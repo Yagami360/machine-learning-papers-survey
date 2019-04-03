@@ -1,9 +1,9 @@
-# Readnig Machine Learning Papers
-機械学習関連の論文（arixv等）読み練習用レポジトリ
+# MachineLearning-Papers_Survey
+機械学習関連の論文（arXiv等）読み練習用レポジトリ
 
 
 ## ◎ 論文サイト
-- [arixv]()
+- [arXiv](https://arxiv.org/)
 - [Google Scholer](https://scholar.google.co.jp/schhp?hl=ja&as_sdt=0,5)
 
 ## ◎ 便利サイト
@@ -50,6 +50,8 @@ categories: CV NLP Others
 - [先端技術とメディア表現1 #FTMA15](http://www.slideshare.net/Ochyai/1-ftma15) from [Yoichi Ochiai](http://www.slideshare.net/Ochyai)
 
 ![](https://raw.githubusercontent.com/shunk031/paper-survey/master/assets/img/FTMA15-1-page-65.png)
+
+<br>
 
 ```
 ## 一言でいうと

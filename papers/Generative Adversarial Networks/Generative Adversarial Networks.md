@@ -56,21 +56,99 @@
 - We propose a new generative model estimation procedure that sidesteps these difficulties. 
     - 我々は、それらの困難さを回避する [sidesteps] 新しい生成モデルの推定手法を提案する。
 
+<br>
+
 - In the proposed adversarial nets framework, the generative model is pitted against an adversary: a discriminative model that learns to determine whether a sample is from the model distribution or the data distribution.
     - 提案された敵対的ネットワークの枠組みでは、生成モデルは、敵対者 [adversary]（即ち、サンプルデータがモデルの分布から来たものなのか？データの分布から来たものなのか？の判断を学習するような識別モデル）に競わせる [pitted against]。
 
 - The generative model can be thought of as analogous to a team of counterfeiters, trying to produce fake currency and use it without detection, while the discriminative model is analogous to the police, trying to detect the counterfeit currency.
+    - 生成モデルは、偽通貨を生産し、検知されることなしに使用することを試みる、偽札 [counterfeiters] チームの類似 [analogous] として考えられる [be thought of]。
+    - 一方で [while]、識別モデルは、偽札を検知しようと試みる警察に類似していると考えられる.
 
 - Competition in this game drives both teams to improve their methods until the counterfeits are indistiguishable from the genuine articles.
+    - このゲームの競争は、両方のチームが、本物の品物と識別できなくなるまで、彼らの手法を改善することを駆動する。
+
+<br>
 
 - This framework can yield specific training algorithms for many kinds of model and optimization algorithm.
+    - この枠組みは、たくさんの種類のモデルや最適化アルゴリズムで、特別な学習アルゴリズムを生み出す [yield] ことが出来る。
 
 - In this article, we explore the special case when the generative model generates samples by passing random noise through a multilayer perceptron, and the discriminative model is also a multilayer perceptron. 
+    - この論文では、生成モデルがランダムノイズを多層パーセプトロンに通してサンプルを生成し、識別モデルが多層パーセプトロンであるような、特別な場合を扱う。
 
 - We refer to this special case as adversarial nets. In this case, we can train both models using only the highly successful backpropagation and dropout algorithms [17] and sample from the generative model using only forward propagation. No approximate inference or Markov chains are necessary.
-
+    - 我々は、この特別な場合を、敵対的ネットワークと呼ぶ [refer to]。
+    - この場合、我々は、高い成功性を持つ誤差逆伝播法とドロップアウトのアルゴリズムを使うことでのみ、両方のモデルを学習させる事ができる。
+    - 近似的推定法 [approximate inference] やマルコフ連鎖は必要ない。
 
 ## 2. Related work
+
+- An alternative to directed graphical models with latent variables are undirected graphical models with latent variables, such as restricted Boltzmann machines (RBMs) [27, 16], deep Boltzmann machines (DBMs) [26] and their numerous variants.
+    - 潜在変数 [latent variables] を持つ有向 [directed] グラフィカルなモデルの代わりとなるもの [alternative to] は、洗剤変数を持つ無向 [undirected] なモデルである。例えば、制限ボルツマンマシンや深層ボルツマンマシンやその変種などである。
+
+- The interactions within such models are represented as the product of unnormalized potential functions, normalized by a global summation/integration over all states of the random variables.
+    - そのようなモデルの相互作用は、正規化されていないポテンシャル関数の積や、ランダム変数の全ての状態に渡っての和や積分で正規化したものとして、表現される。
+
+- This quantity (the partition function) and its gradient are intractable for all but the most trivial instances, although they can be estimated by Markov chain Monte Carlo (MCMC) methods.
+    - 彼ら（＝モデルの相互採用）は、マルコフ連鎖や MCMC法で推定できるにもかかわらず、
+    - この量（分配関数 [the partition function]）やその勾配は、最もありふれた [trivial] 例 [instances] を除いて [all but]、扱いにくい [intractable]。
+
+- Mixing poses a significant problem for learning algorithms that rely on MCMC [3, 5].
+    - <font color="Pink">混合？は、MCMC に頼る学習アルゴリズムにとって問題を持ち出す？ [pose]。</font>
+
+<br>
+
+- Deep belief networks (DBNs) [16] are hybrid models containing a single undirected layer and several directed layers. 
+    - Deep Belief Network (DBNs) は、単体の非直接的な層といくつかの直接的な層を含んだ、ハイブリッドなモデルである。
+
+- While a fast approximate layer-wise training criterion exists, DBNs incur the computational difficulties associated with both undirected and directed models.
+    - 高速近似 [fast approximate] layer-wise 学習評価が存在するまでの間、DBNs は、無向モデル、有向モデルの両方に関連した [associated with]、計算上の困難さこうむる [incur]
+
+<br>
+
+- Alternative criteria that do not approximate or bound the log-likelihood have also been proposed, such as score matching [18] and noise-contrastive estimation (NCE) [13]. 
+    - 例えば、スコアマッチや NCE のように、
+    - 対数尤度を境界化？ [bound]、或いは、近似しないような、代わりとなる基準 [criteria] も提案されている。
+
+- Both of these require the learned probability density to be analytically specified up to a normalization constant.
+    - これらの手法は両方とも、<font color="Pink">学習された確率分布に、正規化定数で分析的に設定されること</font>を要求する。
+
+- Note that in many interesting generative models with several layers of latent variables (such as DBNs and DBMs), it is not even possible to derive a tractable unnormalized probability density. 
+    - <font color="Pink">留意すべきことは [Note that]、
+    - いくつかの層や潜在変数を持つような、多くの興味深い生成モデルでは、
+    - 扱いやすい [tractable] 正規化されていない確率分布を導き出す [derive] ことさえ可能ではない。</font>
+
+- Some models such as denoising auto-encoders [30] and contractive autoencoders have learning rules very similar to score matching applied to RBMs.
+    - ノイズ除去 [denoising] の auto-encoders や縮小 [contractive] の auto-encoders といったいくつかのモデルは、RBMs に適用されるスコアマッチ手法によく似た学習規則を持つ。
+
+- In NCE, as in this work, a discriminative training criterion is employed to fit a generative model.
+    - <font color="Pink">NCE では、その動作の中にあるように、生成モデルに適合するために、特徴的な [discriminative] 学習規則が採用されている。</font>
+
+- However, rather than fitting a separate discriminative model, the generative model itself is used to discriminate generated data from samples a fixed noise distribution.
+    - しかしながら、離散的な [separate] 識別モデルを適合させることよりも、生成モデルはそれ自身、固定されたノイズの分布のサンプルからデータを生成することに慣れている。
+
+- Because NCE uses a fixed noise distribution, learning slows dramatically after the model has learned even an approximately correct distribution over a small subset of the observed variables.
+    - NCE は固定されたノイズ分布を使うために、
+    - 観測された変数の小さなサブセットに渡っての、正しい分布の近似でさえ、
+    - 学習済みモデルのあとは、
+    - 学習は、劇的に遅くなる。
+
+- Finally, some techniques do not involve defining a probability distribution explicitly, but rather train a generative machine to draw samples from the desired distribution.
+    - 最終的に、いくつかのテクニックは、確率分布を明示的に [explicitly] 定義することを巻き込まない。
+    - むしろ [but rather]、生成器に、所望の [desired] 分布からサンプルすることを学習する。
+
+- This approach has the advantage that such machines can be designed to be trained by back-propagation.
+    - このアプローチは、そのような生成器が、誤差逆伝播法によって学習されることを設計出来るというメリットが存在する。
+
+- Prominent recent work in this area includes the generative stochastic network (GSN) framework [5], which extends generalized denoising auto-encoders [4]: both can be seen as defining a parameterized Markov chain, i.e., one learns the parameters of a machine that performs one step of a generative Markov chain. 
+    - xxx
+
+- Compared to GSNs, the adversarial nets framework does not require a Markov chain for sampling.
+
+- Because adversarial nets do not require feedback loops during generation, they are better able to leverage piecewise linear units [19, 9, 10], which improve the performance of backpropagation but have problems with unbounded activation when used ina feedback loop.
+
+- More recent examples of training a generative machine by back-propagating into it include recent work on auto-encoding variational Bayes [20] and stochastic backpropagation [24].
+
 
 ## 3. Adversarial nets
 

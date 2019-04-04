@@ -141,21 +141,35 @@
     - このアプローチは、そのような生成器が、誤差逆伝播法によって学習されることを設計出来るというメリットが存在する。
 
 - Prominent recent work in this area includes the generative stochastic network (GSN) framework [5], which extends generalized denoising auto-encoders [4]: both can be seen as defining a parameterized Markov chain, i.e., one learns the parameters of a machine that performs one step of a generative Markov chain. 
-    - xxx
+    - この領域の主要な [Prominent] 最近の手法 [work] は、generative stochastic network (GSN) の枠組みを含んでいる。
+    - （この枠組は、）generalized denoising auto-encoders を拡張する。
+    - つまり、xxx
 
 - Compared to GSNs, the adversarial nets framework does not require a Markov chain for sampling.
+    - GSNs と比較すると、敵対的ネットワークは、サンプリングのために、マルコフ連鎖を必要としない。
 
 - Because adversarial nets do not require feedback loops during generation, they are better able to leverage piecewise linear units [19, 9, 10], which improve the performance of backpropagation but have problems with unbounded activation when used ina feedback loop.
+    - 敵対的ネットワークは、生成過程でフィードバックループを必要としないため、誤差逆伝播法のパフォーマンスを改善するような区分線形ユニットを利用することをより可能にする。
+    - <font color="Pink">しかし、内部のフィードバックループを使う際に、unbounded activation? に問題をもつ。</font>
 
 - More recent examples of training a generative machine by back-propagating into it include recent work on auto-encoding variational Bayes [20] and stochastic backpropagation [24].
-
+    - より最近の誤差逆伝播法を持つ生成器の学習例は、auto-encoding variational Bayes や確率的誤差逆伝播法といった最近の手法を含む。
 
 ## 3. Adversarial nets
 
 - The adversarial modeling framework is most straightforward to apply when the models are both multilayer perceptrons.
     - モデルが両方とも多層パーセプトロンであるときに、敵対的モデリングフレームワークは最も簡単に適用できます。
 
-- To learn the generator’s distribution $p_g$ over data $x$, we define a prior on input noise variables $p_z(z)$, then represent a mapping to data space as $G(z; \theta_g)$, where G is a differentiable function represented by a multilayer perceptron with parameters $\theta_g$.
-    - データ $x$ に対してのジェネレーター G の確率分布 $p_g$ を学習するために、前もって、入力ノイズ変数 $p_z(z)$ を定義し、パラメータ $\theta_g$ を持つ多層パーセプトロンによって表現された微分可能な関数である $G(z; \theta_g)$ としてデータ空間への写像で表現する。
+- To learn the generator’s distribution $p_g$ over data $x$, we define a prior on input noise variables $p_z(\vec{z})$, then represent a mapping to data space as $G(\vec{z}; \theta_g)$, where G is a differentiable function represented by a multilayer perceptron with parameters $\theta_g$.
+    - データ $x$ に対してのジェネレーター G の確率分布 $p_g$ を学習するために、前もって、入力ノイズ変数 $p_z(\vec{z})$ を定義し、パラメータ $\theta_g$ を持つ多層パーセプトロンによって表現された微分可能な関数である $G(z; \theta_g)$ としてデータ空間への写像で表現する。
 
-- 
+- We also define a second multilayer perceptron $D(\vec{x};\theta_d)$ that outputs a single scalar. 
+
+- D(x) represents the probability that x came from the data rather than pg.
+
+- We train D to maximize the probability of assigning the correct label to both training examples and samples from G. 
+
+- We simultaneously train G to minimize log(1 􀀀 D(G(z))):
+2
+
+- In other words, D and G play the following two-player minimax game with value function V (G;D):

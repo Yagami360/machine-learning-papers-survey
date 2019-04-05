@@ -164,12 +164,109 @@
     - データ $x$ に対してのジェネレーター G の確率分布 $p_g$ を学習するために、前もって、入力ノイズ変数 $p_z(\vec{z})$ を定義し、パラメータ $\theta_g$ を持つ多層パーセプトロンによって表現された微分可能な関数である $G(z; \theta_g)$ としてデータ空間への写像で表現する。
 
 - We also define a second multilayer perceptron $D(\vec{x};\theta_d)$ that outputs a single scalar. 
+    - 単一のスカラー値を出力する２つ目の多層パーセプトロン $D(\vec{x};\theta_d)$ を定義する。
 
-- D(x) represents the probability that x came from the data rather than pg.
+- $D(\vec{x})$ represents the probability that $x$ came from the data rather than $p_g$.
+    - $D(\vec{x})$ は、（生成器の確率分布）$p_g(z)$ ではなく [rather than]、データ $x$ が来た（入力された）ときの、（識別）確率を表わしている。
 
 - We train D to maximize the probability of assigning the correct label to both training examples and samples from G. 
+    - 識別器 D が、正しいラベルを割り当てる [assigning] 確率を最大化するように学習する。
 
-- We simultaneously train G to minimize log(1 􀀀 D(G(z))):
-2
+- We simultaneously train G to minimize $\log{ (1-D(G(z)) ) }$ :
+    - 同時に、生成器 G を、$\log{ (1-D(G(z)) ) }$ が最小になるように学習する。
 
-- In other words, D and G play the following two-player minimax game with value function V (G;D):
+- In other words, D and G play the following two-player minimax game with value function $V(G;D)$:
+    - 言い換えれば、識別器 D と生成器 G は、価値関数（＝損失関数） $V(G;D)$ に対しての２人プレイヤーのミニマックスゲームにそってゲームプレイする。
+
+$$
+min_{G} max_D{V(D,G)} = \mathbb{E}_{\vec{x} \sim p_{data}(x) } [\log{D(\vec{x})}] + \mathbb{E}_{\vec{z} p_{z}(z) } [1-\log{D(G(\vec{z})})]
+$$
+
+> $\vec{x} \sim p_{data}(\vec{x})$ ： $\vec{x}$ は、確率分布 $p_{data}(\vec{x})$ に従う。（＝確率分布 $p_{data}(\vec{x})$ からサンプリングされたデータ $\vec{x}$ である。）
+
+<br>
+
+- In the next section, we present a theoretical analysis of adversarial nets, essentially showing that the training criterion allows one to recover the data generating distribution as G and D are given enough capacity, i.e., in the non-parametric limit.
+    - 次のセクションでは、我々は、敵対的ネットワークの理論的な分析を提示する。
+    - <font color="Pink">本質的に [essentially]、生成器 G と識別器 D に十分なキャパシティが与えれているときに、学習規則はデータを生成する分布をリカバーすることを許容することを示している。</font>
+
+
+- See Figure 1 for a less formal, more pedagogical explanation of the approach. 
+    - 形式的でない [less formal]、より教育的な [pedagogical] アプローチでの説明については、図１を見てください。
+
+- In practice, we must implement the game using an iterative, numerical approach.
+    - 実際には [In practice]、我々は、反復的な数値的手法を使って実装しなくてはならない。
+
+- Optimizing $D$ to completion in the inner loop of training is computationally prohibitive, and on finite datasets would result in overfitting.
+    - <font color="Pink">内部の学習ループでの完了 [completion] で識別器 D を最適化することは、計算的に[computationally] 禁止であり、</font>有限のデータセットでは、過学習の結果を招く。
+
+- Instead, we alternate between k steps of optimizing D and one step of optimizing G.
+    - 代わりに、kステップでの識別器 D の最適化と、1ステップでの生成器 G の最適化の間を、交互に行う。[alternate]
+
+- This results in D being maintained near its optimal solution, so long as G changes slowly enough. 
+    - 生成器 G が十分緩やかに変化する限り [so long as]、識別器 D は最適解付近に維持される
+    - この xxx での結果、
+
+- This strategy is analogous to the way that SML/PCD [31, 29] training maintains samples from a Markov chain from one learning step to the next in order to avoid burning in a Markov chain as part of the inner loop of learning.
+    - この戦略は、SML/PCD といった手法に類似 [analogous] している。
+    - xxx
+
+- The procedure is formally presented in Algorithm 1.
+    - その処理は、アルゴリズム１に形式的に表している。
+
+<br>
+
+- In practice, equation 1 may not provide sufficient gradient for G to learn well. Early in learning, when G is poor, D can reject samples with high confidence because they are clearly different from the training data. 
+    - 実際には、式１は、生成器 G がうまく学習するための十分な勾配を与えないかもしれない。
+    - 学習の初期段階において、生成器 G が弱いとき、識別器 D は高い信用度でサンプルを拒絶することが出来る。
+    - なぜならば、それらは、明らかに学習用データとはことなるためである。
+
+- In this case, $\log{ (1 - D(G(z))) }$ saturates. Rather than training G to minimize $\log(1 - D(G(z)))$ we can train G to maximize $\log{D(G(z))}$.
+    - このようなケースにおいて、$\log{ (1 - D(G(z))) }$ を満たす。[saturates]
+    - $\log{ (1 - D(G(z))) }$ を最小化するために、生成器 G を学習するよりも、$\log{ D(G(z)) }$ を最大化するために、生成器 G を学習する。
+
+- This objective function results in the same fixed point of the dynamics of G and D but provides much stronger gradients early in learning.
+    - この目的関数 [objective function] は、結果的に、G と D の動的な同じ固定点をもたらす。[result in]
+    - しかし、学習の初期段階において、より強い勾配を提供する。
+
+![image](https://user-images.githubusercontent.com/25688193/55600485-1ecde900-5797-11e9-9476-9f904a4d41ac.png)<br>
+
+- > Figure 1: Generative adversarial nets are trained by simultaneously updating the discriminative distribution ($D$, blue, dashed line) so that it discriminates between samples from the data generating distribution (black,dotted line) $p_x$ from those of the generative distribution $p_g(G)$ (green, solid line).
+    - > 図１：敵対的生成ネットワークは、データが生成する分布 $p_x$（黒点先）サンプルと、（生成器が生成する確率分布）<font color="Green">$p_g(G)$（緑線）</font>の間を識別するように [so that]、識別器の分布を更新しながら、同時に学習される。（<font color="Blue">識別器 D は青ダッシュ線</font>）
+
+- > The lower horizontal line is the domain from which z is sampled, in this case uniformly. The horizontal line above is part of the domain of x. The upward arrows show how the mapping $x = G(z)$ imposes the non-uniform distribution $p_g$ on transformed samples. 
+    - > 下段の水平線は、一様に？ z からサンプルされた z からの領域 [domein] である。
+    - > この水平線の上側は、x の領域の一部である。
+    - > 上向き矢印は、どうのようして、写像 $x=G(z)$ が、変換されたサンプルに、一様分布でない $p_g$ を強制する [impose on] のかを示している。
+
+- > G contracts in regions of high density and expands in regions of low density of $p_g$. 
+    - 生成器 G は、高密度の領域を縮約し [contracts]、$p_g$ の低密度の領域を拡張する。
+
+- > (a) Consider an adversarial pair near convergence: $p_g$ is similar to $p_{data}$ and D is a partially accurate classifier.
+    - > (a) 収束 [convergence]　付近の敵対ネットワークのペアを考慮した図。
+    - > 即ち、$p_g$ （の形状）は、$p_{data}$ に似ており、識別器 D は、部分的に正確な分類器となっている。
+
+- > (b) In the inner loop of the algorithm D is trained to discriminate samples from data, converging to $D^*(x) = {p_{data}(x)}/{(p_{data}(x)+p_g(x)})$. 
+    - > (b) 識別器 D のアルゴリズムの内部ループでは、$D^*(x) = {p_{data}(x)}/{(p_{data}(x)+p_g(x)})$ に収束するような、データからのサンプルを識別することを学習されている。
+
+- > (c) After an update to G, gradient of D has guided $G(z)$ to flow to regions that are more likely to be classified as data.
+    > - (c)１回の生成器の更新の後、識別器 D の勾配は、<font color="Pink">$G(z)$ に、データとして分類される可能性の高い [be likely to] 領域に流れるようにガイドする。</font>
+
+- > (d) After several steps of training, if G and D have enough capacity, they will reach a point at which both cannot improve because $p_g = p_{data}$. The discriminator is unable to differentiate between the two distributions, i.e. $D(x) = 1/2$.
+    - > (d) 何回かの学習ステップの後、生成器 G と識別器 D が十分なキャパシティを持っていれば、それらは、$p_g = p_{data}$ となるために、両方とも（これ以上は）改善しないという（最適）点に到達するだろう。
+    - > 識別器は、例えば、1/2 の確率といったように、２つの分布の違いを識別することができなくなる。
+
+
+## 4. Theoretical Results
+
+- The generator G implicitly defines a probability distribution pg as the distribution of the samples G(z) obtained when z  pz. 
+
+- Therefore, we would like Algorithm 1 to converge to a good estimator of pdata, if given enough capacity and training time.
+
+- The results of this section are done in a nonparametric setting, e.g. we represent a model with infinite capacity by studying convergence in the space of probability density functions.
+
+- We will show in section 4.1 that this minimax game has a global optimum for pg = pdata.
+
+- We will then show in section 4.2 that Algorithm 1 optimizes Eq 1, thus obtaining the desired result.
+
+![image](https://user-images.githubusercontent.com/25688193/55601015-9735a980-5799-11e9-9d6f-0d78a648a4f8.png)<br>

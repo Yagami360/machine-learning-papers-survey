@@ -9,13 +9,14 @@
 ## ◎ 便利サイト
 - [Google翻訳](https://translate.google.co.jp/?hl=ja&tab=wT)
 - [Hyper Collocation](https://hypcol.marutank.net/ja/)
+- [arXiv Vanity](https://www.arxiv-vanity.com/)
 
 ## ◎ 参考サイト
 
 - [arXivTimes](https://github.com/arXivTimes/arXivTimes)
 - [ymym3412/acl-papers](https://github.com/ymym3412/acl-papers)
 - [shunk031/paper-survey](https://github.com/shunk031/paper-survey)
-
+- [趣味として楽しむ論文読みのススメ - karaage. [からあげ]](https://karaage.hatenadiary.jp/entry/2018/08/13/000000)
 
 ## ◎ フォーマット
 

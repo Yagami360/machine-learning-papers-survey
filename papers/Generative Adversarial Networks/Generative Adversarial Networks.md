@@ -122,7 +122,7 @@
     - ノイズ除去 [denoising] の auto-encoders や縮小 [contractive] の auto-encoders といったいくつかのモデルは、RBMs に適用されるスコアマッチ手法によく似た学習規則を持つ。
 
 - In NCE, as in this work, a discriminative training criterion is employed to fit a generative model.
-    - <font color="Pink">NCE では、その動作の中にあるように、生成モデルに適合するために、特徴的な [discriminative] 学習規則が採用されている。</font>
+    - <font color="Pink">NCE では、その動作の中にあるように、生成モデルに適合するために、特徴的な [discriminative] 損失関数 [training criterion] が採用されている。</font>
 
 - However, rather than fitting a separate discriminative model, the generative model itself is used to discriminate generated data from samples a fixed noise distribution.
     - しかしながら、離散的な [separate] 識別モデルを適合させることよりも、生成モデルはそれ自身、固定されたノイズの分布のサンプルからデータを生成することに慣れている。
@@ -179,7 +179,7 @@
     - 言い換えれば、識別器 D と生成器 G は、価値関数（＝損失関数） $V(G;D)$ に対しての２人プレイヤーのミニマックスゲームにそってゲームプレイする。
 
 $$
-min_{G} max_D{V(D,G)} = \mathbb{E}_{\vec{x} \sim p_{data}(x) } [\log{D(\vec{x})}] + \mathbb{E}_{\vec{z} p_{z}(z) } [1-\log{D(G(\vec{z})})]
+min_{G} max_D{V(D,G)} = \mathbb{E}_{\vec{x} \sim p_{data}(x) } [\log{D(\vec{x})}] + \mathbb{E}_{\vec{z} \sim p_{z}(z) } [1-\log{D(G(\vec{z})})]
 $$
 
 > $\vec{x} \sim p_{data}(\vec{x})$ ： $\vec{x}$ は、確率分布 $p_{data}(\vec{x})$ に従う。（＝確率分布 $p_{data}(\vec{x})$ からサンプリングされたデータ $\vec{x}$ である。）
@@ -188,7 +188,7 @@ $$
 
 - In the next section, we present a theoretical analysis of adversarial nets, essentially showing that the training criterion allows one to recover the data generating distribution as G and D are given enough capacity, i.e., in the non-parametric limit.
     - 次のセクションでは、我々は、敵対的ネットワークの理論的な分析を提示する。
-    - <font color="Pink">本質的に [essentially]、生成器 G と識別器 D に十分なキャパシティが与えれているときに、学習規則はデータを生成する分布をリカバーすることを許容することを示している。</font>
+    - <font color="Pink">本質的に [essentially]、生成器 G と識別器 D に十分なキャパシティが与えれているときに、損失関数 [training criterion] はデータを生成する分布をリカバーすることを許容することを示している。</font>
 
 
 - See Figure 1 for a less formal, more pedagogical explanation of the approach. 
@@ -263,17 +263,64 @@ $$
     - 生成器 G は、$z \sim p_z$ のとき、$G(z)$ が手に入れるサンプルの分布として確率分布 $p_g$ を暗に [implicitly] 定義する。
 
 - Therefore, we would like Algorithm 1 to converge to a good estimator of $p_{data}$, if given enough capacity and training time.
-    - それ故、もし、十分な容量と学習時間が与えられていれば、$p_{data}$ のよい推定器に収束したい [converge]。
+    - それ故、もし、十分な容量と学習時間が与えられていれば、アルゴリズム１は、$p_{data}$ のよい推定器に収束したい [converge]。
 
 - The results of this section are done in a nonparametric setting, e.g. we represent a model with infinite capacity by studying convergence in the space of probability density functions.
     - このセクションでの結果は、ノンパラメトリック設定で行われている。
     - 例えば、確率分布関数の空間への収束を学習することにより、無限の容量でモデルを表現する。
 
 - We will show in section 4.1 that this minimax game has a global optimum for $p_g = p_{data}$.
+    - セクション4.1 に、このミニマックスゲームが、$p_g = p_{data}$ に対しての、大域的最適を持つことを示す。
 
 - We will then show in section 4.2 that Algorithm 1 optimizes Eq 1, thus obtaining the desired result.
+    - セクション 4.2 では、アルゴリズム１が式１を最適化することを示す。
+    - 結果として、望ましい結果が得られる。
 
 ![image](https://user-images.githubusercontent.com/25688193/55601015-9735a980-5799-11e9-9d6f-0d78a648a4f8.png)<br>
+
+### 4.1 Global Optimality of $p_g = p_{data}$
+- We first consider the optimal discriminator D for any given generator G.
+    - 最初に、いくつかの生成器 G によって与えられる、識別器 D の最適値について考える。
+
+- Proposition 1. For G fixed, the optimal discriminator D is
+    - 命題１：生成器 G を固定のともで、識別器 D の最適値は、
+
+![image](https://user-images.githubusercontent.com/25688193/55698389-820e8400-5a00-11e9-8780-23d260b98b17.png)<br>
+
+- Proof. The training criterion for the discriminator D, given any generator G, is to maximize the quantity V (G;D)
+    - 証明：識別器の損失関数 [training criterion] は、いくつかの生成器 G に対して、価値関数を最大化することである。
+
+![image](https://user-images.githubusercontent.com/25688193/55699247-ed5a5500-5a04-11e9-82e1-8941265b149c.png)<br>
+
+- For any $(a; b) \in R^2 \ {(0; 0)}$, the function $y \rightarrow a \log{y} + b \log{(1-y)}$ achieves its maximum in [0; 1] at $a/a+b$ . The discriminator does not need to be defined outside of $Supp{(p_{data})} \cup Supp(p_g)$, concluding the proof.
+
+- Note that the training objective for D can be interpreted as maximizing the log-likelihood for estimating the conditional probability $P(Y = y|x)$, where $Y$ indicates whether $x$ comes from $p_{data}$ (with $y = 1$) or from $p_g$ (with $y = 0$). 
+    -  ここで留意すべきは [note that]、識別器 D の学習目的が、条件確率 $P(Y = y|x)$ （$Y$ は $x$ が $p_{data}$ から来るか、$p_g$ から来るかを示している。）を推定するための対数尤度の最大化として、解釈する [interpreted as] ことができる。
+
+- The minimax game in Eq. 1 can now be reformulated as:
+
+![image](https://user-images.githubusercontent.com/25688193/55699707-082dc900-5a07-11e9-96bb-f18ee084eecc.png)<br>
+
+- Theorem 1. The global minimum of the virtual training criterion $C(G)$ is achieved if and only if $p_g = p_{data}$. At that point, $C(G)$ achieves the value $-\log{(4)}$.
+    - 定理１：仮想的な損失関数 $C(G)$ の大域的最適値では、$p_g = p_{data}$ が成り立つ。
+    - この点では、$C(G)$ は、$-\log{(4)}$ の値になる。
+
+- Proof. For pg = pdata, DG(x) = 12 , (consider Eq. 2). Hence, by inspecting Eq. 4 at DG(x) = 12 , we find C(G) = log 12 + log 12 = 􀀀log 4.
+
+- To see that this is the best possible value of C(G), reached only for pg = pdata, observe that
+
+![image](https://user-images.githubusercontent.com/25688193/55700222-6491e800-5a09-11e9-83a0-cce4e1ca4b9d.png)<br>
+
+- and that by subtracting this expression from C(G) = V (DG;G), we obtain :
+
+![image](https://user-images.githubusercontent.com/25688193/55700261-8be8b500-5a09-11e9-8d2c-5c9a15a7e00c.png)<br>
+
+- where KL is the Kullback–Leibler divergence. We recognize in the previous expression the Jensen–Shannon divergence between the model’s distribution and the data generating process:
+
+![image](https://user-images.githubusercontent.com/25688193/55700282-9dca5800-5a09-11e9-8cb2-df5d18ca3b63.png)<br>
+
+- Since the Jensen–Shannon divergence between two distributions is always non-negative and zero only when they are equal, we have shown that C = 􀀀log(4) is the global minimum of C(G) and that the only solution is pg = pdata, i.e., the generative model perfectly replicating the data generating process.
+
 
 
 ## 5. Experiments

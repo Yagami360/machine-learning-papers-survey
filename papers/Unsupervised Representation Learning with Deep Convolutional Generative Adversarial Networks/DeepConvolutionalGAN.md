@@ -1,6 +1,6 @@
 ## ■ 論文
 - 論文リンク：[[1511.06434] Unsupervised Representation Learning with Deep Convolutional Generative Adversarial Networks](https://arxiv.org/abs/1511.06434)
-- 論文投稿日付：2015/11/19(v1), 2016/xx/07(v2)
+- 論文投稿日付：2015/11/19(v1), 2016/01/07(v2)
 - 著者：Alec Radford, Luke Metz, Soumith Chintala
 - categories / Subjects：Machine Learning (cs.LG); Computer Vision and Pattern Recognition (cs.CV)
 
@@ -137,22 +137,36 @@
 <br>
 
 - Third is Batch Normalization (Ioffe & Szegedy, 2015) which stabilizes learning by normalizing the input to each unit to have zero mean and unit variance.
+    - ３つ目は、Batch Normalization です。
+    - （この Batch Normalization というのは、）<font color="Pink">入力を各々のユニットのゼロ平均、分散値で</font>正規化することによって学習を安定化させるようなものである。
 
 - This helps deal with training problems that arise due to poor initialization and helps gradient flow in deeper models.
+    - これは不十分 [poor] な初期化が原因で発生する学習問題に対処するのみ役立ち、より深いモデルでの勾配フローに役立つ。
 
 - This proved critical to get deep generators to begin learning, preventing the generator from collapsing all samples to a single point which is a common failure mode observed in GANs.
+    - これは、深い構造を持つ生成器を得るために、学習を始めるのに重要であることが証明されている。
+    - （この学習というのは、）GAN で観測される共通の故障モードというような１つの点に、生成器が、全てのサンプルで崩壊するのを防ぐようなものである。
+
+    > モード崩壊 [mode collapse] のことを言っている？
 
 - Directly applying batchnorm to all layers however, resulted in sample oscillation and model instability.
+    - すべての層に直接的に batchnorm を適用することはしかしながら、サンプルの発振？ [sample oscillation] やモデルの不安定化という結果になる。
 
 - This was avoided by not applying batchnorm to the generator output layer and the discriminator input layer.
+    - これは、batchnorm を、生成器の出力層と識別器の入力層に適用しないことによって、回避された。
 
 - The ReLU activation (Nair & Hinton, 2010) is used in the generator with the exception of the output layer which uses the Tanh function.
+    - ReLU 活性化関数は、Tanh 関数が使用されている出力層を除いて、生成器に使用されている。
 
 - We observed that using a bounded activation allowed the model to learn more quickly to saturate and cover the color space of the training distribution.
+    - 有界の活性化関数を使用することは、モデルに、<font color="Pink">学習分布の色空間を満たし [saturate] たりカバーしたりするために、より早く学習することを許容したこということを観測した。</font>
 
 - Within the discriminator we found the leaky rectified activation (Maas et al., 2013) (Xu et al., 2015) to work well, especially for higher resolution modeling.
+    - 識別器の中では、leaky Relu がよりうまくいくことを見つけ出した。
+    - とりわけ、より高い解像度のモデリングでは、（うまくいった）
 
 - This is in contrast to the original GAN paper, which used the maxout activation (Goodfellow et al., 2013).
+    - maxout 活性化関数が使われているオリジナル GAN 論文とは対照的である。[in contrast]
 
 <br>
 
@@ -163,17 +177,23 @@
     - Use ReLU activation in generator for all layers except for the output, which uses Tanh.
     - Use LeakyReLU activation in the discriminator for all layers.
 
+- DCGAN を安定化させるためのアーキテクチャのガイドライン
+    - 各々のプーリング層を、識別器のストライド畳み込みや生成器の fractional-strided convolutions に取り替える。
+    - 生成器と識別器で共に、batchnorm を使用する。
+    - 深いアーキテクチャ構造を持つ、全結合の隠れ層を除外する。
+    - 生成器において、Tanh を使用する出力以外は、全ての層で Relu を使用する。
+    - 識別器において、全ての層で　LeaklyRelu を使用する。
 
 
 ## ■ 結論（何をしたか？詳細）
 
 ### 7. CONCLUSION AND FUTURE WORK
 - We propose a more stable set of architectures for training generative adversarial networks and we give evidence that adversarial networks learn good representations of images for supervised learning and generative modeling.
-    - 我々は、GAN の学習のための、より安定したアーキテクチャのセットを提案する。そして、GAN が教師あり学習と生成モデルたの画像の良い表現を学習しているという証拠を与える。
+    - 我々は、GAN の学習のための、より安定したアーキテクチャのセットを提案する。そして、GAN が教師あり学習と生成モデルための、画像の良い表現を学習しているという証拠を与える。
 
 - There are still some forms of model instability remaining - we noticed as models are trained longer they sometimes collapse a subset of filters to a single oscillating mode.
     - モデルの不安定性には、まだいくつかの型が残っている。
-    - <font color="Pink">（即ち、）より長い時間学習されたモデルは、ときどき、フィルターのサブセットを、単一の振動モード [oscillating mode] に崩壊させることがあるということに、我々は気づいた。</font>
+    - <font color="Pink">（即ち、）より長い時間学習されたモデルは、ときどき、フィルターのサブセットを、単一の振動モード [oscillating mode] に崩壊させることがあるということに、（⇒モード崩壊のこと？）我々は気づいた。</font>
 
 <br>
 
@@ -195,12 +215,102 @@
 
 ### 5. EMPIRICAL VALIDATION OF DCGANS CAPABILITIES
 
+#### 5.1 CLASSIFYING CIFAR-10 USING GANS AS A FEATURE EXTRACTOR
+
+- One common technique for evaluating the quality of unsupervised representation learning algorithms is to apply them as a feature extractor on supervised datasets and evaluate the performance of linear models fitted on top of these features.
+    - 教師なし学習アルゴリズムを評価するための１つの共通のテクニックは、それらを教師あり学習の元での？、特徴抽出機として適応することです。
+    - そして、それらの特徴量のトップ？で適合された線形モデルのパフォーマンスを評価することです。
+
+<br>
+
+- On the CIFAR-10 dataset, a very strong baseline performance has been demonstrated from a well tuned single layer feature extraction pipeline utilizing K-means as a feature learning algorithm.
+    - CIFAR-10 データセットでは、とても強いベースライン性能（基準性能）が、十分によくチューニングされた単一の特徴抽出パイプラインから、実演されている。
+    - （この特徴抽出パイプラインというのは、）特徴量の学習アルゴリズムとしての K-means を利用したものである。
+
+- When using a very large amount of feature maps (4800) this technique achieves 80.6% accuracy.
+    - 特徴マップ(4800毎) というとても大きな量を使用するときには、このテクニックは、80.6% の正解率を達成する。
+
+- An unsupervised multi-layered extension of the base algorithm reaches 82.0% accuracy (Coates &Ng, 2011).
+    - ベースアルゴリズムの教師なしでの多層への拡張は、82.0% の正解率に到達する。
+
+- To evaluate the quality of the representations learned by DCGANs for supervised tasks, we train on Imagenet-1k and then use the discriminator’s convolutional features from all layers, maxpooling each layers representation to produce a 4 × 4 spatial grid.
+    - 教師ありタスクのための、DCGAN によって学習された表現の質を評価するために、我々は Imagenet-1k を学習する。そしてその後、識別器の全ての層からの畳み込み層を使用する。
+    - <font color="Pink">4 × 4 の分割されたグリッドを処理するための、各層の表現を maxpooling する？</font>
+
+- These features are then flattened and concatenated to form a 28672 dimensional vector and a regularized linear L2-SVM classifier is trained on top of them.
+    - これらの特徴量は、28672 次元のベクトルに平坦化処理や結合処理される。
+    - そして、それら特徴量のトップで学習されたL2-SVM 分類器に正則化 [regularized] される。
+
+- This achieves 82.8% accuracy, out performing all K-means based approaches.
+    - この手法は、82.8% の正解率を達成し、
+    - 全ての K-means をベースとするアプローチを実行しない。
+
+- Notably, the discriminator has many less feature maps (512 in the highest layer) compared to K-means based techniques, but does result in a larger total feature vector size due to the many layers of 4 × 4 spatial locations.
+    - とりわけ、識別器は、K-meansをベースとするテクニックと比較して、はるかに少ない特徴マップ（最も高い層で、512枚）ですむ。
+    - しかしながら、<font color="Pink">4 × 4 の分割された位置の多くの層によって、より大きな特徴ベクトルサイズ（を持つ）という結果となる。</font>
+
+- The performance of DCGANs is still less than that of Exemplar CNNs (Dosovitskiy et al., 2015), a technique which trains normal discriminative CNNs in an unsupervised fashion to differentiate between specifically chosen, aggressively augmented, exemplar samples from the source dataset.
+    - DCGAN のパフォーマンスは、Exemplar CNNs のそれより、まだ低い。
+    - （この Exemplar CNNs というのは、）データセットの資源からの典型的な [exemplar] サンプル、積極的に増加された [augmented] サンプル、特別に抽出されたサンプル、との間を区別する [differentiate] ために、教師なしファッションデータで、通常の識別を行う CNN を学習するテクニックである。
+
+- Further improvements could be made by finetuning the discriminator’s representations, but we leave this for future work.
+    - さらなる改善は、識別器の表現のファインチューニング（＝既存のモデルの一部を再利用して、新しいモデルを構築する手法）で作り出すことが出来た。
+    - しかし、我々は、これを将来の研究に残しておく。
+
+- Additionally, since our DCGAN was never trained on CIFAR-10 this experiment also demonstrates the domain robustness of the learned features.
+    - 加えて、我々の DCGAN が、CIFAR-10 で学習されることはないので [since]、この実験はまた、学習された特徴量の分野のロバスト性 [robustness] を実証している。
+
+- Table 1: CIFAR-10 classification results using our pre-trained model.
+    - Our DCGAN is not pretrained on CIFAR-10, but on Imagenet-1k, and the features are used to classify CIFAR-10 images.
+
+- 表１：事前学習されたモデルを用いた CIFAR-10 の分類結果。
+    - 我々の DCGAN は、CIFAR-10 で事前学習されていない。
+    - しかし、Imagenet-1k や？
+    - 特徴量では、CIFAR-10 画像を分類するために使われている。
+
+![image](https://user-images.githubusercontent.com/25688193/55852405-d39d4700-5b97-11e9-9f55-fc738bb57aa1.png)<br>
+
+
+#### 5.2 CLASSIFYING SVHN DIGITS USING GANS AS A FEATURE EXTRACTOR
+
+- On the StreetView House Numbers dataset (SVHN)(Netzer et al., 2011), we use the features of the discriminator of a DCGAN for supervised purposes when labeled data is scarce.
+    - StreetView House Numbers dataset (SVHN) では、ラベルデータが不足している [scarce] ときの目的のために、我々は、DCGAN の識別器の教師データとしての特徴量を使用する。
+
+- Following similar dataset preparation rules as in the CIFAR-10 experiments, we split off a validation set of 10,000 examples from the non-extra set and use it for all hyperparameter and model selection.
+    - CIFAR-10 の実験とよく似たデータセット準備のルールに従って [following]、我々は、非追加セットから、10,000 サンプルのバリデーションデータセットを分割する。
+    - そして、ハイパーパラメータやモデルの選択に使用する。
+
+- 1000 uniformly class distributed training examples are randomly selected and used to train a regularized linear L2-SVM classifier on top of the same feature extraction pipeline used for CIFAR-10.
+    - <font color="Pink">1000 個の一様なトレーニングサンプルの分布をもつクラスは、
+    - CIFAR-10 のために使用されているものと同じ特徴抽出パイプラインのトップ？で、正規化された線形 L2-SVM 分類器を学習するために、
+    - ランダムに選択され、使用されたものである。</font>
+
+- This achieves state of the art (for classification using 1000 labels) at 22.48% test error, improving upon another modifcation of CNNs designed to leverage unlabled data (Zhao et al., 2015).
+    - この手法は、22.48% の test error での、（1000個のラベルを用いた分類問題での）SOTA を達成する。
+    
+- Additionally, we validate that the CNN architecture used in DCGAN is not the key contributing factor of the model’s performance by training a purely supervised CNN with the same architecture on the same data and optimizing this model via random search over 64 hyperparameter trials (Bergstra & Bengio,2012).
+    - 加えて、DCGAN で使用されている CNN のアーキテクチャが、モデルのパフォーマンスのキーポイント要因ではないことを、検証した。[validate]
+    - 学習することによって、
+
+- It achieves a signficantly higher 28.87% validation error.
+
 ### 6. INVESTIGATING AND VISUALIZING THE INTERNALS OF THE NETWORKS
 
+> 記載中...
 
 ## ■ 関連研究（他の手法との違い）・メソッド（実験方法）
 
 ### 4. DETAILS OF ADVERSARIAL TRAINING
 
+- We trained DCGANs on three datasets, Large-scale Scene Understanding (LSUN) (Yu et al., 2015), Imagenet-1k and a newly assembled Faces dataset. 
+    - 我々は、DCGAN を３つのデータセットで学習した。
+    - （この３つのデータセットというのは、）Large-scale Scene Understanding (LSUN)、Imagenet-1k、a newly assembled Faces dataset です。
+
+- Details on the usage of each of these datasets are given below.
+    - これらのデータセットの使用法 [usage] の詳細は、以下に示している。
+
+> 記載中...
+
 ### 2. RELATED WORK
 
+> 記載中...

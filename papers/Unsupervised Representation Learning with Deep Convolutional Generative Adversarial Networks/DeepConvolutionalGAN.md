@@ -1,12 +1,13 @@
-## ■ 論文
+# ■ 論文
+
 - 論文リンク：[[1511.06434] Unsupervised Representation Learning with Deep Convolutional Generative Adversarial Networks](https://arxiv.org/abs/1511.06434)
 - 論文投稿日付：2015/11/19(v1), 2016/01/07(v2)
 - 著者：Alec Radford, Luke Metz, Soumith Chintala
 - categories / Subjects：Machine Learning (cs.LG); Computer Vision and Pattern Recognition (cs.CV)
 
-## ■ 概要（何をしたか？）
+# ■ 概要（何をしたか？）
 
-### ABSTRACT
+## ABSTRACT
 
 - In recent years, supervised learning with convolutional networks (CNNs) has seen huge adoption in computer vision applications. 
     - 最近では、CNN の構造をもつ教師あり学習が、コンピュータービジョンのアプリケーションにおいて、莫大に採用 [adoption] されている。
@@ -27,9 +28,9 @@
 - Additionally, we use the learned features for novel tasks - demonstrating their applicability as general image representations.
     - 加えて、我々は、（タスクの）適用性を一般的な画像表現として実証するような新型の [novel] タスクのために、学習された特徴量を使用する。
 
-## ■ イントロダクション（何をしたいか？）
+# ■ イントロダクション（何をしたいか？）
 
-### 1. INTRODUCTION
+## 1. INTRODUCTION
 
 - Learning reusable feature representations from large unlabeled datasets has been an area of active research.
     - ラベリングされていない巨大なデータセットからの再利用可能な特徴量の表現を学習することは、活発な研究分野になっている。
@@ -68,7 +69,7 @@
     - 我々は、生成器が、生成されたサンプルの多くの意味的な [semantic] 品質の簡単な操作 [manipulation] を許可するような、興味深い算術 [arithmetic] 特性のベクトルを持つことを示す。
     
 
-### 3. APPROACH AND MODEL ARCHITECTURE
+## 3. APPROACH AND MODEL ARCHITECTURE
 
 - Historical attempts to scale up GANs using CNNs to model images have been unsuccessful.
     - CNN を用いて GAN をスケールアップする歴史的な試みは、失敗に終わった。
@@ -185,9 +186,9 @@
     - 識別器において、全ての層で　LeaklyRelu を使用する。
 
 
-## ■ 結論（何をしたか？詳細）
+# ■ 結論（何をしたか？詳細）
 
-### 7. CONCLUSION AND FUTURE WORK
+## 7. CONCLUSION AND FUTURE WORK
 - We propose a more stable set of architectures for training generative adversarial networks and we give evidence that adversarial networks learn good representations of images for supervised learning and generative modeling.
     - 我々は、GAN の学習のための、より安定したアーキテクチャのセットを提案する。そして、GAN が教師あり学習と生成モデルための、画像の良い表現を学習しているという証拠を与える。
 
@@ -211,11 +212,11 @@
 - ACKNOWLEDGMENTS : We are fortunate and thankful for all the advice and guidance we have received during this work, especially that of Ian Goodfellow, Tobias Springenberg, Arthur Szlam and Durk Kingma. Additionally we’d like to thank all of the folks at indico for providing support, resources, and conversations, especially the two other members of the indico research team, Dan Kuster and Nathan Lintz. Finally, we’d like to thank Nvidia for donating a Titan-X GPU used in this work.
 
 
-## ■ 実験結果（主張の証明）・議論（手法の良し悪し）
+# ■ 実験結果（主張の証明）・議論（手法の良し悪し）
 
-### 5. EMPIRICAL VALIDATION OF DCGANS CAPABILITIES
+## 5. EMPIRICAL VALIDATION OF DCGANS CAPABILITIES
 
-#### 5.1 CLASSIFYING CIFAR-10 USING GANS AS A FEATURE EXTRACTOR
+### 5.1 CLASSIFYING CIFAR-10 USING GANS AS A FEATURE EXTRACTOR
 
 - One common technique for evaluating the quality of unsupervised representation learning algorithms is to apply them as a feature extractor on supervised datasets and evaluate the performance of linear models fitted on top of these features.
     - 教師なし学習アルゴリズムを評価するための１つの共通のテクニックは、それらを教師あり学習の元での？、特徴抽出機として適応することです。
@@ -271,7 +272,7 @@
 ![image](https://user-images.githubusercontent.com/25688193/55852405-d39d4700-5b97-11e9-9f55-fc738bb57aa1.png)<br>
 
 
-#### 5.2 CLASSIFYING SVHN DIGITS USING GANS AS A FEATURE EXTRACTOR
+### 5.2 CLASSIFYING SVHN DIGITS USING GANS AS A FEATURE EXTRACTOR
 
 - On the StreetView House Numbers dataset (SVHN)(Netzer et al., 2011), we use the features of the discriminator of a DCGAN for supervised purposes when labeled data is scarce.
     - StreetView House Numbers dataset (SVHN) では、ラベルデータが不足している [scarce] ときの目的のために、我々は、DCGAN の識別器の教師データとしての特徴量を使用する。
@@ -290,17 +291,126 @@
     
 - Additionally, we validate that the CNN architecture used in DCGAN is not the key contributing factor of the model’s performance by training a purely supervised CNN with the same architecture on the same data and optimizing this model via random search over 64 hyperparameter trials (Bergstra & Bengio,2012).
     - 加えて、DCGAN で使用されている CNN のアーキテクチャが、モデルのパフォーマンスのキーポイント要因ではないことを、検証した。[validate]
-    - 学習することによって、
+    - <font color="Pink">（これは）純粋に、同じデータの同じアーキテクチャと共に、教師ありで（学習された）CNN で学習すること、そして、64 個のハイパーパラメータの試行を超えたランダムサーチ経由でこのモデルを最適化することによって、（検証した）</font>
 
 - It achieves a signficantly higher 28.87% validation error.
+    - これは、28.87% validation error より大幅に [signficantly] 高いスコアを達成した。
 
-### 6. INVESTIGATING AND VISUALIZING THE INTERNALS OF THE NETWORKS
+![image](https://user-images.githubusercontent.com/25688193/55924793-3816df80-5c46-11e9-818c-fe6e6da6a030.png)<br>
 
-> 記載中...
 
-## ■ 関連研究（他の手法との違い）・メソッド（実験方法）
+## 6. INVESTIGATING AND VISUALIZING THE INTERNALS OF THE NETWORKS
 
-### 4. DETAILS OF ADVERSARIAL TRAINING
+- We investigate the trained generators and discriminators in a variety of ways.
+    - 我々は、様々な方法で、学習された生成器と識別器を調査した。
+
+- We do not do any kind of nearest neighbor search on the training set. 
+    - 学習用データセットに対して、どんな種類の最近傍探索 [nearest neighbor search] も行っていない。
+
+- Nearest neighbors in pixel or feature space are trivially fooled (Theis et al., 2015) by small image transforms.
+    - ピクセルの中や特徴空間での最近傍探索は、小さな画像の変換によって、些細に [trivially] 騙される。[be fooled]
+
+- We also do not use log-likelihood metrics to quantitatively assess the model, as it is a poor (Theis et al., 2015) metric.
+    - 我々はまた、モデルを定量的に [quantitatively ] 評価する [assess] ための対数尤度の測定基準を使用しない。
+    - 測定基準であるように、
+
+### 6.1 WALKING IN THE LATENT SPACE
+
+- The first experiment we did was to understand the landscape of the latent space.
+    - 我々が行った最初の実験は、潜在空間 [latent spece] の景色 [landscape] を理解することです。
+
+- Walking on the manifold that is learnt can usually tell us about signs of memorization (if there are sharp transitions) and about the way in which the space is hierarchically collapsed.
+    - 学習された多様体 [manifold] 上を歩くことは、通常、<font color="Pink">記憶の兆候について、我々に教えてくれる。（もしそれらの多様体が急激な変化があれば）
+    - そして、空間が階層的に崩壊する方法について、教えてくれる。</font>
+
+    > 多様体学習の話？
+
+- If walking in this latent space results in semantic changes to the image generations (such as objects being added and removed), we can reason that the model has learned relevant and interesting representations.
+    - もし、この潜在空間の中を歩くことが、画像生成を意味論的に [semantic] 変えるという結果（例えば、オブジェクトが追加されたり、削除されたりするような変化）となるならば、我々は、モデルが関連して興味深い表現を学習したと考える [reason] ことができる。
+
+- The results are shown in Fig.4.
+
+![image](https://user-images.githubusercontent.com/25688193/55925916-364f1b00-5c4a-11e9-982d-68100d947e4f.png)<br>
+
+- > Figure 4: Top rows: Interpolation between a series of 9 random points in Z show that the space learned has smooth transitions, with every image in the space plausibly looking like a bedroom.
+    - > 図４：
+    - > 先頭の行：入力ノイズ Z のランダム点の系列の間での補間は、学習された空間が、スムーズに変化していくことを示している。
+    - > （このスムーズな変化は、）空間内の全ての画像がベットルームのようにもっともらしく [plausibly] 見えるといったような、（スムーズな変化で）
+
+- In the 6th row, you see a room without a window slowly transforming into a room with a giant window.
+
+- In the 10th row, you see what appears to be a TV slowly being transformed into a window.
+
+### 6.2 VISUALIZING THE DISCRIMINATOR FEATURES
+
+- Previous work has demonstrated that supervised training of CNNs on large image datasets results in very powerful learned features (Zeiler & Fergus, 2014).
+    - 以前の研究では、巨大な画像データセットでの CNN の教師あり学習が、とてもパワフルに学習された特徴量になるという結果を実証した。
+
+- Additionally, supervised CNNs trained on scene classification learn object detectors (Oquab et al., 2014).
+    - 加えて、シーンの分類問題において学習された CNN が、物体検出を学習した。
+
+- We demonstrate that an unsupervised DCGAN trained on a large image dataset can also learn a hierarchy of features that are interesting.
+    - 我々は、巨大な画像データセットで学習した教師なし学習の DCGAN がまた、興味深い特徴の階層を学習することが出来ることを実証する。
+
+- Using guided backpropagation as proposed by (Springenberg et al., 2014), we show in Fig.5 that the features learnt by the discriminator activate on typical parts of a bedroom, like beds and windows.
+    - (Springenberg et al., 2014) によって提案された guided backpropagation を使用して、
+    - 我々は、識別機によって学習された特徴量が、ベットルームやベッド、窓の典型的な [typical] 部分で活性化するということを図５に示す。
+
+> guided backpropagation<br>
+> ![image](https://user-images.githubusercontent.com/25688193/55927584-8b8e2b00-5c50-11e9-8024-8d5d42eeaaad.png)<br>
+
+- For comparison, in the same figure, we give a baseline for randomly initialized features that are not activated on anything that is semantically relevant or interesting.
+    - 比較のために、同じ図に、意味的に関連して興味深いもので活性化していないような、ランダムに初期化された特徴量のベースラインを与える。
+
+![image](https://user-images.githubusercontent.com/25688193/55927173-035b5600-5c4f-11e9-90c0-65cc43dcbf7c.png)<br>
+
+- > Figure 5: On the right, guided backpropagation visualizations of maximal axis-aligned responses for the first 6 learned convolutional features from the last convolution layer in the discriminator.
+    - > 図５：右側の図では、座標軸に平行な [axis-aligned] 最大軸の guided backpropagation での可視化は、
+    - > 識別器の最後の畳み込み層からの、畳み込み特徴量を学習した最初の６つのを応答している？
+
+- > Notice a significant minority of features respond to beds - the central object in the LSUN bedrooms dataset.
+    - > 少数とはいえ無視できない数の [significant minority of] 特徴量が、ベッドに反応していることに注意してください。つまり、LSUN bedrooms dataset の中央のオブジェクト。
+
+- > On the left is a random filter baseline. Comparing to the previous responses there is little to no discrimination and random structure.
+    - > 左側は、ランダムフィルタのベースラインです。前の反応と比較すると識別するものやランダム構造はほとんどない。
+
+### 6.3 MANIPULATING THE GENERATOR REPRESENTATION
+
+#### 6.3.1 FORGETTING TO DRAW CERTAIN OBJECTS
+
+- In addition to the representations learnt by a discriminator, there is the question of what representations the generator learns.
+    - 識別器によって学習された表現に加えて、生成器が何の表現を学習しているのかという疑問が存在する。
+
+- The quality of samples suggest that the generator learns specific object representations for major scene components such as beds, windows, lamps, doors, and miscellaneous furniture.
+    - サンプルの品質は、生成器が、例えば、ベッド・窓・ドアなどの主なシーンのコンポーネントのために、特定のオブジェクトの表現を学習したということを提案する。
+
+- In order to explore the form that these representations take, we conducted an experiment to attempt to remove windows from the generator completely.
+    - それらの表現を受け取る型を発見するために、我々は、生成器からウインドウを完全に除外する試みるための実験を行った。
+
+<br>
+
+- On 150 samples, 52 window bounding boxes were drawn manually.
+    - 150個のサンプルで、52個のウインドウのバウンディングボックスを、手書きで [manually] 描いた。
+
+- On the second highest convolution layer features, logistic regression was fit to predict whether a feature activation was on a window (or not), by using the criterion that activations inside the drawn bounding boxes are positives and random samples from the same images are negatives. 
+    - ２番目に高い畳み込み層では、ロジスティック回帰は、特徴量の活性化がウインドウ上に存在しているのか、或いはそうでないかということを、予想するために適合する。
+    - 描写されたバウンディングボックスの中での活性化が正であり、同じ画像からのランダムサンプルが負である、という評価を用いることによって、
+
+- Using this simple model, all feature maps with weights greater than zero ( 200 in total) were dropped from all spatial locations.
+    - このシンプルなモデルを使うことで、全ての特徴マップ
+
+- Then, random new samples were generated with and without the feature map removal.
+
+<br>
+
+- The generated images with and without the window dropout are shown in Fig.6, and interestingly, the network mostly forgets to draw windows in the bedrooms, replacing them with other objects.
+
+#### 6.3.2 VECTOR ARITHMETIC ON FACE SAMPLES
+
+
+# ■ 関連研究（他の手法との違い）・メソッド（実験方法）
+
+## 4. DETAILS OF ADVERSARIAL TRAINING
 
 - We trained DCGANs on three datasets, Large-scale Scene Understanding (LSUN) (Yu et al., 2015), Imagenet-1k and a newly assembled Faces dataset. 
     - 我々は、DCGAN を３つのデータセットで学習した。
@@ -311,6 +421,6 @@
 
 > 記載中...
 
-### 2. RELATED WORK
+## 2. RELATED WORK
 
 > 記載中...

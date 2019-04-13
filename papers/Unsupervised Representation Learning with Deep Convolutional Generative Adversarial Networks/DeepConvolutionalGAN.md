@@ -385,30 +385,99 @@
     - サンプルの品質は、生成器が、例えば、ベッド・窓・ドアなどの主なシーンのコンポーネントのために、特定のオブジェクトの表現を学習したということを提案する。
 
 - In order to explore the form that these representations take, we conducted an experiment to attempt to remove windows from the generator completely.
-    - それらの表現を受け取る型を発見するために、我々は、生成器からウインドウを完全に除外する試みるための実験を行った。
+    - それらの表現を受け取る型を発見するために、我々は、生成器（の生成した画像）から、窓（の描写）を完全に除外する試みるための実験を行った。
 
 <br>
 
 - On 150 samples, 52 window bounding boxes were drawn manually.
-    - 150個のサンプルで、52個のウインドウのバウンディングボックスを、手書きで [manually] 描いた。
+    - 150個のサンプルで、52個の窓のバウンディングボックスを、手書きで [manually] 描いた。
 
 - On the second highest convolution layer features, logistic regression was fit to predict whether a feature activation was on a window (or not), by using the criterion that activations inside the drawn bounding boxes are positives and random samples from the same images are negatives. 
-    - ２番目に高い畳み込み層では、ロジスティック回帰は、特徴量の活性化がウインドウ上に存在しているのか、或いはそうでないかということを、予想するために適合する。
+    - ２番目に高い畳み込み層では、ロジスティック回帰は、特徴量の活性化（反応）が窓の上に存在しているのか、或いはそうでないかということを、予想するために適合する。
     - 描写されたバウンディングボックスの中での活性化が正であり、同じ画像からのランダムサンプルが負である、という評価を用いることによって、
 
 - Using this simple model, all feature maps with weights greater than zero ( 200 in total) were dropped from all spatial locations.
-    - このシンプルなモデルを使うことで、全ての特徴マップ
+    - このシンプルなモデルを使うことで、ゼロより大きい重みを持つ全ての特徴マップ（全部で200枚）は、全ての空間の [spatial] 位置から除外する。
 
 - Then, random new samples were generated with and without the feature map removal.
+    - そのとき、特徴マップの除去の有無での、ランダムな新しいサンプルが生成される。
 
 <br>
 
 - The generated images with and without the window dropout are shown in Fig.6, and interestingly, the network mostly forgets to draw windows in the bedrooms, replacing them with other objects.
+    - 窓の（描写の）除去の有無での生成された画像を、図６に示す。
+    - そして、興味深いことに、ネットワークはベットルームの窓の描写をほとんど [mostly] 忘れ、別のオブジェクトを描写する。
 
-#### 6.3.2 VECTOR ARITHMETIC ON FACE SAMPLES
+![image](https://user-images.githubusercontent.com/25688193/55935317-4bd63c00-5c6e-11e9-8114-d718b6c5d72d.png)<br>
+
+- > Figure 6: Top row: un-modified samples from model.
+    - > 図６：先頭の行：モデルからの修正されていないサンプル。
+
+- > Bottom row: the same samples generated with dropping out ”window” filters.
+    - > 下の行："窓フィルター" の除外で生成された同じサンプル。
+
+- > Some windows are removed, others are transformed into objects with similar visual appearance such as doors and mirrors.
+    - > 同じ窓が除去されており、他のものは、ドアや鏡などの似た外観 [visual appearance] をもつオブジェクトに変換されている。
+
+- > Although visual quality decreased, overall scene composition stayed similar, suggesting the generator has done a good job disentangling scene representation from object representation. 
+    - > 見た目の品質は低下したが、全体的な [overall] シーンの構成は、よく似たままであり、生成器がオブジェクトの表現からシーンの表現を解きほぐす [disentanging] ようなよい仕事を行ったということを示唆している。
+
+- > Extended experiments could be done to remove other objects from the image and modify the objects the generator draws.
+    - > 追加の実験は、画像から（窓以外の）他のオブジェクトを除外することを可能にした。また、生成器が描写したオブジェクトを修正することを可能にした。
+
+#### 6.3.2 VECTOR ARITHMETIC ON FACE SAMPLES（顔サンプルデータでのベクトル演算）
+
+- In the context of evaluating learned representations of words (Mikolov et al., 2013) demonstrated that simple arithmetic operations revealed rich linear structure in representation space. 
+    - 学習された単語の表現を評価する文脈において [In the context of]、表現空間での豊かな線形構造で、単純な算術演算があらわになることを実証した。
+
+- One canonical example demonstrated that the vector(”King”) - vector(”Man”) + vector(”Woman”) resulted in a vector whose nearest neighbor was the vector for Queen.
+    - １つの集団の例は、"King" を表すベクトル - "Man" を表すベクトル + "Woman" を表すベクトル が、"Queen" を表すベクトルに最も近いベクトルになるという結果となった。
+
+- We investigated whether similar structure emerges in the Z representation of our generators.
+    - 我々は、生成器の Z 表現に、似た構造が表れるのかを調査している。
+
+- We performed similar arithmetic on the Z vectors of sets of exemplar samples for visual concepts.
+    - 我々は視覚的概念 [concept] のために、標本 [exemplar] サンプルのセットの Z ベクトル上で、同様の算術演算を行った。
+
+- Experiments working on only single samples per concept were unstable, but averaging the Z vector for three examplars showed consistent and stable generations that semantically obeyed the arithmetic.
+    - １つの概念毎に１つのサンプルのみ動作させた実験は、不鑑定であった。
+    - しかし、３つの標本の Z ベクトルの平均は、意味論的に [semantically ] 算術演算に従うような、一貫性のあり [consistent] 、安定した世代を見せていた。
+
+- In addition to the object manipulation shown in (Fig. 7), we demonstrate that face pose is also modeled linearly in Z space (Fig. 8).
+    - 図７に示しているオブジェクト操作 [manipulation] に加えて、我々は、顔のポーズもまた、Z空間で線形にモデル化されているということを実証している。
+
+- These demonstrations suggest interesting applications can be developed using Z representations learned by our models.
+    - これらの実証は、我々のモデルで学習されたZ表現を使用することで、興味深い応用が開発できることを提案する。
+
+- It has been previously demonstrated that conditional generative models can learn to convincingly model object attributes like scale, rotation, and position (Dosovitskiy et al.,2014).
+    - 条件付き生成モデル [conditional generative models] がスケールや回転、位置といったオブジェクトの属性をもっともらしく [convincingly ] 学習出来ることが、以前に実証されていた。
+
+- This is to our knowledge the first demonstration of this occurring in purely unsupervised models.
+    - これは我々の知る限りでは、純粋な教師なしモデルにおいて行われた最初の実証です。
+
+- Further exploring and developing the above mentioned vector arithmetic could dramatically reduce the amount of data needed for conditional generative modeling of complex image distributions.
+    - 上記で言及したベクトル演算をさらなる調査や開発することで、複雑な画像分布の条件付き生成モデリングに対して必要となるデータの量を、劇的に減らす事ができる。
+
+![image](https://user-images.githubusercontent.com/25688193/56075060-507a2c00-5df7-11e9-9411-c339b5648de7.png)<br>
+
+- > Figure 7: Vector arithmetic for visual concepts.
+
+- > For each column, the Z vectors of samples are averaged. 
+
+- > Arithmetic was then performed on the mean vectors creating a new vector Y.
+
+- > The center sample on the right hand side is produce by feeding Y as input to the generator.
+
+- > To demonstrate the interpolation capabilities of the generator, uniform noise sampled with scale +-0.25 was added to Y to produce the 8 other samples.
+
+- > Applying arithmetic in the input space (bottom two examples) results in noisy overlap due to misalignment.
+
+![image](https://user-images.githubusercontent.com/25688193/56075263-98e71900-5dfa-11e9-9888-1cea794ce37f.png)<br>
+
+- > Figure 8: A ”turn” vector was created from four averaged samples of faces looking left vs looking right. By adding interpolations along this axis to random samples we were able to reliably transform their pose.
 
 
-# ■ 関連研究（他の手法との違い）・メソッド（実験方法）
+# ■ メソッド（実験方法）
 
 ## 4. DETAILS OF ADVERSARIAL TRAINING
 
@@ -420,6 +489,8 @@
     - これらのデータセットの使用法 [usage] の詳細は、以下に示している。
 
 > 記載中...
+
+# ■ 関連研究（他の手法との違い）
 
 ## 2. RELATED WORK
 

@@ -488,10 +488,175 @@
 - Details on the usage of each of these datasets are given below.
     - これらのデータセットの使用法 [usage] の詳細は、以下に示している。
 
-> 記載中...
+- No pre-processing was applied to training images besides scaling to the range of the tanh activation function [-1, 1].
+    - tanh 活性化関数の範囲を [-1,1] にスケーリングすることの他に [besides]、画像を学習するための前処理は、何も適用していない。
+
+- All models were trained with mini-batch stochastic gradient descent (SGD) with a mini-batch size of 128.
+    - 全てのモデルは、128個のミニバッチサイズでのミニバッチ処理での確率的勾配法（SGD）で学習されている。
+
+- All weights were initialized from a zero-centered Normal distribution with standard deviation 0.02.
+    - 全ての重みは、０を中心とした標準偏差 0.02 の正規分布で初期化されている。
+
+- In the LeakyReLU, the slope of the leak was set to 0.2 in all models.
+    - LeakyRelu では、全てのモデルで、leak の傾斜 [slope] は、0.2 に設定されている。
+
+- While previous GAN work has used momentum to accelerate training, we used the Adam optimizer (Kingma & Ba, 2014) with tuned hyperparameters.
+    - 前の GAN の研究が、学習を加速させるために、モーメンタムを使ってい一方で、我々は、チューニングパラメーター共に、Adam 最適化アルゴリズムを使用した。
+
+- We found the suggested learning rate of 0.001, to be too high, using 0.0002 instead.
+    - 我々は、提案されていた 0.001 の学習率の値が高すぎることを発見し、代わりに、0.0002 の学習率の値を使用した。
+
+- Additionally, we found leaving the momentum term 1 at the suggested value of 0.9 resulted in training oscillation and instability while reducing it to 0.5 helped stabilize training.
+    - 加えて、我々は、提案されていた 0.9 の値のモーメンタム項１が、学習が発振 [training oscillation] し、不安定になるという結果になることを発見した。
+    - その一方で、その値（＝モーメンタム項１）を 0.5 にすることで学習が安定化するのに役立つことを（発見した）。
+
+### 4.1 LSUN
+
+- As visual quality of samples from generative image models has improved, concerns of over-fitting and memorization of training samples have risen.
+    - 画像の生成モデルからのサンプルの見た目の質が改善されるにつれて、過学習や学習の丸暗記の懸念 [concern] が、上昇した。
+
+- To demonstrate how our model scales with more data and higher resolution generation, we train a model on the LSUN bedrooms dataset containing a little over 3 million training examples. 
+    - より多くのデータやより高い解像度の生成器で、我々のモデルのスケールを実証するために、我々は、モデルを ３万個以上の学習サンプルを含む LSUN bedrooms データセットで学習する。
+
+- Recent analysis has shown that there is a direct link between how fast models learn and their generalization performance (Hardt et al., 2015).
+    - 最近の研究では、どのように速くモデルを学習するかということや、それらモデルの一般的なパフォーマンスの間に直接的なリンクが存在することをが、示されている。
+
+- We show samples from one epoch of training (Fig.2), mimicking online learning, in addition to samples after convergence (Fig.3), as an opportunity to demonstrate that our model is not producing high quality samples via simply overfitting/memorizing training examples.
+    - 我々のモデルが、単純な過学習や丸暗記経由で、高品質な画像を生成していないことを実証するための機会として、
+    - 我々は、収束した後のサンプル（図３）に加えて、オンライン学習を模倣した [mimicking] １エポックの学習からのサンプルを見せる（図２）
+
+- No data augmentation was applied to the images.
+    - 画像データに対しての、data augmentation（データのかさ増し）は、適用されなかった。
+
+![image](https://user-images.githubusercontent.com/25688193/56102900-ed110b00-5f6a-11e9-859a-e47d50013af5.png)<br>
+
+- > Figure 2: Generated bedrooms after one training pass through the dataset.
+    - > データセットと通じての１トレーニングパス（＝１エポック）の学習の後で生成された寝室の画像
+
+- > Theoretically, the model could learn to memorize training examples, but this is experimentally unlikely as we train with a small learning rate and minibatch SGD.
+    - > 理論的には、モデルは学習サンプルを学習を丸暗記することが出来る。しかし、このことは、小さな学習率と小さなミニバッチで学習を行うので、実験的にはありそうもないことになる。
+
+- > We are aware of no prior empirical evidence demonstrating memorization with SGD and a small learning rate.
+    - > 我々は、SGD や小さな学習率での暗記を実証するような経験的な [empirical] 証拠がないことに気づいている。
+
+![image](https://user-images.githubusercontent.com/25688193/56103025-83453100-5f6b-11e9-8887-719373c039fc.png)<br>
+
+- > Figure 3: Generated bedrooms after five epochs of training. 
+    - > 図３：５エポックの学習後に生成された寝室画像
+
+- > There appears to be evidence of visual under-fitting via repeated noise textures across multiple samples such as the base boards of some of the beds.
+    - > いくつかのベッドのすそ板 [base boards] のような複数のサンプルに渡って繰り返されるノイズテクスチャー経由で、視覚的な under-fitting の証拠があるようだ。
+
+#### 4.1.1 DEDUPLICATION（重複排除）
+
+- To further decrease the likelihood of the generator memorizing input examples (Fig.2) we perform a simple image de-duplication process.
+    - 生成器が入力例（図１）を丸暗記する可能性を更に減少させるために、我々は、簡単な画像の de-duplication（重複排除）処理を行う。
+
+- We fit a 3072-128-3072 de-noising dropout regularized RELU autoencoder on 32x32 downsampled center-crops of training examples. 
+    - <font color="Pink">我々は、学習例のダウンサンプリングされた center-crops（32×32）に対して、正規化された ReLu オートエンコーダーでドロップアウトした de-noising（3072-128-3072）を fit する。</font>
+
+- The resulting code layer activations are then binarized via thresholding the ReLU activation which has been shown to be an effective information preserving technique (Srivastava et al., 2014) and provides a convenient form of semantic-hashing, allowing for linear time de-duplication.
+    - <font color="Pink">code 層？の活性化関数の結果は、有効な情報保存テクニックであることが示されている Relu 活性化関数のスレッショルド値経由で、バイナリ化されている。
+    - そして、線形時間での de-duplication が許容されている semantic-hashing の便利な形式を提供する。</font>
+
+- Visual inspection of hash collisions showed high precision with an estimated false positive rate of less than 1 in 100. 
+    - hash collision の目視での検査 [inspection] は、1/100 以下の推定 FP 率という高い適合率 [precision] を見せる。
+
+- Additionally, the technique detected and removed approximately 275,000 near duplicates, suggesting a high recall.
+    - 加えて、このテクニックは、重複部分 [duplicates] の近くで、およそ 275,000 個を検出し除外した。
+    - （このことで、）高い再現率を提案している。
+
+### 4.2 FACES
+
+- We scraped images containing human faces from random web image queries of peoples names.
+
+- The people names were acquired from dbpedia, with a criterion that they were born in the modern era.
+
+- This dataset has 3M images from 10K people.
+
+- We run an OpenCV face detector on these images, keeping the detections that are sufficiently high resolution, which gives us approximately 350,000 face boxes.
+
+- We use these face boxes for training.
+
+- No data augmentation was applied to the images.
+
+### 4.3 IMAGENET-1K
+
+- We use Imagenet-1k (Deng et al., 2009) as a source of natural images for unsupervised training.
+
+- We train on 32 × 32 min-resized center crops.
+
+- No data augmentation was applied to the images.
+
 
 # ■ 関連研究（他の手法との違い）
 
 ## 2. RELATED WORK
 
-> 記載中...
+### 2.1 REPRESENTATION LEARNING FROM UNLABELED DATA
+
+- Unsupervised representation learning is a fairly well studied problem in general computer vision research, as well as in the context of images.
+    - 教師なし学習の学習表現は、画像文脈と共に、一般的なコンピュータービジョンの研究で、よく研究されているテーマである。
+
+- A classic approach to unsupervised representation learning is to do clustering on the data (for example using K-means), and leverage the clusters for improved classification scores.
+    - 教師なし学習の学習表現の古典的なアプローチは、K-means 法のように、データをクラスタリングするものです。
+    - そして、分類スコアを改善するクラスターを活用する [leverage] ことです。
+
+- In the context of images, one can do hierarchical clustering of image patches (Coates & Ng, 2012) to learn powerful image representations.
+    - 画像の文脈において、パワフルな画像表現を学習するための画像パッチの階層的なクラスタリングを行う事ができる。
+
+- Another popular method is to train auto-encoders (convolutionally, stacked (Vincent et al., 2010), separating the what and where components of the code (Zhao et al., 2015), ladder structures (Rasmus et al., 2015)) that encode an image into a compact code, and decode the code to reconstruct the image as accurately as possible.
+    - 他の有名な方法は、オートエンコーダーを学習することです。
+    - xxx
+
+- These methods have also been shown to learn good feature representations from image pixels.
+    - これらの方法は、画像ピクセルからの良い特徴表現を見せる。
+
+- Deep belief networks (Lee et al., 2009) have also been shown to work well in learning hierarchical representations.
+    - Deep belief networks は、階層的な表現を学習するのに、良い動作をすることが見られる。
+
+
+### 2.2 GENERATING NATURAL IMAGES（自然な画像の生成）
+
+- Generative image models are well studied and fall into two categories: parametric and nonparametric.
+    - 十分に学習された画像生成モデルは、パラメーター調整可能であるモデルとノンパラメトリックの２つのカテゴリに分類される。
+
+- The non-parametric models often do matching from a database of existing images, often matching patches of images, and have been used in texture synthesis (Efros et al., 1999), super-resolution (Freeman et al., 2002) and in-painting (Hays & Efros, 2007).
+    - <font color="Pink">ノンパラメトリックモデルは、既存の画像のデータベースから、たびたびマッチングを行い、
+    - しばしば画像のパッチをマッチングし、</font>
+    - テクスチャー合成 [texture synthesis] 、超高解像度化 [super-resolution] において使われている。
+
+- Parametric models for generating images has been explored extensively (for example on MNIST digits or for texture synthesis (Portilla & Simoncelli, 2000)).
+    - 画像生成のためのパラメリックモデルは、広範囲で [extensively] 探索されている。
+
+- However, generating natural images of the real world have had not much success until recently.
+    - しかしながら、実世界の自然な画像生成は、最近まで十分に成功していない。
+
+- A variational sampling approach to generating images (Kingma & Welling, 2013) has had some success, but the samples often suffer from being blurry.
+    - 画像を生成するための変分法 [variational] でのサンプリングのアプローチは、いくつかは成功した。しかし、サンプルが、たびたびぼやけて [blurry] しまうということに悩まされる。[suffer from]
+
+- Another approach generates images using an iterative forward diffusion process (Sohl-Dickstein et al., 2015).
+    - 他のアプローチとしては、an iterative forward diffusion process　を用いた画像生成のアプローチが存在する。
+
+- Generative Adversarial Networks (Goodfellow et al., 2014) generated images suffering from being noisy and incomprehensible.
+    - GAN は、生成画像がノイジーで理解しにくい [incomprehensible] という問題を抱えている。
+
+- A laplacian pyramid extension to this approach (Denton et al., 2015) showed higher quality images, but they still suffered from the objects looking wobbly because of noise introduced in chaining multiple models.
+    - このアプローチを拡張したラプラシアンピラミッドは、より高品質な画像を見せる。
+    - しかし、複数のモデルを連鎖する [chaining] するように導入されたノイズのために、オブジェクトの見た目がグラグラする [wobbly] という問題を抱えている。
+
+- A recurrent network approach (Gregor et al., 2015) and a deconvolution network approach (Dosovitskiy et al., 2014) have also recently had some success with generating natural images.
+    - 再帰ネットワークのアプローチや逆畳み込みネットワークのアプローチもまた、自然な画像生成にある程度成功した。
+
+- However, they have not leveraged the generators for supervised tasks.
+    - しかしながら、教師ありタスクのための生成器を利用していない。
+
+
+### 2.3 VISUALIZING THE INTERNALS OF CNNS
+
+- One constant criticism of using neural networks has been that they are black-box methods, with little understanding of what the networks do in the form of a simple human-consumable algorithm.
+    - ニューラルネットワークを使用することでの絶え間ない批判の１つは、この手法がブラックボックスな手法であり、人間が消費可能な [human-consumable] 単純な形で、ネットワークがすることが殆ど理解されていない、ということである。
+
+- In the context of CNNs, Zeiler et. al. (Zeiler & Fergus, 2014) showed that by using deconvolutions and filtering the maximal activations, one can find the approximate purpose of each convolution filter in the network.
+
+- Similarly, using a gradient descent on the inputs lets us inspect the ideal image that activates certain subsets of filters (Mordvintsev et al.).

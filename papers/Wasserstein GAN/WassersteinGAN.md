@@ -203,13 +203,35 @@
 ## 2. Diffierent Distances
 
 - We now introduce our notation.
+    - 表記法 [notation] を紹介する。
 
-- Let X be a compact metric set (such as the space of images [0; 1]d) and let  denote the set of all the Borel subsets of X.
+- Let ![image](https://user-images.githubusercontent.com/25688193/56361196-b1539b00-6221-11e9-8ac0-558b8bfdc3d6.png) be a compact metric set (such as the space of images ![image](https://user-images.githubusercontent.com/25688193/56361272-e65fed80-6221-11e9-897e-3b357b4b1ae4.png)) and let Σ denote the set of all the Borel subsets of ![image](https://user-images.githubusercontent.com/25688193/56361196-b1539b00-6221-11e9-8ac0-558b8bfdc3d6.png).
+    - ![image](https://user-images.githubusercontent.com/25688193/56361196-b1539b00-6221-11e9-8ac0-558b8bfdc3d6.png) を、（画像の空間 ![image](https://user-images.githubusercontent.com/25688193/56361272-e65fed80-6221-11e9-897e-3b357b4b1ae4.png) のような）コンパクト測度？の集合とし、[Let]
+    - Σ は、![image](https://user-images.githubusercontent.com/25688193/56361196-b1539b00-6221-11e9-8ac0-558b8bfdc3d6.png) の全てのボレル部分集合？と意味する。[denote]
 
-- Let Prob(X) denote the space of probability measures dened on X. 
+> ![image](https://user-images.githubusercontent.com/25688193/56361196-b1539b00-6221-11e9-8ac0-558b8bfdc3d6.png) は、σ加法族。（特に、画像の空間を要素とするようなσ-加法族は、ボレル加法族になる。）<br>
+> Σ は、この σ-加法族（＝ボレル集合族になる）![image](https://user-images.githubusercontent.com/25688193/56361196-b1539b00-6221-11e9-8ac0-558b8bfdc3d6.png) の要素であるボレル集合<br>
 
-- We can now define elementary distances and divergences between two distributions Pr; Pg 2 Prob(X):
+- Let ![image](https://user-images.githubusercontent.com/25688193/56361987-b6194e80-6223-11e9-8a29-56d8d77ef627.png) denote the space of probability measures defined on ![image](https://user-images.githubusercontent.com/25688193/56361196-b1539b00-6221-11e9-8ac0-558b8bfdc3d6.png). 
+    - ![image](https://user-images.githubusercontent.com/25688193/56361987-b6194e80-6223-11e9-8a29-56d8d77ef627.png) は、測度の集合 ![image](https://user-images.githubusercontent.com/25688193/56361196-b1539b00-6221-11e9-8ac0-558b8bfdc3d6.png) ？上で定義された、確率測度空間を意味している。
 
+> ![image](https://user-images.githubusercontent.com/25688193/56361987-b6194e80-6223-11e9-8a29-56d8d77ef627.png) は、ボレル加法族 ![image](https://user-images.githubusercontent.com/25688193/56361196-b1539b00-6221-11e9-8ac0-558b8bfdc3d6.png) 上で定義される確率密度関数の集合
+
+- We can now define elementary distances and divergences between two distributions ![image](https://user-images.githubusercontent.com/25688193/56362134-1c05d600-6224-11e9-967b-9fd55e218c4c.png):
+    - ２つの分布 ![image](https://user-images.githubusercontent.com/25688193/56362134-1c05d600-6224-11e9-967b-9fd55e218c4c.png) の間の初歩的な [elementary] 距離とダイバージェンスを定義できる。即ち、
+
+![image](https://user-images.githubusercontent.com/25688193/56362277-65562580-6224-11e9-86a3-8a0132bde1b6.png)<br>
+
+- where both ![image](https://user-images.githubusercontent.com/25688193/56362373-9fbfc280-6224-11e9-9e77-65b5e06c829b.png) and ![image](https://user-images.githubusercontent.com/25688193/56362414-bcf49100-6224-11e9-8fa9-bdb3b2b4308a.png) are assumed to be absolutely continuous, and therefore admit densities, with respect to a same measure μ defined on ![image](https://user-images.githubusercontent.com/25688193/56361196-b1539b00-6221-11e9-8ac0-558b8bfdc3d6.png).(2)
+    - ここで [where]、![image](https://user-images.githubusercontent.com/25688193/56362373-9fbfc280-6224-11e9-9e77-65b5e06c829b.png) と ![image](https://user-images.githubusercontent.com/25688193/56362414-bcf49100-6224-11e9-8fa9-bdb3b2b4308a.png) の両方は、絶対連続であると仮定され、そして、それ故、ボレル集合族 ![image](https://user-images.githubusercontent.com/25688193/56361196-b1539b00-6221-11e9-8ac0-558b8bfdc3d6.png) 上で定義された同じ測度 μ に関しての [respect to]、確率密度が認められる。
+
+> 絶対連続：連続性や一様連続性よりも強い条件を課した連続性の概念。リプシッツ連続な写像は絶対連続
+
+- (2) Recall that a probability distribution ![image](https://user-images.githubusercontent.com/25688193/56366544-596f6100-622e-11e9-9959-e6bf64509045.png) admits a density ![image](https://user-images.githubusercontent.com/25688193/56366612-7c9a1080-622e-11e9-8765-89e02d22160d.png) with respect to μ,that is, ![image](https://user-images.githubusercontent.com/25688193/56366642-8e7bb380-622e-11e9-88b0-b48e3fdfe963.png), if and only it is absolutely continuous with respect to μ, that is, ![image](https://user-images.githubusercontent.com/25688193/56366698-aeab7280-622e-11e9-814f-9c88e3b86b05.png).
+    - 測度 μ に関しての確率密度
+
+- The KL divergence is famously assymetric and possibly infinite when there are points such that ![image](https://user-images.githubusercontent.com/25688193/56366217-8d965200-622d-11e9-9672-271ab2a10585.png) and ![image](https://user-images.githubusercontent.com/25688193/56366267-b6b6e280-622d-11e9-8cc1-12498d8994ce.png).
+    - ![image](https://user-images.githubusercontent.com/25688193/56366217-8d965200-622d-11e9-9672-271ab2a10585.png) と ![image](https://user-images.githubusercontent.com/25688193/56366267-b6b6e280-622d-11e9-8cc1-12498d8994ce.png) のような点が存在するとき、KLダイバージェンスは、よく知られているように非対称性で、無限大になる可能性がある。
 
 
 # ■ 実験結果（主張の証明）・議論（手法の良し悪し）

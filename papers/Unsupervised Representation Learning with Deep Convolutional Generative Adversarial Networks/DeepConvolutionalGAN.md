@@ -68,6 +68,33 @@
     - 我々は、GAN によって学習されたフィルターを可視化する。そして、特定のフィルターが特定ののオブジェクトを描写することを学習していたということを実験的に [empirically] 見せる。
     - 我々は、生成器が、生成されたサンプルの多くの意味的な [semantic] 品質の簡単な操作 [manipulation] を許可するような、興味深い算術 [arithmetic] 特性のベクトルを持つことを示す。
     
+# ■ 結論
+
+## 7. CONCLUSION AND FUTURE WORK
+- We propose a more stable set of architectures for training generative adversarial networks and we give evidence that adversarial networks learn good representations of images for supervised learning and generative modeling.
+    - 我々は、GAN の学習のための、より安定したアーキテクチャのセットを提案する。そして、GAN が教師あり学習と生成モデルための、画像の良い表現を学習しているという証拠を与える。
+
+- There are still some forms of model instability remaining - we noticed as models are trained longer they sometimes collapse a subset of filters to a single oscillating mode.
+    - モデルの不安定性には、まだいくつかの型が残っている。
+    - <font color="Pink">（即ち、）より長い時間学習されたモデルは、ときどき、フィルターのサブセットを、単一の振動モード [oscillating mode] に崩壊させることがあるということに、（⇒モード崩壊のこと？）我々は気づいた。</font>
+
+<br>
+
+- Further work is needed to tackle this from of instability.
+    - さらなる研究では、この不安定型についての取り組み [tackle] が必要がある。
+
+- We think that extending this framework to other domains such as video (for frame prediction) and audio (pre-trained features for speech synthesis) should be very interesting.
+    - 我々は、この枠組みを、動画（フレーム予想）や音声（会話のための事前学習された特徴量）といった分野に拡張することと、とても興味深いものだと考えている。
+
+- Further investigations into the properties of the learnt latent space would be interesting as well.
+    - 学習された潜在空間 [latent space] についてのさらなる調査も興味深い。
+
+<br>
+
+- ACKNOWLEDGMENTS : We are fortunate and thankful for all the advice and guidance we have received during this work, especially that of Ian Goodfellow, Tobias Springenberg, Arthur Szlam and Durk Kingma. Additionally we’d like to thank all of the folks at indico for providing support, resources, and conversations, especially the two other members of the indico research team, Dan Kuster and Nathan Lintz. Finally, we’d like to thank Nvidia for donating a Titan-X GPU used in this work.
+
+
+# ■ 何をしたかの詳細
 
 ## 3. APPROACH AND MODEL ARCHITECTURE
 
@@ -184,32 +211,6 @@
     - 深いアーキテクチャ構造を持つ、全結合の隠れ層を除外する。
     - 生成器において、Tanh を使用する出力以外は、全ての層で Relu を使用する。
     - 識別器において、全ての層で　LeaklyRelu を使用する。
-
-
-# ■ 結論（何をしたか？詳細）
-
-## 7. CONCLUSION AND FUTURE WORK
-- We propose a more stable set of architectures for training generative adversarial networks and we give evidence that adversarial networks learn good representations of images for supervised learning and generative modeling.
-    - 我々は、GAN の学習のための、より安定したアーキテクチャのセットを提案する。そして、GAN が教師あり学習と生成モデルための、画像の良い表現を学習しているという証拠を与える。
-
-- There are still some forms of model instability remaining - we noticed as models are trained longer they sometimes collapse a subset of filters to a single oscillating mode.
-    - モデルの不安定性には、まだいくつかの型が残っている。
-    - <font color="Pink">（即ち、）より長い時間学習されたモデルは、ときどき、フィルターのサブセットを、単一の振動モード [oscillating mode] に崩壊させることがあるということに、（⇒モード崩壊のこと？）我々は気づいた。</font>
-
-<br>
-
-- Further work is needed to tackle this from of instability.
-    - さらなる研究では、この不安定型についての取り組み [tackle] が必要がある。
-
-- We think that extending this framework to other domains such as video (for frame prediction) and audio (pre-trained features for speech synthesis) should be very interesting.
-    - 我々は、この枠組みを、動画（フレーム予想）や音声（会話のための事前学習された特徴量）といった分野に拡張することと、とても興味深いものだと考えている。
-
-- Further investigations into the properties of the learnt latent space would be interesting as well.
-    - 学習された潜在空間 [latent space] についてのさらなる調査も興味深い。
-
-<br>
-
-- ACKNOWLEDGMENTS : We are fortunate and thankful for all the advice and guidance we have received during this work, especially that of Ian Goodfellow, Tobias Springenberg, Arthur Szlam and Durk Kingma. Additionally we’d like to thank all of the folks at indico for providing support, resources, and conversations, especially the two other members of the indico research team, Dan Kuster and Nathan Lintz. Finally, we’d like to thank Nvidia for donating a Titan-X GPU used in this work.
 
 
 # ■ 実験結果（主張の証明）・議論（手法の良し悪し）

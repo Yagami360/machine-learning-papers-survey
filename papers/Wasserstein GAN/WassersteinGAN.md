@@ -143,7 +143,7 @@
 - Continuity means that when a sequence of parameters θt converges to θ, the distributions ![image](https://user-images.githubusercontent.com/25688193/56349793-48a9f580-6204-11e9-8a91-b417a5e717bb.png) also converge to ![image](https://user-images.githubusercontent.com/25688193/56339217-3cb03a80-61e8-11e9-9bff-a7ace9111bd7.png).
     - （この写像の）連続性とは、パラメーターの系列 θ_t が θ に収束するとき、分布の（系列）![image](https://user-images.githubusercontent.com/25688193/56349793-48a9f580-6204-11e9-8a91-b417a5e717bb.png) も、![image](https://user-images.githubusercontent.com/25688193/56339217-3cb03a80-61e8-11e9-9bff-a7ace9111bd7.png) に収束することを意味している。
 
-    > つまりは、リプシッツ連続のこと
+> つまりは、リプシッツ連続のこと
 
 - However, it is essential to remember that the notion of the convergence of the distributions ![image](https://user-images.githubusercontent.com/25688193/56349793-48a9f580-6204-11e9-8a91-b417a5e717bb.png) depends on the way we compute the distance between distributions.
     - しかしながら、分布 ![image](https://user-images.githubusercontent.com/25688193/56349793-48a9f580-6204-11e9-8a91-b417a5e717bb.png) の収束の概念 [notion] は、分布間の距離の計算の仕方によって異なることを、覚えておくことが必要不可欠である。
@@ -151,7 +151,7 @@
 - The weaker this distance, the easier it is to define a continuous mapping from θ-space to ![image](https://user-images.githubusercontent.com/25688193/56339217-3cb03a80-61e8-11e9-9bff-a7ace9111bd7.png)-space, since it's easier for the distributions to converge.
     - この距離が弱いほど、確率分布が収束しやすくなるので、θの空間から、![image](https://user-images.githubusercontent.com/25688193/56339217-3cb03a80-61e8-11e9-9bff-a7ace9111bd7.png) の空間へのリプシッツ連続な写像が定義しやすくなる。
 
-    > 距離が弱いとは、位相的な意味での弱さ？
+> 距離が弱いとは、位相的な意味での弱さ？
 
 - The main reason we care about the mapping ![image](https://user-images.githubusercontent.com/25688193/56349416-7a6e8c80-6203-11e9-83de-bb405e48d48a.png) to be continuous is as follows.
     - 写像 ![image](https://user-images.githubusercontent.com/25688193/56349416-7a6e8c80-6203-11e9-83de-bb405e48d48a.png) が、リプシッツ連続であることを気にする理由は、以下の通りである。
@@ -209,29 +209,181 @@
     - ![image](https://user-images.githubusercontent.com/25688193/56361196-b1539b00-6221-11e9-8ac0-558b8bfdc3d6.png) を、（画像の空間 ![image](https://user-images.githubusercontent.com/25688193/56361272-e65fed80-6221-11e9-897e-3b357b4b1ae4.png) のような）コンパクト測度？の集合とし、[Let]
     - Σ は、![image](https://user-images.githubusercontent.com/25688193/56361196-b1539b00-6221-11e9-8ac0-558b8bfdc3d6.png) の全てのボレル部分集合？と意味する。[denote]
 
-> ![image](https://user-images.githubusercontent.com/25688193/56361196-b1539b00-6221-11e9-8ac0-558b8bfdc3d6.png) は、σ加法族。（特に、画像の空間を要素とするようなσ-加法族は、ボレル加法族になる。）<br>
-> Σ は、この σ-加法族（＝ボレル集合族になる）![image](https://user-images.githubusercontent.com/25688193/56361196-b1539b00-6221-11e9-8ac0-558b8bfdc3d6.png) の要素であるボレル集合<br>
+> ![image](https://user-images.githubusercontent.com/25688193/56361196-b1539b00-6221-11e9-8ac0-558b8bfdc3d6.png) は、σ加法族。<br>
+> Σ は、この σ-加法族（＝ボレル集合族になる）![image](https://user-images.githubusercontent.com/25688193/56361196-b1539b00-6221-11e9-8ac0-558b8bfdc3d6.png) の部分集合であるボレル集合族。（画像の空間を要素とするようなσ-加法族は、ボレル加法族になる。）<br>
 
 - Let ![image](https://user-images.githubusercontent.com/25688193/56361987-b6194e80-6223-11e9-8a29-56d8d77ef627.png) denote the space of probability measures defined on ![image](https://user-images.githubusercontent.com/25688193/56361196-b1539b00-6221-11e9-8ac0-558b8bfdc3d6.png). 
-    - ![image](https://user-images.githubusercontent.com/25688193/56361987-b6194e80-6223-11e9-8a29-56d8d77ef627.png) は、測度の集合 ![image](https://user-images.githubusercontent.com/25688193/56361196-b1539b00-6221-11e9-8ac0-558b8bfdc3d6.png) ？上で定義された、確率測度空間を意味している。
+    - ![image](https://user-images.githubusercontent.com/25688193/56361987-b6194e80-6223-11e9-8a29-56d8d77ef627.png) は、σ-加法族 ![image](https://user-images.githubusercontent.com/25688193/56361196-b1539b00-6221-11e9-8ac0-558b8bfdc3d6.png) 上で定義された、確率測度の空間を意味している。
 
-> ![image](https://user-images.githubusercontent.com/25688193/56361987-b6194e80-6223-11e9-8a29-56d8d77ef627.png) は、ボレル加法族 ![image](https://user-images.githubusercontent.com/25688193/56361196-b1539b00-6221-11e9-8ac0-558b8bfdc3d6.png) 上で定義される確率密度関数の集合
+> ![image](https://user-images.githubusercontent.com/25688193/56361987-b6194e80-6223-11e9-8a29-56d8d77ef627.png) は、σ-加法族 ![image](https://user-images.githubusercontent.com/25688193/56361196-b1539b00-6221-11e9-8ac0-558b8bfdc3d6.png) 上で定義される確率測度の集合
 
 - We can now define elementary distances and divergences between two distributions ![image](https://user-images.githubusercontent.com/25688193/56362134-1c05d600-6224-11e9-967b-9fd55e218c4c.png):
     - ２つの分布 ![image](https://user-images.githubusercontent.com/25688193/56362134-1c05d600-6224-11e9-967b-9fd55e218c4c.png) の間の初歩的な [elementary] 距離とダイバージェンスを定義できる。即ち、
 
+> GANの文脈では、<br>
+> ![image](https://user-images.githubusercontent.com/25688193/56362373-9fbfc280-6224-11e9-9e77-65b5e06c829b.png) は、真の確率分布。<br>
+> ![image](https://user-images.githubusercontent.com/25688193/56362414-bcf49100-6224-11e9-8fa9-bdb3b2b4308a.png) は、（生成器が出力する）モデルの確率分布。<br>
+> GANでは、このモデルの確率分布を真の確率分布に近づけることが学習の目的となる。
+
 ![image](https://user-images.githubusercontent.com/25688193/56362277-65562580-6224-11e9-86a3-8a0132bde1b6.png)<br>
 
 - where both ![image](https://user-images.githubusercontent.com/25688193/56362373-9fbfc280-6224-11e9-9e77-65b5e06c829b.png) and ![image](https://user-images.githubusercontent.com/25688193/56362414-bcf49100-6224-11e9-8fa9-bdb3b2b4308a.png) are assumed to be absolutely continuous, and therefore admit densities, with respect to a same measure μ defined on ![image](https://user-images.githubusercontent.com/25688193/56361196-b1539b00-6221-11e9-8ac0-558b8bfdc3d6.png).(2)
-    - ここで [where]、![image](https://user-images.githubusercontent.com/25688193/56362373-9fbfc280-6224-11e9-9e77-65b5e06c829b.png) と ![image](https://user-images.githubusercontent.com/25688193/56362414-bcf49100-6224-11e9-8fa9-bdb3b2b4308a.png) の両方は、絶対連続であると仮定され、そして、それ故、ボレル集合族 ![image](https://user-images.githubusercontent.com/25688193/56361196-b1539b00-6221-11e9-8ac0-558b8bfdc3d6.png) 上で定義された同じ測度 μ に関しての [respect to]、確率密度が認められる。
+    - ここで [where]、確率分布 ![image](https://user-images.githubusercontent.com/25688193/56362373-9fbfc280-6224-11e9-9e77-65b5e06c829b.png) と ![image](https://user-images.githubusercontent.com/25688193/56362414-bcf49100-6224-11e9-8fa9-bdb3b2b4308a.png) の両方は、絶対連続であると仮定され、そして、それ故、σー加法族 ![image](https://user-images.githubusercontent.com/25688193/56361196-b1539b00-6221-11e9-8ac0-558b8bfdc3d6.png) 上で定義された同じ測度 μ に関しての [respect to]、確率密度が認められる。
 
 > 絶対連続：連続性や一様連続性よりも強い条件を課した連続性の概念。リプシッツ連続な写像は絶対連続
 
 - (2) Recall that a probability distribution ![image](https://user-images.githubusercontent.com/25688193/56366544-596f6100-622e-11e9-9959-e6bf64509045.png) admits a density ![image](https://user-images.githubusercontent.com/25688193/56366612-7c9a1080-622e-11e9-8765-89e02d22160d.png) with respect to μ,that is, ![image](https://user-images.githubusercontent.com/25688193/56366642-8e7bb380-622e-11e9-88b0-b48e3fdfe963.png), if and only it is absolutely continuous with respect to μ, that is, ![image](https://user-images.githubusercontent.com/25688193/56366698-aeab7280-622e-11e9-814f-9c88e3b86b05.png).
-    - 測度 μ に関しての確率密度
+    - 確率分布 ![image](https://user-images.githubusercontent.com/25688193/56366544-596f6100-622e-11e9-9959-e6bf64509045.png) は、測度 μ に関しての確率密度 ![image](https://user-images.githubusercontent.com/25688193/56366612-7c9a1080-622e-11e9-8765-89e02d22160d.png) を許容することを思い出すこと。
+    - 即ち [that is]、![image](https://user-images.githubusercontent.com/25688193/56366642-8e7bb380-622e-11e9-88b0-b48e3fdfe963.png)
+    - 測度 μ に関して、絶対連続の場合にのみ、![image](https://user-images.githubusercontent.com/25688193/56366698-aeab7280-622e-11e9-814f-9c88e3b86b05.png)
 
 - The KL divergence is famously assymetric and possibly infinite when there are points such that ![image](https://user-images.githubusercontent.com/25688193/56366217-8d965200-622d-11e9-9672-271ab2a10585.png) and ![image](https://user-images.githubusercontent.com/25688193/56366267-b6b6e280-622d-11e9-8cc1-12498d8994ce.png).
     - ![image](https://user-images.githubusercontent.com/25688193/56366217-8d965200-622d-11e9-9672-271ab2a10585.png) と ![image](https://user-images.githubusercontent.com/25688193/56366267-b6b6e280-622d-11e9-8cc1-12498d8994ce.png) のような点が存在するとき、KLダイバージェンスは、よく知られているように非対称性で、無限大になる可能性がある。
+
+<br>
+
+![image](https://user-images.githubusercontent.com/25688193/56399783-24ddc280-628b-11e9-803d-7e00e5c130f0.png)<br>
+
+- where Pm is the mixture ![image](https://user-images.githubusercontent.com/25688193/56399825-4d65bc80-628b-11e9-9b94-ce31dc04b7b2.png). 
+    - ここで、Pm は、混合物 ![image](https://user-images.githubusercontent.com/25688193/56399825-4d65bc80-628b-11e9-9b94-ce31dc04b7b2.png) である。
+
+- This divergence is symmetrical and always defined because we can choose μ = Pm.
+    - このダイバージェンスは、対称であり、μ = Pm を選択できるので、常に定義できる。
+
+<br>
+
+![image](https://user-images.githubusercontent.com/25688193/56399901-cebd4f00-628b-11e9-877c-deb696203dd6.png)<br>
+
+- where ![image](https://user-images.githubusercontent.com/25688193/56399927-00361a80-628c-11e9-8e99-f7918d88bf5a.png) denotes the set of all joint distributions ![image](https://user-images.githubusercontent.com/25688193/56399965-37a4c700-628c-11e9-8df3-d160b87962f9.png) whose marginals are respectively ![image](https://user-images.githubusercontent.com/25688193/56362373-9fbfc280-6224-11e9-9e77-65b5e06c829b.png) and ![image](https://user-images.githubusercontent.com/25688193/56362414-bcf49100-6224-11e9-8fa9-bdb3b2b4308a.png).
+    - ここで、![image](https://user-images.githubusercontent.com/25688193/56399927-00361a80-628c-11e9-8e99-f7918d88bf5a.png) は、周辺 [marginals ] 分布が各々 [respectively ] ![image](https://user-images.githubusercontent.com/25688193/56362373-9fbfc280-6224-11e9-9e77-65b5e06c829b.png) と ![image](https://user-images.githubusercontent.com/25688193/56362414-bcf49100-6224-11e9-8fa9-bdb3b2b4308a.png) であるような、同時分布 [joint distributions] ![image](https://user-images.githubusercontent.com/25688193/56399965-37a4c700-628c-11e9-8df3-d160b87962f9.png) の集合を表す。
+
+> ![image](https://user-images.githubusercontent.com/25688193/56408519-ddb5f880-62af-11e9-999e-bfcf760abc05.png)<br>
+
+- Intuitively, ![image](https://user-images.githubusercontent.com/25688193/56399927-00361a80-628c-11e9-8e99-f7918d88bf5a.png) indicates how much "mass" must be transported from x to y in order to transform the distributions ![image](https://user-images.githubusercontent.com/25688193/56362373-9fbfc280-6224-11e9-9e77-65b5e06c829b.png) into the distribution ![image](https://user-images.githubusercontent.com/25688193/56362414-bcf49100-6224-11e9-8fa9-bdb3b2b4308a.png).
+    - 直感的には [Intuitively]、同時確率分布 ![image](https://user-images.githubusercontent.com/25688193/56399927-00361a80-628c-11e9-8e99-f7918d88bf5a.png) は、確率分布 ![image](https://user-images.githubusercontent.com/25688193/56362373-9fbfc280-6224-11e9-9e77-65b5e06c829b.png) を確率分布 ![image](https://user-images.githubusercontent.com/25688193/56362414-bcf49100-6224-11e9-8fa9-bdb3b2b4308a.png) に変換するために、どの程度の質量が、x から y に転送されたのかを示している。
+
+- The EM distance then is the "cost" of the optimal transport plan.
+    - EM 距離は、このとき、最適輸送問題 [optimal transport plan] のコストになる。
+
+<br>
+
+- The following example illustrates how apparently simple sequences of probability distributions converge under the EM distance but do not converge under the other distances and divergences denfined above.
+    - 以下の例は、どの程度明らかに、確率分布単純な系列が、EM距離のもとで収束するのか？一方、上で定義した他の距離やダイバージェンス（KLダイバージェンス等）のもとで収束しないのか？をイラスト化している。
+
+![image](https://user-images.githubusercontent.com/25688193/56400730-61f88380-6290-11e9-9104-b1875585380c.png)<br>
+
+> ![image](https://user-images.githubusercontent.com/25688193/56401620-cb7a9100-6294-11e9-93e0-f6c3c96efba4.png)<br>
+
+- When θt → 0, the sequence ![image](https://user-images.githubusercontent.com/25688193/56346946-2f9e4600-61fe-11e9-840e-a67c017096ed.png) converges to P0 under the EM distance, but does not converge at all under either the JS, KL, reverse KL, or TV divergences.
+    - θt → 0 とすると、系列 ![image](https://user-images.githubusercontent.com/25688193/56346946-2f9e4600-61fe-11e9-840e-a67c017096ed.png) は、EM距離のもとでは、P0 に収束する。
+    - しかし、JSダイバージェンス、KLダイバージェンス、TV距離といったものは収束しない。
+
+- Figure 1 illustrates this for the case of the EM and JS distances.
+
+![image](https://user-images.githubusercontent.com/25688193/56401633-d8978000-6294-11e9-8028-c22aa873caf8.png)<br>
+
+- > Figure 1: These plots show ρ(Pθ;P0) as a function of θ when ρ is the EM distance (left plot) or the JS divergence (right plot). 
+    - > 図１：これらのプロットは、θの関数である距離 ρ(Pθ;P0) を示している。
+    - > 左図は、距離 ρ が EM距離であるとき。右図は、距離 ρ が JSダイバージェンスであるとき。
+
+- > The EM plot is continuous and provides a usable gradient everywhere.
+    - > EM 距離のプロットは、連続で、すべての使用可能な場所で勾配を提供している。
+
+- > The JS plot is not continuous and does not provide a usable gradient.
+    - > JSダイバージェンスのプロットは、非連続で、すべての使用可能な場所で勾配を提供していない。
+
+> JSダイバージェンスでは、勾配の傾きが０になっており、勾配損失問題が発生している。一方、EM距離では、勾配損失問題は発生していない。
+
+<br>
+
+- Example 1 gives us a case where we can learn a probability distribution over a low dimensional manifold by doing gradient descent on the EM distance.
+    - 例１は、EM距離で最急降下法をすることによって、低次元多様体上の確率分布を学習することが出来るケースを提供する。
+
+- This cannot be done with the other distances and divergences because the resulting loss function is not even continuous.
+    - このことは、（EM距離以外の）他の距離やダイバージェンスで行うことができない。
+    - なぜならば、損失関数の結果が、連続でさえないためである。
+
+- Although this simple example features distributions with disjoint supports, the same conclusion holds when the supports have a non empty intersection contained in a set of measure zero.
+    - この単純な例は、（２つの確率分布）ばらばらになっている [disjoint] 台（Supp）を持つ確率分布を特徴としているが、
+    - 台が、測度０の集合を含むような、空でない共通部分を持つときに、同じ結論が、維持される。[hold]
+
+- This happens to be the case when two low dimensional manifolds intersect in general position [1].
+    - これは、２つの低次元多様体が、一般的な位置で交差するケースで発生する。
+
+> ここでいう低次元多様体とは、いわゆる多様体仮説の話？（データは高次元だが、意味のあるデータは、実は低次元の空間内に局在している。）
+
+> ![image](https://user-images.githubusercontent.com/25688193/56405137-d25dcf80-62a5-11e9-9cdc-0b5aa149f9d8.png)<br>
+
+> ![image](https://user-images.githubusercontent.com/25688193/56405173-0a651280-62a6-11e9-9ed4-decfdc8a7570.png)<br>
+
+<br>
+
+- Since the Wasserstein distance is much weaker than the JS distance (3), we can now ask whether ![image](https://user-images.githubusercontent.com/25688193/56405230-6334ab00-62a6-11e9-9131-345ca06f9f67.png) is a continuous loss function on θ under mild assumptions.
+    - Wassertein 距離は、JSダイバージェンスより、（位相的な意味で？）はるかに弱いので (3)、今度は、![image](https://user-images.githubusercontent.com/25688193/56405230-6334ab00-62a6-11e9-9131-345ca06f9f67.png) が、ゆるい仮定のもとで、θ に対して、連続な損失関数であるかを尋ねることが出来る。
+
+- (3) : The argument for why this happens, and indeed how we arrived to the idea that Wasserstein is what we should really be optimizing is displayed in Appendix A. 
+    - We strongly encourage the interested reader who is not afraid of the mathematics to go through it.
+
+- (3) : この主張がなぜ起こるのか？そして、どのようにして、本当に最適化すべきものが、Wassertein 距離であるというアイデアを思いつたのか？ということは付録 A に示されている。
+    - 我々は、数学に心配ない興味のある読者に、それを経験することを強く勧める。
+
+
+- This, and more, is true, as we now state and prove.
+    - これは、今から述べ証明するように、本当である。
+
+![image](https://user-images.githubusercontent.com/25688193/56402282-94f24580-6297-11e9-9a45-7e418df1e9c8.png)<br>
+
+- The following corollary tells us that learning by minimizing the EM distance makes sense (at least in theory) with neural networks.
+    - 以下の命題 [corollary] は、EM距離を最小化することによっての学習は、ニューラルネットワークでは、（少なくとも理論的には）意味を成すことを教えてくれる。
+
+![image](https://user-images.githubusercontent.com/25688193/56405893-7137fb00-62a9-11e9-9479-ab012b103d16.png)<br>
+![image](https://user-images.githubusercontent.com/25688193/56405907-890f7f00-62a9-11e9-97dc-365c5762cd75.png)<br>
+
+- (4) : By a feedforward neural network we mean a function composed by affine transformations and pointwise nonlinearities which are smooth Lipschitz functions (such as the sigmoid, tanh, elu, softplus, etc). Note: the statement is also true for rectier nonlinearities but the proof is more technical (even though very similar) so we omit it.
+
+
+- > You’ll need to refer to the paper to see what “sufficiently nice” means, but for our purposes it’s enough to know that it’s satisfied for feedfoward networks that use standard nonlinearites. Thus, out of JS, KL, and Wassertstein distance, only the Wasserstein distance has guarantees of continuity and differentiability, which are both things you really want in a loss function.
+    - > 「十分に素晴らしい」とはどういう意味なのかを確認するには、この論文を参照する必要がありますが、私たちの目的のためには、標準的な非線形であるフィードフォワードネットワークには十分であることを知っていれば十分です。 したがって、JS、KL、およびWassertstein距離のうち、Wasserstein距離のみが連続性と微分可能性を保証します。これらはどちらも損失関数に本当に必要なものです。 
+
+<br>
+
+- All this shows that EM is a much more sensible cost function for our problem than at least the Jensen-Shannon divergence.
+    - 以上のことから [All this]、我々の問題に対して、EM距離が、JSダイバージェンスより、はるかに賢明な [sensible] コスト関数であることが分かる。
+
+- The following theorem describes the relative strength of the topologies induced by these distances and divergences, with KL the strongest, followed by JS and TV, and EM the weakest.
+    - 以下の定理は、これら距離やダイバージェンスによって誘発される [induced]、位相の相対的な強さを記述している。
+    - KLダイバージェンスが最も強く、次にJSダイバージェンスとTV距離が続き、EM距離が最も弱い。
+
+![image](https://user-images.githubusercontent.com/25688193/56406018-3b474680-62aa-11e9-807e-1917d7920556.png)<br>
+
+> つまりは、KLダイバージェンスやJSダイバージェンスで収束するような、全ての確率分布が、Wesseterin 距離のもとでも収束することを示している？
+
+
+- This highlights the fact that the KL, JS, and TV distances are not sensible cost functions when learning distributions supported by low dimensional manifolds.
+    - この強調する事実は、低次元多様体による台となっている確率分布を学習するときに、KL,JS,TV が賢明なコスト関数でないということである。
+
+- However the EM distance is sensible in that setup.
+    - しかしながら、EM距離は、この設定のもとで、賢明なコスト関数になっている。
+
+![image](https://user-images.githubusercontent.com/25688193/56408335-ece87680-62ae-11e9-9af5-0d3d25904665.png)<br>
+
+> 結論としては、Wasseerstein Metric（＝EM距離）を使用することで、真の分布とモデルの分布の２つの確率分布の台（Supp）が違っても、コスト関数を連続関数として定義できる。これにより、低次元多様体同士の距離をうまく測れる。
+
+- This obviously leads us to the next section where we introduce a practical approximation of optimizing the EM distance.
+    - このことは明らかに、EM距離を最適化する実用的な近似を紹介する次のセクションへ、我々を導く。
+
+## 3. Wasserstein GAN
+
+- Again, Theorem 2 points to the fact that ![image](https://user-images.githubusercontent.com/25688193/56408157-105ef180-62ae-11e9-8010-94b20e700840.png) might have nicer properties when optimized than ![image](https://user-images.githubusercontent.com/25688193/56408226-62077c00-62ae-11e9-85b0-aceec1b2e70b.png).
+    - 再度、定理２は、最適化するときに、Wassertein距離 ![image](https://user-images.githubusercontent.com/25688193/56408157-105ef180-62ae-11e9-8010-94b20e700840.png) は、JSダイバージェンス ![image](https://user-images.githubusercontent.com/25688193/56408226-62077c00-62ae-11e9-85b0-aceec1b2e70b.png) よりも、より良い性質 [property] を持つかもしれないという事実を指摘している。
+
+- However, the infimum in (1) is highly intractable.
+    - しかしながら、式１の下限（inf）は、非常に扱いにくい [intractable]
+
+- On the other hand, the Kantorovich-Rubinstein duality [22] tells us that
+    - 一方、Kantorovich-Rubinstein 双対性は、以下の式を教える。
+
+![image](https://user-images.githubusercontent.com/25688193/56408238-751a4c00-62ae-11e9-9697-30868ee05ec4.png)<br>
 
 
 # ■ 実験結果（主張の証明）・議論（手法の良し悪し）

@@ -38,7 +38,7 @@
 ![image](https://user-images.githubusercontent.com/25688193/56338702-11c4e700-61e6-11e9-8ccd-2d64603a63fc.png)<br>
 
 - If the real data distribution ![image](https://user-images.githubusercontent.com/25688193/56339104-ba277b00-61e7-11e9-9454-a661bfd50b19.png) admits a density and ![image](https://user-images.githubusercontent.com/25688193/56339217-3cb03a80-61e8-11e9-9bff-a7ace9111bd7.png) is the distribution of the parametrized density ![image](https://user-images.githubusercontent.com/25688193/56339255-62d5da80-61e8-11e9-9000-67762c55123d.png), then, asymptotically, this amounts to minimizing the Kullback-Leibler divergence ![image](https://user-images.githubusercontent.com/25688193/56339053-8cdacd00-61e7-11e9-990d-02114b588b03.png).
-    - もし真のデータ分布 ![image](https://user-images.githubusercontent.com/25688193/56339104-ba277b00-61e7-11e9-9454-a661bfd50b19.png) が、確率密度であることを許可し、（＝確率密度関数で表現できることを前提とし）
+    - もし真のデータ分布 ![image](https://user-images.githubusercontent.com/25688193/56339104-ba277b00-61e7-11e9-9454-a661bfd50b19.png) が、確率密度であることを許可し、（＝確率密度で表現できることを前提とし）
     - そして、![image](https://user-images.githubusercontent.com/25688193/56339217-3cb03a80-61e8-11e9-9bff-a7ace9111bd7.png) は、パラメーター化された ![image](https://user-images.githubusercontent.com/25688193/56339255-62d5da80-61e8-11e9-9000-67762c55123d.png) の分布とするならば、
     - そのとき、漸近的に [asymptotically]、この量は、KLダイバージェンス ![image](https://user-images.githubusercontent.com/25688193/56339053-8cdacd00-61e7-11e9-990d-02114b588b03.png) を最小化する。
 
@@ -46,7 +46,7 @@
     - このことが意味をなすのに、モデルの分布 ![image](https://user-images.githubusercontent.com/25688193/56339255-62d5da80-61e8-11e9-9000-67762c55123d.png) が存在している必要がある。
 
 - This is not the case in the rather common situation where we are dealing with distributions supported by low dimensional manifolds. 
-    - このことは、低次元の多様体 [manifolds] によってサポートされている（＝台にされている？）分布を扱うような、かなり [rather] 一般的な [common] シチュエーションでは、当てはまらない。[not the case]
+    - このことは、低次元の多様体 [manifolds] によっての確率分布の台を扱うような、かなり [rather] 一般的な [common] シチュエーションでは、当てはまらない。[not the case]
 
 - It is then unlikely that the model manifold and the true distribution's support have a non-negligible intersection (see [1]), and this means that the KL distance is not dened (or simply infinite).
     - そのことは、モデルの多様体と真の分布の台が、（無視できないほど）僅かでない [non-negligible] 交差点 [intersection] を持っているということが、ありそうもない。[be unlikely]
@@ -83,7 +83,7 @@
     - しかし、最尤度推定のアプローチを動作させるために必要となる。
 
 - Rather than estimating the density of ![image](https://user-images.githubusercontent.com/25688193/56339104-ba277b00-61e7-11e9-9454-a661bfd50b19.png) which may not exist, we can define a random variable Z with a fixed distribution p(z) and pass it through a parametric function ![image](https://user-images.githubusercontent.com/25688193/56343805-b94a1580-61f6-11e9-8a61-4834acf729fb.png) (typically a neural network of some kind) that directly generates samples following a certain distribution ![image](https://user-images.githubusercontent.com/25688193/56339217-3cb03a80-61e8-11e9-9bff-a7ace9111bd7.png).
-    - 存在しないかもしれない（真の分布）![image](https://user-images.githubusercontent.com/25688193/56339104-ba277b00-61e7-11e9-9454-a661bfd50b19.png) の確率密度関数を推定することよりも、
+    - 存在しないかもしれない（真の分布）![image](https://user-images.githubusercontent.com/25688193/56339104-ba277b00-61e7-11e9-9454-a661bfd50b19.png) の確率密度を推定することよりも、
     - 固定された分布 p(z) でのランダム変数 Z を定義することができる。
     - そして、その（ランダム変数 Z を、）パラメリック関数（通常は [typically] ある種のニューラルネット） ![image](https://user-images.githubusercontent.com/25688193/56343805-b94a1580-61f6-11e9-8a61-4834acf729fb.png) に通す。
     - （この関数というのは、）特定の [certain] 分布 ![image](https://user-images.githubusercontent.com/25688193/56339217-3cb03a80-61e8-11e9-9bff-a7ace9111bd7.png) に従うサンプルを、直接的に生成するような関数
@@ -95,7 +95,7 @@
     - これは、２つの方法で便利である。
 
 - First of all, unlike densities, this approach can represent distributions conned to a low dimensional manifold.
-    - まず第１に、確率密度分布とは異なり、このアプローチは、低次元多様体に結合された分布を表現することが出来る。
+    - まず第１に、確率密度分布とは異なり、このアプローチは、低次元多様体に結合された確率分布を表現することが出来る。
 
 - Second, the ability to easily generate samples is often more useful than knowing the numerical value of the density (for example in image superresolution or semantic segmentation when considering the conditional distribution of the output image given the input image).
     - 第２に、サンプルを簡単に生成する能力は、たびたび、確率密度の数値を知ることよりも便利である。
@@ -210,7 +210,7 @@
     - Σ は、![image](https://user-images.githubusercontent.com/25688193/56361196-b1539b00-6221-11e9-8ac0-558b8bfdc3d6.png) の全てのボレル部分集合？と意味する。[denote]
 
 > ![image](https://user-images.githubusercontent.com/25688193/56361196-b1539b00-6221-11e9-8ac0-558b8bfdc3d6.png) は、σ加法族。<br>
-> Σ は、この σ-加法族（＝ボレル集合族になる）![image](https://user-images.githubusercontent.com/25688193/56361196-b1539b00-6221-11e9-8ac0-558b8bfdc3d6.png) の部分集合であるボレル集合族。（画像の空間を要素とするようなσ-加法族は、ボレル加法族になる。）<br>
+> Σ は、この σ-加法族 ![image](https://user-images.githubusercontent.com/25688193/56361196-b1539b00-6221-11e9-8ac0-558b8bfdc3d6.png) の部分集合であるボレル集合族。（画像の空間 [0,1]^d を要素とするようなσ-加法族は、ボレル加法族になる。）<br>
 
 - Let ![image](https://user-images.githubusercontent.com/25688193/56361987-b6194e80-6223-11e9-8a29-56d8d77ef627.png) denote the space of probability measures defined on ![image](https://user-images.githubusercontent.com/25688193/56361196-b1539b00-6221-11e9-8ac0-558b8bfdc3d6.png). 
     - ![image](https://user-images.githubusercontent.com/25688193/56361987-b6194e80-6223-11e9-8a29-56d8d77ef627.png) は、σ-加法族 ![image](https://user-images.githubusercontent.com/25688193/56361196-b1539b00-6221-11e9-8ac0-558b8bfdc3d6.png) 上で定義された、確率測度の空間を意味している。
@@ -265,6 +265,9 @@
 - The EM distance then is the "cost" of the optimal transport plan.
     - EM 距離は、このとき、最適輸送問題 [optimal transport plan] のコストになる。
 
+> ![image](https://user-images.githubusercontent.com/25688193/56409771-71d68e80-62b5-11e9-8e0f-10fe770a55de.png)<br>
+
+
 <br>
 
 - The following example illustrates how apparently simple sequences of probability distributions converge under the EM distance but do not converge under the other distances and divergences denfined above.
@@ -315,6 +318,8 @@
 > ![image](https://user-images.githubusercontent.com/25688193/56405137-d25dcf80-62a5-11e9-9cdc-0b5aa149f9d8.png)<br>
 
 > ![image](https://user-images.githubusercontent.com/25688193/56405173-0a651280-62a6-11e9-9ed4-decfdc8a7570.png)<br>
+
+![image](https://user-images.githubusercontent.com/25688193/56425280-7d927700-62ee-11e9-9d80-d7837a9ef9b3.png)<br>
 
 <br>
 
@@ -385,13 +390,231 @@
 
 ![image](https://user-images.githubusercontent.com/25688193/56408238-751a4c00-62ae-11e9-9697-30868ee05ec4.png)<br>
 
+> EM距離を計算することそれ自体が最適化問題最適輸送問題での問題設定となっている。ここで、この最適輸送問題は、線形計画法であるので、線形計画法と同様にして、主問題とその双対問題の形式が得られる。
 
-# ■ 実験結果（主張の証明）・議論（手法の良し悪し）
+- where the supremum is over all the 1-Lipschitz functions ![image](https://user-images.githubusercontent.com/25688193/56410036-94b57280-62b6-11e9-8022-7f56683468bd.png). 
+    - ここで、上限（sup）は、全ての 1-リプシッツ連続な関数 ![image](https://user-images.githubusercontent.com/25688193/56410036-94b57280-62b6-11e9-8022-7f56683468bd.png) の上にある。
 
-## 4. Empirical Results
+- Note that if we replace ![image](https://user-images.githubusercontent.com/25688193/56410209-42c11c80-62b7-11e9-98ee-b21ae7179cc7.png) for ||f||_L ≦ K (consider K-Lipschitz for some constant K), then we end up with K・W(Pr; Pg). 
+    - もし、（いくつかの定数 K の K-リプシッツ連続性を考慮して、） ![image](https://user-images.githubusercontent.com/25688193/56410209-42c11c80-62b7-11e9-98ee-b21ae7179cc7.png) を ![image](https://user-images.githubusercontent.com/25688193/56410276-7dc35000-62b7-11e9-8e81-33100f692a2b.png) と置き換えると、![image](https://user-images.githubusercontent.com/25688193/56410299-9895c480-62b7-11e9-9ba3-7c93986c1498.png) という結果になることに注意。
+
+- Therefore, if we have a parameterized family of functions ![image](https://user-images.githubusercontent.com/25688193/56410552-6df83b80-62b8-11e9-93f3-80f32fbf8649.png) that are all K-Lipschitz for some K, we could consider solving the problem
+    - それ故、もし、いくつかの K に対しての K-リプシッツ連続であるような、パラメーター化された関数の族 ![image](https://user-images.githubusercontent.com/25688193/56410552-6df83b80-62b8-11e9-93f3-80f32fbf8649.png) を持つならば、以下の問題を解くことを検討する。
+
+![image](https://user-images.githubusercontent.com/25688193/56410069-bca4d600-62b6-11e9-9dd4-68dca44141f8.png)<br>
+
+> ここでの w は、nニューラルネットワークの重みのこと。つまり、リプシッツ連続な関数を、重みパラメーター w で近似することを考えている。
+
+- and if the supremum in (2) is attained for some w ∈ W (a pretty strong assumption akin to what's assumed when proving consistency of an estimator), this process would yield a calculation of ![image](https://user-images.githubusercontent.com/25688193/56411046-5752e400-62ba-11e9-9245-6d3633ddea57.png) up to a multiplicative constant.
+    - そしてもし、式 (2) の sup が、いくつかの w ∈ W に対して、達成する [attained for] ならば、
+    - これは、（推定器の一貫性 [consistency] を証明するときに、仮定されたものに類似した [akin]、とても強い仮定）
+    - このプロセスは、増加する [multiplicative constant] 定数まで、Wasserstein 距離 ![image](https://user-images.githubusercontent.com/25688193/56411046-5752e400-62ba-11e9-9245-6d3633ddea57.png) の計算を生み出す [yield] だろう。
+
+- Furthermore, we could consider diffierentiating ![image](https://user-images.githubusercontent.com/25688193/56411046-5752e400-62ba-11e9-9245-6d3633ddea57.png) (again, up to a constant) by back-proping through equation (2) via estimating ![image](https://user-images.githubusercontent.com/25688193/56411206-f1b32780-62ba-11e9-88a8-ba6c7ffcf825.png).
+    - 更には、![image](https://user-images.githubusercontent.com/25688193/56411206-f1b32780-62ba-11e9-88a8-ba6c7ffcf825.png) の推定を通じて、式２の誤差逆伝搬によって、（再び定数の値まで、）Wasserstein 距離 ![image](https://user-images.githubusercontent.com/25688193/56411046-5752e400-62ba-11e9-9245-6d3633ddea57.png) の微分を考慮することができる。
+
+- While this is all intuition, we now prove that this process is principled under the optimality assumption.
+    - これらは全て直感的な [intuition] ことであるが、今度は、最適化の仮定の元で、このプロセスは原則的であることを証明する。
+
+![image](https://user-images.githubusercontent.com/25688193/56411645-62a70f00-62bc-11e9-9688-2cdc610601d7.png)<br>
+
+- Now comes the question of finding the function f that solves the maximization problem in equation (2).
+    - 今度は、式２の最大化問題を解くような関数 f を見つける問題が出てきた。
+
+- To roughly approximate this, something that we can do is train a neural network parameterized with weights w lying in a compact space W and then backprop through ![image](https://user-images.githubusercontent.com/25688193/56411206-f1b32780-62ba-11e9-88a8-ba6c7ffcf825.png), as we would do with a typical GAN.
+    - このおよその近似のために、出来ることは、典型的な GAN で行っていたように、コンパクト空間 W に横たわる [lying] 重み w でパラメーター化されたニューラルネットワークを学習することである。
+    - そして、![image](https://user-images.githubusercontent.com/25688193/56411206-f1b32780-62ba-11e9-88a8-ba6c7ffcf825.png) を通じて、誤差逆伝搬することである。
+
+- Note that the fact that W is compact implies that all the functions fw will be K-Lipschitz for some K that only depends on W and not the individual weights, therefore approximating (2) up to an irrelevant scaling factor and the capacity of the `critic' fw. 
+    - W がコンパクト空間であるという事実は、Wのみに依存して個々の w に依存しないような、全ての関数 ![image](https://user-images.githubusercontent.com/25688193/56412264-879c8180-62be-11e9-9889-f8a421f65c2c.png) が、ある K に対しての K-リプシッツ連続な関数になることを意味していることに注意。
+    - それゆえに、式２の近似は、スケーリング係数とクリティック（＝識別器） ![image](https://user-images.githubusercontent.com/25688193/56412264-879c8180-62be-11e9-9889-f8a421f65c2c.png)の能力に無関係 [irrelevant] になる。
+
+> D(x)はもはや、識別結果（0 or 1）としての意味をもたないため、出力をsigmoid関数によって[0,1]に変換する必要がなくなる。そのため、WGANでは D(x) を f(x) と表したり、識別器の代わりにクリティックと呼んだりします。
+
+> ![image](https://user-images.githubusercontent.com/25688193/56424557-b846e000-62eb-11e9-8333-55696b073b6a.png)<br>
+
+- In order to have parameters w lie in a compact space, something simple we can do is clamp the weights to a fixed box (say ![image](https://user-images.githubusercontent.com/25688193/56412217-65a2ff00-62be-11e9-8f1b-084f61cc7b32.png)) after each gradient update.
+    - パラメーター w をコンパクト空間に横たえるために、我々が出来る簡単なことは、各勾配を更新した後に、固定ボックス（![image](https://user-images.githubusercontent.com/25688193/56412217-65a2ff00-62be-11e9-8f1b-084f61cc7b32.png)）に重みを留める [clamp] ことである。
+
+> 要は、fw をリプシッツな関数にするため、重み w のそれぞれの値の絶対値がある小さな値以上にならないようclipすることをいっている。
+
+- The Wasserstein Generative Adversarial Network (WGAN) procedure is described in Algorithm 1.
+
+![image](https://user-images.githubusercontent.com/25688193/56411984-a3ebee80-62bd-11e9-91e1-288b3eec5855.png)<br>
+
+- Weight clipping is a clearly terrible way to enforce a Lipschitz constraint.
+    - 重みの固定は、リプシッツ連続を強いるための、明らかにひどい方法である。
+
+- If the clipping parameter is large, then it can take a long time for any weights to reach their limit, thereby making it harder to train the critic till optimality.
+    -　もしクリッピングパラメーターが大きれば、いくつかの重みに対して、極限に到達するために長い時間がかかる。
+    - それによって [thereby]、最適値になるまでクリティック（＝識別器）を学習することがよく困難になる。
+
+- If the clipping is small, this can easily lead to vanishing gradients when the number of layers is big, or batch normalization is not used (such as in RNNs).
+    - もしクリッピング値が小さければ、層の数が多くなるときに、或いは、BatchNormが使われていないときに、容易に勾配損失問題に導く。
+
+- We experimented with simple variants (such as projecting the weights to a sphere) with little diffierence, and we stuck with weight clipping due to its simplicity and already good performance.
+    - 我々は、ほとんど違いがないような、単純な変異 [variant]（例えば、球への重みの射影など）を実験した。
+    - そして、それ（＝重みクリッピング）の簡単さとすでに良いパフォーマンスであるために、重みクリッピングを行き詰まって使用した。
+
+- However, we do leave the topic of enforcing Lipschitz constraints in a neural network setting for further investigation, and we actively encourage interested researchers to improve on this method.
+    - しかしながら、さらなる研究のために、ニューラルネットワークの設定において、リプシッツ連続を強制するトピックを残している。
+    - そして、興味ある研究者に、このメソッドを改善する積極的に推奨する。
+
+<br>
+
+- The fact that the EM distance is continuous and diffierentiable a.e. means that we can (and should) train the critic till optimality.
+    - EM距離が、連続で、微分可能であるという事実は、ほとんどいたるところで [a.e.]、最適値までクリティック（＝識別器）を学習することが出来る或いはすべきことを意味する。
+
+- The argument is simple, the more we train the critic, the more reliable gradient of the Wasserstein we get, which is actually useful by the fact that Wasserstein is diffierentiable almost everywhere.
+    - この主張は簡単で、クリティックを学習すればするほど、Wasserstein距離のより信頼できる [reliable] 勾配が得られる。
+    - このことは、Wasserstein距離がほとんどいたるところで微分可能であるという事実によって、実際に便利である。
+
+- For the JS, as the discriminator gets better the gradients get more reliable but the true gradient is 0 since the JS is locally saturated and we get vanishing gradients, as can be seen in Figure 1 of this paper and Theorem 2.4 of [1].
+    - JSダイバージェンスの場合、識別器がよくなるほど、勾配はより信頼できるものになる。
+    - しかし、この論文の図１と定理2.4でわかるように、JSダイバージェンスは局所的に飽和し、勾配損失するので、真の値は０である。
+
+- In Figure 2 we show a proof of concept of this, where we train a GAN discriminator and a WGAN critic till optimality.
+    - 図２では、このコンセプトの証明を見せる。ここで、GANの識別器とWGANのクリティックを最適状態まで学習している。
+
+- The discriminator learns very quickly to distinguish between fake and real, and as expected provides no reliable gradient information.
+    - 識別器は、偽物と本物の間の識別を非常に早く学習する。
+    - そして、予想されるものとして、信頼性のない勾配の情報を提供する。
+
+- The critic, however, can't saturate, and converges to a linear function that gives remarkably clean gradients everywhere.
+    - クリティックは、しかしながら、（これを）満たさない。
+    - そして、ほとんどいたるところで著しく [remarkably] きれいな勾配を与えるような、線形関数に収束する。
+
+- The fact that we constrain the weights limits the possible growth of the function to be at most linear in diffierent parts of the space, forcing the optimal critic to have this behaviour.
+    - 重みを制限するという事実は、空間の異なる部分において、関数の可能な成長に対して、せいぜい線形（関数）であるように制限し、
+    - 最適なクリティックに対して、この振る舞いを強制する。
+
+![image](https://user-images.githubusercontent.com/25688193/56412100-10ff8400-62be-11e9-9363-ee481c3e59ad.png)<br>
+
+- > Figure 2: Optimal discriminator and critic when learning to diffierentiate two Gaussians.
+    - > 図２：異なる２つのガウス分布を学習するときの、最適な識別機とクリティック。
+
+- > As we can see, the discriminator of a minimax GAN saturates and results in vanishing gradients.
+    - > 見て取れるように、GAN の minimax の識別器は、勾配消失という結果になる。（赤線）
+
+- > Our WGAN critic provides very clean gradients on all parts of the space.
+    - > WGAN のクリティックは、全ての空間部分において、とてもきれいな勾配を提供する。（水色線）
+
+<br>
+
+- Perhaps more importantly, the fact that we can train the critic till optimality makes it impossible to collapse modes when we do. 
+    - おそらく [Perhaps] より重要なのは、クリティックを最適状態まで学習出来るという事実は、モード崩壊を不可能にする。
+
+- This is due to the fact that mode collapse comes from the fact that the optimal generator for a fixed discriminator is a sum of deltas on the points the discriminator assigns the highest values, as observed by [4] and highlighted in [11].
+    - [4] で観測され、[11] で強調されているように、
+    - これは、モード崩壊が、固定された識別器に対しての最適な生成器が、識別器が最も高い値を割り当てる [assigns] 点での、デルタ（Δ）の合計である、
+    - という事実から来ている、という事実によるものである。
+
+<br>
+
+- In the following section we display the practical benets of our new algorithm, and we provide an in-depth comparison of its behaviour and that of traditional GANs.
+    - 次のセクションでは、我々の新しいアルゴリズムの実用的な利点を示す。
+    - そして、伝統的な GAN のそれとの詳細な [in-depth] 比較 [comparison] を提供する。
 
 
-# ■ メソッド（実験方法）
+# ■ 実験結果（主張の証明）・メソッド（実験方法）・議論（手法の良し悪し）
+
+## 4. Empirical Results（経験的な結果）
+
+- We run experiments on image generation using ourWasserstein-GAN algorithm and show that there are signicant practical benets to using it over the formulation used in standard GANs.
+    - 我々は、WGAN のアルゴリズムを用いて、画像生成の実験を実施した。
+    - そして、それ（＝WGAN）を使用することで、標準の GAN で使用されている定式化を超えて、重要な実用的な利点があることを示す。
+
+- We claim two main benets:
+    - a meaningful loss metric that correlates with the generator's convergence and sample quality
+    - improved stability of the optimization process
+
+- 我々は、２つの主な利点を主張する。
+    - 生成器の収束とサンプルのクオリティに相関するような、意味のある損失関数
+    - 最適化処理の安定性の向上
+
+> この損失関数値が小さくなるほど、サンプルのクオリティを上昇するという関係は、実験による経験的な知見である？
+
+
+### 4.1 Experimental Procedure
+
+- We run experiments on image generation.
+    - 画像生成の実験を実施する。
+
+- The target distribution to learn is the LSUN-Bedrooms dataset [24] - a collection of natural images of indoor bedrooms.
+    - 学習するための確率分布の教師データは、the LSUN-Bedrooms dataset である。
+    - これは、室内の寝室の自然なコレクションである。
+
+- Our baseline comparison is DCGAN [18], a GAN with a convolutional architecture trained with the standard GAN procedure using the -logD trick [4].
+    - ベースラインの比較は、DCGAN である。
+    - （これは、）-logD トリックを使用して、標準的な GAN の処理で学習された、畳み込み構造をもつ GAN である。
+
+- The generated samples are 3-channel images of 64x64 pixels in size.
+    - 生成されたサンプルは、3チャンネルの 64×64 pixel のサイズである。
+
+- We use the hyper-parameters specied in Algorithm 1 for all of our experiments.
+    - 全ての実験において、アルゴリズム１で指定されたハイパーパラメータを使用する。
+
+### 4.2 Meaningful loss metric
+
+- Because the WGAN algorithm attempts to train the critic f (lines 2-8 in Algorithm1) relatively well before each generator update (line 10 in Algorithm 1), the loss function at this point is an estimate of the EM distance, up to constant factors related to the way we constrain the Lipschitz constant of f.
+    - WGAN アルゴリズムが、各生成器が更新する（アルゴリズム１の１０行目）の前に、クリティック f（アルゴリズム１の2-8行目）比較的よく学習しようと試みるため、
+    - この地点での損失関数は、f のリプシッツ定数を強制する方法に関連した定数に一致して [up to]、EM距離の推定となる。
+
+<br>
+
+- Our first experiment illustrates how this estimate correlates well with the quality of the generated samples.
+    - 最初の実験では、この推定が、生成されたサンプルのクオリティと、どのようにうまく相関するのかを示している。
+
+- Besides the convolutional DCGAN architecture, we also ran experiments where we replace the generator or both the generator and the critic by 4-layer ReLU-MLP with 512 hidden units.
+    - 畳み込みの DCGAN のアーキテクチャに加えて、
+    - 生成器、或いは、生成器とクリティックの両方を、512個のユニットをもつ４層の Relu-MLP に置き換える実験を行った。
+
+<br>
+
+- Figure 3 plots the evolution of the WGAN estimate (3) of the EM distance during WGAN training for all three architectures.
+    - 図３の
+
+- The plots clearly show that these curves correlate well with the visual quality of the generated samples.
+
+
+![image](https://user-images.githubusercontent.com/25688193/56450006-3c38b080-635c-11e9-909c-db1b0ddff722.png)<br>
+
+- > Figure 3: Training curves and samples at diffierent stages of training.
+    - > 図３：学習曲線と、異なる学習段階でのサンプル
+
+- > We can see a clear correlation between lower error and better sample quality.
+    - > 損失関数値が小さくなることとサンプルのクオリティがよくなることの間に、明らかな相関が見てとれる。
+
+- > Upper left: the generator is an MLP with 4 hidden layers and 512 units at each layer.
+    - > 左上図：生成器が、４つの隠れ層と、各層で 512 個のユニットをもつ MLP での図。
+
+- > The loss decreases constistently as training progresses and sample quality increases.
+    - > 損失関数値が、学習が進むにつれて一貫して [constistently] 減少しており、サンプルのクオリティは上昇している。
+
+- > Upper right: the generator is a standard DCGAN.
+    - > 右上図：生成器が、標準的な DCGAN での図
+
+- > The loss decreases quickly and sample quality increases as well. 
+    - > 損失関数値は、急激に減少し、サンプルのクオリティを同様にして上昇する。
+
+- > In both upper plots the critic is a DCGAN without the sigmoid so losses can be subjected to comparison.
+    - 両方の上側のプロットにおいて、損失値を比較の対称に出来るように、クリティックは sigmoid なしの DCGAN である。
+
+- > Lower half: both the generator and the discriminator are MLPs with substantially high learning rates (so training failed).
+    - > 下側の図：生成器と識別器の両方は、（学習が失敗するように、）十分に [substantially] 高い学習率での MLP である。
+
+- > Loss is constant and samples are constant as well.
+    - > 損失値は一定で、サンプルも同様にして一定である。
+
+- > The training curves were passed through a median filter for visualization purposes.
+    - > 学習曲線は、可視化の目的に対して、中間フィルターを通してある。
+
+<br>
+
+- To our knowledge, this is the rst time in GAN literature that such a property is shown, where the loss of the GAN shows properties of convergence.
+
+- This property is extremely useful when doing research in adversarial networks as one does not need to stare at the generated samples to gure out failure modes and to gain information on which models are doing better over others.
+
 
 # ■ 関連研究（他の手法との違い）
 

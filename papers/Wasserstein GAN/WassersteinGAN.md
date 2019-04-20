@@ -558,12 +558,12 @@
 
 - Because the WGAN algorithm attempts to train the critic f (lines 2-8 in Algorithm1) relatively well before each generator update (line 10 in Algorithm 1), the loss function at this point is an estimate of the EM distance, up to constant factors related to the way we constrain the Lipschitz constant of f.
     - WGAN アルゴリズムが、各生成器が更新する（アルゴリズム１の１０行目）の前に、クリティック f（アルゴリズム１の2-8行目）比較的よく学習しようと試みるため、
-    - この地点での損失関数は、f のリプシッツ定数を強制する方法に関連した定数に一致して [up to]、EM距離の推定となる。
+    - この地点での損失関数は、f のリプシッツ定数を強制する方法に関連した定数に一致して [up to]、EM距離の推定値（式３）となる。
 
 <br>
 
 - Our first experiment illustrates how this estimate correlates well with the quality of the generated samples.
-    - 最初の実験では、この推定が、生成されたサンプルのクオリティと、どのようにうまく相関するのかを示している。
+    - 最初の実験では、この推定値（式３）が、生成されたサンプルのクオリティと、どのようにうまく相関するのかを示している。
 
 - Besides the convolutional DCGAN architecture, we also ran experiments where we replace the generator or both the generator and the critic by 4-layer ReLU-MLP with 512 hidden units.
     - 畳み込みの DCGAN のアーキテクチャに加えて、
@@ -572,10 +572,10 @@
 <br>
 
 - Figure 3 plots the evolution of the WGAN estimate (3) of the EM distance during WGAN training for all three architectures.
-    - 図３の
+    - 図３は、３つの全てのアーキテクチャに対して、WGAN を学習する間の、EM距離のWGANの推定値（式３）の進化をプロットしている。
 
 - The plots clearly show that these curves correlate well with the visual quality of the generated samples.
-
+    - プロットは、これらの曲線が、生成されたサンプルの見た目のクオリティとよく相関しているということを、明らかに見せている。
 
 ![image](https://user-images.githubusercontent.com/25688193/56450006-3c38b080-635c-11e9-909c-db1b0ddff722.png)<br>
 
@@ -611,13 +611,249 @@
 
 <br>
 
-- To our knowledge, this is the rst time in GAN literature that such a property is shown, where the loss of the GAN shows properties of convergence.
+- To our knowledge, this is the first time in GAN literature that such a property is shown, where the loss of the GAN shows properties of convergence.
+    - 我々が知る限り、GAN の文脈において、このような性質 [property] が見られたのは、初めてのことであり、
+    - ここで [where]、GAN の loss値は収束の性質を見せる。
 
-- This property is extremely useful when doing research in adversarial networks as one does not need to stare at the generated samples to gure out failure modes and to gain information on which models are doing better over others.
+- This property is extremely useful when doing research in adversarial networks as one does not need to stare at the generated samples to figure out failure modes and to gain information on which models are doing better over others.
+    - この性質は、敵対的ネットワークを調査するときに、極めて有効である。
+    - （なぜならば、）１つには、失敗モードを理解し、モデルが他のモデルよりもよく動作しているかの情報を得るために、生成サンプルを、じっと見つめる必要がない（ので、[as]）
+
+<br>
+
+- However, we do not claim that this is a new method to quantitatively evaluate generative models yet.
+    - しかしながら、我々は、生成モデルのクオリティを評価するための新しい方法であるとは、まだ主張しない。
+
+- The constant scaling factor that depends on the critic's architecture means it's hard to compare models with diffierent critics.
+    - クリティックのアーキテクチャに依存した、スケーリング要因の定数（＝リプシッツ定数K）は、異なるクリティックをもつモデルを比較することが難しいことを意味している。
+
+- Even more, in practice the fact that the critic doesn't have infinite capacity makes it hard to know just how close to the EM distance our estimate really is.
+    - さらには、実際上には、クリティックが無限の能力をもっていない、という事実は、
+    - EM距離が、我々の推定値とどの程度近いか？ということを知ることが困難にする
+
+- This being said, we have succesfully used the loss metric to validate our experiments repeatedly and without failure, and we see this as a huge improvement in training GANs which previously had no such facility.
+    - そうはいっても [This being said]、我々の実験を検証するために、繰り返し、失敗することなしに、loss 値をうまく [succesfully ] 使用してした。
+    - そして、我々は、以前にはこのような設備（＝便利さ） [facility] を持たなかった GAN の学習において、これを大きな改善と見ている。
+
+<br>
+
+- In contrast, Figure 4 plots the evolution of the GAN estimate of the JS distance during GAN training.
+    - 対称的 [contrast] に、図４は、GAN の学習中に、JSダイバージェンスの推定値での、GAN の進化をプロットしたものである。
+
+- More precisely, during GAN training, the discriminator is trained to maximize
+    - より正確には、GAN を学習する間、識別器は、以下の式を最大化するように学習される。
+
+![image](https://user-images.githubusercontent.com/25688193/56452749-66946900-6370-11e9-8c0c-dd86b24a4085.png)<br>
+
+> 通常の GAN の識別器の損失関数の式になっている。
+
+- which is is a lower bound of ![image](https://user-images.githubusercontent.com/25688193/56452838-043c6800-6372-11e9-8779-536d64396a3b.png).
+    - （この式は、）![image](https://user-images.githubusercontent.com/25688193/56452838-043c6800-6372-11e9-8779-536d64396a3b.png) の下限 [lower bound] である。
+
+- In the figure, we plot the quantity ![image](https://user-images.githubusercontent.com/25688193/56452858-6d23e000-6372-11e9-90c0-99412295f1c9.png), which is a lower bound of the JS distance.
+    - 図では、JSダイバージェンスの下限である量 ![image](https://user-images.githubusercontent.com/25688193/56452858-6d23e000-6372-11e9-90c0-99412295f1c9.png) をプロットしている。
+
+![image](https://user-images.githubusercontent.com/25688193/56452818-bd4e7280-6371-11e9-959e-c9a1028b9b8a.png)<br>
+
+- > Figure 4: JS estimates for an MLP generator (upper left) and a DCGAN generator (upper right) trained with the standard GAN procedure.
+    - > 図４：標準の GAN で学習された、MLP での生成器に対しての、JS推定値（左上図）
+    - > 標準の GAN で学習された、DCGAN での生成器に 対しての、JS推定値（右上図）。
+
+- > Both had a DCGAN discriminator.
+    - > 両方とも DCGAN での識別器をもつ。
+
+- > Both curves have increasing error.
+    - > 両方の曲線とも、誤差値が増加している。
+
+- > Samples get better for the DCGAN but the JS estimate increases or stays constant, pointing towards no signicant correlation between sample quality and loss.
+    - > DCGAN に対してのサンプル（のクオリティ）は、よくなっている。
+    - > しかし、JS推定値は、増加したり、一定になったりしており、
+    - > サンプルのクオリティと loss 値の間に、重要な相関がないことを指し示している。[pointing]
+
+- > Bottom: MLP with both generator and discriminator.
+    - > 下段：生成器と識別器ともに、MLP
+
+- > The curve goes up and down regardless of sample quality.
+    - > 曲線は、サンプルのクオリティに関わらず、上がったり下がったりしている。
+
+- > All training curves were passed through the same median filter as in Figure 3.
+    - > 全ての学習曲線は、図３においてしていたように、同じ中間フィルタを通している。
+
+<br>
+
+- This quantity clearly correlates poorly the sample quality.
+    - この量（＝JSダイバージェンス）は、明らかにサンプルのクオリティと、不十分に [poorly] 相関している。
+
+- Note also that the JS estimate usually stays constant or goes up instead of going down.
+    - JS推定値が、たいてい一定のままである、或いは、減少するかわりに上昇するということにも注意
+
+- In fact it often remains very close to log 2 ≒ 0:69 which is the highest value taken by the JS distance.
+    - 実際、JSダイバージェンスによって取られる最も高い値は、たいてい log 2 ≒ 0:69 に非常に近い値のままになる。
+
+- In other words, the JS distance saturates, the discriminator has zero loss, and the generated samples are in some cases meaningful (DCGAN generator, top right plot) and in other cases collapse to a single nonsensical image [4].
+    - 言い換えると、JSダイバージェンスが飽和し、識別器が０の loss 値となり、
+    - そして、生成されたサンプルが、いくつかのケースにおいて、意味のあるものとなり（DCGANでの生成器：右上図のプロット）、
+    - そして、他の場合において、単一の無意味な [nonsensical] 画像に崩壊する。
+
+- This last phenomenon has been theoretically explained in [1] and highlighted in [11].
+    - この最後の現象（＝無意味な画像に崩壊する現象）は、[1] で理論的に説明されている。そして、[11] で強調されている。
+
+<br>
+
+- When using the -logD trick [4], the discriminator loss and the generator loss are diffierent.
+    - -logD トリックを使用した場合、識別器の loss 値と、生成器の loss 値は異なる。
+
+- Figure 8 in Appendix E reports the same plots for GAN training, but using the generator loss instead of the discriminator loss.
+    - 図８は、GAN の学習に対して、同じプロットを報告している。但し、識別器の loss 値の代わりに、生成器の loss 値を使っている。
+
+- This does not change the conclusions.
+    - このことは、結果を変えるものではない。
+
+- E : Generator's cost during normal GAN training
+    ![image](https://user-images.githubusercontent.com/25688193/56453094-68155f80-6377-11e9-87cf-ff44619ab72e.png)<br>
+
+- > Figure 8: Cost of the generator during normal GAN training, for an MLP generator (upper left) and a DCGAN generator (upper right). Both had a DCGAN discriminator. 
+
+- > Both curves have increasing error.
+
+- > Samples get better for the DCGAN but the cost of the generator increases, pointing towards no signicant correlation between sample quality and loss. 
+
+- > Bottom: MLP with both generator and discriminator.
+
+- > The curve goes up and downregardless of sample quality.
+
+- > All training curves were passed through the same median lter as in Figure 3.
+
+> 図８は、-logD のトリックを使った場合の、通常の GAN での loss 値の変化であるが、このテクニックを使わない通常の GAN での loss 値の変化である図７での結果と同じ。
+
+<br>
+
+- Finally, as a negative result, we report that WGAN training becomes unstable at times when one uses a momentum based optimizer such as Adam [8] (with β1 > 0) on the critic, or when one uses high learning rates.
+    - 最後に、否定的な結果となるが、WGAN の学習が、（β1 > 0での）Adam のようなモーメンタムベースの最適化アルゴリズムを使用するときや、高い学習率を使用するときに、ときどき不安定になるという報告をする。
+
+- Since the loss for the critic is nonstationary, momentum based methods seemed to perform worse.
+    - クリティックの loss 値が、非定常的 [nonstationary] であるので、モーメンタムベースの手法は、パフォーマンスが悪化するほうに見えた。
+
+- We identfiied momentum as a potential cause because, as the loss blew up and samples got worse, the cosine between the Adam step and the gradient usually turned negative.
+    - 我々は、モーメンタムを、潜在的な [potential] 原因 [cause] と特定した。[identified]
+    - （なぜならば、）loss 値が増大して、サンプルが悪化するにつれて、Adam ステップと勾配の間のコサイン値 cos [cosine] が、たいてい負の値に変わるので [as]、
+
+- The only places where this cosine was negative was in these situations of instability.
+    - このコサイン値が負の値になる唯一の場所では、不安定さの状況であった。
+
+- We therefore switched to RMSProp [21] which is known to perform well even on very nonstationary problems [13].
+    - それ故、非常に非定常的な問題でさえも良いパフォーマンスを行うことでよく知られている RMSProp に切り替えた。
+
+### 4.3 Improved stability
+
+- One of the benets of WGAN is that it allows us to train the critic till optimality.
+    - WGAN の利点の１つは、最適状態までクリティックを学習することを許容することである。
+
+> loss 値がサンプルのクオリティに比例して、０に向かって安定的に単調減少するので、最適状態まで学習することが出来る。（通常の GAN では、loss 値が上がったり下がったりして、サンプルのクオリティが突然悪くなったりするので、このようなことが行えるとは限らない。）
+
+- When the critic is trained to completion, it simply provides a loss to the generator that we can train as any other neural network. 
+    - クリティックが、完成状態まで学習されると、
+    - 他のニューラルネットワークとして学習出来るような生成器に、loss 値を提供する。
+
+- This tells us that we no longer need to balance generator and discriminator's capacity properly.
+    - このことは、もはや生成器と識別器の能力のバランスをとる必要がない性質を、我々に教えてくれる。
+
+- The better the critic,the higher quality the gradients we use to train the generator.
+    - クリティックがよくなるほど、生成器を学習するために、使用する勾配のクオリティが、より高くなる。
+
+<br>
+
+- We observe that WGANs are much more robust than GANs when one varies the architectural choices for the generator.
+    - 生成器に対して、アーキテクチャでの選択を変更する [vary] とき、
+    - WGAN が、GAN よりはるかにロバストであるということを観測する。
+
+- We illustrate this by running experiments on three generator architectures:
+    - 我々はこれを、３つの生成器のアーキテクチャにおいて、実験を実施することによって示す。即ち、
+
+- (1) a convolutional DCGAN generator, 
+    - (1) 畳み込み DCGAN での生成器
+
+- (2) a convolutional DCGAN generator without batch normalization and with a constant number of lters, 
+    - (2) batc norm なしで、一定数のイテレーション回数の畳み込み DCGAN の生成器
+
+- and (3) a 4-layer ReLU-MLP with 512 hidden units.
+    - (3) 512個の隠れ層のユニットをもつ４層の ReLu-MLP
+
+- The last two are known to perform very poorly with GANs.
+    - 最後の２つは、GAN で、とても不十分な [poorly] パフォーマンスとなることが知られている。
+
+- We keep the convolutional DCGAN architecture for the WGAN critic or the GAN discriminator.
+    - 我々は、WGAN のクリティックや GAN の識別器に対して、畳み込み DCGAN のアーキテクチャを保つ。
+
+<br>
+
+- Figures 5, 6, and 7 show samples generated for these three architectures using both the WGAN and GAN algorithms.
+    - 図５，６、７は、WGAN と GAN のアルゴリズムを使用しているこれらの３つのアーキテクチャに対して生成されたサンプルを示している。
+
+- We refer the reader to Appendix F for full sheets of generated samples.
+    - 生成されたサンプルのフルシートは、補足 F を参照してください。
+
+- Samples were not cherry-picked.
+    - サンプルは、チェリー・ピッキング [cherry-picked] されていない。
+
+> チェリー・ピッキング：数多くの事例の中から自らの論証に有利な事例のみを並べ立てることで、命題を論証しようとする論理上の誤謬、あるいは詭弁術。
+
+- In no experiment did we see evidence of mode collapse for the WGAN algorithm.
+    - WGAN のアルゴリズムに対して、モード崩壊の証拠を見せる実験は存在しない。
+
+![image](https://user-images.githubusercontent.com/25688193/56453320-d2c89a00-637b-11e9-89a7-a67ac8479eba.png)<br>
+
+- > Figure 5: Algorithms trained with a DCGAN generator. 
+    - DCGAN での生成器で学習されたアルゴリズム（１）
+
+- > Left: WGAN algorithm. Right: standard GAN formulation.
+    - 左図：WGAN アルゴリズム。右図：標準の GAN
+
+- > Both algorithms produce high quality samples.
+    - 両方のアルゴリズムは、高いクオリティのサンプルを生成している。
+
+<br>
+
+![image](https://user-images.githubusercontent.com/25688193/56453331-04d9fc00-637c-11e9-8cd8-01ab1f140c4a.png)<br>
+
+- > Figure 6: Algorithms trained with a generator without batch normalization and constant number of lters at every layer (as opposed to duplicating them every time as in [18]).
+    - > 図６：全ての層で、batc norm なしで、一定数のイテレーション回数の畳み込み DCGAN の生成器で学習されたアルゴリズム（２）
+    - （[18] のように、毎回それを複製するのと対称的に、）
+
+- > Aside from taking out batch normalization, the number of parameters is therefore reduced by a bit more than an order of magnitude.
+    - > batc norm を除外するだけではなく [Aside from]、
+    - > パラメーターの数は、それ故に、１桁分 [an order of magnitude] 以上のビット値で、減少させられる。
+
+- > Left: WGAN algorithm. Right: standard GAN formulation.
+    - 左図：WGAN アルゴリズム。右図：標準の GAN
+
+- > As we can see the standard GAN failed to learn while the WGAN still was able to produce samples.
+    - > 見られるように、標準の GAN は学習に失敗する。一方で、WGAN は、まだサンプルを生成することが出来る。
+
+<br>
+
+![image](https://user-images.githubusercontent.com/25688193/56453750-a6b01780-6381-11e9-99db-be7fd502d9bf.png)<br>
+
+- > Figure 7: Algorithms trained with an MLP generator with 4 layers and 512 units with ReLU nonlinearities.
+    - > 図７：４つの層と512個のユニットを持ち、非線形性の Relu をもつ MLP での生成器で学習されたアルゴリズム（３）
+
+- > The number of parameters is similar to that of a DCGAN, but it lacks a strong inductive bias for image generation.
+    - > パラメーターの数は、DCGAN のそれとよく似ている。しかし、画像生成に対しての強い帰納的な [inductive] バイアスが不足している。
+
+- > Left: WGAN algorithm. Right: standard GAN formulation.
+    - 左図：WGAN アルゴリズム。右図：標準の GAN
+
+- > The WGAN method still was able to produce samples, lower quality than the DCGAN, and of higher quality than the MLP of the standard GAN.
+    - > WGAN は、まだサンプルを生成することができている。
+    - > DCGAN のものよりも低いクオリティで、
+    - > そして、標準の GAN の MLP でのものよりも、高いクオリティで、
+
+- > Note the signicant degree of mode collapse in the GAN MLP.
+    - > MLP での GAN において、モード崩壊の大幅な程度（＝大幅なモード崩壊）に、注意。
 
 
 # ■ 関連研究（他の手法との違い）
 
-## x. 論文の項目名（Related Work）
+## 5. Related Work
 
 

@@ -1,5 +1,5 @@
 # ■ 論文
-
+- 論文タイトル：「UNSUPERVISED REPRESENTATION LEARNING WITH DEEP CONVOLUTIONAL GENERATIVE ADVERSARIAL NETWORKS」
 - 論文リンク：[[1511.06434] Unsupervised Representation Learning with Deep Convolutional Generative Adversarial Networks](https://arxiv.org/abs/1511.06434)
 - 論文投稿日付：2015/11/19(v1), 2016/01/07(v2)
 - 著者：Alec Radford, Luke Metz, Soumith Chintala

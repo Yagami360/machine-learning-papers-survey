@@ -1,4 +1,5 @@
 # ■ 論文
+- 論文タイトル：「Wasserstein GAN」
 - 論文リンク：https://arxiv.org/abs/1701.07875
 - 論文投稿日付：2017/01/26 (v1), 2017/03/09 (v2), 2017/12/06 (v3)
 - 著者：Martin Arjovsky, Soumith Chintala, Léon Bottou

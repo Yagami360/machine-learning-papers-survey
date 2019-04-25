@@ -198,14 +198,181 @@
     - 784次元の MNIST サンプルを生成するための出力として、最終的な sigmoid ユニットをもつ。
 
 - The discriminator maps x to a maxout [6] layer with 240 units and 5 pieces, and y to a maxout layer with 50 units and 5 pieces.
-    - 識別器は、
+    - 識別器は、入力画像 x を 240 個のユニットと5ピースと共に、maxout 層 [6] へ写像する。
+    - そして、クラスラベル y を、50 個のユニットと5ピースと共に、maxout 層へ写像する。
+
+![image](https://user-images.githubusercontent.com/25688193/56703728-299bee00-6745-11e9-84a7-962272c0e3a5.png)<br>
 
 - Both of the hidden layers mapped to a joint maxout layer with 240 units and 4 pieces before being fed to the sigmoid layer.
-    - xxx
+    - 両方の隠れ層は、シグモイド層へ供給される前に、
+    - 240 個のユニットと4ピースと共に、 結合された maxout 層へ写像する。
 
 - (The precise architecture of the discriminator is not critical as long as it has sufficient power; we have found that maxout units are typically well suited to the task.)
-    - xxx
+    - 識別器の正確なアーキテクチャは、十分な [sufficient] 能力をもつ限り、重要ではない。
+    - 即ち、我々は、一般的に [typically]、maxout ユニットが、そのタスクにうまく適しているということを見つけ出した。
 
+<br>
+
+- The model was trained using stochastic gradient decent with mini-batches of size 100 and initial learning rate of 0:1 which was exponentially decreased down to :000001 with decay factor of 1:00004.
+    - モデルは、サイズ 100 のミニバッチで、確率的勾配法を用いて学習される。
+    - そして、0 ~ 1 の初期の学習率は、1:00004 の減衰項で、指数関数的に :000001 に減少する。
+
+- Also momentum was used with initial value of :5 which was increased up to 0:7.
+    - モーメンタムが、:5 の初期値として使用される。
+
+- Dropout[9] with probability of 0.5 was applied to both the generator and discriminator.
+    - 0.5 の確率でのドロップアウト [9] は、生成器と識別器の両方に適用される。
+
+- And best estimate of log-likelihood on the validation set was used as stopping point.
+    - そして、検証用データセットでの対数尤度のベストな推定は、停止点として使用される。
+
+<br>
+
+- Table 1 shows Gaussian Parzen window log-likelihood estimate for the MNIST dataset test data.
+    - 表１は、MNIST のテストデータに対しての、対数尤度のカーネル密度推定 [Gaussian Parzen window] を示している。
+
+> カーネル密度推定：データ標本から、その母集団である確率分布を推定する手法。<br>
+
+> ![image](https://user-images.githubusercontent.com/25688193/56705915-edb95680-674d-11e9-8e91-ada8dca04b01.png)<br>
+
+![image](https://user-images.githubusercontent.com/25688193/56705770-59e78a80-674d-11e9-9946-27b1cdf1ddf6.png)<br>
+
+- > Table 1: Parzen window-based log-likelihood estimates for MNIST. We followed the same procedure as [8] for computing these values.
+
+
+- 1000 samples were drawn from each 10 class and a Gaussian Parzen window was fitted to these samples.
+    - 10 個の各クラスからの、1000 個のサンプルが示されている。
+    - そして、カーネル密度推定は、これらのサンプルに適合されている。
+
+- We then estimate the log-likelihood of the test set using the Parzen window distribution.
+    - カーネル密度分布を用いたテストデータの対数尤度を推定する。
+
+- (See [8] for more details of how this estimate is constructed.)
+    - この推定がどのようにして構築されているかの詳細は、[8] を見てください。
+
+<br>
+
+- The conditional adversarial net results that we present are comparable with some other network based, but are outperformed by several other approaches – including non-conditional adversarial nets.
+    - 我々が提供する CGAN の結果は、他のネットワークベースと比較出来る.
+    - しかし、いくつかの他のアプローチによって、実行される。
+    - （このアプローチというのは、）条件付けでない敵対的ネットワークを含んでいるような（アプローチ）
+
+- We present these results more as a proof-of-concept than as demonstration of efficacy, and believe that with further exploration of hyper-parameter space and architecture that the conditional model should match or exceed the non-conditional results.
+    - 我々は、効果 [efficacy] の実証よりも、概念実証 [proof-of-concept] で、これらの結果を提示する。
+    - そして、ハイパーパラメータの空間やアーキテクチャのさらなる探索で、
+    - 条件付きモデルは、条件付けなしのモデルとマッチする、或いは、上回る [exceed]
+    - ということを信じている。
+
+- Fig 2 shows some of the generated samples. Each row is conditioned on one label and each column is a different generated sample.
+    - 図２は、いくつかの生成されたサンプルを示している。
+    - 各行は、１つのラベルで条件付けされており、各列は異なる生成されたサンプルになっている。
+
+![image](https://user-images.githubusercontent.com/25688193/56709244-31668d00-675b-11e9-96dd-2edaf07d6f27.png)<br>
+
+### 4.2 Multimodal
+
+- Photo sites such as Flickr are a rich source of labeled data in the form of images and their associated user-generated metadata (UGM) — in particular user-tags.
+    - Flickr のような写真サイトは、
+    - 画像の型や、画像に関連付けられた [associated] ユーザーが生成したメタデータ（UGM）（とりわけ、ユーザータグ）において、
+    - 豊富なリソースのラベリングされたデータがある。
+
+- User-generated metadata differ from more ‘canonical’ image labelling schems in that they are typically more descriptive, and are semantically much closer to how humans describe images with natural language rather than just identifying the objects present in an image.
+    - ユーザーが生成したメタデータは、より標準的な [canonical] 画像ラベリングのスキーマ（図式、計画）とは異なる。
+    - 画像内のオブジェクトを単に識別することよりも、
+    - 画像を自然言語で記述している方法が、
+    - 一般的に、より説明的に、意味的にはるかに近い
+    - という点において、
+
+- Another aspect of UGM is that synoymy is prevalent and different users may use different vocabulary to describe the same concepts — consequently, having an efficient way to normalize these labels becomes important.
+    - UGM の他の側面は、同義語 [synoymy] が流行しており [prevalent]、
+    - 異なるユーザーが、同じコンセプトを記述するために、異なる用語を用いるかもしれないということです。
+    - 結果的に、それらのラベルを標準化する効果的な方法を持つことが、重要となる。
+
+- Conceptual word embeddings [14] can be very useful here since related concepts end up being represented by similar vectors.
+    - 単語埋め込みの概念は、関連した概念が、同じようなベクトルによって、表現されるという結果になるので、とても便利である。
+
+<br>
+
+- In this section we demonstrate automated tagging of images, with multi-label predictions, using conditional adversarial nets to generate a (possibly multi-modal) distribution of tag-vectors conditional on image features.
+    - このセクションでは、画像の自動タグ付けを実証する。
+    - 複数のラベル予想で、
+    - 画像特徴量で条件付けされたタグベクトルの確率分布（可能であれば、マルチモードの確率分布）を生成するために、CGAN を用いて（実証する。）
+
+<br>
+
+- For image features we pre-train a convolutional model similar to the one from [13] on the full ImageNet dataset with 21,000 labels [15].
+    - 画像特徴量のために、
+    - 21000 個のラベルをもつ full ImageNet dataset [15] において、[13] からの１つによく似ているような、
+    - 畳み込みモデルを、事前に学習している。
+
+- We use the output of the last fully connected layer with 4096 units as image representations.
+    - 画像の表現として、4096 個のユニットをもつ fully connected layer の最後の出力を利用する。
+
+<br>
+
+- For the world representation we first gather a corpus of text from concatenation of user-tags, titles and descriptions from YFCC100M 2 dataset metadata.
+    - 世界の表現のために、我々ははじめに、
+    - ユーザータグ、タイトル、YFCC100M 2 dataset のメタデータからの記述の連結 [concatenation] からテキストのコーパスを集めた
+
+- After pre-processing and cleaning of the text we trained a skip-gram model [14] with word vector size of 200.
+    - 事前学習と、テキストのクリーニングの後で、サイズ 200 のワードベクトルで、skip-gram を学習した。
+
+- And we omitted any word appearing less than 200 times from the vocabulary, thereby ending up with a dictionary of size 247465.
+    - ボキャブラリーから 200回以下の回数で現れる用語を省略した [omitted ]。
+    - それ故、247465 サイズの辞書になるという結果になった。
+
+<br>
+
+- We keep the convolutional model and the language model fixed during training of the adversarial net.
+    - 敵対的ネットワークを学習している間、畳み込みモデルと言語モデルを固定し続けた。
+
+- And leave the experiments when we even backpropagate through these models as future work.
+    - そして、将来の研究として、実験を残す。
+    - これらのモデルを通じたバックプロパゲーションするときに
+
+<br>
+
+- For our experiments we use MIR Flickr 25,000 dataset [10], and extract the image and tags features using the convolutional model and language model we described above.
+    - 我々の実験のために、MIR Flickr 25,000 dataset [10] を使用する。
+    - そして、上記で記述した畳み込みモデルと言語モデルを用いて、画像とタグ特徴量を抽出する。
+
+- Images without any tag were omitted from our experiments and annotations were treated as extra tags. 
+    - いくつかのタグ無しの画像は、我々の実験から除外されている。
+    - そして、アノテーションは、追加のタグとして扱われる。
+
+- The first 150,000 examples were used as training set.
+    - 最初の 150,000 個のサンプルは、学習用データセットとして使用される。
+
+- Images with multiple tags were repeated inside the training set once for each associated tag.
+    - 複数のタグをもつ画像は、各関連タグに対して、学習用データセットの中で、一度だけ繰り返された。
+
+<br>
+
+- For evaluation, we generate 100 samples for each image and find top 20 closest words using cosine similarity of vector representation of the words in the vocabulary to each sample.
+    - 評価のために、各画像の 100 個のサンプルを生成する。
+    - そして、語彙ベクトルの cos 類似度を用いて、上位 20 個の近いワードを見つけ出す。
+
+- Then we select the top 10 most common words among all 100 samples.
+    - 次に、100 個全てのサンプルの間に、上位 10 個の最も共通したワードを選択する。
+
+- Table 4.2 shows some samples of the user assigned tags and annotations along with the generated tags.
+    - 表 4.2 は、ユーザーの関連タグと、生成されたタグの間のアノテーションのいくつかのサンプルを示している。
+
+![image](https://user-images.githubusercontent.com/25688193/56711859-32052080-6767-11e9-851a-cf60be39caf7.png)<br>
+
+- The best working model’s generator receives Gaussian noise of size 100 as noise prior and maps it to 500 dimension ReLu layer. 
+    - 最もうまく動作している生成器は、100 個のガウス分布にもとづくノイズを、前のノイズとして受け取っている。
+    - そして、それを（＝ノイズを）、500 次元の Relu層へ写像している
+
+- And maps 4096 dimension image feature vector to 2000 dimension ReLu hidden layer.
+    - そして、4096 次元の画像特徴量を、200 次元の Relu 隠れ層へ、写像している。
+
+- Both of these layers are mapped to a joint representation of 200 dimension linear layer which would output the generated word vectors.
+    - これらの層の両方は、生成された語彙ベクトルを出力するような、200 次元の線形層の結合された表現に、写像されている。
+
+- The discriminator is consisted of 500 and 1200 dimension ReLu hidden layers for word vectors and image features respectively and maxout layer with 1000 units and 3 pieces as the join layer which is finally fed to the one single sigmoid unit.
+    - 識別器は、各々の [respectively] 語彙ベクトルと画像特徴量のための、500,1200 次元の Relu 隠れ層で構成されている。
+    - xxx
 
 
 # ■ メソッド（実験方法）

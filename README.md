@@ -1,24 +1,36 @@
 # MachineLearning-Papers_Survey
 機械学習関連の論文（arXiv等）読み練習用レポジトリ
 
+## ■ 構成
 
-## ◎ 論文サイト
+- GANs
+    - [Generative Adversarial Networks](https://github.com/Yagami360/MachineLearning-Papers_Survey/blob/master/papers/GenerativeAdversarialNetworks/GenerativeAdversarialNetworks.md)
+    - [Unsupervised Representation Learning with Deep Convolutional Generative Adversarial Networks](https://github.com/Yagami360/MachineLearning-Papers_Survey/blob/master/papers/UnsupervisedRepresentationLearningwithDeepConvolutionalGenerativeAdversarialNetworks/DeepConvolutionalGAN.md)
+    - [Conditional Generative Adversarial Nets](https://github.com/Yagami360/MachineLearning-Papers_Survey/blob/master/papers/ConditionalGenerativeAdversarialNets/ConditionalGAN.md)
+    - [Wasserstein GAN](https://github.com/Yagami360/MachineLearning-Papers_Survey/blob/master/papers/WassersteinGAN/WassersteinGAN.md)
+- Others
+    - xxx
+
+## ■ 参考サイト
+
+### ◎ 論文サイト
 - [arXiv](https://arxiv.org/)
 - [Google Scholer](https://scholar.google.co.jp/schhp?hl=ja&as_sdt=0,5)
 
-## ◎ 便利サイト
+### ◎ 便利サイト
 - [Google翻訳](https://translate.google.co.jp/?hl=ja&tab=wT)
 - [Hyper Collocation](https://hypcol.marutank.net/ja/)
 - [arXiv Vanity](https://www.arxiv-vanity.com/)
 
-## ◎ 参考サイト
+### ◎ その他参考サイト
 
 - [arXivTimes](https://github.com/arXivTimes/arXivTimes)
 - [ymym3412/acl-papers](https://github.com/ymym3412/acl-papers)
 - [shunk031/paper-survey](https://github.com/shunk031/paper-survey)
 - [趣味として楽しむ論文読みのススメ - karaage. [からあげ]](https://karaage.hatenadiary.jp/entry/2018/08/13/000000)
 
-## ◎ フォーマット
+
+## ■ フォーマット
 
 ```
 layout: post

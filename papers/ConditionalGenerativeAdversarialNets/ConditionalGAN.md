@@ -1,5 +1,5 @@
 # ■ 論文
-- 論文タイトル：「Conditional Generative Adversarial Nets」
+- 論文タイトル： "Conditional Generative Adversarial Nets"
 - 論文リンク：https://arxiv.org/abs/1411.1784
 - 論文投稿日付：2014/11/06
 - 著者：Mehdi Mirza, Simon Osindero

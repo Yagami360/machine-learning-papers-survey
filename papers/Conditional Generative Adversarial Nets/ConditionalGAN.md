@@ -176,7 +176,7 @@
 ![image](https://user-images.githubusercontent.com/25688193/56548763-ebbf8e00-65bb-11e9-8040-5ead4a28f7c5.png)<br>
 
 
-# ■ 実験結果（主張の証明）・議論（手法の良し悪し）
+# ■ 実験結果（主張の証明）・議論（手法の良し悪し）・メソッド（実験方法）
 
 ## 4. Experimental Results
 
@@ -372,12 +372,25 @@
 
 - The discriminator is consisted of 500 and 1200 dimension ReLu hidden layers for word vectors and image features respectively and maxout layer with 1000 units and 3 pieces as the join layer which is finally fed to the one single sigmoid unit.
     - 識別器は、各々の [respectively] 語彙ベクトルと画像特徴量のための、500,1200 次元の Relu 隠れ層で構成されている。
-    - xxx
+    - そして、1000 個のユニットと 3ピースを持つ結合層としての maxout 層は、１つのシグモイドユニットへと供給される。
 
+<br>
 
-# ■ メソッド（実験方法）
+- The model was trained using stochastic gradient decent with mini-batches of size 100 and initial learning rate of 0:1 which was exponentially decreased down to :000001 with decay factor of 1:00004.
+    - モデルは、サイズ 100 のミニバッチをもつ確率的勾配法で学習されたものである。
+    - そして、[0:1] の初期の学習率は、減衰項で :000001 へ指数関数的に減少する。
 
-## x. 論文の項目名
+- Also momentum was used with initial value of :5 which was increased up to 0:7.
+    - また、モーメンタムは、0:7 に増加する :5 の初期値で、使用されている。
+
+- Dropout with probability of 0.5 was applied to both the generator and discriminator.
+    - 0.5 の確率値でのドロップアウトは、生成器と識別器の両方に適用される。
+
+<br>
+
+- The hyper-parameters and architectural choices were obtained by cross-validation and a mix of random grid search and manual selection (albeit over a somewhat limited search space.)
+    - ハイパーパラメータとアーキテクチャの選択は、クロスバリディゲーションやランダムグリッドサーチとマニュアル選択の混合、によって手に入れる。
+    -　(いくらか制限された検索空間を超えるのであるが [albeit])
 
 
 # ■ 関連研究（他の手法との違い）

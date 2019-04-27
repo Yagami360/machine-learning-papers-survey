@@ -99,7 +99,7 @@
 
 - If we take a naive approach, and ask the CNN to minimize Euclidean distance between predicted and ground truth pixels, it will tend to produce blurry results [29, 46].
     - もし、我々が考えが甘い [naive] アプローチをとり、そして、予想値と ground truth ピクセルとの間のユークリッド距離を最小化することを、CNN に依頼するならば、
-    - ぼやけた [blurry] 結果の傾向となるだろう。
+    - ぼやけた [blurry] 結果の傾向となるだろう。[29,46]
 
 - This is because Euclidean distance is minimized by averaging all plausible outputs, which causes blurring.
     - これは、ユークリッド距離が、全ての尤度 [plausible] 出力の平均を最小化しているために起こり、この場合にぼやける。
@@ -115,7 +115,7 @@
     - このゴールを満足するのに適した [appropriate for] 損失関数を自動的に学習することが、強く望まれる。[desirable]
 
 - Fortunately, this is exactly what is done by the recently proposed Generative Adversarial Networks (GANs) [14, 5, 30, 36, 47]. 
-    - 幸運なことに、これは、最近提案された GAN によって、ちょうど行われていることである。
+    - 幸運なことに、これは、最近提案された GAN によって、ちょうど行われていることである。[14,5,30,36,47]
 
 - GANs learn a loss that tries to classify if the output image is real or fake, while simultaneously training a generative model to minimize this loss.
     - GAN は、出力画像が本物であるのか偽物であるのかを、分類しようと損失値を学習する。
@@ -135,7 +135,7 @@
 
 - Just as GANs learn a generative model of data, conditional GANs (cGANs) learn a conditional generative model [14].
     - GAN が、データの生成モデルを学習ように、
-    - cGAN は、条件付き生成モデルを学習する。
+    - cGAN は、条件付き生成モデルを学習する。[14]
 
 - This makes cGANs suitable for image-to-image translation tasks, where we condition on an input image and generate a corresponding output image.
     - これは、cGAN を、image-to-image 変換タスクに適合したものにする。
@@ -181,7 +181,7 @@
 ## 2. Method
 
 - GANs are generative models that learn a mapping from random noise vector z to output image y: G : z → y[14].
-    - GAN は、ランダムノイズ入力 z から、出力画像 y:: G:z→yへの写像を学習するような、生成モデルである。
+    - GAN は、ランダムノイズ入力 z から、出力画像 y:: G:z→yへの写像を学習するような、生成モデルである。[14]
 
 - In contrast, conditional GANs learn a mapping from observed image x and random noise vector z, to y: G : {x,z} → y.
     - 対称的に、cGAN は、観測された画像 x とランダムノイズ z から、y:: G : {x,z} → y への写像を学習する。
@@ -207,6 +207,9 @@
 - > Unlike an unconditional GAN, both the generator and discriminator observe an input image.
     - > 条件付けのない GAN とは異なって [Unlike]、生成器と識別器の両方は、１つの入力画像を観測する。
 
+
+> 最も大きな違いは、GANではGeneratorに乱数zしか与えていなかったのが、pix2pix での cGAN では Generator に変換元となる画像も与えるようになっているという点です。そして、Discriminatorについても、GANでは1つの画像が与えられ、学習データに含まれている画像かGeneratorが生成した画像かという判断を下すだけだったのですが、Conditional GANでは2つの画像が与えられ、学習データに含まれている (変換元画像, 変換先画像) というペアなのか、 (変換元画像, 変換元画像からGeneratorが生成した画像) のペアなのかという判断を下すようになっています。
+
 ## 2.1. Objective
 
 - The objective of a conditional GAN can be expressed as
@@ -214,12 +217,169 @@
 
 ![image](https://user-images.githubusercontent.com/25688193/56846579-e9d33300-690b-11e9-9cf3-111e882697b0.png)<br>
 
-- where G tries to minimize this objective against an adversarial D that tries to maximize it, i.e. G^* =arg min_G max_D L_cGAN(G;D).
+> (z → noise vector, x → input image, y → output image)<br>
+> cf : cGAN の損失関数<br>
+> ![image](https://user-images.githubusercontent.com/25688193/56847771-94525280-691a-11e9-8515-0b10522aa2f4.png)<br>
+
+- where G tries to minimize this objective against an adversarial D that tries to maximize it, i.e. ![image](https://user-images.githubusercontent.com/25688193/56847145-636e1f80-6912-11e9-8814-f3bdf4df8aa8.png).
     - ここで、G は、D に対抗して、この目的関数を最小化しようとする。
     - D は、この目的関数を最大化しようとする。
-    - 例えば、G^* =arg min_G max_D L_cGAN(G;D).
+    - 例えば、![image](https://user-images.githubusercontent.com/25688193/56847145-636e1f80-6912-11e9-8814-f3bdf4df8aa8.png).
 
 - To test the importance of conditioning the discrimintor, we also compare to an unconditional variant in which the discriminator does not observe x:
+    - 識別器を条件付けの重要性をテストするために、
+    - 識別器が x を観測しないような、条件付けされていな変種を比較する。
+    - 即ち、
+
+![image](https://user-images.githubusercontent.com/25688193/56846822-cbbb0200-690e-11e9-9561-86ad53cc0a1b.png)<br>
+
+- Previous approaches to conditional GANs have found it beneficial to mix the GAN objective with a more traditional loss, such as L2 distance [29].
+    - cGAN への以前のアプローチでは、
+    - L2 距離のような、より伝統的な損失関数での GAN の目的関数を組み合わせることが、有益である [beneficial] ということがわかっている。[29]
+
+- The discriminator’s job remains unchanged, but the generator is tasked to not only fool the discriminator but also to be near the ground truth output in an L2 sense.
+    - 識別器の仕事は、変わらないままである。
+    - しかし、生成器は、識別器を騙すだけでなく、L2 の意味 [sense] での、ground truth な出力の近くになるように、仕向けられている。
+
+- We also explore this option, using L1 distance rather than L2 as L1 encourages less blurring:
+    - 我々はまた、L1 のほうが、ぼやけが少ないので [as]、L2 よりも L1 を使用し、
+    - このオプションを探索する。
+    - 即ち、
+
+![image](https://user-images.githubusercontent.com/25688193/56847095-cb703600-6911-11e9-8944-eabea1712c70.png)
+
+- Our final objective is
+    - 最終的な目的関数は、
+
+![image](https://user-images.githubusercontent.com/25688193/56847105-f064a900-6911-11e9-91dd-9e8e508cd48b.png)
+
+> L1正則化項は、変換先画像とGeneratorが生成した画像がピクセル単位でどれくらい違っているかということを表しており、これを最小化するということは、ピクセル単位で正解画像に近いような画像を生成するようになるということです。これにより、Discriminatorによって大域的な正しさを判定しつつ、L1正則化でピクセル単位での正しさも勘案する、ということが可能になります。
+
+- Without z, the net could still learn a mapping from x to y, but would produce deterministic outputs, and therefore fail to match any distribution other than a delta function.
+    - z なしに、ネットワークは依然として、x から y への写像を学習することはできた。
+    - しかし、決定論的な出力を生成するだろう。
+    - そして、それ故に、デルタ関数以外の他の（関数）の分布に一致しない。
+
+> 確率分布の形状が、デルタ関数であることは、確率１の決定論的な確率分布になっていることを意味している。
+
+- Past conditional GANs have acknowledged this and provided Gaussian noise z as an input to the generator, in addition to x (e.g., [39]).
+    - 過去の CGAN は、これを認めて [acknowledged]、
+    - x に加えて、生成器への入力としての、ガウスノイズ z を提供した。（例えば、[39]）
+
+- In initial experiments, we did not find this strategy effective – the generator simply learned to ignore the noise – which is consistent with Mathieu et al. [27].
+    - 初期の実験では、我々は、この戦略が効果的であることを見つけ出せなかった。
+    - 即ち、生成器は、単純にノイズを無視するように学習した。
+    - このことは、Mathieu [27] 等と矛盾なく一致する [consistent]。
+
+- Instead, for our final models, we provide noise only in the form of dropout, applied on several layers of our generator at both training and test time.
+    - 代わりに、我々の最終的なモデルために、
+    - dropout の形のみで、ノイズを提供する。
+    - （このノイズ？dropuout?というのは、）学習時間とテスト時間の両方で、生成器のいくつかの層に適用されるような（ノイズ？dropout?）
+
+- Despite the dropout noise, we observe very minor stochasticity in the output of our nets.
+    - dropout ノイズにも関わらず、ネットワークの出力において、とても僅かな確率 [stochasticity] を観測する。
+
+- Designing conditional GANs that produce stochastic output, and thereby capture the full entropy of the conditional distributions they model, is an important question left open by the present work.
+    - 確率出力を生成する cGAN を設計すること、
+    - そして、それによって [thereby ]、モデルの条件付き確率の全エントロピーを捕まえることは、
+    - 現在の研究での、未解決の重要な問題である。
+
+## 2.2. Network architectures
+
+- We adapt our generator and discriminator architectures from those in [30].
+    - [30] のものから、生成器と識別器のアーキテクチャを適用した。
+
+- Both generator and discriminator use modules of the form convolution-BatchNorm-ReLu [18].
+    - 生成器と識別器の両方は、convolution-BatchNorm-ReLu の形のモジュール [18] を使用する。
+
+- Details of the architecture are provided in the appendix, with key features discussed below.
+    - アーキテクチャの詳細は、以下ので議論される鍵となる特徴とともに、補足に提供している。
+
+![image](https://user-images.githubusercontent.com/25688193/56847826-ce702400-691b-11e9-9e14-b51aef1be691.png)<br>
+
+### 2.2.1 Generator with skips
+
+- A defining feature of image-to-image translation problems is that they map a high resolution input grid to a high resolution output grid.
+    - image-to-image 変換問題の決定的な [defining] 特徴は、高解像度の入力グリッドを、高解像度の出力グリッドへ写像するということである。
+
+- In addition, for the problems we consider, the input and output differ in surface appearance, but both are renderings of the same underlying structure.
+    - 加えて、我々が考えている問題に対しては、入力と出力は、表面の見え方が異なる。
+    - しかし、両方とも、同じ基本的な [underlying] 構造をレンダリングしている。
+
+- Therefore, structure in the input is roughly aligned with structure in the output.
+    - これ故、入力の構造は、出力の構造に、おおまかにそろっている。[aligned]
+
+- We design the generator architecture around these considerations.
+    - 我々は、これらの考慮して、生成器のアーキテクチャを設計する。
+
+<br>
+
+- Many previous solutions [29, 39, 19, 48, 43] to problems in this area have used an encoder-decoder network [16].
+    - この領域において、多くの以前の解決法 [29, 39, 19, 48, 43] が、encoder-decoder network を使用していた。
+
+- In such a network, the input is passed through a series of layers that progressively downsample, until a bottleneck layer, at which point the process is reversed (Figure 3).
+    - このようなネットワークにおいては、
+    - 入力は、一連の層を通過する。
+    - ボトルネックとなっている層まで、徐々に [progressively] ダウンサンプリング
+    - （ボトルネックとなっている）その点では、処理は逆方向になる。
+    - （図３）
+
+- Such a network requires that all information flow pass through all the layers, including the bottleneck.
+    - **このようなネットワークでは、ボトルネックを含めて、全ての情報フローが、全ての層を通過することを要求する。**
+
+- For many image translation problems, there is a great deal of low-level information shared between the input and output, and it would be desirable to shuttle this information directly across the net.
+    - **多くの画像変換問題に対して、入力と出力との間で共有されるような、多量の [a great deal of] 低レベルでの情報がある。**
+    - **そして、ネットワークを渡って、この情報を直接的にシャッフルすることが望ましい。**
+
+- For example, in the case of image colorizaton, the input and output share the location of prominent edges.
+    - 例えば、画像の色付けの場合では、入力と出力は、突き出した [prominent] 辺の位置を共有する。
+
+<br>
+
+- To give the generator a means to circumvent the bottleneck for information like this, we add skip connections, following the general shape of a “U-Net” [34] (Figure 3).
+    - **このような情報に対してのボトルネックを回避する [circumvent] ための手段 [mean] を、生成器に与えるために、**
+    - **"U-Net" の一般的な構造に従って、skip connections を加える。**
+
+- Specifically, we add skip connections between each layer i and layer n-i, where n is the total number of layers.
+    - 特に、層 i と層 n-i の各々の間に、skip connections を加える。
+    - ここで、n は、全ての層の数である。
+
+- Each skip connection simply concatenates all channels at layer i with those at layer n - i.
+    - 各 skip connection は、層 n-i のものとともに、層 i で、全てのチャンネルで、単純に結合する。
+
+> pix2pix で UNet の構造が使われている理由は、UNet に入る全ての情報が、全ての層にフローされるために、image-to-image のタスクにおいてこのことが、入力と出力との間の
+
+![image](https://user-images.githubusercontent.com/25688193/56848050-fd3bc980-691e-11e9-9c90-95fc0e206af2.png)<br>
+
+- > Figure 3: Two choices for the architecture of the generator.
+    - > 図３：生成器のアーキテクチャのための、２つの選択
+
+- > The “U-Net” [34] is an encoder-decoder with skip connections between mirrored layers in the encoder and decoder stacks.
+    - "U-Net" は、encoder の中の mirrored layers と、decoder の stacks の間の skip connections をもつ encoder-decoder である。[34]
+
+### 2.2.2 Markovian discriminator (PatchGAN)
+
+> PatchGANは、Discriminatorに画像を与える際に、画像すべてではなく、16x16や70x70といった小領域(=Patch)を切り出してから与えるようにするという仕組みです。これにより、ある程度大域的な判定を残しながらも学習パラメータ数を削減することができ、より効率的に学習することができるそうです。
+
+- It is well known that the L2 loss – and L1, see Figure 4 – produces blurry results on image generation problems [22].
+    - L2損失関数と L1損失関数は、
+    - 画像生成問題のぼやけた結果を生成するということが、よく知られている。（図４を参照）
+
+![image](https://user-images.githubusercontent.com/25688193/56848494-cbc5fc80-6924-11e9-9b94-45e4a39005c5.png)<br>
+
+- > Figure 4: Different losses induce different quality of results. 
+
+- > Each column shows results trained under a different loss. 
+
+- > Please see https://phillipi.github.io/pix2pix/ for additional examples. 
+
+<br>
+
+- Although these losses fail to encourage highfrequency crispness, in many cases they nonetheless accurately capture the low frequencies.
+
+- For problems where this is the case, we do not need an entirely new framework to enforce correctness at the low frequencies.
+
+- L1 will already do.
 
 
 

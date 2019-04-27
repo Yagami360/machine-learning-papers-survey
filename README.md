@@ -8,6 +8,7 @@
     - [Unsupervised Representation Learning with Deep Convolutional Generative Adversarial Networks](https://github.com/Yagami360/MachineLearning-Papers_Survey/blob/master/papers/UnsupervisedRepresentationLearningwithDeepConvolutionalGenerativeAdversarialNetworks/DeepConvolutionalGAN.md)
     - [Conditional Generative Adversarial Nets](https://github.com/Yagami360/MachineLearning-Papers_Survey/blob/master/papers/ConditionalGenerativeAdversarialNets/ConditionalGAN.md)
     - [Wasserstein GAN](https://github.com/Yagami360/MachineLearning-Papers_Survey/blob/master/papers/WassersteinGAN/WassersteinGAN.md)
+    - Image-to-Image Translation with Conditional Adversarial Networks
 - Others
     - xxx
 

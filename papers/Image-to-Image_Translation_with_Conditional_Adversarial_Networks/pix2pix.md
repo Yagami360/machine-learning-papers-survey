@@ -347,7 +347,9 @@
 - Each skip connection simply concatenates all channels at layer i with those at layer n - i.
     - 各 skip connection は、層 n-i のものとともに、層 i で、全てのチャンネルで、単純に結合する。
 
+<!--
 > pix2pix で UNet の構造が使われている理由は、UNet に入る全ての情報が、全ての層にフローされるために、image-to-image のタスクにおいてこのことが、入力と出力との間の
+-->
 
 ![image](https://user-images.githubusercontent.com/25688193/56848050-fd3bc980-691e-11e9-9c90-95fc0e206af2.png)<br>
 
@@ -357,9 +359,19 @@
 - > The “U-Net” [34] is an encoder-decoder with skip connections between mirrored layers in the encoder and decoder stacks.
     - "U-Net" は、encoder の中の mirrored layers と、decoder の stacks の間の skip connections をもつ encoder-decoder である。[34]
 
+
+> ![image](https://user-images.githubusercontent.com/25688193/56857732-15a5f580-69ac-11e9-8ff9-2ccd55712be4.png)
+
+> UNetでは、CNNでの、Encoder-decoderのように全ての情報をボトルネックまでダウンサンプリングさせるのではなく、共通の特徴量はレイヤー間をスキップさせてボトルネックを回避させる
+
+> pix2pixでは入力と出力の表面上の外見は異なりますが、基本構造は一緒のため、このような方法で共通の特徴量におけるデータ欠損を回避させます。
+
+
 ### 2.2.2 Markovian discriminator (PatchGAN)
 
 > PatchGANは、Discriminatorに画像を与える際に、画像すべてではなく、16x16や70x70といった小領域(=Patch)を切り出してから与えるようにするという仕組みです。これにより、ある程度大域的な判定を残しながらも学習パラメータ数を削減することができ、より効率的に学習することができるそうです。
+
+> PatachGAN。これはcGANモデルにL1モデルを組み込むことで、大雑把な画像をL1で捉え、cGANがその詳細を捉えるという方法です。L1による画像生成だけでは細部がぼやけ、cGANのみの画像生成だけではDiscriminatorを騙すための違和感が生じてしまうので、これらを組み合わせることで互いの得意な作業を使い分け、精度を向上させます[4]。
 
 - It is well known that the L2 loss – and L1, see Figure 4 – produces blurry results on image generation problems [22].
     - L2損失関数と L1損失関数は、
@@ -368,29 +380,124 @@
 ![image](https://user-images.githubusercontent.com/25688193/56848494-cbc5fc80-6924-11e9-9b94-45e4a39005c5.png)<br>
 
 - > Figure 4: Different losses induce different quality of results. 
+    - > 図４：異なる損失関数は、異なる結果のクオリティを示している。
 
 - > Each column shows results trained under a different loss. 
+    - >各列は、異なる損失関数のもとで、学習された結果である。
 
 - > Please see https://phillipi.github.io/pix2pix/ for additional examples. 
 
 <br>
 
 - Although these losses fail to encourage highfrequency crispness, in many cases they nonetheless accurately capture the low frequencies.
+    - これらの損失関数は、高周波成分の鮮明さ [crispness] を推奨 [encourage] しないけれども、
+    - 多くのケースにおいて、それにも関わらず [nonetheless]、低周波成分を正確に捉える。
+
+> 画像の高周波成分、低周波成分とは？
+
+> 画像は空間周波数という観点からとらえることができ，低い周波数成分は画像のおおまかな形状を，高い周波数成分は緻密な部分の情報を担っていることがわかります。
 
 - For problems where this is the case, we do not need an entirely new framework to enforce correctness at the low frequencies.
+    - これが事実である問題に対して、低周波成分での正しさを強制するために、我々は、新しいフレームワークの全体を必要としない。
 
 - L1 will already do.
+    - L1 損失関数は、すでにそうである。
+
+<br>
+
+- This motivates restricting the GAN discriminator to only model high-frequency structure, relying on an L1 term to force low-frequency correctness (Eqn. 4).
+    - この動機は、高周波成分の構造のみをもつモデルに、GAN の識別器を、制限する [restricting]。
+    - 低周波成分での正確性を強制するような L1項に頼って、
+
+- In order to model high-frequencies, it is sufficient to restrict our attention to the structure in local image patches.
+    - **高周波成分のモデルのためには、局所的な画像パッチにおいての構造に、我々の注意を向ければ十分である。**
+
+- Therefore, we design a discriminator architecture – which we term a PatchGAN – that only penalizes structure at the scale of patches. 
+    - **これ故、我々は、識別器のアーキテクチャを設計する。**
+    - **我々はこれを、PatchGAN と呼ぶ。**
+    - **（この PatchGAN というのは、）パッチのスケールで、構造にペナルティーを課すのみであるような（ものである。）**
+
+- This discriminator tries to classify if each N × N patch in an image is real or fake.
+    - この識別器は、１つの画像の各 N×N のパッチが、本物か偽物かを分類しようとする。
+
+- We run this discriminator convolutationally across the image, averaging all responses to provide the ultimate output of D.
+    - 我々は、この識別器を、画像に渡っての、畳み込みで動作させ、
+    - 全ての応答の平均化し、D の最終的な [ultimate] 出力を提供する。
+
+<br>
+
+- In Section 3.4, we demonstrate that N can be much smaller than the full size of the image and still produce high quality results.
+    - **セクション 3.4 では、N は、画像のフルサイズよりも、遥かに小さいことと、依然としてハイクオリティな結果を生成することを実証する。**
+
+- This is advantageous because a smaller PatchGAN has fewer parameters, runs faster, and can be applied on arbitrarily large images.
+    - **これは、利点である。**
+    - **なぜならば、より小さい PatchGAN は、より少ないパラメーターで、よりはやく動作し、そして、任意の [arbitrarily] 大きな画像に適用できるからである。**
+
+<br>
+
+- Such a discriminator effectively models the image as a Markov random field, assuming independence between pixels separated by more than a patch diameter.
+    - <font color="Pink">このような識別器は、マルコフ確率場 [Markov random field] として、画像を効果的にモデル化する。
+    - パッチの直径 [diameter] よりも離れているピクセルの間の独立性を推定しながら、</font>
+
+- This connection was previously explored in [25], and is also the common assumption in models of texture [8, 12] and style [7, 15, 13, 24].
+    - この接続は、以前に [25] で探求された。
+    - そして、テスクチャとスタイルのモデルにおいても、共通の仮定である。
+
+- Our PatchGAN can therefore be understood as a form of texture/style loss.
+    - 我々の PatchGAN は、それ故、texture/style の損失関数の形として、理解される。
 
 
+### 2.3. Optimization and inference    
 
-# ■ 実験結果（主張の証明）・議論（手法の良し悪し）
+- To optimize our networks, we follow the standard approach from [14]: we alternate between one gradient descent step on D, then one step on G.
+    - 我々のネットワークを最適化するために、[14] からの標準的なアプローチに従う。
+    - 即ち、D の１つの勾配ステップと、G の１つの勾配ステップの間を交互に入れ替わる [alternate]。
 
-## x. 論文の項目名
+- We use minibatch SGD and apply the Adam solver [20].
+    - 我々は、SGD のミニバッチを使用し、Adam soler を適用する。
+
+<br>
+
+- At inference time, we run the generator net in exactly the same manner as during the training phase.
+    - 推論フェイズでは、学習フェイズの間とまったく同じ方法 [manner] で、生成器を動作する。
+
+- This differs from the usual protocol in that we apply dropout at test time, and we apply batch normalization [18] using the statistics of the test batch, rather than aggregated statistics of the training batch.
+    - これは、テストフェイズでドロップアウトを適用するという点において、一般的なプロトコルとは異なり、
+    - 学習バッチの総計の [aggregated] 統計ではなく、テストバッチの統計を使用している batch normalization [18] を適用する
+
+- This approach to batch normalization, when the batch size is set to 1, has been termed “instance normalization” and has been demonstrated to be effective at image generation tasks [38].
+    - バッチサイズが１に設定されているとき、
+    - この barch normalization に向けてのアプローチは、“instance normalization” と呼ばれてきた。
+    - そして、画像生成タスクで、効果的であることが実証されている。[38]
+
+- In our experiments, we use batch size 1 for certain experiments and 4 for others, noting little difference between these two conditions.
+    - 我々の実験では、バッチサイズ１をいくらかの [certain] 実験のために使用し、バッチサイズ４を他の実験で使用する。
+    - それら２つの条件の間の違いはほとんどない。
 
 
-# ■ メソッド（実験方法）
+# ■ 実験結果（主張の証明）・議論（手法の良し悪し）・メソッド（実験方法）
 
-## x. 論文の項目名
+## 3. Experiments
+
+- To explore the generality of conditional GANs, we test the method on a variety of tasks and datasets, including both graphics tasks, like photo generation, and vision tasks, like semantic segmentation:
+    - Semantic labels$photo, trained on the Cityscapes dataset [4].
+    - Architectural labels!photo, trained on the CMP Facades dataset [31].
+    - Map → aerial photo, trained on data scraped from Google Maps.
+    - BW → color photos, trained on [35].
+    - Edges → photo, trained on data from [49] and [44]; binary edges generated using the HED edge detector [42] plus postprocessing.
+    - Sketch → photo: tests edges!photo models on humandrawn sketches from [10].
+    - Day → night, trained on [21].
+
+
+### 3.1. Evaluation metrics
+
+### 3.2. Analysis of the objective function
+
+### 3.3. Analysis of the generator architecture
+
+### 3.4 From PixelGANs to PatchGans to ImageGANs
+
+### 3.5. Perceptual validation
 
 
 # ■ 関連研究（他の手法との違い）

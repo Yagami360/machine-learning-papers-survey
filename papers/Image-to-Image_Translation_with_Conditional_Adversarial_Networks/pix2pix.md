@@ -480,14 +480,18 @@
 ## 3. Experiments
 
 - To explore the generality of conditional GANs, we test the method on a variety of tasks and datasets, including both graphics tasks, like photo generation, and vision tasks, like semantic segmentation:
-    - Semantic labels$photo, trained on the Cityscapes dataset [4].
-    - Architectural labels!photo, trained on the CMP Facades dataset [31].
+    - Semantic labels↔photo, trained on the Cityscapes dataset [4].
+    - Architectural labels → photo, trained on the CMP Facades dataset [31].
     - Map → aerial photo, trained on data scraped from Google Maps.
     - BW → color photos, trained on [35].
     - Edges → photo, trained on data from [49] and [44]; binary edges generated using the HED edge detector [42] plus postprocessing.
     - Sketch → photo: tests edges!photo models on humandrawn sketches from [10].
     - Day → night, trained on [21].
 
+- cGAN の一般性を探求するために、写真生成のようなグラフィックスタスクと、セマンティックセグメンテーションのようなコンピュータービジョンタスクの両方を、様々なタスクとデータセットでメソッドをテストする。
+    - Cityscapes dataset [4] で学習された、セマンティックラベル ↔ 写真。
+    - CMP Facades dataset [31] で学習された、アーキテクチャ上のラベル → 写真。
+    - xxx
 
 ### 3.1. Evaluation metrics
 

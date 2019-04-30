@@ -161,17 +161,116 @@
 - > The arrows denote the diffierent operations.
     - > 矢印は、異なるオペレーションを示している。
 
+> ![image](https://user-images.githubusercontent.com/25688193/56893821-fcda3480-6abe-11e9-93fe-f2963d0425e3.png)<br>
+
 <br>
+
+- One important modication in our architecture is that in the upsampling part we have also a large number of feature channels, which allow the network to propagate context information to higher resolution layers.
+    - 我々のアーキテクチャにおける１つの重要な修正は、アップサンプリング部分において、膨大な特徴マップチャンネルも持っているということである。
+    - （この特徴チャンネルというのは、）より高い解像度の層へ、画像内容の情報を伝搬する [propagate] ことを、ネットワークに許容する。
+
+- As a consequence, the expansive path is more or less symmetric to the contracting path, and yields a u-shaped architecture.
+    - 結論として、expansive path は多かれ少なかれ、contracting path と対称であり、U字型のアーキテクチャを生み出す。
+
+- The network does not have any fully connected layers and only uses the valid part of each convolution, i.e., the segmentation map only contains the pixels, for which the full context is available in the input image.
+    - **このネットワークは、全結合層を一切使用していない。**
+    - そして、各畳み込みの有効な [valid] 部分のみを使用する。
+    - 例えば、フル画像の内容が入力画像内で利用可能であるような、ピクセルのみを含むセグメンテーションマップ
+
+- This strategy allows the seamless segmentation of arbitrarily large images by an overlap-tile strategy (see Figure 2).
+    - **この戦略は、overlap-tile strategy（重なるタイル戦略）によって、任意の [arbitrarily] 大きな画像のシームレスなセグメンテーションを許可する。（図２を参照）**
+
+- To predict the pixels in the border region of the image, the missing context is extrapolated by mirroring the input image.
+    - 画像の境界領域におけるピクセルを予想するためには、ミラーリングした入力画像によって、欠けている画像内容は外挿 [extrapolated] される。
+
+- This tiling strategy is important to apply the network to large images, since otherwise the resolution would be limited by the GPU memory.
+    - この tiling strategy は、ネットワークに大きな画像を適用するために重要である。
+    - さもないと、解像度が、GPU メモリで制限されるため。
+
+![image](https://user-images.githubusercontent.com/25688193/56894413-c00f3d00-6ac0-11e9-8bd2-5fce592f6ff8.png)<br>
+
+- > Fig. 2. Overlap-tile strategy for seamless segmentation of arbitrary large images (here segmentation of neuronal structures in EM stacks).
+    - > 図２：任意の大きな画像のセマンティックセグメンテーションにための、Overlap-tile strategy
+    - > ここでは、ニューロン構造のセマンティックセグメンテーション
+
+- > Prediction of the segmentation in the yellow area, requires image data within the blue area as input.
+    - > 黄色の枠内での、セグメンテーションの予想は、入力としての青い枠内の画像データを要求する。
+
+- > Missing input data is extrapolated by mirroring.
+    - > 欠損した入力データは、ミラーリングによって、外挿される。
+
+<br>
+
+- As for our tasks there is very little training data available, we use excessive data augmentation by applying elastic deformations to the available training images.
+    - 我々のタスクの対して、僅かな学習用データが利用可能であるので、
+    - 利用可能な学習用画像データを、柔軟な [elastic] 変形 [deformations] を適用することによって、過度の [excessive] データオーグメンテーション [data augmentation] を使用する。
+
+- This allows the network to learn invariance to such deformations, without the need to see these transformations in the annotated image corpus.
+    - これは、ネットワークに、このような変形への不変性 [invariance] を学習することを許容する。
+    - アノテーション付き画像コーパスにおいて、これらの変換を見る必要なしに、
+
+- This is particularly important in biomedical segmentation, since deformation used to be the most common variation in tissue and realistic deformations can be simulated efficiently.
+    - これは、生体医療において、特に重要である。
+    - （これは、）細胞の組織において、かつて最も共通の変化であった変形やリアルな変形が、効果的にシミュレーション出来るためである。
+
+- The value of data augmentation for learning invariance has been shown in Dosovitskiy et al. [2] in the scope of unsupervised feature learning.
+    - 不変性 [invariance] の学習に対しての、データオーグメンテーションの価値は、教師なしの特徴学習において、Dosovitskiy [2] で示されている。
+
+<br>
+
+- Another challenge in many cell segmentation tasks is the separation of touching objects of the same class; see Figure 3.
+    - 多くの細胞セグメンテーションタスクにおける他のチャレンジは、同じクラスの接触しているオブジェクトの分離である。（図３を参照のこと）
+
+- To this end, we propose the use of a weighted loss, where the separating background labels between touching cells obtain a large weight in the loss function.
+    - この目的を達成するために、[To this end]
+    - 我々は、重み付き損失関数の使用を提案する。
+    - （この重み付き損失関数というのは、）接触している細胞セルとの間の、分離された背景ラベルが、損失関数において、大きな重みを手に入れる（というもの）
+
+> 図３の (d) で、各セルが接している部分が、赤↔青 で描かれており、この部分が大きな重みとなっている。
+
+<br>
+
+- The resulting network is applicable to various biomedical segmentation problems.
+    - 結果のネットワークは、様々な生体医療のセグメンテーション問題に適用出来る。
+
+- In this paper, we show results on the segmentation of neuronal structures in EM stacks (an ongoing competition started at ISBI 2012), where we outperformed the network of Ciresan et al. [1]. 
+
+- Furthermore, we show results for cell segmentation in light microscopy images from the ISBI cell tracking challenge 2015.
+
+- Here we won with a large margin on the two most challenging 2D transmitted light datasets.
+
+![image](https://user-images.githubusercontent.com/25688193/56936454-7bbc8500-6b32-11e9-813f-8481fa1621af.png)<br>
+
+- > Fig. 3. HeLa cells on glass recorded with DIC (diffierential interference contrast) microscopy.
+
+- > (a) raw image.
+
+- > (b) overlay with ground truth segmentation. 
+
+- > Diffierent colors indicate diffierent instances of the HeLa cells.
+
+- > (c) generated segmentation mask (white:foreground, black: background).
+    - > (c) 生成されたセグメンテーションマスク（白：最前面、黒：背景）
+
+- > (d) map with a pixel-wise loss weight to force the network to learn the border pixels.
+    - > (d) ネットワークに、境界のピクセルを学習させるための、ピクセル単位の損失関数の重みでのマップ
 
 
 # ■ 結論
 
-## x. 論文の項目名 (Conclusion)
+## 5 Conclusion
+
+- The u-net architecture achieves very good performance on very diffierent biomedical segmentation applications.
+
+- Thanks to data augmentation with elastic defor-mations, it only needs very few annotated images and has a very reasonable training time of only 10 hours on a NVidia Titan GPU (6 GB).
+
+- We provide the full Caffie[6]-based implementation and the trained networks4. We are sure that the u-net architecture can be applied easily to many more tasks.
 
 
 # ■ 何をしたか？詳細
 
-## x. 論文の項目名
+## 2 Network Architecture
+
 
 
 # ■ 実験結果（主張の証明）・議論（手法の良し悪し）・メソッド（実験方法）

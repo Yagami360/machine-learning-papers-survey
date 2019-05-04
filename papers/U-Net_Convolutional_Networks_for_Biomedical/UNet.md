@@ -105,6 +105,10 @@
 - More recent approaches [11,4] proposed a classier output that takes into account the features from multiple layers.
     - 分類器を目的とした、より最近のアプローチでは、複数の層からの特徴を考慮に入れて、出力する。
 
+> U-Netでは、Encoderの各層で出力される特徴マップを、Decoderの対応する層の特徴マップに直接連結することでpixelのディティールを補っている。
+
+> 前の層の特徴マップと統合するという点ではFCNのアプローチにも似ているが、FCNでは違う層の特徴マップ同士をチャンネルごとの値の足し算で統合しているのに対し、U-NetではEncoderで出力された特徴マップを別チャンネルとしてDecoderの特徴マップに追加する形で連結している。
+
 - Good localization and the use of context are possible at the same time.
     - よい局所化と、画像内容の利用は、同時に可能である。
 
@@ -255,6 +259,7 @@
 - > (d) map with a pixel-wise loss weight to force the network to learn the border pixels.
     - > (d) ネットワークに、境界のピクセルを学習させるための、ピクセル単位の損失関数の重みでのマップ
 
+> ![image](https://user-images.githubusercontent.com/25688193/56937257-bf18f280-6b36-11e9-93d0-7eaa350ed9fb.png)<br>
 
 # ■ 結論
 
@@ -271,6 +276,7 @@
 
 ## 2 Network Architecture
 
+## 3 Training
 
 
 # ■ 実験結果（主張の証明）・議論（手法の良し悪し）・メソッド（実験方法）

@@ -1,8 +1,8 @@
 # ■ 論文
 - 論文タイトル："Image-to-Image Translation with Conditional Adversarial Networks"
-- 論文リンク：
-- 論文投稿日付：
-- 著者：
+- 論文リンク：https://arxiv.org/abs/1611.07004
+- 論文投稿日付：2016/11/21(v1), 2018/11/26(v3)
+- 著者：Phillip Isola, Jun-Yan Zhu, Tinghui Zhou, Alexei A. Efros
 - categories：
 
 # ■ 概要（何をしたか？）
@@ -274,7 +274,7 @@
 - Instead, for our final models, we provide noise only in the form of dropout, applied on several layers of our generator at both training and test time.
     - 代わりに、我々の最終的なモデルために、
     - dropout の形のみで、ノイズを提供する。
-    - （このノイズ？dropuout?というのは、）学習時間とテスト時間の両方で、生成器のいくつかの層に適用されるような（ノイズ？dropout?）
+    - （このdropuoutでのノイズというのは、）学習フェイズとテストフェイズの両方で、生成器のいくつかの層に適用されるような（dropoutでのノイズ）
 
 - Despite the dropout noise, we observe very minor stochasticity in the output of our nets.
     - dropout ノイズにも関わらず、ネットワークの出力において、とても僅かな確率 [stochasticity] を観測する。
@@ -283,6 +283,8 @@
     - 確率出力を生成する cGAN を設計すること、
     - そして、それによって [thereby ]、モデルの条件付き確率の全エントロピーを捕まえることは、
     - 現在の研究での、未解決の重要な問題である。
+
+> 生成器 G に入力する入力ノイズ z は、従来の GAN のように、確率分布 U(0,1)  or N(0,1)  から直接サンプリングして実現するのではなく、生成器のネットワークの複数の層に、直接 dropout を施すという意味でのノイズとして実現する。
 
 ## 2.2. Network architectures
 
@@ -371,7 +373,9 @@
 
 > PatchGANは、Discriminatorに画像を与える際に、画像すべてではなく、16x16や70x70といった小領域(=Patch)を切り出してから与えるようにするという仕組みです。これにより、ある程度大域的な判定を残しながらも学習パラメータ数を削減することができ、より効率的に学習することができるそうです。
 
+<!--
 > PatachGAN。これはcGANモデルにL1モデルを組み込むことで、大雑把な画像をL1で捉え、cGANがその詳細を捉えるという方法です。L1による画像生成だけでは細部がぼやけ、cGANのみの画像生成だけではDiscriminatorを騙すための違和感が生じてしまうので、これらを組み合わせることで互いの得意な作業を使い分け、精度を向上させます[4]。
+-->
 
 - It is well known that the L2 loss – and L1, see Figure 4 – produces blurry results on image generation problems [22].
     - L2損失関数と L1損失関数は、

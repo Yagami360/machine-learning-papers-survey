@@ -145,12 +145,49 @@
     - 一般的に、我々は、学習中に中間潜在空間を直接的に形づくる [shaping] ための方法が、将来の研究のために、興味深い手段 [avenues] を提供することを期待する。
 
 
----
-
-
 # ■ 何をしたか？詳細
 
 ## 2. Style-based generator
+
+- Traditionally the latent code is provided to the generator through an input layer, i.e., the first layer of a feedforward network (Figure 1a). 
+    - 伝統的に、潜在コードは、生成器の１つの入力層を通って、提供される。
+    - 例えば、順伝搬ネットワークの最初の層。（図1a）
+
+![image](https://user-images.githubusercontent.com/25688193/57176992-413c4a80-6e9a-11e9-8689-0c3fa4a5287a.png)<br>
+
+
+- We depart from this design by omitting the input layer altogether and starting from a learned constant instead (Figure 1b, right). 
+    - 我々は、入力層を完全に省略 [omitting] し 、代わりに学習済み定数から開始することによって 、このデザインから出発する。
+
+- Given a latent code z in the input latent space Z, a non-linear mapping network f : Z → W first produces w ∈ W (Figure 1b, left).
+    - 入力潜在空間 Z の中の潜在コード z を与えるような、
+    - 非線形写像 f : Z → W は、最初に w ∈ W を生成する。（図1bの左）
+
+- For simplicity, we set the dimensionality of both spaces to 512, and the mapping f is implemented using an 8-layer MLP, a decision we will analyze in Section 4.1.
+    - 単純に、我々は、両方の空間の次元を、512 に設定する。
+    - そして、写像 f は、8層の MLP を使用して実装される。
+    - この決定については、セクション 4.1 で分析する。
+
+- Learned affine transformations then specialize w to styles y = (y_s,y_b) that control adaptive instance normalization (AdaIN) [27, 17, 21, 16] operations after each convolution layer of the synthesis network g.
+    - w を スタイル y = (y_s,y_b) に特定するように学習されたアフィン変換
+    - （このスタイル y というのは、）合成されたネットワーク G の各畳み込みの後で、adaptive instance normalization (AdaIN) 演算子を制御するようなもの
+
+> A：w を style=(y_s,y_b) に変換するためののアフィン変換
+
+> 潜在変数wはアフィン変換されることでスタイルyになる
+
+- The AdaIN operation is defined as
+
+![image](https://user-images.githubusercontent.com/25688193/57177273-b8bfa900-6e9d-11e9-829d-8db08864a8fb.png)<br>
+
+- where each feature map xi is normalized separately, and then scaled and biased using the corresponding scalar components from style y.
+
+- Thus the dimensionality of y is twice the number of feature maps on that layer.
+
+![image](https://user-images.githubusercontent.com/25688193/57177089-68474c00-6e9b-11e9-8568-d038a8e7e9ec.png)<br>
+
+
+---
 
 
 # ■ 実験結果（主張の証明）・議論（手法の良し悪し）・メソッド（実験方法）

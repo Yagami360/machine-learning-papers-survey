@@ -65,7 +65,7 @@
 
 - Our generator starts from a learned constant input and adjusts the “style” of the image at each convolution layer based on the latent code, therefore directly controlling the strength of image features at different scales.
     - 我々の生成器は、学習された一定の入力からスタートする。
-    - そして、潜在コード？において、各畳み込み層ベースでの、画像の ”スタイル” を調整する。
+    - そして、潜在変数において、各畳み込み層ベースでの、画像の ”スタイル” を調整する。
     - それ故、異なるスケールで、画像の特徴の強度を直接的にコントロールする。
 
 - Combined with noise injected directly into the network, this architectural change leads to automatic, unsupervised separation of high-level attributes (e.g., pose, identity) from stochastic variation (e.g., freckles,hair) in the generated images, and enables intuitive scale-specific mixing and interpolation operations.
@@ -79,7 +79,7 @@
 ---
 
 - Our generator embeds the input latent code into an intermediate latent space, which has a profound effect on how the factors of variation are represented in the network.
-    - **我々の生成器は、入力潜在コードを、中間の [intermediate] 潜在空間へ埋め込む。**
+    - **我々の生成器は、入力潜在変数を、中間の [intermediate] 潜在空間へ埋め込む。**
     - **（この潜在空間というのは、）多様性の要因が、どのようにして、ネットワークの中で表されるのかということに、深い [profound] 影響を与えるような（潜在空間）**
 
 - The input latent space must follow the probability density of the training data, and we argue that this leads to some degree of unavoidable entanglement.
@@ -150,14 +150,14 @@
 ## 2. Style-based generator
 
 - Traditionally the latent code is provided to the generator through an input layer, i.e., the first layer of a feedforward network (Figure 1a). 
-    - 伝統的に、潜在コードは、生成器の１つの入力層を通って、提供される。
+    - 伝統的に、潜在変数は、生成器の１つの入力層を通って、提供される。
     - 例えば、順伝搬ネットワークの最初の層。（図1a）
 
 - We depart from this design by omitting the input layer altogether and starting from a learned constant instead (Figure 1b, right). 
     - 我々は、入力層を完全に省略 [omitting] し 、代わりに学習済み定数から開始することによって 、このデザインから出発する。
 
 - Given a latent code z in the input latent space Z, a non-linear mapping network f : Z → W first produces w ∈ W (Figure 1b, left).
-    - 入力潜在空間 Z の中の潜在コード z を与えるような、
+    - 入力潜在空間 Z の中の潜在変数 z を与えるような、
     - 非線形写像 f : Z → W は、最初に w ∈ W を生成する。（図1bの左）
 
 - For simplicity, we set the dimensionality of both spaces to 512, and the mapping f is implemented using an 8-layer MLP, a decision we will analyze in Section 4.1.
@@ -191,7 +191,7 @@
 - > Figure 1.
 
 - > While a traditional generator [30] feeds the latent code though the input layer only, we first map the input to an intermediate latent space W, which then controls the generator through adaptive instance normalization (AdaIN) at each convolution layer.
-    - > 伝統的な生成器が、潜在コードを、入力層のみ通す一方で、
+    - > 伝統的な生成器が、潜在変数を、入力層のみ通す一方で、
     - > 我々は、最初に、入力を、中間潜在空間 W へ写像する。
     - > （この中間潜在空間というのは、）各畳み込み層で、adaptive instance normalization (AdaIN) を通じて、生成器を制御するようなもの
 
@@ -258,10 +258,44 @@
 ---
 
 - To see the reason for this localization, let us consider how the AdaIN operation (Eq. 1) first normalizes each channel to zero mean and unit variance, and only then applies scales and biases based on the style.
+    - この局在化の理由を見るために、AdaIN 演算が、どのよにして、最初に各チャンネルを、平均値０や分散値１に、正規化するのかを、考察する。
+    - そして、そのときのみ、スタイルに基づいた、スケールとバイアスを適用する。
 
 - The new per-channel statistics, as dictated by the style, modify the relative importance of features for the subsequent convolution operation, but they do not depend on the original statistics because of the normalization.
+    - <font color="Pink">スタイルによって決定づけられる [dictated] ような、チャンネル単位の新しい統計では、それに続く [subsequent] 畳み込み演算に対して、特徴の相対的な [relative] 重要性を修正する。
+    - しかし、正規化のため、オリジナルの統計に依存しない。</font>
 
 - Thus each style controls only one convolution before being overridden by the next AdaIN operation.
+    - それ故、次の AdaIN 演算によって、上書きされる前に、各スタイルは、１つの畳み込みのみ制御する。
+
+### 3.1. Style mixing
+
+- To further encourage the styles to localize, we employ mixing regularization, where a given percentage of images are generated using two random latent codes instead of one during training.
+    - スタイルを局在化することを、更に促す [encourage] ために、
+    - 我々は、mixing regularization を使用する。
+    - （この mixing regularization というのは、）与えられた画像のパーセンテージが、学習の間に、１つ潜在変数の代わりに、の２つの潜在変数を使用して、生成される。
+
+- When generating such an image, we simply switch from one latent code to another—an operation we refer to as style mixing—at a randomly selected point in the synthesis network.
+    - そのような画像を生成するとき、
+    - 合成ネットワークにおいて、ランダムに選択された点で、
+    - 我々は、単純に、１つの潜在変数から、別の１つの演算（これをスタイル混合 [style mixing]という）に、交換する。
+
+- To be specific, we run two latent codes z_1,z_2 through the mapping network, and have the corresponding w_1,w_2 control the styles so that w_1 applies before the crossover point and w2 after it.
+    - 具体的に言うと、我々は、写像ネットワークを通じて、２つの潜在変数 z_1,z_2 を動作する。
+    - そして、対応している w_1 と w_2 で、スタイルを制御する。
+    - w_1 交差している点の前に適用し、
+    - そして、w_2 は、それの後に、（適用する。）
+
+- This regularization technique prevents the network from assuming that adjacent styles are correlated.
+    - **この正則化テクニックは、ネットワークが、隣接する [adjacent] スタイルが相関しているという仮定することを防ぐ。**
+
+---
+
+- Table 2 shows how enabling mixing regularization during training improves the localization considerably, indicated by improved FIDs in scenarios where multiple latents are mixed at test time.
+
+- Figure 3 presents examples of images synthesized by mixing two latent codes at various scales.
+
+- We can see that each subset of styles controls meaningful high-level attributes of the image.
 
 
 # ■ 実験結果（主張の証明）・議論（手法の良し悪し）・メソッド（実験方法）

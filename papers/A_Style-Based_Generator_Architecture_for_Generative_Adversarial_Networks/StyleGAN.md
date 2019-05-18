@@ -555,7 +555,11 @@
 
 - Similar to the inception score [53], the exponentiation brings the values from logarithmic to linear domain so that they are easier to compare.
     - inception score [53] によく似ている。
-    - xxx
+    - 比較がより簡単になるように、
+    - 指数関数は、対数 [logarithmic] から、線形領域へ、値をもたらす。
+
+> inception score : GANの性能評価に用いられている指標で、最もよく使われている指標。
+
 
 # ■ 実験結果（主張の証明）・議論（手法の良し悪し）・メソッド（実験方法）
 
@@ -724,6 +728,17 @@
 - We see that both traditional and style-based generators benefit from having a mapping network, and additional depth generally improves the perceptual path length as well as FIDs.
 
 - It is interesting that while lW improves in the traditional generator, lZ becomes considerably worse, illustrating our claim that the input latent space can indeed be arbitrarily entangled in GANs.
+
+
+### 4.2. Linear separability
+
+- Tables 3 and 4 show that W is consistently better separable than Z, suggesting a less entangled representation.
+
+- Furthermore, increasing the depth of the mapping network improves both image quality and separability in W, which is in line with the hypothesis that the synthesis network inherently favors a disentangled input representation.
+
+- Interestingly, adding a mapping network in front of a traditional generator results in severe loss of separability in Z but improves the situation in the intermediate latent spaceW, and the FID improves as well.
+
+- This shows that even the traditional generator architecture performs better when we introduce an intermediate latent space that does not have to follow the distribution of the training data.
 
 
 # ■ 関連研究（他の手法との違い）

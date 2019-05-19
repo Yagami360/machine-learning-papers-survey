@@ -21,14 +21,14 @@
     - **前例のない [unprecedented] 品質の画像を生成することを許容する。**
 
 - We also propose a simple way to increase the variation in generated images, and achieve a record inception score of 8.80 in unsupervised CIFAR10.
-    - 我々はまた、生成された画像において、変動を増加させるための単純な方法を提案する。
+    - 我々はまた、生成された画像において、変動（多様性）を増加させるための単純な方法を提案する。
     - そして、教師なしの CIFAR10 において、8.80 の inception score の記録を達成する。
 
 - Additionally, we describe several implementation details that are important for discouraging unhealthy competition between the generator and discriminator.
     - 加えて、生成器と識別器の間の、不健全な [unhealthy] 競争を妨げる [discouraging] ために重要となる、いくつかの実装の詳細を説明する。
 
 - Finally, we suggest a new metric for evaluating GAN results, both in terms of image quality and variation.
-    - 最後に、我々は、画像の品質と変動に関して、GAN を評価するための新しい距離を提案する。
+    - 最後に、我々は、画像の品質と変動（多様性）に関して、GAN を評価するための新しい距離を提案する。
 
 - As an additional contribution, we construct a higher-quality version of the CELEBA dataset.
     - 追加の貢献として、CELEBA データセットのより高い品質のバージョンを構築する。
@@ -62,7 +62,7 @@
 - GANs produce sharp images, albeit only in fairly small resolutions and with somewhat limited variation, and the training continues to be unstable despite recent progress (Salimans et al., 2016; Gulrajani et al., 2017; Berthelot et al., 2017; Kodali et al., 2017).
     - GAN は、鮮明な画像を生成する。
     - とはいえ [albeit]、かなり [fairly] 小さい解像度であり、
-    - いくらか変動が制限され、
+    - いくらか変動（多様性）が制限され、
     - 最近の進歩にも関わらず学習が不安定である。
 
 - Hybrid methods combine various strengths of the three, but so far lag behind GANs in image quality (Makhzani & Frey, 2017; Ulyanov et al., 2017; Dumoulin et al., 2016).
@@ -134,17 +134,17 @@
     - 学習データ分布の全体を、明確に [explicitly] 要求しない。
 
 - The conventional wisdom has been that there is a tradeoff between image quality and variation, but that view has been recently challenged (Odena et al., 2017).
-    - 従来の知見は、画像品質と変動との間にトレードオフがあるというものであった。
+    - 従来の知見は、画像品質と変動（多様性）との間にトレードオフがあるというものであった。
     - しかし、この見方は最近変わった。
 
 - The degree of preserved variation is currently receiving attention and various methods have been suggested for measuring it, including inception score (Salimans et al., 2016), multi-scale structural similarity (MS-SSIM) (Odena et al., 2017; Wang et al., 2003), birthday paradox (Arora & Zhang, 2017), and explicit tests for the number of discrete modes discovered (Metz et al., 2016).
-    - 保存された変動の程度は、最近注目を集めており、
+    - 保存された変動（多様性）の程度は、最近注目を集めており、
     - それを計測するための様々な手法が提案されている。
     - inception score, multi-scale structural similarity (MS-SSIM), birthday paradox, 
 
 - We will describe our method for encouraging variation in Section 3, and propose a new metric for evaluating the quality and variation in Section 5.
-    - セクション３で、変動を促進する [encouraging] ための我々の手法を説明する。
-    - そして、セクション５で、品質と変動を評価するための新しい手法を提案する。
+    - セクション３で、変動（多様性）を促進する [encouraging] ための我々の手法を説明する。
+    - そして、セクション５で、品質と変動（多様性）を評価するための新しい手法を提案する。
 
 ---
 
@@ -263,22 +263,105 @@
 ---
 
 - We observe that the progressive training has several benefits.
+    - 進行的な学習は、いくつかの利点がある。
 
 - Early on, the generation of smaller images is substantially more stable because there is less class information and fewer modes (Odena et al., 2017).
+    - 初期段階では [Early on]、より小さな画像の生成は、より安定化する。
+    - なぜならば、より小さな情報とより少ないモードが存在するためである。
 
 - By increasing the resolution little by little we are continuously asking a much simpler question compared to the end goal of discovering a mapping from latent vectors to e.g. 1024^2 images. 
+    - **解像度を少しずつ増加させることにより、**
+    - **1024×1024 の画像の潜在ベクトルからの写像を発見するという最終ゴールと比較して、（我々の手法は、）もっとシンプルな質問を問っている。**
 
 - This approach has conceptual similarity to recent work by Chen & Koltun (2017).
+    - このアプローチは、Chen & Koltun による最近の研究に、概念的に [conceptual] 似ている。
 
 - In practice it stabilizes the training sufficiently for us to reliably synthesize megapixel-scale images using WGAN-GP loss (Gulrajani et al., 2017) and even LSGAN loss (Mao et al., 2016b).
+    - 実用的には、これは、
+    - WGAN-GP loss と更には LSGAN loss を使用したメガピクセルのスケールでの画像を確実に合成するための、
+    - 学習を十分に安定化させる。
 
 ---
 
 - Another benefit is the reduced training time.
+    - 他の利点は、学習時間を減らすことである。
 
 - With progressively growing GANs most of the iterations are done at lower resolutions, and comparable result quality is often obtained up to 2–6 times faster, depending on the final output resolution.
+    - 進歩的に成長する GAN では、ほとんどのイテレーションが、低解像度で行われる。
+    - 同程度の [comparable] 結果の品質が、最終的な出力の解像度に依存して、2-6 倍速く手に入る。
 
 ---
+
+- The idea of growing GANs progressively is related to the work of Wang et al. (2017), who use multiple discriminators that operate on different spatial resolutions.
+    - 進歩的に成長する GAN のアイデアは、Wang の研究に関連がある。
+    - （この研究というのは、）異なる空間的な解像度を演算するような複数の識別器を使用するものである。
+
+- That work in turn is motivated by Durugkar et al. (2016) who use one generator and multiple discriminators concurrently, and Ghosh et al. (2017) who do the opposite with multiple generators and one discriminator.
+    - この研究は、次には、１つの生成器と複数の識別器を同時に [concurrently] 使用するような、Durugkar による（研究）で動機づけられている。
+    - そして、それとは反対に、複数の生成器と１つの識別器を使用するような、Ghosh による（研究）で動機づけられている。
+
+- Hierarchical GANs (Denton et al., 2015; Huang et al., 2016; Zhang et al., 2017) define a generator and discriminator for each level of an image pyramid.
+    - 階層的 GAN は、１つの画像ピラミッド [pyramid] の各レベルに対して、生成器と識別器を定義する。
+
+- These methods build on the same observation as our work – that the complex mapping from latents to high-resolution images is easier to learn in steps – but the crucial difference is that we have only a single GAN instead of a hierarchy of them.
+    - これらの手法は、我々の研究のように、同じ観測 [observation] に基づいている [build on]。
+    - 即ち、潜在変数から高解像度の画像への複雑な写像は、段階的に [in step] 学習することがより簡単である。
+    - しかし、極めて重要な [crucial] 違いは、それらの階層性の代わりに、我々の GAN は、単一の GAN のみであることである。
+
+- In contrast to early work on adaptively growing networks, e.g., growing neural gas (Fritzke, 1995) and neuro evolution of augmenting topologies (Stanley & Miikkulainen, 2002) that grow networks greedily, we simply defer the introduction of pre-configured layers.
+    - 適合的に成長するネットワークの初期の研究（例えば、growing neural gas や 貪欲に成長するネットワークである neuro evolution of augmenting topologies）とは対称的に、
+    - <font color="Pink">**我々の手法は、単純に、pre-configured layers（事前設定層？）を、単純に延期する [defer]。**</font>
+
+- In that sense our approach resembles layer-wise training of autoencoders (Bengio et al., 2007).
+    - そういった意味では [In that sense]、我々のアプローチは、オートエンコーダーの層単位での学習に似ている。
+
+
+## 3 INCREASING VARIATION USING MINIBATCH STANDARD DEVIATION
+
+- GANs have a tendency to capture only a subset of the variation found in training data, and Salimans et al. (2016) suggest “minibatch discrimination” as a solution.
+    - GAN は、学習データの中で見つかるような、変動（多様性）のサブセット（部分集合）のみを抽出する傾向 [tendency] がある。
+    - そして、Salimans は、解決策として、“minibatch discrimination” を提案している。
+
+- They compute feature statistics not only from individual images but also across the minibatch, thus encouraging the minibatches of generated and training images to show similar statistics.
+    - それらの手法は、個々の画像だけでなく、ミニバッチを渡って、特徴量の統計量を計算する。
+    - それ故、生成された画像や学習した画像が、よく似た統計量を表示するように促進する [encouraging]。
+
+- This is implemented by adding a minibatch layer towards the end of the discriminator, where the layer learns a large tensor that projects the input activation to an array of statistics.
+    - この手法は、識別器の終端に、ミニバッチ層を追加することによって、実装される。
+    - ここでミニバッチ層は、入力活性化関数を、統計量の配列へ投影するような、大きなテンソルを学習する。
+
+- A separate set of statistics is produced for each example in a minibatch and it is concatenated to the layer’s output, so that the discriminator can use the statistics internally.
+    - 統計量の個別の [separate] 集合は、ミニバッチデータの各サンプルに対して、生成される。
+    - そして、それは、識別器が内部で統計量を使用出来るように、層の出力に結合される。
+
+- We simplify this approach drastically while also improving the variation.
+    - 我々は、多様性を改善しながら [while]、このアプローチを劇的に単純化する。
+
+---
+
+- Our simplified solution has neither learnable parameters nor new hyperparameters.
+    - 我々の単純化された解決法は、学習可能なパラメーターだけでなく、新しいハイパーパラメータも持っていない。
+
+- We first compute the standard deviation for each feature in each spatial location over the minibatch.
+    - 我々の手法では、初めに、ミニバッチに渡って、各空間的な位置で、各特徴量に対して標準偏差を計算する。
+
+- We then average these estimates over all features and spatial locations to arrive at a single value.
+
+- We replicate the value and concatenate it to all spatial locations and over the minibatch, yielding one additional (constant) feature map.
+
+- This layer could be inserted anywhere in the discriminator, but we have found it best to insert it towards the end (see Appendix A.1 for details).
+
+- We experimented with a richer set of statistics, but were not able to improve the variation further.
+
+- In parallel work, Lin et al. (2017) provide theoretical insights about the benefits of showing multiple images to the discriminator.
+
+---
+
+- Alternative solutions to the variation problem include unrolling the discriminator (Metz et al., 2016) to regularize its updates, and a “repelling regularizer” (Zhao et al., 2017) that adds a new loss term to the generator, trying to encourage it to orthogonalize the feature vectors in a minibatch.
+
+- The multiple generators of Ghosh et al. (2017) also serve a similar goal.
+
+- We acknowledge that these solutions may increase the variation even more than our solution – or possibly be orthogonal to it – but leave a detailed comparison to a later time.
 
 
 # ■ 実験結果（主張の証明）・議論（手法の良し悪し）・メソッド（実験方法）

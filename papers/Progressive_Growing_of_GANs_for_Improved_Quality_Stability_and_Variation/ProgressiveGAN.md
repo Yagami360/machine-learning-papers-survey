@@ -176,7 +176,19 @@
 
 # ■ 結論
 
-## x. 論文の項目名 (Conclusion)
+## 7. DISCUSSION
+
+- While the quality of our results is generally high compared to earlier work on GANs, and the training is stable in large resolutions, there is a long way to true photorealism. 
+    - 我々の結果の質はGANに関する以前の研究と比較して一般的に高く、そして訓練は大きな解像度で安定していますが、真のフォトリアリズムへの長い道のりがあります。
+
+- Semantic sensibility and understanding dataset-dependent constraints, such as certain objects being straight rather than curved, leaves a lot to be desired.
+    - あるオブジェクトが曲線ではなくまっすぐであるなどの意味的な感度とデータセットに依存する制約を理解することは、望まれるべき多くのことを残します。
+
+- There is also room for improvement in the micro-structure of the images.
+    - 画像の微細構造にも改良の余地がある。
+
+- That said, we feel that convincing realism may now be within reach, especially in CELEBA-HQ.
+    - とは言っても、説得力のあるリアリズムは、特にCELEBA-HQにおいて手の届くところにあるかもしれないと我々は感じています。
 
 
 # ■ 何をしたか？詳細
@@ -500,18 +512,33 @@
     - １つのラプラシアンのレベルは、特定の空間的な周波数バンドに一致する。
 
 - We randomly sample 16384 images and extract 128 descriptors from each level in the Laplacian pyramid, giving us 221 (2.1M) descriptors per level.
+    - 16384 枚の画像をランダムにサンプルし、ラプラシアンの各レベルから、128 個の記述子 [descriptors] を展開し、
+    - 各レベルに対して、221（2.1M）個の記述子が得られる。
 
 - Each descriptor is a 7 × 7 pixel neighborhood with 3 color channels, denoted by $x \in R^{7 \times 7 \times 3}=R^{147}$.
+    - 各記述子は、３つのカラーチャンネルで、7 × 7 ピクセルの近傍であり、
+    - $x \in R^{7 \times 7 \times 3}=R^{147}$ で示される。
 
 - We denote the patches from level l of the training set and generated set as $(x_i^l)_{i=1}^{2^{21}}$ and $(y_i^l)_{i=1}^{2^{21}}$, respectively.
+    - 学習データセットと生成されたセットのレベル l からのパッチを、それぞれ [respectively]、$(x_i^l)_{i=1}^{2^{21}}$ and $(y_i^l)_{i=1}^{2^{21}}$ として示す。
 
 - We first normalize $(x_i^l)$ and $(y_i^l)$ w.r.t. the mean and standard deviation of each color channel, and then estimate the statistical similarity by computing their sliced Wasserstein distance SWD$( (x_i^l), (y_i^l) )$, an efficiently computable randomized approximation to earthmovers distance, using 512 projections (Rabin et al., 2011).
+    - 我々は最初に、
+    - 各カラーチャンネルの平均と標準偏差に関して [w.r.t. : with reference to]、
+    - $(x_i^l)$ と $(y_i^l)$ を正規化する。
+    - そして次に、
+    - 512 個の射影を使用した、効率的な計算可能な earthmovers 距離へのランダム化された近似し、
+    - スライスされた Wasserstein 距離 SWD$( (x_i^l), (y_i^l) )$ を計算することによって、統計的な類似性を推定する。
 
 ---
 
 - Intuitively a smallWasserstein distance indicates that the distribution of the patches is similar, meaning that the training images and generator samples appear similar in both appearance and variation at this spatial resolution.
+    - 直感的には [Intuitively]、小さな Wasserstein 距離は、パッチの分布が似ていることを示しており、
+    - 学習画像と生成されたサンプルが、この空間的な解像度において、外観 [appearance ] と多様性の両方で、よく似て現れることを意味している。
 
 - In particular, the distance between the patch sets extracted from the lowestresolution 16 × 16 images indicate similarity in large-scale image structures, while the finest-level patches encode information about pixel-level attributes such as sharpness of edges and noise.
+    - 特に、最も低い解像度 16 × 16 から抽出されたパッチのセットの間の距離は、大きなスケールでの画像の構造において、似ていることを示している。
+    - 一方で、最も細かい [finest] レベルのパッチは、辺の輪郭やノイズのような、ピクセルレベルでの情報を符号化する。
 
 
 # ■ 実験結果（主張の証明）・議論（手法の良し悪し）・メソッド（実験方法）
@@ -528,19 +555,19 @@
 
 ### 6.1 IMPORTANCE OF INDIVIDUAL CONTRIBUTIONS IN TERMS OF STATISTICAL SIMILARITY
 
+- We will first use the sliced Wasserstein distance (SWD) and multi-scale structural similarity (MSSSIM) (Odena et al., 2017) to evaluate the importance our individual contributions, and also perceptually validate the metrics themselves.
+
+- We will do this by building on top of a previous state-of-theart loss function (WGAN-GP) and training configuration (Gulrajani et al., 2017) in an unsupervised setting using CELEBA (Liu et al., 2015) and LSUN BEDROOM (Yu et al., 2015) datasets in 1282 resolution.
+
+- CELEBA is particularly well suited for such comparison because the training images contain noticeable artifacts (aliasing, compression, blur) that are difficult for the generator to reproduce faithfully.
+
+- In this test we amplify the differences between training configurations by choosing a relatively low-capacity network structure (Appendix A.2) and terminating the training once the discriminator has been shown a total of 10M real images.
+
+- As such the results are not fully converged.
+
+---
+
 - xxx
-
-
-## 7. DISCUSSION
-
-- While the quality of our results is generally high compared to earlier work on GANs, and the training is stable in large resolutions, there is a long way to true photorealism. 
-    - 我々の結果の
-
-- Semantic sensibility and understanding dataset-dependent constraints, such as certain objects being straight rather than curved, leaves a lot to be desired.
-
-- There is also room for improvement in the micro-structure of the images.
-
-- That said, we feel that convincing realism may now be within reach, especially in CELEBA-HQ.
 
 
 # ■ 関連研究（他の手法との違い）

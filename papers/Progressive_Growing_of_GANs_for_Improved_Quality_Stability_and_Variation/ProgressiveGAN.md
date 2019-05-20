@@ -322,6 +322,8 @@
     - GAN は、学習データの中で見つかるような、変動（多様性）のサブセット（部分集合）のみを抽出する傾向 [tendency] がある。
     - そして、Salimans は、解決策として、“minibatch discrimination” を提案している。
 
+> モード崩壊のこと
+
 - They compute feature statistics not only from individual images but also across the minibatch, thus encouraging the minibatches of generated and training images to show similar statistics.
     - それらの手法は、個々の画像だけでなく、ミニバッチを渡って、特徴量の統計量を計算する。
     - それ故、生成された画像や学習した画像が、よく似た統計量を表示するように促進する [encouraging]。
@@ -346,27 +348,188 @@
     - 我々の手法では、初めに、ミニバッチに渡って、各空間的な位置で、各特徴量に対して標準偏差を計算する。
 
 - We then average these estimates over all features and spatial locations to arrive at a single value.
+    - 全ての特徴量と空間的な位置に渡って、１つの値に到着するために、これらの推定値を平均化する。
 
 - We replicate the value and concatenate it to all spatial locations and over the minibatch, yielding one additional (constant) feature map.
+    - その値を複製 [replicate] し、それを、ミニバッチに渡っての全ての空間的な位置で結合し、
+    - １つの追加の(定数の）特徴マップを生み出す。
 
 - This layer could be inserted anywhere in the discriminator, but we have found it best to insert it towards the end (see Appendix A.1 for details).
+    - この層は、識別器のどの場所にでも挿入することが出来る。
+    - しかし、我々は、末端に挿入することがベストであることを見つけ出した。（詳細は、補足 A.1 参照）
 
 - We experimented with a richer set of statistics, but were not able to improve the variation further.
+    - 我々は、豊富な統計量のセットで実験した。
+    - しかし、変動をこれ以上に改善することは出来なかった。
 
 - In parallel work, Lin et al. (2017) provide theoretical insights about the benefits of showing multiple images to the discriminator.
+    - 並行的な研究では、Lin は、識別機に複数の画像を見せることの利点についての、理論的な洞察を提供する。
 
 ---
 
 - Alternative solutions to the variation problem include unrolling the discriminator (Metz et al., 2016) to regularize its updates, and a “repelling regularizer” (Zhao et al., 2017) that adds a new loss term to the generator, trying to encourage it to orthogonalize the feature vectors in a minibatch.
+    - 多様性問題の代替の解決法は、
+    - 更新を規則化（正則化）する unrolling the discriminator や、
+    - 生成器に新しい損失項を追加する “repelling regularizer” を含んでおり、
+    - ミニバッチにおいて、特徴ベクトルを直交化するために、それを促進する。
 
 - The multiple generators of Ghosh et al. (2017) also serve a similar goal.
+    - Ghosh の複数の生成器もまた、似たゴールの目的を果たしている [serve]。
 
 - We acknowledge that these solutions may increase the variation even more than our solution – or possibly be orthogonal to it – but leave a detailed comparison to a later time.
+    - 我々は、これらの解決法が、我々の解決法よりも、多様性を増加させるだろうこと、は認識している [acknowledge]。
+    - 或いは、それを直交化させる可能性については認識している。
+    - しかし、詳細な比較は、後に残す。
+
+
+## 4 NORMALIZATION IN GENERATOR AND DISCRIMINATOR
+
+- GANs are prone to the escalation of signal magnitudes as a result of unhealthy competition between the two networks.
+    - GAN は、２つのネットワークの間の不健全な競争の結果として、単一の大きさ [magnitudes] が増大する傾向がある [prone]。
+
+> 生成器と識別器のどちらかが強くなりすぎて、単一の大きさ（偽物画像 or 識別結果）が増大するという意味
+
+- Most if not all earlier solutions discourage this by using a variant of batch normalization (Ioffe & Szegedy, 2015; Salimans & Kingma, 2016; Ba et al., 2016) in the generator, and often also in the discriminator.
+    - 全てではないにしろほとんどの [Most if not all]、初期の解決法では、- 生成器において、そしてしばしば識別器においても、
+    - batch norm の変動を使用することによって、これを阻止する [discourage]。
+
+- These normalization methods were originally introduced to eliminate covariate shift.
+    - これらの正規化手法は、元々は、共変量シフト [covariate shift] を除外する [eliminate] ために紹介されている。
+
+- However, we have not observed that to be an issue in GANs, and thus believe that the actual need in GANs is constraining signal magnitudes and competition.
+    - しかしながら、GAN において、（共変量シフトが）１つの問題となることを観測しない。
+    - そしてそれ故に、GAN において本当に必要なのは、単一の大きさ [magnitudes] と競争を、抑制すること [constraining] であると信じている。
+
+- We use a different approach that consists of two ingredients, neither of which include learnable parameters.
+    - 我々は、２つの要素 [ingredients] から構成される異なるアプローチを使用する。
+    - その両方共、学習可能なパラメーターを含んでいない。
+
+### 4.1 EQUALIZED LEARNING RATE
+
+- We deviate from the current trend of careful weight initialization, and instead use a trivial N(0,1) initialization and then explicitly scale the weights at runtime.
+    - 現在の注意深い重み初期化の傾向から脱却し [deviate from]、
+    - 代わりに、自明な [trivial] N(0,1) での初期化を使用し、
+    - そして次に、実行時に [at runtime]、明示的に [explicitly] 重みスケールを使用する。
+
+- To be precise, we set ![image](https://user-images.githubusercontent.com/25688193/57992711-a3c75480-7af0-11e9-877e-72853fdfa0ff.png), where w_i are the weights and c is the per-layer normalization constant from He’s initializer (He et al., 2015).
+    - 正確に言えば [To be precise]、![image](https://user-images.githubusercontent.com/25688193/57992711-a3c75480-7af0-11e9-877e-72853fdfa0ff.png) を設定する。
+    - ここで、w_i は、重みで、
+    - c は、その初期化からの層単位での正規化定数である。
+
+- The benefit of doing this dynamically instead of during initialization is somewhat subtle, and relates to the scale-invariance in commonly used adaptive stochastic gradient descent methods such as RMSProp (Tieleman & Hinton, 2012) and Adam (Kingma & Ba, 2015).
+    - 初期化中の代わりに、この動的な処理を行うことの利点は、いくらか微妙 [subtle] であり、
+    - RMSProp や Adam のような、一般的に使用されている適合的確率的勾配法を使用したスケール不変性に関連がある。
+
+- These methods normalize a gradient update by its estimated standard deviation, thus making the update independent of the scale of the parameter.
+    - これらの手法は、その推定された標準偏差によって、勾配の更新を正規化する。
+    - それ故に、更新を、パラメーターのスケールとは無関係にする。
+
+- As a result, if some parameters have a larger dynamic range than others, they will take longer to adjust.
+    - 結果として、いくつかのパラメーターが他のものよりも大きいダイナミックレンジ [dynamic range] を持つならば、
+    - 適合するのに、より時間がかかるだろう。
+
+> ダイナミックレンジ（英: dynamic range）とは、識別可能な信号の最小値と最大値の比率をいう。 信号の情報量を表すアナログ指標のひとつ。
+
+- This is a scenario modern initializers cause, and thus it is possible that a learning rate is both too large and too small at the same time.
+    - これは、最新の [modern] 初期化が引き起こすシナリオである。
+    - そしてそれ故に、同時に、学習率を大きすぎたり、小さ過ぎたりすることが可能となる。
+
+- Our approach ensures that the dynamic range, and thus the learning speed, is the same for all weights.
+    - 我々のアプローチは、ダイナミックレンジを保証する [ensures]。
+    - そしてそれ故に、学習スピードは、全ての重みで同じである。
+
+- A similar reasoning was independently used by van Laarhoven (2017).
+    - よく似た推論 [reasoning] は、van Laarhoven によって、独自に使用されている。
+
+
+### 4.2 PIXELWISE FEATURE VECTOR NORMALIZATION IN GENERATOR
+
+- To disallow the scenario where the magnitudes in the generator and discriminator spiral out of control as a result of competition, we normalize the feature vector in each pixel to unit length in the　generator after each convolutional layer.
+    - 生成器と識別器の大きさ [magnitudes] が、競争の結果として、手に負えないような状況に陥る [spiral out of control] シナリオが許容しないために、
+    - 各畳み込み層の後の生成器において、各ピクセルの中の特徴ベクトルを、ユニット長へ正規化する。
+
+- We do this using a variant of “local response normalization” (Krizhevsky et al., 2012), configured as $b_{x,y}=a_{x,y}/\sqrt{ \frac{1}{N} \sum_{j=0}^{N-1} (a_{x,y}^j )^2+\varepsilon }$
+    - 我々は、
+    - $b_{x,y}=a_{x,y}/\sqrt{ \frac{1}{N} \sum_{j=0}^{N-1} (a_{x,y}^j )^2+\varepsilon }$
+    - として設定される “local response normalization” の変種を使用して、これを行う。
+
+- where $\varepsilon = 10^{-8}$, N is the number of feature maps, and $a_{x,y}$ and $b_{x,y}$ are the original and normalized feature vector in pixel (x,y), respectively.
+    - ここで、$\varepsilon = 10^{-8}$
+    - N は、特徴マップの数
+    - $a_{x,y}$ と $b_{x,y}$ は、ピクセル (x,y) での、直交化され正規化された特徴ベクトルである。
+
+- We find it surprising that this heavy-handed constraint does not seem to harm the generator in any way, and indeed with most datasets it does not change the results much, but it prevents the escalation of signal magnitudes very effectively when needed.
+    - 我々は、この強引な [heavy-handed] 制約 [constraint] が、決して [in any way] 生成器に害を与えないようであること、
+    - そして、実際には [indeed]、殆どのデータセットで、結果を大きくは変えないが、
+    - それは必要なときに、とても効率的に、信号の大きさの過剰な増大を防ぐ。
+    - ということを、驚きを持って見つけ出した。
+
+## 5. MULTI-SCALE STATISTICAL SIMILARITY FOR ASSESSING GAN RESULTS
+
+- In order to compare the results of one GAN to another, one needs to investigate a large number of images, which can be tedious, difficult, and subjective.
+    - ある GAN と別のもの（＝別のGAN）の結果を比較するために、
+    - １つには、退屈で [tedious]、困難で、主観的 [subjective] であり得るような、巨大な枚数の画像を調査する必要がある。
+
+- Thus it is desirable to rely on automated methods that compute some indicative metric from large image collections.
+    - そういうわけで、巨大な画像のコレクションから、いくつかの指標 [indicative] 計量 [metric] を計算するような自動化手法に頼ることが望ましい。
+
+- We noticed that existing methods such as MS-SSIM (Odena et al., 2017) find large-scale mode collapses reliably but fail to react to smaller effects such as loss of variation in colors or textures, and they also do not directly assess image quality in terms of similarity to the training set.
+    - 我々は、MS-SSIM のような既に存在する手法が、大きなスケールでのモード崩壊を、確実に [reliably] 見つけ出すが、
+    - 色やテクスチャーの変動の損失値のような、小さな効果に反応せず、
+    - そして、学習データセットの類似性に関して、画像の品質を直接評価 [assess] もしない。
+    - ということに気がついた。
+
+---
+
+- We build on the intuition that a successful generator will produce samples whose local image structure is similar to the training set over all scales.
+    - 成功する生成器は、局所的な画像の構造が、全てのスケールに渡って学習データによく似ているような、サンプルを生成するだろうというような、直感 [intuition] に基づいている [build on]。
+
+- We propose to study this by considering the multiscale statistical similarity between distributions of local image patches drawn from Laplacian pyramid (Burt & Adelson, 1987) representations of generated and target images, starting at a low-pass resolution of 16 × 16 pixels.
+    - 我々は、
+    - 16 × 16 ピクセルのローパス解像度で開始して、
+    - 生成画像と教師画像のラプラシアンピラミッド表現から描写されるような、局所的な画像パッチの分布との間の、
+    - マルチスケールの統計的な類似性を考慮することによって、これを研究することを提案する。
+
+- As per standard practice, the pyramid progressively doubles until the full resolution is reached, each successive level encoding the difference to an up-sampled version of the previous level.
+    - 標準的な技法 [standard practice] によると [as per]、ラプラシアンは、フル解像度に到達するまで、進歩的に２倍にする。
+    - 連続する [successive] 各レベルは、アップサンプリングされた以前のレベルのバージョンとの差異を符号化する。
+
+---
+
+- A single Laplacian pyramid level corresponds to a specific spatial frequency band.
+    - １つのラプラシアンのレベルは、特定の空間的な周波数バンドに一致する。
+
+- We randomly sample 16384 images and extract 128 descriptors from each level in the Laplacian pyramid, giving us 221 (2.1M) descriptors per level.
+
+- Each descriptor is a 7 × 7 pixel neighborhood with 3 color channels, denoted by $x \in R^{7 \times 7 \times 3}=R^{147}$.
+
+- We denote the patches from level l of the training set and generated set as $(x_i^l)_{i=1}^{2^{21}}$ and $(y_i^l)_{i=1}^{2^{21}}$, respectively.
+
+- We first normalize $(x_i^l)$ and $(y_i^l)$ w.r.t. the mean and standard deviation of each color channel, and then estimate the statistical similarity by computing their sliced Wasserstein distance SWD$( (x_i^l), (y_i^l) )$, an efficiently computable randomized approximation to earthmovers distance, using 512 projections (Rabin et al., 2011).
+
+---
+
+- Intuitively a smallWasserstein distance indicates that the distribution of the patches is similar, meaning that the training images and generator samples appear similar in both appearance and variation at this spatial resolution.
+
+- In particular, the distance between the patch sets extracted from the lowestresolution 16 × 16 images indicate similarity in large-scale image structures, while the finest-level patches encode information about pixel-level attributes such as sharpness of edges and noise.
 
 
 # ■ 実験結果（主張の証明）・議論（手法の良し悪し）・メソッド（実験方法）
 
-## x. 論文の項目名
+## 6 EXPERIMENTS
+
+- In this section we discuss a set of experiments that we conducted to evaluate the quality of our results.
+
+- Please refer to Appendix A for detailed description of our network structures and training configurations.
+
+- We also invite the reader to consult the accompanying video (https://youtu.be/G06dEcZ-QTg) for additional result images and latent space interpolations.
+
+- In this section we will distinguish between the network structure (e.g., convolutional layers, resizing), training configuration (various normalization layers, minibatch-related operations), and training loss (WGAN-GP, LSGAN).
+
+### 6.1 IMPORTANCE OF INDIVIDUAL CONTRIBUTIONS IN TERMS OF STATISTICAL SIMILARITY
+
+- xxx
+
 
 ## 7. DISCUSSION
 

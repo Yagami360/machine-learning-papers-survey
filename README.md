@@ -3,6 +3,8 @@
 
 ## ■ 構成
 
+- ResNet
+    - [Deep Residual Learning for Image Recognition]()
 - GANs
     - [Generative Adversarial Networks](https://github.com/Yagami360/MachineLearning-Papers_Survey/blob/master/papers/Generative_Adversarial_Networks/GenerativeAdversarialNetworks.md)
     - [Unsupervised Representation Learning with Deep Convolutional Generative Adversarial Networks](https://github.com/Yagami360/MachineLearning-Papers_Survey/blob/master/papers/Unsupervised_Representation_Learning_with_Deep_Convolutional_Generative_Adversarial_Networks/DeepConvolutionalGAN.md)

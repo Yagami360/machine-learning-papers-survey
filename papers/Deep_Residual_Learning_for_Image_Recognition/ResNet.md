@@ -308,14 +308,20 @@
 ![image](https://user-images.githubusercontent.com/25688193/58237941-3aaa4000-7d81-11e9-9b58-473bd3b6c15b.png)
 
 - Here x and y are the input and output vectors of the layers considered.
+    - ここで、x と y は、層の入力ベクトルと出力ベクトルとしてみなす。
 
 - The function ![image](https://user-images.githubusercontent.com/25688193/58238050-76dda080-7d81-11e9-8a99-d66145b73165.png) represents the residual mapping to be learned.
+    - 関数 ![image](https://user-images.githubusercontent.com/25688193/58238050-76dda080-7d81-11e9-8a99-d66145b73165.png) は、学習されるための残差写像を表している。
 
 - For the example in Fig. 2 that has two layers, ![image](https://user-images.githubusercontent.com/25688193/58238085-8957da00-7d81-11e9-9ed8-7eac7bb91664.png) in which σ denotes ReLU [29] and the biases are omitted for simplifying notations.
+    - ２つの層をもつ図２の例では、![image](https://user-images.githubusercontent.com/25688193/58238085-8957da00-7d81-11e9-9ed8-7eac7bb91664.png) の中の σ は　Relu を示す。
+    - そして、バイアスは、表記 [notations] を簡単にするために、省略されている [be omitted]。
 
 - The operation F + x is performed by a shortcut connection and element-wise addition.
+    - 演算 F + x は、shortcut connection と要素単位での加算によって、実行される。
 
 - We adopt the second nonlinearity after the addition (i.e., σ(y), see Fig. 2).
+    - 我々は、加算の後に、２番目の非線形性（即ち、σ(y)）を適用した。
 
 ---
 
@@ -325,14 +331,49 @@
 
 
 - The shortcut connections in Eqn.(1) introduce neither extra parameter nor computation complexity.
+    - 式 (1) の shortcut connection は、追加のパラメーターも複雑な計算も必要としない。
 
 - This is not only attractive in practice but also important in our comparisons between plain and residual networks.
+    - これは、実用的に魅力的であるだけではなく、我々の plain network と残差ネットワークとの間の比較においても重要である。
 
 - We can fairly compare plain/residual networks that simultaneously have the same number of parameters, depth, width, and computational cost (except for the negligible element-wise addition).
+    - 同じパラメーター数、深さ、幅、計算可能コストを持つ plain network と残差ネットワークを同時に、公平に比較することが出来る。（無視できる ほど小さい [negligible] 要素単位での加算を除いて）
 
 ---
 
-- xxx
+- The dimensions of x and F must be equal in Eqn.(1).
+    - 式 (1) において、x と F の次元は、等しくなくてはならない。
+
+- If this is not the case (e.g., when changing the input/output channels), we can perform a linear projection W_s by the shortcut connections to match the dimensions:
+    - もしこのケースではない場合（即ち、入出力チャンネルが変わるとき）、
+    - 次元を一致させるために、shortcut connection によって、線形射影 W_s を実行することができる。
+
+![image](https://user-images.githubusercontent.com/25688193/58240480-07b67b00-7d86-11e9-80a0-8b92a307c34b.png)
+
+- We can also use a square matrix W_s in Eqn.(1).
+    - 式 (1) において、正方行列 W_s を使用することも出来る。
+
+- But we will show by experiments that the identity mapping is sufficient for addressing the degradation problem and is economical, and thus W_s is only used when matching dimensions.
+    - しかし我々は、恒等写像が、低下問題を対処する [adress] ために、十分である、経済的であるということを、実験によって示すだろう。
+    - それ故、W_s は、次元を一致させるときのみ使用される。
+
+---
+
+- The form of the residual function F is flexible.
+
+- Experiments in this paper involve a function F that has two or three layers (Fig. 5), while more layers are possible.
+
+- But if F has only a single layer, Eqn.(1) is similar to a linear layer: y = W_1 x+x, for which we have not observed advantages.
+
+---
+
+- We also note that although the above notations are about fully-connected layers for simplicity, they are applicable to convolutional layers.
+
+- The function F(x; fWig) can represent multiple convolutional layers.
+
+- The element-wise addition is performed on two feature maps, channel by channel.
+
+### 3.3. Network Architectures
 
 
 

@@ -232,20 +232,103 @@
 
 ### 3.1. Residual Learning
 
-- Let us consider H(x) as an underlying mapping to be
-fit by a few stacked layers (not necessarily the entire net),
-with x denoting the inputs to the first of these layers. If one
-hypothesizes that multiple nonlinear layers can asymptotically
-approximate complicated functions2, then it is equivalent
-to hypothesize that they can asymptotically approximate
-the residual functions, i.e., H(x) 􀀀 x (assuming that
-the input and output are of the same dimensions). So
-rather than expect stacked layers to approximate H(x), we
-explicitly let these layers approximate a residual function
-F(x) := H(x) 􀀀 x. The original function thus becomes
-F(x)+x. Although both forms should be able to asymptotically
-approximate the desired functions (as hypothesized),
-the ease of learning might be different.
+- Let us consider H(x) as an underlying mapping to be fit by a few stacked layers (not necessarily the entire net), with x denoting the inputs to the first of these layers.
+    - H(x) を、いくつかの積み上げられた層に、適合するための基本的な写像とみなす。（ネットワーク全体の写像である必要はない）
+    - ここで、x は、これらのネットワークの最初の入力を示している。
+
+- If one hypothesizes that multiple nonlinear layers can asymptotically approximate complicated functions (2), then it is equivalent to hypothesize that they can asymptotically approximate the residual functions, i.e., H(x) - x (assuming that the input and output are of the same dimensions).
+    - もし複数の非線形の層が、漸近的に [asymptotically] 複雑な関数の近似することが出来るという、１つの仮説を立てる [hypothesize] ならば、
+    - 残差関数（例えば、H(x) - x）を、漸近的に近似することが出来るという仮説に、等しくなる。（入力と出力を同じ次元で推定）
+
+- So rather than expect stacked layers to approximate H(x), we explicitly let these layers approximate a residual function F(x) := H(x) - x.
+    - そのため、積み上げられた層を、H(x) で近似することを期待するようにも、
+    - 我々は、これらの層を、残差関数 F(x) := H(x) - x で明示的に [explicitly] 近似させる。
+
+- The original function thus becomes F(x)+x.
+    - 元のオリジナルの関数は、そういうわけで、F(x)+x となる。
+
+- Although both forms should be able to asymptotically approximate the desired functions (as hypothesized), the ease of learning might be different.
+    - 両方の形状ともに、漸近的に望ましい関数に近似することが出来るべきでだけども、
+    - 学習の容易さは異なる。
+
+---
+
+- This reformulation is motivated by the counterintuitive phenomena about the degradation problem (Fig. 1, left).
+    - この再公式化は、低下問題についての直感に反する [counterintuitive] 現象によって、動機付けられる。（図１の左）
+
+- As we discussed in the introduction, if the added layers can be constructed as identity mappings, a deeper model should have training error no greater than its shallower counterpart.
+    - イントロダクションで議論したように、もし層の追加が、恒等写像として構築されることが出来るならば、より深いモデルは、より浅いモデルよりも、学習エラーが小さくなるべきである。
+
+- The degradation problem suggests that the solvers might have difficulties in approximating identity mappings by multiple nonlinear layers.
+    - 低下問題は、恒等写像を複数の非線形層で推定することにおいて、ソルバーが困難さを持つ可能性があることを提案している。
+
+- With the residual learning reformulation, if identity mappings are optimal, the solvers may simply drive the weights of the multiple nonlinear layers toward zero to approach identity mappings.
+    - 残差学習の再公式化では、
+    - もし恒等写像が最適であるならば、
+    - ソルバーは、恒等写像に近づくために、複数の非線形層の重みを０の方向に、単純に動かすだろう。
+
+---
+
+- In real cases, it is unlikely that identity mappings are optimal, but our reformulation may help to precondition the problem.
+    - 現実的なケースでは、恒等写像は最適でありそうにはない。
+    - しかし、我々の再公式化は、問題の前提条件 [precondition] に役立つだろう。
+
+- If the optimal function is closer to an identity mapping than to a zero mapping, it should be easier for the solver to find the perturbations with reference to an identity mapping, than to learn the function as a new one.
+    - もし最適関数が、ゼロ写像よりも、恒等写像により近いならば、
+    - ソルバーにとって、恒等写像を参照する摂動（せつどう） [perturbations] を見つけることは、新しい１つ（＝写像）として関数を学習することよりも、より簡単になるべきである。
+
+- We show by experiments (Fig. 7) that the learned residual functions in general have small responses, suggesting that identity mappings provide reasonable preconditioning.
+    - 一般的に、学習された残差関数は、応答が小さいことを、実験（図７）によって示し、
+    - これは、恒等写像は、意味のある前提条件を提供することを提案している。
+
+---
+
+![image](https://user-images.githubusercontent.com/25688193/58237415-008c6e80-7d80-11e9-8066-2fbaa81c408d.png)
+
+- > Figure 7. Standard deviations (std) of layer responses on CIFAR-10.
+
+- > The responses are the outputs of each 3×3 layer, after BN and before nonlinearity.
+
+- > Top: the layers are shown in their original order.
+
+- > Bottom: the responses are ranked in descending order.
+
+
+### 3.2. Identity Mapping by Shortcuts
+
+- We adopt residual learning to every few stacked layers.
+    - 我々は、いくつかの積み重ねられた層の全てに、残差学習を適用した。
+
+- A building block is shown in Fig. 2.
+    - 構築されたブロックは、図２に示している。
+
+- Formally, in this paper we consider a building block defined as:
+    - 形式的には、この論文では、構築したブロックを以下のように定義する。
+
+![image](https://user-images.githubusercontent.com/25688193/58237941-3aaa4000-7d81-11e9-9b58-473bd3b6c15b.png)
+
+- Here x and y are the input and output vectors of the layers considered.
+
+- The function ![image](https://user-images.githubusercontent.com/25688193/58238050-76dda080-7d81-11e9-8a99-d66145b73165.png) represents the residual mapping to be learned.
+
+- For the example in Fig. 2 that has two layers, ![image](https://user-images.githubusercontent.com/25688193/58238085-8957da00-7d81-11e9-9ed8-7eac7bb91664.png) in which σ denotes ReLU [29] and the biases are omitted for simplifying notations.
+
+- The operation F + x is performed by a shortcut connection and element-wise addition.
+
+- We adopt the second nonlinearity after the addition (i.e., σ(y), see Fig. 2).
+
+---
+
+![image](https://user-images.githubusercontent.com/25688193/58237972-4c8be300-7d81-11e9-8e0e-a958bcb14d9c.png)
+
+---
+
+
+- The shortcut connections in Eqn.(1) introduce neither extra parameter nor computation complexity.
+
+- This is not only attractive in practice but also important in our comparisons between plain and residual networks.
+
+- We can fairly compare plain/residual networks that simultaneously have the same number of parameters, depth, width, and computational cost (except for the negligible element-wise addition).
 
 ---
 

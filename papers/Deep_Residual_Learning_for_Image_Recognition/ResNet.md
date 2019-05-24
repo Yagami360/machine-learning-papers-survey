@@ -360,27 +360,134 @@
 ---
 
 - The form of the residual function F is flexible.
+    - 残差関数 F の形状は、柔軟である。
 
 - Experiments in this paper involve a function F that has two or three layers (Fig. 5), while more layers are possible.
+    - 個の論文での実験では、２つまたは３つの層を持つ関数 F を含む [involve]（図５）、一方で、より多くの層が可能である。
 
 - But if F has only a single layer, Eqn.(1) is similar to a linear layer: y = W_1 x+x, for which we have not observed advantages.
+    - しかし、もし F は単一の層のみ持つならば、式 (1) は、線形層に似ている。
+    - 即ち、y = W_1 x+x は、観測される利点を持たない。
 
 ---
 
 - We also note that although the above notations are about fully-connected layers for simplicity, they are applicable to convolutional layers.
+    - 我々はまた、上の表記は、単純さ [simplicity] のために、全結合層についてのものにも関わらず、
+    - それらは、畳み込み層にも適用できるということを示す。
 
-- The function F(x; fWig) can represent multiple convolutional layers.
+- The function ![image](https://user-images.githubusercontent.com/25688193/58238050-76dda080-7d81-11e9-8a99-d66145b73165.png) can represent multiple convolutional layers.
+    - 関数 ![image](https://user-images.githubusercontent.com/25688193/58238050-76dda080-7d81-11e9-8a99-d66145b73165.png) は、複数の畳み込みそうで表現できる。
 
 - The element-wise addition is performed on two feature maps, channel by channel.
+    - 要素単位の加算処理は、チャンネルごとに [channel by channel]、２つの特徴マップで実行される。
+
 
 ### 3.3. Network Architectures
 
+- We have tested various plain/residual nets, and have observed consistent phenomena.
+    - 我々は、様々な plain  neteork や残差ネットワークでテストを行い、一貫した現象を観測した。
+
+- To provide instances for discussion, we describe two models for ImageNet as follows.
+    - 議論の例を提供するために、ImageNet に対して、以下の２つのモデルを記述する。
+
+---
+
+![image](https://user-images.githubusercontent.com/25688193/58295951-89e98280-7e0c-11e9-866b-7d8974e1a91d.png)
+
+- > Figure 3. Example network architectures for ImageNet.
+    - > ImageNet に対する、ネットワークアーキテクチャの例
+
+- > Left: the VGG-19 model [41] (19.6 billion FLOPs) as a reference.
+
+- > Middle: a plain network with 34 parameter layers (3.6 billion FLOPs).
+
+- > Right: a residual network with 34 parameter layers (3.6 billion FLOPs).
+
+- > The dotted shortcuts increase dimensions.
+    - > 点線で示されたショートカットは、次元を増加する。
+
+- > Table 1 shows more details and other variants.
+
+---
+
+![image](https://user-images.githubusercontent.com/25688193/58296020-dfbe2a80-7e0c-11e9-9ab9-bfdfdf89796a.png)
+
+- > Table 1. Architectures for ImageNet.
+
+- > Building blocks are shown in brackets (see also Fig. 5), with the numbers of blocks stacked. 
+
+- > Downsampling is performed by conv3_1, conv4_1, and conv5_1 with a stride of 2.
+
+#### Plain Network.
+
+- Our plain baselines (Fig. 3, middle) are mainly inspired by the philosophy of VGG nets [41] (Fig. 3,left).
+    - 我々の plain network のベースライン（図３の中央）は、主に、VGG net （図３の左）の考えに着想を得ている。
+
+- The convolutional layers mostly have 3 × 3 filters and follow two simple design rules:
+    - 畳み込み層は、主に、3 × 3　のフィルターを持っており、２つのシンプルなルールに従う。
+
+- (i) for the same output feature map size, the layers have the same number of filters; 
+    - (i) 同じ特徴マップのサイズの出力のために、層は、同じ数のフィルターを持つ。
+
+- and (ii) if the feature map size is halved, the number of filters is doubled so as to preserve the time complexity per layer.
+    - (ii) もし特徴マップのサイズが半分に [halved] なれば、
+    - フィルターの数は、層単位での時間的な複雑性を維持する [preserve] ために、２倍になる。
+
+- We perform downsampling directly by convolutional layers that have a stride of 2.
+    - ストライド幅３の畳み込み層によって、直接的にダウンサンプリングを実行する。
+
+- The network ends with a global average pooling layer and a 1000-way fully-connected layer with softmax.
+    - ネットワークは global average pooling で終了し、1000 本の fully-connected layer が softmax される。
+
+- The total number of weighted layers is 34 in Fig. 3 (middle).
+    - 重み層の層数は、図３にあるように、34 個である。
+
+---
+
+- It is worth noticing that our model has fewer filters and lower complexity than VGG nets [41] (Fig. 3, left).
+    - 我々のモデルは、VGG より、少ないフィルターで、低い複雑さを持つことに気づく価値がある。
+
+- Our 34- layer baseline has 3.6 billion FLOPs (multiply-adds), which is only 18% of VGG-19 (19.6 billion FLOPs).
+    - 我々の 34層のベースラインは、3.6 億の FLOPs（積乗演算）で、
+    - これは、VGG-19（19.6 億の FLOPs） の 18% である。
+
+#### Residual Network.
+
+- Based on the above plain network, we insert shortcut connections (Fig. 3, right) which turn the network into its counterpart residual version.
+    - 上の plain network をベースにして、ネットワークを相当する残差バージョンに変えるような、shortcut connection を挿入する（図３の右側）。
+
+- The identity shortcuts (Eqn.(1)) can be directly used when the input and output are of the same dimensions (solid line shortcuts in Fig. 3).
+    - 恒等写像のショートカット（式 (1)）は、入出力が同じ次元であるときに使用される。（図３の実線）
+
+- When the dimensions increase (dotted line shortcuts in Fig. 3), we consider two options:
+    - 次元が増加するとき（図３の点線）、以下の２つのオプションが考えられる。
+
+- (A) The shortcut still performs identity mapping, with extra zero entries padded for increasing dimensions.
+    - (A) ショートカットは依然として恒等写像であり、増加した次元に対して、ゼロパディングを行う。
+
+- This option introduces no extra parameter; 
+    - このオプションでは、追加のパラメーターを必要としない。
+
+- (B) The projection shortcut in Eqn.(2) is used to match dimensions (done by 1 × 1 convolutions).
+    - (B) 次元を一致させるために、式 (2) での射影ショートカットを使用する。
+
+- For both options, when the shortcuts go across feature maps of two sizes, they are performed with a stride of 2.
+    - 両方のオプション共に、ショートカットが、２つのサイズの特徴マップをまたがるとき、ストライド幅２で実行される。
 
 
 # ■ 実験結果（主張の証明）・議論（手法の良し悪し）・メソッド（実験方法）
 
-## x. 論文の項目名
+## 4. Experiments
 
+### 4.1. ImageNet Classification
+
+- xxx
+
+### 4.2. CIFAR10 and Analysis
+
+- xxx
+
+### 4.3. Object Detection on PASCAL and MS COCO
 
 # ■ 関連研究（他の手法との違い）
 

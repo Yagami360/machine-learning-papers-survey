@@ -185,9 +185,9 @@
     - 我々は、条件付き画像生成問題としての、画像ベースの仮想試着のタスクに取り組む。
 
 - Generally, given a reference image I_i of a person wearing in clothes c_i and a target clothes c, the goal of CP-VTON is to synthesize a new image I_o of the wearer in the new cloth c_o, in which the body shape and pose of I_i are retained, the characteristics of target clothes c are reserved and the effiects of the old clothes c_i are eliminated.
-    - 一般的に、服 c_i と目標の服 c を着ている人物の参照画像 I_i を与えれば、
+    - 一般的に、服 c_i を着ている人物の参照画像 I_i と目標の服 c を与えれば、
     - CP-VTON のゴールは、新しい服 c_o において、試着者の新しい画像 I_o を合成することである。
-    - （この合成画像というのは、）体型や I_i の姿勢が保持され、目標の服 c の特性が保持され、古い服 c_i の効果が排除される。（ようなもの）
+    - （この合成画像というのは、） I_i の体型や姿勢が保持され、目標の服 c の特性が保持され、古い服 c_i の効果が排除される。（ようなもの）
 
 ---
 
@@ -195,49 +195,188 @@
 
 ---
 
+![image](https://user-images.githubusercontent.com/25688193/58456118-49686c80-815e-11e9-962f-bf209d17ec26.png)
+
+- > Fig. 2. An overview of our CP-VTON, containing two main modules.
+    - > 図２。我々の CP-VTON の概要で、２つのメインネットワークを含んでいる。
+
+- > (a) Geometric Matching Module: the in-shop clothes c and input image representation p are aligned via a learnable matching module. 
+    - > (a) GAMM : 店内の服 c と入力画像表現 p は、学習可能なマッチングモジュール経由で整理されている。
+
+- > (b) Try-On Module: it generates a composition mask M and a rendered person I_r.
+    - > (b) Try-On Module  : これは、構成マスク M とレンダリングされた人物 I_r を生成する。
+
+- > The final results I_o is composed by warped clothes c^ and the rendered person I_r with the composition mask M.
+    - > 最終的な結果 I_o は、歪んだ服 c^ と、構成マスク M で描写された人物 I_r によって構成される。
+
+---
+
+
 - Training with sample triplets (I_i, c, I_t) where I_t is the ground truth of I_o and c is coupled with I_t wearing in clothes c_t, is straightforward but undesirable in practice.
-    - ３つの組のサンプル (I_i, c, I_t) での学習、
+    - ３つの組のサンプル (I_i, c, I_t) での学習は、簡単である [straightforward] が、実際には、望ましくない。
     - （ここで、I_t は、試着者の新しい画像 I_o の ground truth であり、目標の服 ｃ は I_t と衣服 c_t を着用することとを組み合わせる。）
-    - ことは、簡単である [straightforward] が、実際には、望ましくない。
+
+> I_t は教師信号の役割？
 
 - Because these triplets are difficult to collect.
     - これらの３つの組み合わせは、収集するのが困難である。
 
 - It is easier if I_i is same as I_t, which means that c, I_t pairs are enough.
     - もし I_i が I_t と同じであればより簡単である。
-
+    - これは、c, I_t のペアが十分であることを意味する。
+    
 - These paris are in abundance from shopping websites.
+    - これらのペアは、ショッピング web サイトから豊富にある [in abundance]。
 
 - But directly training on (I_t, c, I_t) harms the model generalization ability at testing phase when only decoupled inputs (I_i, c) are available.
+    - しかし、(I_t, c, I_t) で直接的に学習することは、分離された [decoupled] 入力 (I_i, c) のみが利用可能であるとき、テストフェイズにおいて、モデルの生成能力を妨げる。
 
 - Prior work [10] addressed this dilemma by constructing a clothing-agnostic person representation p to eliminate the effiects of source clothing item c_i.
+    - 以前の研究では、衣服アイテム c_i のソースとしての影響を除外するために、衣服にとらわれない [clothing-agnostic] 人物表現 p を構築することによって、このジレンマに対処した。
 
-- With (I_t, c, I_t) transformed into a new triplet form (p, c, I_t), training and testing phase are unied.
+> この衣服にとらわれない [clothing-agnostic] 人物表現 p というのは、具体的には、図２のような、OpenPose による骨格情報（＝姿勢情報）などのこと
+
+- With (I_t, c, I_t) transformed into a new triplet form (p, c, I_t), training and testing phase are unified.
+    - <font color="Pink">(I_t, c, I_t) を新しい３つの組の形 (p, c, I_t) に変換すれば、
+    - トレーニングフェイズとテストフェイズは、統一される [be unified]。</font>
 
 - We adopted this representation in our method and further enhance it by eliminating less information from reference person image.
+    - 我々は、この表現を我々の手法に適用した。
+    - そして、参照人物画像からの、より少ない情報を推定することによって、それを更に高めた。
 
 - Details are described in Sec. 3.1.
+    - 詳細は、セクション 3.1 で記述される。
 
 - One of the challenges of image-based virtual try-on lies in the large spatial misalignment between in-shop clothing item and wearer's body.
+    - 画像ベースの仮想試着の課題の１つは、店内の服と試着者の体との間の、大きな空間的な不整合 [misalignment] にある。
 
 - Existing network architectures for conditional image generation (e.g. FCN [21], UNet [28], ResNet [11]) lack the ability to handle large spatial deformation, leading to blurry try-on results.
+    - 条件付き画像生成のための存在するネットワークアーキテクチャ（例えば、FCN, UNet, ResNet）は、大きな空間的な変形を操作する能力に欠けており、ぼやけた試着の結果を導く。
 
 - We proposed a Geometric Matching Module (GMM) to explicitly align the input clothes c with aforementioned person representation p and produce a warped clothes image c^.
+    - **我々は、入力服 c を、前述の人物表現 p で、明示的に整形し、歪んだ服の画像 c^ を生成するための Geometric Matching Module (GMM) を提案する。**
 
 - GMM is a end-to-end neural network directly trained using pixel-wise L1 loss.
+    - GMM は、ピクセル単位の L1損失関数を用いて、直接的に学習されたend-to-end なニューラルネットワークである。
 
 - Sec. 3.2 gives the details.
+    - セクション 3.2 で詳細を述べる。
 
 - Sec. 3.3 completes our virtual try-on pipeline with a characteristic-preserving Try-On Module.
+    - セクション 3.3 では、特性を保存する Try-On Module での我々の仮想試着パイプラインを完成する。
 
-- The Try-On module synthesizes nal try-on results Io by fusing the warped clothes c^ and the rendered person image I_r.
+- The Try-On module synthesizes final try-on results I_o by fusing the warped clothes c^ and the rendered person image I_r.
+    - The Try-On module は、歪んだ服 c^ とレンダリングされた人物画像 I_r を融合する [fusing] することによって、最終的な試着結果 I_o を合成し、
 
 - The overall pipeline is depicted in Fig. 2.
-
+    - パイプラインの全体は、図に２図示されている。
 
 ### 3.1 Person Representation
 
-- xxx
+- The original cloth-agnostic person representation [10] aims at leaving out the effiects of old clothes c_i like its color, texture and shape, while preserving information of input person I_i as much as possible, including the person's face, hair, body shape and pose.
+    - 元の服にとらわれない人物表現は、古い服 c_i の色やテクスチャー、形状のような効果を除外する [leaving out] ことを狙いとしている。
+    - 一方で、人物の顔や髪、体型や姿勢を含んでいる、入力人物 I_i の情報を、出来る限り保存することを狙いとしている。
+
+- It contains three components:
+
+- 1. Pose heatmap: an 18-channel feature map with each channel corresponding to one human pose keypoint, drawn as an 11 × 11 white rectangle.
+    - 1. **姿勢ヒートマップ：各チャンネルが人間の姿勢キーポイントに一致している 18 チャンネルの特徴マップで、11 × 11 の白い四角系で描写される。**
+
+- 2. Body shape: a 1-channel feature map of a blurred binary mask that roughly covering diffierent parts of human body.
+    - **2. 体型：人間の異なる体の部分をおおまかにカバーするような、ぼやけた２値マスクの１チャンネルの特徴マップ**
+
+> くっきりしたマスク画像だと、その部分のみに服が合成され、多様性のない合成画像となるため、あえてぼやけたマスク画像とすることで、服の合成の多様性を確保する。
+
+- 3. Reserved regions: an RGB image that contains the reserved regions to maintain the identity of a person, including face and hair.
+    - **3. 保存された領域：顔や髪を含む人物のアイデンティティを維持するための保存された領域を含むような１つの RGB 画像。**
+
+- These feature maps are all scaled to a fixed resolution 256×192 and concatenated together to form the cloth-agnostic person representation map p of k channels, where k = 18 + 1 + 3 = 22.
+    - これらの特徴マップは、全て解像度 256×192 で固定してスケーリングされ、k 個のチャンネルをもつ衣服にとらわれない人物表現写像 p の形にお互いが結合される。ここで、 k= 18 + 1 + 3 = 22
+
+- We also utilize this representation in both our matching module and try-on module.
+    - 我々はまた、我々のマッチングモジュールと try-on module との両方で、この表現を利用する。
+
+---
+
+![image](https://user-images.githubusercontent.com/25688193/58460839-5b9bd800-8169-11e9-968a-d7bb4e1fff0c.png)
+
+
+### 3.2 Geometric Matching Module
+
+- The classical approach for the geometry estimation task of image matching consists of three stages:
+    - 画像マッチングの形状推定タスクのための、従来のアプローチは、以下の３つののステージから構成される。
+
+- (1) local descriptors (e.g. shape context [2], SIFT [22] ) are extracted from both input images,
+    - (1) 局所的な記述子 [descriptor] が、両方の入力画像から抽出される。
+
+- (2) the descriptors are matched across images form a set of tentative correspondences,
+    - (2) その記述子が、複数の画像フォームに渡ってマッチングされ、試験的な [tentative] 対応の組を形成する。
+
+- (3) these correspondences are used to robustly estimate the parameters of geometric model using RANSAC [7] or Hough voting [16,22].
+    - これらの対応は、RANSAC [7] や Hough voting [16,22] を使用している形状モデルのパラメーターを頑丈に [robustly] 推定するために、使用される。
+
+---
+
+- Rocco et al. [27] mimics this process using diffierentiable modules so that it can be trainable end-to-end for geometry estimation tasks.
+    - Rocco ら [27] は、形状推定タスクに対して、end-to-end で学習可能になるように、微分可能な [diffierentiable] モジュールを使用して、このプロセスを模倣している [mimics]。
+
+- Inspired by this work, we design a new Geometric Matching Module (GMM) to transform the target clothes c into warped clothes c^ which is roughly aligned with input person representation p.
+    - この研究に触発され、我々は、目標の服 c を、入力の人物表現 p で大まかに整形された歪んだ服 c^ に変換するための新しい Geometric Matching Module (GMM)を設計する。
+
+- As illustrated in Fig. 2, our GMM consists of four parts:
+    - 図２に図示されているように、我々の GMM は４つの部分で構成する。
+
+- (1) two networks for extracting high-level features of p and c respectively.
+    - (1) p と c の比較的高レベルな特徴量を抽出するためのネットワーク。
+
+- (2) a correlation layer to combine two features into a single tensor as input to the regressor network.
+    - (2) ２つの特徴量を、regressor network の入力としての１つのテンソルに結合する correlation layer（相関層） 
+
+- (3) the regression network for predicting the spatial transformation parameters θ.
+    - (3) 空間的な変換パラメーター θ を推定するための regression network
+
+- (4) a Thin-Plate Spline (TPS) transformation module T for warping an image into the output ^c = T_θ(c).
+    - (4) 画像を、出力 ^c = T_θ(c) に歪ますための Thin-Plate Spline (TPS) 変換モジュール T 
+     
+- The pipeline is end-to-end learnable and trained with sample triplets (p, c, c_t), under the pixel-wise L1 loss between the warped result ^c and ground truth c_t, where c_t is the clothes worn on the target person in I_t:
+    - このパイプラインが、end-to-end に学習可能であり、
+    - 歪んだ結果 c^ と ground truth c_t との間のピクセル単位でのL1損失の元で、３つの組のサンプル (p, c, c_t) で学習される。
+    - ここで、c_t は、I_t の中の目標人物が来ている服である。
+
+![image](https://user-images.githubusercontent.com/25688193/58463396-b84dc180-816e-11e9-8f45-3b490c971527.png)
+
+---
+
+- The key diffierences between our approach and Rocco et al. [27] are three-fold.
+    - 我々のアプローチと Rocco らによるアプローチの間の、重要な違いは、以下の３つである。
+
+- First, we trained from scratch rather than using a pretrained VGG network.
+    - １つ目は、事前学習された VGG network を使用するのではなく、スクラッチで学習した。
+
+- Second, our training ground truths are acquired from wearer's real clothes rather than synthesized from simulated warping.
+    - **２つ目は、我々の学習している ground truths は、歪みシミュレートからの合成されたものではなく、着用者のリアルな服から獲得されるものである。**
+
+- Most importantly, our GMM is directly supervised under pixel-wise L1 loss between warping outputs and ground truth.
+    - 最も重要なことは、我々の GMM は、歪み出力と ground truth との間の ピクセル単位でのL1損失の元で、直接的に監視されている [supervised] ことである。
+
+
+### 3.3 Try-on Module
+
+- Now that the warped clothes ^c is roughly aligned with the body shape of the target person, the goal of our Try-On module is to fuse ^c with the target person and for synthesizing the nal try-on result.
+
+---
+
+- One straightforward solution is directly pasting ^c onto target person image I_t.
+
+- It has the advantage that the characteristics of warped clothes are fully preserved, but leads to an unnatural appearance at the boundary regions of clothes and undesirable occlusion of some body parts (e.g. hair, arms).
+
+- Another solution widely adopted in conditional image generation is translating inputs to outputs by a single forward pass of some encoder-decoder networks, such as UNet [28], which is desirable for rendering seamless smooth images.
+
+- However, It is impossible to perfectly align clothes with target body shape.
+
+- Lacking explicit spatial deformation ability, even minor misalignment could make the UNet-rendered output blurry.
+
+---
 
 
 # ■ 実験結果（主張の証明）・議論（手法の良し悪し）・メソッド（実験方法）

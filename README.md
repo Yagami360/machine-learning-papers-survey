@@ -15,6 +15,8 @@
     - [A Style-Based Generator Architecture for Generative Adversarial Networks](https://github.com/Yagami360/MachineLearning-Papers_Survey/blob/master/papers/A_Style-Based_Generator_Architecture_for_Generative_Adversarial_Networks/StyleGAN.md)
 - Semantic Segmentation
     - [U-Net: Convolutional Networks for Biomedical Image Segmentation](https://github.com/Yagami360/MachineLearning-Papers_Survey/blob/master/papers/U-Net_Convolutional_Networks_for_Biomedical/UNet.md)
+- image-to-image
+    - [Toward Characteristic-Preserving Image-based Virtual Try-On Network](https://github.com/Yagami360/MachineLearning-Papers_Survey/blob/master/papers/Toward_Characteristic-Preserving_Image-based_Virtual_Try-On_Network/cp-vton.md)
 - Others
     - xxx
 

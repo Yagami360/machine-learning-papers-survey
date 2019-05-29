@@ -362,26 +362,197 @@
 
 ### 3.3 Try-on Module
 
-- Now that the warped clothes ^c is roughly aligned with the body shape of the target person, the goal of our Try-On module is to fuse ^c with the target person and for synthesizing the nal try-on result.
+- Now that the warped clothes ^c is roughly aligned with the body shape of the target person, the goal of our Try-On module is to fuse ^c with the target person and for synthesizing the final try-on result.
+    - 今や歪んだ服 c^ は、目標の人の体型で、大雑把に整形されているので、
+    - 我々の Try-On module のゴールは、c^ を目標の人と混合することであり、最終的な試着結果を合成することである。
 
 ---
 
 - One straightforward solution is directly pasting ^c onto target person image I_t.
+    - １つの単純な解決法は、c^ を目標の人の画像 I_t に、直接的に貼り付けることである。
 
 - It has the advantage that the characteristics of warped clothes are fully preserved, but leads to an unnatural appearance at the boundary regions of clothes and undesirable occlusion of some body parts (e.g. hair, arms).
+    - これは、歪んだ服の特性が、完全に保存されるという利点をもつ。
+    - しかし、服の領域の境界で不自然な外見と、いくつかの体の部分（例えば、髪や腕）で、望ましくない閉塞 [occlusion] を導く。
 
 - Another solution widely adopted in conditional image generation is translating inputs to outputs by a single forward pass of some encoder-decoder networks, such as UNet [28], which is desirable for rendering seamless smooth images.
+    - 条件付き画像生成において、広く適用される他の解決法は、UNet のようないくつかの encoder-decoder ネットワークの単一の順方向経路によって、入力を出力に変換することである。
+    - （この encoder-decoder ネットワークというのは、）シームレスでスムーズな画像のために、望ましい（ようなネットワーク）
 
 - However, It is impossible to perfectly align clothes with target body shape.
+    - しかしながら、目標の体型に、服を完全に整形することは不可能である。
 
 - Lacking explicit spatial deformation ability, even minor misalignment could make the UNet-rendered output blurry.
+    - 空間的な変形の能力を欠けば、小さな不整合さえ、U-Net でレンダリングされた出力をぼやけさせるだろう。
 
 ---
+
+![image](https://user-images.githubusercontent.com/25688193/58522089-c72d8600-81f9-11e9-9b8c-23ee29a43e75.png)
+
+---
+
+- Our Try-On Module aims to combine the advantages of both approaches above.
+    - 我々の Try-On-Module は、上の両方のアプローチの利点を組み合わせることを狙いとしている。
+
+- As illustrated in Fig. 2, given a concatenated input of person representation p and the warped clothes ^c, UNet simultaneously renders a person image I_r and predicts a composition mask M.
+    - 図２で図示したように、人物表現 p の結合された入力と歪んだ服 c^ を与えれば、
+    - UNet は同時に、人物画像 I_r を描写し、構成マスク M を推定する。
+
+- The rendered person I_r and the warped clothes ^c are then fused together using the composition mask M to synthesize the final try-on result I_o:
+    - レンダリングされた人物 I_r と歪んだ服 c^ はそのとき、最終的な試着結果 I_o を合成するために、構成マスク M を用いて、お互いを融合する。
+
+![image](https://user-images.githubusercontent.com/25688193/58522324-ba5d6200-81fa-11e9-8128-90548d1b5fd0.png)
+
+- where  represents element-wise matrix multiplication.
+    - ここで、![image](https://user-images.githubusercontent.com/25688193/58522350-e5e04c80-81fa-11e9-9bce-da9483752ab0.png) は、要素単位での行列の積を表している。
+
+---
+
+- At training phase, given the sample triples (p, c, I_t), the goal of Try-On Module is to minimize the discrepancy between output I_o and ground truth I_t.
+    - 学習フェイスでは、３つのサンプルの組 (p, c, I_t) を与えれば、
+    - Try-On-Module のゴールは、出力 I_o と ground truth I_t の間の 不一致 [discrepancy] を最小化することである。
+
+- We adopted the widely used strategy in conditional image generation problem that using a combination of L1 loss and VGG perceptual loss [14], where the VGG perceptual loss is dened as follows:
+    - 我々は、条件付き画像生成問題で広く使われている戦略を適用した。
+    - （この戦略というのは、）L1損失と VGG の知覚的な損失 [14] の組み合わせを使用している（戦略）
+    - ここで、VGG の知覚的な損失は、以下のように定義される。
+
+![image](https://user-images.githubusercontent.com/25688193/58522611-22607800-81fc-11e9-9881-b61da1f9420a.png)
+
+- where φ_i(I) denotes the feature map of image I of the i-th layer in the visual perception network φ, which is a VGG19 [32] pre-trained on ImageNet.
+    - ここで、φ_i(I) は、視覚的なパーセプトロン φ の中での、i番目の層の画像 I の特徴マップを示しており、
+    - これは、ImageNet で VGG19 で事前学習されたものである。
+
+- The layer i ≧ 1 stands for 'conv1 2', 'conv2 2', 'conv3 2', 'conv4 2', 'conv5 2', respectively.
+    - 層 i ≧ 1 は、それぞれ、'conv1 2', 'conv2 2', 'conv3 2', 'conv4 2', 'conv5 2' を表している。
+
+---
+
+- Towards our goal of characteristic-preserving, we bias the composition mask M to select warped clothes as much as possible by applying a L1 regularization ||1 - M||_1 on M.
+    - 特性保存の我々のゴールに向けて、我々は、M においてのL1正則化 ||1 - M||_1 を適用することによって、出来るだけ歪んだ服を選択するために、構成マスク M にバイアスをかける。
+
+- The overall loss function for Try-On Module (TOM) is:
+    - Try-On Module (TOM) に対しての、損失関数の全体は、以下のように定義される。
+
+![image](https://user-images.githubusercontent.com/25688193/58523256-bcc1bb00-81fe-11e9-9f99-d17de9701ab1.png)
 
 
 # ■ 実験結果（主張の証明）・議論（手法の良し悪し）・メソッド（実験方法）
 
-## x. 論文の項目名
+## 4 Experiments and Analysis
+
+### 4.1 Dataset
+
+- We conduct our all experiments on the datasets collected by Han et al. [10].
+    - 我々は、Han らによって収集されたデータセットで、全ての実験を行う。
+
+- It contains around 19,000 front-view woman and top clothing image pairs.
+    - このデータセットは、正面を向いている女性と上着の服の画像のペアの、およそ 19,000 個のデータを含んでいる。
+
+- There are 16253 cleaned pairs, which are split into a training set and a validation set with 14221 and 2032 pairs, respectively. 
+    - 16253 個のクリーニングされたペアが存在する。
+    - これは、それぞれ、12332 個のペアと 2032 個のペアで、学習用データセットと検証用データセットに分割されている。
+
+- We rearrange the images in the validation set into unpaired pairs as the testing set.
+    - 我々は、この検証用データセットの画像を、テスト用として、ペアリングされていないペアに再度整形する。
+
+### 4.2 Quantitative Evaluation
+
+- We evaluate the quantitative performance of diffierent virtual try-on methods via a human subjective perceptual study.
+    - 我々は、人間の主観的で知覚的な研究経由で、仮想試着手法の違いの定量的なパフォーマンスを評価する。
+
+- Inception Score (IS) [29] is usually used as to quantitatively evaluate the image synthesis quality, but not suitable for evaluating this task for that it cannot reflect whether the details are preserved as described in [10].
+    - Inception Score (IS) [29] は、画像合成の質を定量的に評価するためのものとして、一般的に使用されている。
+    - しかし、詳細が、データセット [10] で記述されているように保存されているかどうかを反映することが出来ないために、このタスクを評価するためには、ふさわしくない。
+
+- We focus on the clothes with rich details since we are interested in characteristic-preservation, instead of evaluating on the whole testing set.
+    - 我々は、テストデータセット全体を評価するのではなく、特性の保存に興味があるので、豊富な詳細をもつ服にフォーカスする。
+
+- For simplicity, we measure the detail richness of a clothing image by its total variation (TV) norm.
+    - 簡単のため、total variation (TV) ノルムによって、我々は服の画像の細分の豊富さを計測する。
+
+- It is appropriate for this dataset since the background is in pure color and the TV norm is only contributed by clothes itself, as illustrated in Fig. 3.
+    - 図３に図示されているように、
+    - このデータセットに対しては、背景が純粋な色になっており、TV ノルムは服自身によってのみ貢献されるため、適切である。
+
+- We extracted 50 testing pairs with largest clothing TV norm named as LARGE to evaluate characteristic-preservation of our methods, and 50 pairs with smallest TV norm named as SMALL to ensure that our methods perform at least as good as previous state-of-the-art methods in simpler cases.
+    - 我々は 我々の手法の特性保存性を評価するために、LARGE と名付けられた、最も大きな服の TV ノルムを持つような、50 個のテストペアを抽出した。
+    - そして、我々の手法が、よりシンプルなケースにおいて、少なくとも前の SOTA 手法と同様によいパフォーマンスを行うことを保証するために、SMALL と名付けられた、最も小さい TV ノルムをもつような、50 個のペアを抽出した。
+
+---
+
+![image](https://user-images.githubusercontent.com/25688193/58524854-8dae4800-8204-11e9-8ba1-6dc667eaa93a.png)
+
+- Fig. 3. From top to bottom, the TV norm values are increasing. 
+    - 上段から下段にかけて、TV ノルムは増加している。
+
+- Each line shows some clothes in the same level.
+    - 各行は、同じレベルの同じ服を示している。
+
+---
+
+- We conducted pairwise A/B tests on Amazon Mechanical Turk (AMT) platform.
+    - 我々は、Amazon Mechanical Turk (AMT) で、ピクセル単位での A/B テストを行った。
+
+- Specically, given a person image and a target clothing image, the worker is asked to select the image which is more realistic and preserves more details of the target clothes between two virtual try-on results from diffierent methods.
+    - 特に、人物画像と目標の服画像を与えれば、作業者は、異なる手法からの２つの仮想試着結果との間で、よりリアルでより目標の服の詳細を保存している画像を選択することを求められる。
+
+- There is no time limited for these jobs, and each job is assigned to 4 diffierent workers.
+    - これらの処理の時間的制限は存在せず、各処理は、４つの作業者に割り与えられる。
+
+- Human evaluation metric is computed in the same way as in [10].
+    - 人間的な評価指標は、[10] と同じ方法で計算される。
+
+### 4.3 Implementation Details
+
+#### Training Setup 
+
+![image](https://user-images.githubusercontent.com/25688193/58523256-bcc1bb00-81fe-11e9-9f99-d17de9701ab1.png)
+
+- In all experiments, we use λ_L1 = λ_vgg = 1.
+    - 全ての実験において、我々は、λ_L1 = λ_vgg = 1 を使用する。
+
+- When composition mask is used, we set λ_mask = 1.
+    - 構成マスクが使用されるとき、λ_mask = 1 を設定する。
+
+- We trained both Geometric Matching Module and Try-on Module for 200K steps with batch size 4.
+    - GMM と TOM の両方を、バッチサイズ 4 で 200K ステップ学習した。
+
+- We use Adam [15] optimizer with β_1 = 0.5 and β_2 = 0.999.
+    - β_1 = 0.5 and β_2 = 0.999 で Adam を使用する。
+
+- Learning rate is first fixed at 0.0001 for 100K steps and then linearly decays to zero for the remaining steps.
+    - 学習率は、最初の 100K ステップで 0.0001 で固定され、
+    - 次に、残りのステップで、ゼロに向かって線形に減衰する。
+
+- All input images are resized to 256 × 192 and the output images have the same resolution.
+    - 全ての入力画像は、256 × 192 にリサイズされ、出力画像は同じ解像度を持つ。
+
+#### Geometric Matching Module
+
+![image](https://user-images.githubusercontent.com/25688193/58526055-c2bc9980-8208-11e9-91de-282663c33179.png)
+
+- Feature extraction networks for person representation and clothes have the similar structure, containing four 2-strided down-sampling convolutional layers, succeeded by two 1-strided ones, their numbers of lters being 64, 128, 256, 512, 512, respectively.
+
+- The only diffierence is the number of input channels.
+
+- Regression network contains two 2-strided convolutional layers, two 1-strided ones and one fully-connected output layer.
+
+- The numbers of lters are 512, 256, 128, 64.
+
+- The fully-connected layer predicts the x- and y-coordinate offsets of TPS anchor points, thus has an output size of 2×5×5 = 50.
+
+#### Try-On Module
+
+- xxx
+
+### 4.4 Comparison of Warping Results
+
+
+### 4.5 Comparison of Try-on Results
+
+
+### 4.6 Discussion and Ablation Studies
 
 
 # ■ 関連研究（他の手法との違い）

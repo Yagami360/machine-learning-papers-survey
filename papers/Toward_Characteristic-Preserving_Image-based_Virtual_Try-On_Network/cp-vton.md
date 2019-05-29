@@ -533,23 +533,112 @@
 ![image](https://user-images.githubusercontent.com/25688193/58526055-c2bc9980-8208-11e9-91de-282663c33179.png)
 
 - Feature extraction networks for person representation and clothes have the similar structure, containing four 2-strided down-sampling convolutional layers, succeeded by two 1-strided ones, their numbers of lters being 64, 128, 256, 512, 512, respectively.
+    - 人物画像と服に対しての特徴抽出ネットワークは、よく似た構造をもつ。
+    - （この構造というのは、）１ストライドの２つの畳み込み層によって受け継がれる [succeeded by] ような、２ストライドでダウンサンプリングする４つの畳み込み層を含み、イテレーションの数はそれぞれ 64, 128, 256, 512, 512 となる。
 
 - The only diffierence is the number of input channels.
+    - 違いは、入力チャンネルの数のみである。
 
 - Regression network contains two 2-strided convolutional layers, two 1-strided ones and one fully-connected output layer.
+    - 回帰ネットワークは、２ストライドの２つの畳み込み層、１ストライドの２つの畳み込み層、１つの全結合の出力層を含む。
 
 - The numbers of lters are 512, 256, 128, 64.
+    - イテレーションの回数は、512, 256, 128, 64.
 
 - The fully-connected layer predicts the x- and y-coordinate offsets of TPS anchor points, thus has an output size of 2×5×5 = 50.
+    - 全結合層は、TPS アンカー点の x,y 座標のオフセットを推定する。
+    - それ故に、2×5×5 = 50 の出力サイズをもつ。
 
 #### Try-On Module
 
-- xxx
+- We use a 12-layer UNet with six 2-strided down-sampling convolutional layers and six up-sampling layers.
+    - 我々は、２ストライドでダウンサンプリングを行う６つの畳み込み層と６つのアップサンプリングを行う層を持つ、１２層の UNet を使用する。
+
+- To alleviate so-called "checker-board artifacts", we replace 2-strided deconvolutional layers normally used for up-sampling with the combination of nearest-neighbor interpolation layers and 1-strided convolutional layers, as suggested by [25].
+    - いわゆる "checker-board artifacts" を軽減する [alleviate] ために、
+    - [25] で提案されているように、我々は、通常アップサンプリングの目的のために使用されている２ストライドの逆畳み込み層を、最近接補間層と１ストライドの畳み込み層の組み合わせで置き換える。
+
+- The numbers of lters for down-sampling convolutional layers are 64, 128, 256, 512, 512, 512.
+    - ダウンサンプリングを行う畳み込み層のための、イテレーションの数は、64, 128, 256, 512, 512, 512 である。
+
+- The numbers of lters for up-sampling convolutional layers are 512, 512, 256, 128, 64, 4.
+    - アップサンプリングを行う畳み込み層のための、イテレーションの数は、512, 512, 256, 128, 64, 4 である。
+
+- Each convolutional layer is followed by an Instance Normalization layer [33] and Leaky ReLU [24], of which the slope is set to 0.2.
+    - 各畳み込み層は、Instance Normalization layer [33] とスロープ値が 0.2 に設定された Leaky ReLU [24] に従う。
 
 ### 4.4 Comparison of Warping Results
 
+- Shape Context Matching Module (SCMM) uses hand-crafted descriptors and explicitly computes their correspondences using an iterative algorithm, which is time-consumed, while GMM runs much faster.
+    - Shape Context Matching Module (SCMM) は、手作業の記述子であり、時間のかかる [time-consumed] イテレーションアルゴリズムを使用して、それらの一致性を明示的に計算する。
+    - 一方で GMM はより速く動作する。
+
+- In average, processing a sample pair takes GMM 0.06s on GPU, 0.52s on CPU, and takes SCMM 2.01s on CPU.
+    - 平均では、１つのサンプルペアの処理は、GMM では、GPU で 0.06、CPU で 0.52 s かかり、SCMM では CPU で 2.01s かかる。
+
+#### Qualitative results
+
+![image](https://user-images.githubusercontent.com/25688193/58529527-1a153680-8216-11e9-9682-42bb5a141223.png)
+
+- Fig. 4. Matching results of SCMM and GMM.
+    - 図４：SCMM と GMM のマッチング結果
+
+- Warped clothes are directly pasted onto target persons for visual checking.
+    - 視覚的なチェックのために、歪んだ服が、対象人物上に直接的に貼り付けられている。
+
+- Our method is comparable with SCMM and produces less weird results.
+    - 我々の手法は、SCMM と比較可能であり、より少ない奇妙な結果を生成している。
+
+---
+
+- Fig. 4 demonstrates a qualitative comparison of SCMM and GMM.
+    - 図４は、SCMM と GMM の定性的な比較を示している。
+
+- It shows that both modules are able to roughly align clothes with target person pose.
+    - 両方のモジュールが、対象人物の姿勢で、大まかに服を成形することが可能であることを示している。
+
+- However, SCMM tends to overly shrink a long sleeve into a "thin band", as shown in the 6-th column in Fig. 4.
+    - しかしながら、図４の６番目の列で見られるように、SCMM は、長袖 [long sleeve] を、細い帯に、に大げさに縮ます傾向がある。
+
+- This is because SCMM merely relies on matched shape context descriptors on the boundary of cloths shape, while ignores the internal structures.
+    - これはなぜなら、内部の構造を無視する一方で、SCMM は、服の形状の境界において、マッチングした内容の記述子に、単に [merely] 頼るためである。
+
+- Once there exist incorrect correspondences of descriptors, the warping results will be weird.
+    - いったん、記述子の不正確な一致が存在すれば、歪んだ結果は、奇妙になる。
+
+- In contrast, GMM takes full advantages of the learned rich representation of clothes and person images to
+    - 対称的に、GMM は、服と人物画像の豊富な表現で学習された完全な利点をもつ。
+
+- determinate TPS transformation parameters and more robust for large shape diffierences.
+    - TPS 変換パラメーターを決定し、大きな形状の違いに対して、より堅牢である。
+
+#### Quantitative results
+
+- It is difficult to evaluate directly the quantitative performance of matching modules due to the lack of ground truth in the testing phase.
+    - テストフェイズにおいての ground truth が不足しているために、
+    - 直接的に、マッチングモジュールの手に量的なパフォーマンスを評価することは困難である。
+
+- Nevertheless, we can simply paste the warped clothes onto the original person image as a non-parametric warped synthesis method in [10].
+    - にもかかわらず、[10] においてのノンパラメトリックな歪み合成手法として、元の人物画像を、歪んだ服に貼り付ける。
+
+- We conduct a perceptual user study following the protocol described in Sec. 4.2, for these two warped synthesis methods.
+    - 我々は、これらの２つの歪みの合成の手法に対して、セクション 4.2 で記述されているプロトコルに従って、知覚的なユーザー調査を実施する。
+
+- The synthesized by GMM are rated more realistic in 49.5% and 42.0% for LARGE and SMALL, which indicates that GMM is comparable to SCMM for shape alignment.
+    - GMM による合成は、LARGE と SMALL に対して、49.5 % と 42.0% で、よりリアルであると評価される。
+    - このことは、GMM は正常の整形に対して、SCMM と比較できることを意味している。
 
 ### 4.5 Comparison of Try-on Results
+
+#### Qualitative results
+
+- Fig. 2 shows that our pipeline performs roughly the same as VITON when the patterns of target clothes are simpler.
+
+- However, our pipeline preserves sharp and intact characteristic on clothes with rich details (e.g. texture, logo, embroidery) while VITON produces blurry results.
+
+---
+
+- xxx
 
 
 ### 4.6 Discussion and Ablation Studies

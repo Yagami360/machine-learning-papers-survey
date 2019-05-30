@@ -387,7 +387,7 @@
 
 ---
 
-![image](https://user-images.githubusercontent.com/25688193/58522089-c72d8600-81f9-11e9-9b8c-23ee29a43e75.png)
+![image](https://user-images.githubusercontent.com/25688193/58611051-c3c4f800-82e8-11e9-9041-760bb387f558.png)
 
 ---
 
@@ -423,8 +423,8 @@
     - ここで、φ_i(I) は、視覚的なパーセプトロン φ の中での、i番目の層の画像 I の特徴マップを示しており、
     - これは、ImageNet で VGG19 で事前学習されたものである。
 
-- The layer i ≧ 1 stands for 'conv1 2', 'conv2 2', 'conv3 2', 'conv4 2', 'conv5 2', respectively.
-    - 層 i ≧ 1 は、それぞれ、'conv1 2', 'conv2 2', 'conv3 2', 'conv4 2', 'conv5 2' を表している。
+- The layer i ≧ 1 stands for 'conv1_2', 'conv2_2', 'conv3_2', 'conv4_2', 'conv5_2', respectively.
+    - 層 i ≧ 1 は、それぞれ、'conv1_2', 'conv2_2', 'conv3_2', 'conv4_2', 'conv5_2' を表している。
 
 ---
 
@@ -739,26 +739,104 @@
 ---
 
 - As shown in Fig. 6, even though the warped clothes are roughly aligned with target person, CP-VTON(w/o mask) still loses characteristic details and produces blurry results.
+    - 図６に示したように、たとえ歪んだ服が大まかに目標人物に整形されていても、
+    - CP-VTON(w/o mask) は、特性の詳細を失い、ぼやけた結果を生成する。
 
-- This veries that encoder-decoder network architecture like UNet fails to handle even minor spatial deformation.
+- This verifies that encoder-decoder network architecture like UNet fails to handle even minor spatial deformation.
+    - これは、UNet のような encoder-decoder ネットワークアーキテクチャが、小さな空間的な変形さえ操作しないということを検証する。
 
 ---
 
 - Though integrated with mask composition, CP-VTON(no L1) performs as poorly as variant CP-VTON(w/o mask.
+    - マスク構成で統合されるけれども、CP-VTON(no L1) は、変種 CP-VTON(w/o マスクと同等の性能ではない。
 
 - Fig. 7 shows that composition mask tends to select rendered person image without L1 regularization.
+    - 図７は、構成マスクが、L1正則化することなしにレンダリングされる人物の画像を選択する傾向を示している。
 
 - This verifies that even minor misalignment introduces large perceptual disagreement between warped clothes and ground truth.
-
+    - これは、小さな不整合さえ、歪んだ服と ground truth との間の、大きな知覚的な　不一致 [disagreement] を取り込む [introduces] ことを証明している。
+    
 ---
 
 ![image](https://user-images.githubusercontent.com/25688193/58605297-3a0a3000-82d2-11e9-819b-54c631693a12.png)
 
 - > Fig. 7. Ablation studies on composition mask and mask L1 loss. 
+    - > 図７：構成マスクとL1損失マスクにおいての Ablation studies
 
 - > Without mask composition, UNet cannot handle well even minor misalignment and produces undesirable try-on results.
+    - > マスク構成なしでは、UNet は小さな不整合さえうまく処理できず、望ましくない試着結果を生成する。
 
 - > Without L1 regularization on mask, it tends to select UNet-rendered person, leading to blurry results as well.
+    - > マスクでのL1正則化なしでは、UNet がレンダリングした人物を選択する傾向となり、同様にぼやけた結果を導く。
+
+#### Robustness against minor misalignment
+
+- In Sec. 4.5 we argue that VITON is vulnerable to minor misalignment due to its coarse-to-fine strategy, while our pipeline sidesteps imperfect alignment by simultaneously producing rendered person and composition mask.
+    - セクション 4.5 では、我々は、VITON は、その coarse-to-fine 法のために、小さな不整合に脆弱である [vulnerable] と主張した。
+    - 一方で、我々のパイプラインは、レンダリングされた人物と構成マスクを同時に学習することによって、湯完全な整形を回避することを主張した。
+
+- This is further clarified below in a controlled condition with simulated warped clothes.
+    - これは、シミュレートされた歪んだ服と共に、制御された条件のもとで、更に明らかにされる [be clarified]。
+
+---
+
+- Specically, rather than real warped clothes produced by matching module, we use the wore clothes collected from person images to simulate perfect alignment results.
+    - 特に、マッチングモジュールによって生成された、リアルな歪んだ服よりも、
+    - 完全な整形結果をシミュレートするための人物画像から、収集された着用された服を使用する。
+
+- We then train VITON stage II, our proposed variant CP-VTON(w/o mask) and our pipeline.
+    - 我々は次に、VITON ステージ２を学習する。これは、我々の提案された変種 CP-VTON(w/o mask) と我々のパイプライン
+
+- For VITON stage II, we synthesize coarse person image with its source code and released model checkpoint.
+    - VITON ステージ２に対しては、我々は、粗い人物画像を、そのソースコードとリリースされたモデルの checkpoint で合成する。
+
+---
+
+- It is predictable that with this "perfect matching module", all the three methods could achieve excellent performance in training and validation phase, where input samples are paired.
+    - この "perfect matching module" では、
+    - ３つの手法の全ては、入力サンプルがペアになっている場所である、学習フェイズと検証フェイズにおいて、素晴らしいパフォーマンスを達成できることが、予想できる。
+
+- Next is the interesting part:
+    - 次は興味深いパートである。
+
+- what if the perfect alignment is randomly perturbed within a range of N pixels, to simulate an imperfect matching module?
+    - マッチングモジュールを完全にシミュレートするために、
+    - もし完全な整形が、N ピクセルの範囲内に、ランダムに摂動させられる [be perturbed] とどうなるのであろうか？[what if]
+
+- With the perturbation getting greater (N = 0, 5, 10, 15, 20), how fast will the try-on performance decay?
+    - 摂動 が、(N = 0, 5, 10, 15, 20) で増加すると、どの程度速く、試着結果は減衰するのだろうか？
+
+---
+
+- These questions are answered in Fig. 8.
+
+- As we applying greater perturbation, the performance of both VITON stage II and CP-VTON(w/o mask) decays quickly.
+
+- In contrast, our pipeline shows robustness against perturbation and manages to preserve detailed characteristic.
+
+---
+
+![image](https://user-images.githubusercontent.com/25688193/58609147-85780a80-82e1-11e9-93af-07698e1af985.png)
+
+- > Fig. 8. Comparisons on the robustness of three methods against minor misalignment simulated by random shift within radius N.
+
+- > As N increasing, results of CP-VTON decays more slightly than other methods.
+
+#### Failure cases
+
+- Fig. 9 shows three failure cases of our CP-VTON method caused by 
+
+- (1) improperly preserved shape information of old clothes,
+
+- (2) rare poses 
+
+- and (3) inner side of the clothes undistinguishable from the outer side, respectively.
+
+---
+
+![image](https://user-images.githubusercontent.com/25688193/58610369-3aacc180-82e6-11e9-9048-0f2d99dcf5d1.png)
+
+- > Fig. 9. Some failure cases of our CP-VTON.
 
 
 # ■ 関連研究（他の手法との違い）

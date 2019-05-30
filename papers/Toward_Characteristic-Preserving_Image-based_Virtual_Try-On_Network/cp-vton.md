@@ -633,15 +633,132 @@
 #### Qualitative results
 
 - Fig. 2 shows that our pipeline performs roughly the same as VITON when the patterns of target clothes are simpler.
+    - 図２は、目標の服ののパターンがよりシンプルなとき、我々のパイプラインが、VTON と大まかに同様のパフォーマンスを発揮することを示している。
 
 - However, our pipeline preserves sharp and intact characteristic on clothes with rich details (e.g. texture, logo, embroidery) while VITON produces blurry results.
+    - しかしながら、我々のパイプラインは、VTON がぼやけた結果を生成する一方で、豊富な詳細をもつ服において、形状や無傷の [intact] 特性を保存する。（例えば、テクスチャー、ロゴ、刺繍 [embroidery]）
 
 ---
 
-- xxx
+- We argue that the failure of VITON lies in its coarse-to-fine strategy and the imperfect matching module.
+    - <font color="Pink">我々は、VITON の失敗は、その coarse-to-fine 法と、不完全なマッチングモジュールに横たわっていると主張する。</font>
+
+- Precisely, VITON learns to synthesis a coarse person image at first, then to align the clothes with target person with shape context matching, then to produce a composition mask for fusing UNet rendered person with warped clothes and finally producing a refined result.
+    - 簡単に言えば、VITON はまず初めに、粗い [coarse] 人物の画像を合成することを学習し、
+    - 次に、形状コンテキストマッチングで、服を対象の人物に整形し、
+    - 歪んだ服を着ている UNet でレンダリングされた人物を融合するための、構成マスクを生成し、
+    - そして最後に、洗練された [refined] 結果を生成する。
+
+- After extensive training, the rendered person image has already a small VGG perceptual loss with respect to ground truth.
+    - <font color="Pink">広範囲の学習の後、レンダリングされた人物画像は、ground truth に関して [respecto to]、既に、小さな VGG の知覚的な損失をもつ。</font>
+
+> VGG の知覚的な損失：式 (4) の L_VGG のこと
+
+- On the other hand, the imperfect matching module introduces unavoidable minor misalignment between the warped clothes and ground truth, making the warped clothes unfavorable to perceptual loss.
+    - <font color="Pink">言い換えれば、不完全なマッチングモジュールは、歪んだ服と ground truth との間の、僅かな不整合を避けられないことを紹介し、
+    - 歪んだ服を、知覚的な損失値に、不都合にする [unfavorable]。</font>
+
+- Taken together, when further refined by truncated perceptual loss, the composition mask will be biased towards selecting rendered person image rather than warped clothes, despite the regularization of the composition mask(Eq. 4).
+    - まとめると、[Taken together]
+    - 切り取られた [truncated] 知覚的な損失関数によって、更に洗練されたとき、
+    - 構成マスクは、歪んだ服よりも、レンダリングされた人物を選択する方向へ、バイアス化されるだろう。
+    - 構成マスクの正則化（式 (4)）にも関わらず、
+
+![image](https://user-images.githubusercontent.com/25688193/58523256-bcc1bb00-81fe-11e9-9f99-d17de9701ab1.png)
+
+- The VITON's "ragged" masks shown in Fig. 6 confirm this argument.
+    - VITON の ”不規則な [ragged] ” マスクは、図６に示されており、この主張を確認する。
+
+---
+
+![image](https://user-images.githubusercontent.com/25688193/58603014-0f1bde00-82ca-11e9-8118-1e86d881eb35.png)
+
+- > Fig. 6. An example of VITON stage II.
+    - > VTON のステージ２の例
+
+- > The composition mask tends to ignore the details of coarsely aligned clothes.
+    - > 構成マスクは、荒く整形された服の詳細を無視する傾向がある。
+
+---
+
+- Our pipeline doesn't address the aforementioned issue by improving matching results, but rather sidesteps it by simultaneously learning to produce a UNet rendered person image and a composition mask.
+    - 我々のパイプラインは、マッチング結果を改善することによって、前述の問題に取り組まないが、
+    - むしろ、UNet でレンダリングされた人物画像と構成マスクを生成することを同時に学習することによって、回避する。
+
+- Before the rendered person image becomes favorable to loss function, the central clothing region of composition mask is biased towards warped clothes because it agrees more with ground truth in the early training stage.
+    - <font color="Pink">レンダリングされた人物画像が、損失関数に好ましくなる以前は、
+    - 構成マスクの服の領域の中央は、学習の初期段階において、より多くの ground truth で同意するため、歪んだ服の方向へバイアス化される。</font>
+
+- It is now the warped clothes rather than the rendered person image that takes the early advantage in the competition of mask selection.
+    - <font color="Pink">現状では [It is now]、マスク選択の競争において、歪んだ服よりも、レンダリングされた人物画像が、早いアドバンテージを受け取る。</font>
+
+- After that, the UNet learns to adaptively expose regions where UNet rendering is more suitable than directly pasting.
+    - そのような後に、UNet は、直接的に貼り付けるよりも、UNet がレンダリングするほうがより相応しいような、領域を適用的に晒しだすことを学習する。
+
+- Once the regions of hair and arms are exposed, rendered and seamlessly fused with warped clothes.
+    - いったん、髪や腕の領域が晒しだされ、レンダリングもされ、歪んだ服でシームレスに融合される。
+
+
+#### Quantitative results
+
+- The first column of Table 1 shows that our pipeline surpasses VITON in the preserving the details of clothes using identical person representation.
+    - 表１の最初の列は、我々のパイプラインが、同一人物の表現に使用して服の詳細の保存することにおいて、VITON を上回る [surpasses] ことを示している。
+
+- According to the table, our approach performs better than other methods, when dealing with rich details clothes.
+    - 表によれば、服の豊富な詳細を扱うとき、我々のアプローチは、他の手法よりもよいパフォーマンスを発揮する。
+
+---
+
+![image](https://user-images.githubusercontent.com/25688193/58603551-2cea4280-82cc-11e9-9707-25925c158101.png)
+
+- > Table 1. Results of pairwise comparisons of images synthesized with LARGE and SMALL clothes by diffierent models.
+    - > 表１：異なるモデルによる、LARGE と SMALL での画像合成のピクセル単位での比較結果。
+
+- > Each column compares our approach with one of the baselines. 
+    - > 各列は、我々のアプローチを、１つのベースラインで比較している。
+
+- > Higher is better. The random chance is at 50%.
 
 
 ### 4.6 Discussion and Ablation Studies
+
+#### Effects of composition mask
+
+- To empirically justify the design of composition mask and mask L1 regularization (Eq. 4) in our pipeline, we compare it with two variants for ablation studies:
+    - 我々のパイプラインにおいて、構成マスクとL1正則化マスク（式４）の設計を強調して正当化するために、
+    - 我々は、ablation study（アブレーション研究）に対しての２つの変種で、それを比較する。
+
+> ablation study : 各構成要素を1つだけ抜いた手法を比較するablation studyを行うことで、提案手法からどの構成要素を抜いたとしても大きく精度が低下することを示し、結果的にどの構成要素も重要であると主張することができます。
+
+- (1): mask composition is also removed and the final results are directly rendered by UNet as CP-VTON(w/o mask).
+    - (1) : マスク構成はまた除外されており、最終的な結果は、CP-VTON(w/o mask) としての UNet によって直接的にレンダリングされる。
+
+- (2): the mask composition is used but the mask L1 regularization is removed as CP-VTON(w/o L1 Loss);
+    - (2) : マスク構成は使用されるが、L1正則化マスクは、CP-VTON(w/o L1 Loss) として、除外されている。
+
+---
+
+- As shown in Fig. 6, even though the warped clothes are roughly aligned with target person, CP-VTON(w/o mask) still loses characteristic details and produces blurry results.
+
+- This veries that encoder-decoder network architecture like UNet fails to handle even minor spatial deformation.
+
+---
+
+- Though integrated with mask composition, CP-VTON(no L1) performs as poorly as variant CP-VTON(w/o mask.
+
+- Fig. 7 shows that composition mask tends to select rendered person image without L1 regularization.
+
+- This verifies that even minor misalignment introduces large perceptual disagreement between warped clothes and ground truth.
+
+---
+
+![image](https://user-images.githubusercontent.com/25688193/58605297-3a0a3000-82d2-11e9-819b-54c631693a12.png)
+
+- > Fig. 7. Ablation studies on composition mask and mask L1 loss. 
+
+- > Without mask composition, UNet cannot handle well even minor misalignment and produces undesirable try-on results.
+
+- > Without L1 regularization on mask, it tends to select UNet-rendered person, leading to blurry results as well.
 
 
 # ■ 関連研究（他の手法との違い）

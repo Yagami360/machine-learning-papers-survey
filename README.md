@@ -13,6 +13,7 @@
     - [Image-to-Image Translation with Conditional Adversarial Networks](https://github.com/Yagami360/MachineLearning-Papers_Survey/blob/master/papers/Image-to-Image_Translation_with_Conditional_Adversarial_Networks/pix2pix.md)
     - [Progressive Growing of GANs for Improved Quality, Stability, and Variation](https://github.com/Yagami360/MachineLearning-Papers_Survey/blob/master/papers/Progressive_Growing_of_GANs_for_Improved_Quality_Stability_and_Variation/ProgressiveGAN.md)
     - [A Style-Based Generator Architecture for Generative Adversarial Networks](https://github.com/Yagami360/MachineLearning-Papers_Survey/blob/master/papers/A_Style-Based_Generator_Architecture_for_Generative_Adversarial_Networks/StyleGAN.md)
+    - GANimation: Anatomically-aware Facial Animation from a Single Image
 - Semantic Segmentation
     - [U-Net: Convolutional Networks for Biomedical Image Segmentation](https://github.com/Yagami360/MachineLearning-Papers_Survey/blob/master/papers/U-Net_Convolutional_Networks_for_Biomedical/UNet.md)
 - image-to-image

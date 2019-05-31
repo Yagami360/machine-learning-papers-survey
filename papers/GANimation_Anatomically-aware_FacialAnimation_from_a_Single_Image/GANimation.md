@@ -149,12 +149,13 @@
 
 - > Fig. 2. Overview of our approach to generate photo-realistic conditioned images.
 
-- > The proposed architecture consists of two main blocks: a generator G to regress attention and color masks; and a critic D to evaluate the generated image in its photorealism D_I and expression conditioning fullfilment y^_g.
+- > The proposed architecture consists of two main blocks: a generator G to regress attention and color masks; and a critic D to evaluate the generated image in its photorealism D_I and expression conditioning fullfilment ![image](https://user-images.githubusercontent.com/25688193/58687076-9006d280-83bb-11e9-934c-746053e30488.png).
     - > 提案されたアーキテクチャは、２つのメインブロックから構成される。
-    - > Attention map とカラーマスクを逆行する [regress] 生成器 G
-    - > 
+    - > Attention map とカラーマスクを逆行する [regress] ための生成器 G
+    - > フォトリアリズム D_I と条件付された表現の実現？ [fullfilment]  ![image](https://user-images.githubusercontent.com/25688193/58687076-9006d280-83bb-11e9-934c-746053e30488.png) において、生成画像を評価するためのクリティック D
 
 - > Note that our systems does not require supervision, i.e., no pairs of images of the same person with diffierent expressions, nor the target image I_{y_g} are assumed to be known.
+    - > 我々のシステムは教師データを必要としないこと、すなわち異なる表情を有する同一人物の画像のペアも、目標画像 I_{y_g} も知られていると仮定していないことに留意されたい。
 
 ---
 
@@ -162,12 +163,128 @@
     - 任意の表情でキャプチャされた、入力RGB画像を ![image](https://user-images.githubusercontent.com/25688193/58678291-1d392f80-839a-11e9-9d29-6f8abe3a9b87.png) と定義する。
 
 - Every gesture expression is encoded by means of a set of N action units y_r = (y_1, ... ,y_N)^T, where each y_n denotes a normalized value between 0 and 1 to module the magnitude of the n-th action unit.
-    - 各ジェスチャ表現は、一組のＮ個の AU 単位 ![image](https://user-images.githubusercontent.com/25688193/58678436-b9633680-839a-11e9-9ff8-c39c338b4f3d.png) によって符号化される。
+    - 各ジェスチャ表現は、一組のＮ個の AU ![image](https://user-images.githubusercontent.com/25688193/58678436-b9633680-839a-11e9-9ff8-c39c338b4f3d.png) によって符号化される。
     - ここで各 y_n は、ｎ番目のAUの大きさを調整するための、０から１の間の正規化値を示している。
 
->  入力画像の他にAction-Unitの状態を記述するための変数yを用意し、これを同時に入力として与える。
+>  入力画像の他にAction-Unitの状態を記述するためのベクトル y を用意し、これを同時に入力として与える。
 
 - It is worth pointing out that thanks to this continuous representation, a natural interpolation can be done between diffierent expressions, allowing to render a wide range of realistic and smooth facial expressions.
+    - この（y による）連続的な表現のおかげで、
+    - 異なる表現の間で自然な補間を行うことができ、
+    - 広範囲の現実的で滑らかな表情をレンダリングすることが可能になりますということを指摘しておく価値がある。
+
+---
+
+- Our aim is to learn a mapping M to translate I_{y_r} into an output image I_{y_g} conditioned on an action-unit target y_g, i.e., we seek to estimate the mapping M : (I_{y_r} , y_g) → I_{y_g}.
+    - 私たちの目的は、I_{y_r} を、AUs の目標値 y_g で条件付された出力画像 I_{y_g} に変換するための写像 ![image](https://user-images.githubusercontent.com/25688193/58681801-fa624780-83a8-11e9-91e2-3f1e3f572797.png) を学ぶことです。
+    - すなわち、写像 ![image](https://user-images.githubusercontent.com/25688193/58681734-a6eff980-83a8-11e9-850b-a020148ecac8.png) を推定しようとします [seek to]。
+
+- To this end, we propose to train M in an unsupervised manner, using M training triplets ![image](https://user-images.githubusercontent.com/25688193/58681807-136af880-83a9-11e9-8941-9d2ea3fa42c9.png).
+    - この目的のために、M 個の学習する３つの組 ![image](https://user-images.githubusercontent.com/25688193/58681807-136af880-83a9-11e9-8941-9d2ea3fa42c9.png) を使用して、教師なしの形式において、写像 ![image](https://user-images.githubusercontent.com/25688193/58681801-fa624780-83a8-11e9-91e2-3f1e3f572797.png) を学習することを提案する。
+
+- where the target vectors y_g are randomly generated.
+    - ここで、目標ベクトル y_g は、ランダムに生成される。
+
+- Importantly, we neither require pairs of images of the same person under diffierent expressions, nor the expected target image I_g.
+    - 重要なことに、我々は、異なる表現の下での同一人物の画像のペアも、予想される目標画像 I_g も必要としない。
+
+## 4 Our Approach
+
+![image](https://user-images.githubusercontent.com/25688193/58678528-fa5b4b00-839a-11e9-82fd-6aa811e8b62f.png)
+
+---
+
+- This section describes our novel approach to generate photo-realistic conditioned images, which, as shown in Fig. 2, consists of two main modules.
+    - このセクションでは、フォトリアリスティックな画像を生成するための、我々の新しいアプローチを記述する。
+    - （これは、）図２に示されているような、２つのメインモジュールから構成される。
+
+- On the one hand, a generator G(I_r | y_g) is trained to realistically transform the facial expression in image I_r to the desired y_g.
+    - 一方では、生成器 G(I_r | y_g) は、画像 I_r を、望ましい（AU状態のベクトル） y_g に、リアルに変換することを学習する。
+
+> 望ましい（AU状態のベクトル） y_g の条件下での、画像 I_r への変換を学習するでは？
+
+- Note that G is applied twice, first to map the input image I_r → I_g , and then to render it back I_g → I^_{y_r}.
+    - 生成器 G は、２回適用されることに注意。
+    - 最初は、入力画像の写像 I_r → I_g。
+    - 次に、I_g → I^_{y_r} へ戻すようなレンダリング。
+
+- On the other hand, we use a WGAN-GP [9] based critic D(I_{y_g}) to evaluate the quality of the generated image as well as its expression.
+    - 一方で、生成された画像の品質を評価するために、我々は、WGAN-GP ベースのクリティック D(I_{y_g}) を使用する。
+
+### 4.1 Network Architecture
+
+#### Generator.
+
+- Let G be the generator block.
+
+- Since it will be applied bidirectionally (i.e., to map either input image to desired expression and vice-versa) in the following discussion we use subscripts o and f to indicate origin and final.
+    - 以下の説明では双方向に（すなわち、入力画像を所望の表現に写像するため、および、その逆も然り [vice-versa] の両方）適用されるので、
+    - 原点および最終を示すために、下付き文字 [subscripts] o と f を使用する。
+
+> ここでいう双方向 [bidirectionally] とは、生成器が、入力画像 → アニメーション画像 と アニメーション画像 → 元の画像の２つのプロセスで存在することを示している？
+
+- Given the image I_{y_o} ∈ R^{H×W×3} and the N-vector y_f encoding the desired expression, we form the input of generator as a concatenation (I_{y_o} , y_o) ∈ R^{H×W×3}, where y_o has been represented as N arrays of size H × W.
+    - 画像 ![image](https://user-images.githubusercontent.com/25688193/58684905-d7d62b80-83b4-11e9-8440-4ca261297f48.png) と望ましい表現でエンコードされたNベクトル y_f を与えれば、
+    - 生成器の入力を、連結 ![image](https://user-images.githubusercontent.com/25688193/58685065-6a76ca80-83b5-11e9-9461-0aad699fd4bf.png) として、形成する。
+
+---
+
+- One key ingredient of our system is to make G focus only on those regions of the image that are responsible of synthesizing the novel expression and keep the rest elements of the image such as hair, glasses, hats or jewelery untouched.
+    - 私たちのシステムの重要な成分 [ingredient] の1つは、
+    - Gに新しい表現の合成する責任のある画像の領域のみに集中し、
+    - 髪の毛、メガネ、帽子、宝石などの画像の残りの部分には、手に触れていないままにしておくことである。
+
+> Attention のこと。
+
+- For this purpose, we have embedded an attention mechanism to the generator.
+    - この目的のために、我々は、生成器に attention メカニズムを組み込む。
+
+- Concretely, instead of regressing a full image, our generator outputs two masks, a color mask C and attention mask A.
+    - 具体的には、フル画像を逆行させるのではなく、カラーマスクCとアテンションマスクAの2つのマスクを出力します。
+
+- The final image can be obtained as:
+
+![image](https://user-images.githubusercontent.com/25688193/58685509-f0dfdc00-83b6-11e9-8beb-328fc19487df.png)
+
+- where ![image](https://user-images.githubusercontent.com/25688193/58685587-3bf9ef00-83b7-11e9-8470-8e5f9ed7be04.png) and ![image](https://user-images.githubusercontent.com/25688193/58685783-cd696100-83b7-11e9-940b-3df18005fae6.png). 
+
+- The mask A indicates to which extend each pixel of the C contributes to the output image I_f.
+    - マスクＡは、Ｃの各ピクセルが出力画像 I_f に貢献している程度 [extend] を示す。
+
+- In this way, the generator does not need to render static elements, and can focus exclusively on the pixels defining the facial movements, leading to sharper and more realistic synthetic images.
+    - このようにして、ジェネレータは静的要素をレンダリングする必要がなく、顔の動きを定義するピクセルに、独占的に [exclusively] 焦点を合わせることができ、より鮮明でより現実的な合成画像をもたらす。
+
+- This process is depicted in Fig. 3.
+
+---
+
+![image](https://user-images.githubusercontent.com/25688193/58685985-71eba300-83b8-11e9-926b-79500b977565.png)
+
+- > Fig. 3. Attention-based generator.
+
+- > Given an input image and the target expression, the generator regresses and attention mask A and an RGB color transformation C over the entire image.
+
+- > The attention mask defines a per pixel intensity specifying to which extend each pixel of the original image will contribute in the final rendered image.
+    - > Attention マスクは、元のイメージの各ピクセルが最終的にレンダリングされた画像に、どの程度寄与するかを特定する、ピクセル単位での明度（強度）[intensity] を定義します。
+
+#### Conditional Critic.
+
+- This is a network trained to evaluate the generated images in terms of their photo-realism and desired expression fullfilment. 
+    - これは生成された画像を、フォトリアリズムと望ましい表現の実現 [fullfilment] という観点から、評価するために学習されたネットワークです。
+
+> フォトリアリズム：アーキテクチャ図におけるクリティックの出力 D_I のこと
+
+> 望ましい表現の実現 [fullfilment]：アーキテクチャ図におけるクリティックの出力 ![image](https://user-images.githubusercontent.com/25688193/58687076-9006d280-83bb-11e9-934c-746053e30488.png) のこと
+
+- The structure of D(I) resembles that of the PatchGan [10] network mapping from the input image I to a matrix ![image](https://user-images.githubusercontent.com/25688193/58686296-66e54280-83b9-11e9-9db8-2bbe14f6695f.png),
+    - D(I) の構造は、入力画像 I から行列 ![image](https://user-images.githubusercontent.com/25688193/58686296-66e54280-83b9-11e9-9db8-2bbe14f6695f.png) へ写像するネットワークである、PatchGAN に似ている。
+
+- where ![image](https://user-images.githubusercontent.com/25688193/58686425-bc215400-83b9-11e9-8e79-8ca051ef4f2c.png) represents the probability of the overlapping patch i,j to be real.
+    - ここで、![image](https://user-images.githubusercontent.com/25688193/58686425-bc215400-83b9-11e9-8e79-8ca051ef4f2c.png) は、重なっているパッチ i,j が真になる確率を表現している。
+
+- Also, to evaluate its conditioning, on top of it we add an auxiliary regression head that estimates the AUs activations ![image](https://user-images.githubusercontent.com/25688193/58686538-099dc100-83ba-11e9-9f80-8e862da660a6.png) in the image.
+    - また、その条件付けを評価するために、
+    - それに加えて [on top of it]、画像内の AUs の活性化 ![image](https://user-images.githubusercontent.com/25688193/58686538-099dc100-83ba-11e9-9f80-8e862da660a6.png) を推定するような、補助的な [auxiliary] 回帰ヘッドを追加します。
 
 
 # ■ 関連研究（他の手法との違い）

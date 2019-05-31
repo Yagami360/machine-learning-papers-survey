@@ -809,35 +809,44 @@
 ---
 
 - These questions are answered in Fig. 8.
+    - これらの質問は、図８で回答されている。
 
 - As we applying greater perturbation, the performance of both VITON stage II and CP-VTON(w/o mask) decays quickly.
+    - より大きい摂動を適用するほど、VITON ステージ２と CP-VTON(w/o mask) の両方のパフォーマンスは、素早く減衰する。
 
 - In contrast, our pipeline shows robustness against perturbation and manages to preserve detailed characteristic.
+    - 対照的に、我々のパイプラインは、摂動に対して堅牢であり、特性の詳細を保存するために管理する。
 
 ---
 
 ![image](https://user-images.githubusercontent.com/25688193/58609147-85780a80-82e1-11e9-93af-07698e1af985.png)
 
 - > Fig. 8. Comparisons on the robustness of three methods against minor misalignment simulated by random shift within radius N.
+    - > 図８：半径 N 内のランダムシフトによって、シミュレートされた小さな不整合に対しての、３つの手法の堅牢性の比較
 
 - > As N increasing, results of CP-VTON decays more slightly than other methods.
+    -　N が増加するほど、CP-VTON の結果は、他の手法より、わずかに [slightly] 減衰する。
 
 #### Failure cases
 
 - Fig. 9 shows three failure cases of our CP-VTON method caused by 
+    - 図９は、我々の CP-VTON の３つの失敗ケースを示している。
 
 - (1) improperly preserved shape information of old clothes,
+    - (1) 古い服の不適切に [improperly ] 保存された形状
 
 - (2) rare poses 
+    - (2) 珍しい姿勢
 
 - and (3) inner side of the clothes undistinguishable from the outer side, respectively.
+    - (3) 服の内部が、外側と区別できない
 
 ---
 
 ![image](https://user-images.githubusercontent.com/25688193/58610369-3aacc180-82e6-11e9-9048-0f2d99dcf5d1.png)
 
 - > Fig. 9. Some failure cases of our CP-VTON.
-
+    - > 図９：我々の CP-VTON のいくつかの失敗ケース
 
 # ■ 関連研究（他の手法との違い）
 

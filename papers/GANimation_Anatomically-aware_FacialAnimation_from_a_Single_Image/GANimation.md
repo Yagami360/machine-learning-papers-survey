@@ -223,9 +223,10 @@
 
 > ここでいう双方向 [bidirectionally] とは、生成器が、入力画像 → アニメーション画像 と アニメーション画像 → 元の画像の２つのプロセスで存在することを示している？
 
-- Given the image I_{y_o} ∈ R^{H×W×3} and the N-vector y_f encoding the desired expression, we form the input of generator as a concatenation (I_{y_o} , y_o) ∈ R^{H×W×3}, where y_o has been represented as N arrays of size H × W.
-    - 画像 ![image](https://user-images.githubusercontent.com/25688193/58684905-d7d62b80-83b4-11e9-8440-4ca261297f48.png) と望ましい表現でエンコードされたNベクトル y_f を与えれば、
+- Given the image ![image](https://user-images.githubusercontent.com/25688193/58684905-d7d62b80-83b4-11e9-8440-4ca261297f48.png) and the N-vector ![image](https://user-images.githubusercontent.com/25688193/58695722-0f52d100-83d1-11e9-8d0e-97fdc2da5fd4.png) encoding the desired expression, we form the input of generator as a concatenation ![image](https://user-images.githubusercontent.com/25688193/58685065-6a76ca80-83b5-11e9-9461-0aad699fd4bf.png), where ![image](https://user-images.githubusercontent.com/25688193/58695859-5b9e1100-83d1-11e9-80ed-90f4fb09b29c.png) has been represented as N arrays of size H × W.
+    - 画像 ![image](https://user-images.githubusercontent.com/25688193/58684905-d7d62b80-83b4-11e9-8440-4ca261297f48.png) と望ましい表現でエンコードされた N ベクトル ![image](https://user-images.githubusercontent.com/25688193/58695722-0f52d100-83d1-11e9-8d0e-97fdc2da5fd4.png) を与えれば、
     - 生成器の入力を、連結 ![image](https://user-images.githubusercontent.com/25688193/58685065-6a76ca80-83b5-11e9-9461-0aad699fd4bf.png) として、形成する。
+    - ここで、![image](https://user-images.githubusercontent.com/25688193/58695859-5b9e1100-83d1-11e9-80ed-90f4fb09b29c.png) は、サイズ H × W の N 個の配列として表現された。
 
 ---
 
@@ -274,17 +275,127 @@
 
 > フォトリアリズム：アーキテクチャ図におけるクリティックの出力 D_I のこと
 
-> 望ましい表現の実現 [fullfilment]：アーキテクチャ図におけるクリティックの出力 ![image](https://user-images.githubusercontent.com/25688193/58687076-9006d280-83bb-11e9-934c-746053e30488.png) のこと
+> 望ましい表現の実現 [fullfilment]：アーキテクチャ図におけるクリティックの出力 ![image](https://user-images.githubusercontent.com/25688193/58687076-9006d280-83bb-11e9-934c-746053e30488.png) のこと。これは、Action-Unitの状態 y_r を推定するために Discriminator の分枝で追加している y_r を評価するための機構
 
 - The structure of D(I) resembles that of the PatchGan [10] network mapping from the input image I to a matrix ![image](https://user-images.githubusercontent.com/25688193/58686296-66e54280-83b9-11e9-9db8-2bbe14f6695f.png),
-    - D(I) の構造は、入力画像 I から行列 ![image](https://user-images.githubusercontent.com/25688193/58686296-66e54280-83b9-11e9-9db8-2bbe14f6695f.png) へ写像するネットワークである、PatchGAN に似ている。
+    - <font color="Pink">D(I) の構造は、入力画像 I から行列 ![image](https://user-images.githubusercontent.com/25688193/58686296-66e54280-83b9-11e9-9db8-2bbe14f6695f.png) へ写像するネットワークである、PatchGAN に似ている。</font>
 
 - where ![image](https://user-images.githubusercontent.com/25688193/58686425-bc215400-83b9-11e9-8e79-8ca051ef4f2c.png) represents the probability of the overlapping patch i,j to be real.
-    - ここで、![image](https://user-images.githubusercontent.com/25688193/58686425-bc215400-83b9-11e9-8e79-8ca051ef4f2c.png) は、重なっているパッチ i,j が真になる確率を表現している。
+    - <font color="Pink">ここで、![image](https://user-images.githubusercontent.com/25688193/58686425-bc215400-83b9-11e9-8e79-8ca051ef4f2c.png) は、重なっているパッチ i,j が真になる確率を表現している。</font>
 
 - Also, to evaluate its conditioning, on top of it we add an auxiliary regression head that estimates the AUs activations ![image](https://user-images.githubusercontent.com/25688193/58686538-099dc100-83ba-11e9-9f80-8e862da660a6.png) in the image.
     - また、その条件付けを評価するために、
     - それに加えて [on top of it]、画像内の AUs の活性化 ![image](https://user-images.githubusercontent.com/25688193/58686538-099dc100-83ba-11e9-9f80-8e862da660a6.png) を推定するような、補助的な [auxiliary] 回帰ヘッドを追加します。
+
+> 補助的な [auxiliary] 回帰ヘッド：これは、Action-Unitの状態 y_r を推定するために Discriminator の分枝で追加している y_r を評価するための機構 ![image](https://user-images.githubusercontent.com/25688193/58687076-9006d280-83bb-11e9-934c-746053e30488.png)
+
+### 4.2 Learning the Model
+
+- The loss function we define contains four terms, namely an image adversarial loss [1] with the modification proposed by Gulrajani et al. [9] that pushes the distribution of the generated images to the distribution of the training images;
+    - 我々が定義する損失関数は、４つの項を含む。
+    - 即ち [namely]、生成された画像の分布を、学習画像の分布にプッシュするようなといった、Gulrajani らによって提案された修正を持つ、image adversarial loss L_I
+
+> image adversarial loss L_I : WGAN-GPで用いられる損失項。生成画像がデータセット内の画像と類似したものになるように働きかける。
+
+- the attention loss to drive the attention masks to be smooth and prevent them from saturating;
+    - attention マスクを、スムーズさせて、飽和 [saturating] からそれらを防ぐようにさせる [drive A to B] attention loss L_A。
+
+> attention loss L_A : 隣り合う画素のAttentionが近くなるように、かつAttentionがかかり過ぎないようにする損失項。
+
+- the conditional expression loss that conditions the expression of the generated images to be similar to the desired one;
+    - 生成された画像の表現が、望ましいものと同じになるように条件付けされた、conditional expression loss L_y。
+
+> conditional expression loss L_y : Action-Unitの状態yfで条件づけられて生成された画像がちゃんとyfという状態に従うようにはたらきかける損失項。
+
+- and the identity loss that favors to preserve the person texture identity.
+    - 人物テクスチャーの恒等性 [identity] を保存するために有利な、identity loss
+
+> identity loss : CycleGANのように戻ってきた結果が同じ画像になるようにする損失項。要素ごとのL1距離で測る。
+
+#### Image Adversarial Loss.
+
+- In order to learn the parameters of the generator G, we use the modication of the standard GAN algorithm [8] proposed by WGAN-GP [9].
+    - 生成器 G のパラメーターを学習するために、WGAN-GP によって、提案された標準的な GAN のアルゴリズムを修正したものを使用する。
+
+- Specically, the original GAN formulation is based on the Jensen-Shannon (JS) divergence loss function and aims to maximize the probability of correctly classifying real and rendered images while the generator tries to foul the discriminator.
+    - 特に、標準的な GAN の定式化は、JS ダイバージェンスの損失関数を元にしており、
+    - 本物にレンダリングされた画像をに正しく分類する確率を最大化しようとする。
+    - 一方で、生成器は、識別器をdあまそうとする。
+
+- This loss is potentially not continuous with respect to the generators parameters and can locally saturate leading to vanishing gradients in the discriminator.
+    - この損失関数は、生成器のパラメーターに関して、潜在的に連続ではなく、
+    - 識別器において、局所的に飽和して [saturate]、勾配消失を導くことが出来る。
+
+- This is addressed in WGAN [1] by replacing JS with the continuous Earth Mover Distance.
+    - これは、WGAN において、JS を連続な EM距離に置き換えることによって、取り組まれた。
+
+- To maintain a Lipschitz constraint, WGAN-GP [9] proposes to add a gradient penalty for the critic network computed as the norm of the gradients with respect to the critic input.
+    - リプシッツ連続性を維持するために、WGAN-GP は、クリティックの入力での、勾配のノルムとして計算されるクリティックネットワークに対しての、勾配ペナルティーを加えることを提案している。
+
+---
+
+- Formally, let I_{y_o} be the input image with the initial condition y_o, y_f the desired final condition, P_o the data distribution of the input image, and P_I~ the　random interpolation distribution.
+    - 定式的には、I_{y_o} を初期条件 y_o を持つ入力画像
+    - y_f を最終条件
+    - P_o を入力画像のデータ分布
+    - P_I~ をランダム補間分布
+
+- Then, the critic loss ![image](https://user-images.githubusercontent.com/25688193/58755649-02de8d80-8523-11e9-9a0b-a4235c1b04a3.png) we use is:
+
+![image](https://user-images.githubusercontent.com/25688193/58755652-17228a80-8523-11e9-9e26-08c3db9f1206.png)
+
+- where λ_{gp} is a penalty coefficient.
+
+
+#### Attention Loss.
+
+- When training the model we do not have ground-truth annotation for the attention masks A.
+    - モデルを学習するとき、我々は、attention マスク A に対して、ground-truth アノテーションを持っていない。
+
+> attention マスクに対して、教師データをもっていない。
+
+- Similarly as for the color masks C, they are learned from the resulting gradients of the critic module and the rest of the losses.
+    - カラーマスク C はどうかというと [as for] 同様にして、これらは、クリティックモジュールと勾配と損失の残りの結果から学習される。
+
+- However, the attention masks can easily saturate to 1 which makes that ![image](https://user-images.githubusercontent.com/25688193/58755684-9ca63a80-8523-11e9-9cee-67a7cab25479.png), that is, the generator has no effiect.
+    - しかしながら、attention マスクは、より簡単に 1 に飽和し、
+    - （そのことは、）![image](https://user-images.githubusercontent.com/25688193/58755684-9ca63a80-8523-11e9-9cee-67a7cab25479.png) を作り出す。即ち、生成器が効果を持たない。
+
+> 生成器が、入力画像 I_{y_o} をそのまま出力してしまうようなケース。
+
+- To prevent this situation, we regularize the mask with a l2-weight penalty.
+    - この状況を防ぐために、我々は、マスクを、l2重みペナルティーで正規化する。
+
+- Also, to enforce smooth spatial color transformation when combining the pixel from the input image and the color transformation C, we perform a Total Variation Regularization over A.
+    - また、入力画像と色変換 C から、ピクセルを混ぜ合わせるとき、スムーズな空間的な色変換を強制するために、
+    - A に渡って、全変動正規化 [Total Variation Regularization] を実施する。
+
+- The attention loss ![image](https://user-images.githubusercontent.com/25688193/58755697-cc554280-8523-11e9-8da5-8627e3e7c280.png) can therefore be dened as:
+    - attention 損失は、それ所に、以下のように定義される。
+
+![image](https://user-images.githubusercontent.com/25688193/58755690-b6478200-8523-11e9-9a7c-9d0c280605c5.png)
+
+> 隣り合う画素のAttentionが近くなるように、かつAttentionがかかり過ぎないようにする損失項。
+
+> L2重みペナルティーはどの項？
+
+> 全変動正規化処理は、どの項？<br>
+> → i,j が画層の幅、高さのインデックスなので、[ Σ(A_{i+1,j}-A_{i,j})^2 + (A_{i,j+1}-A_{i,j})^2 ] の項が該当？
+
+- where ![image](https://user-images.githubusercontent.com/25688193/58755781-ff98d100-8525-11e9-9a06-f14cbee901d8.png)  and A_{i,j} is the i,j entry of A. λ_{TV} is a penalty coefficient.
+    - ここで ![image](https://user-images.githubusercontent.com/25688193/58755781-ff98d100-8525-11e9-9a06-f14cbee901d8.png) と A_{i,j} は、 A のエントリー i,j である。
+    - λ_{TV} は、ペナルティー係数である。
+
+
+#### Conditional Expression Loss.
+
+- While reducing the image adversarial loss, the generator must also reduce the error produced by the AUs regression head on top of D.
+
+- In this way, G not only learns to render realistic samples but also learns to satisfy the target facial expression encoded by y_f.
+
+- This loss is dened with two components: an AUs regression loss with fake images used to optimize G, and an AUs regression loss of real images used to learn the regression head on top of D.
+
+- This loss Ly(G;Dy; Iyo ; yo; yf ) is computed as:
 
 
 # ■ 関連研究（他の手法との違い）

@@ -138,11 +138,6 @@
 
 # ■ 何をしたか？詳細
 
-## x. 論文の項目名
-
-
-# ■ 実験結果（主張の証明）・議論（手法の良し悪し）・メソッド（実験方法）
-
 ## 3 Problem Formulation
 
 ![image](https://user-images.githubusercontent.com/25688193/58678528-fa5b4b00-839a-11e9-82fd-6aa811e8b62f.png)
@@ -320,7 +315,7 @@
 - Specically, the original GAN formulation is based on the Jensen-Shannon (JS) divergence loss function and aims to maximize the probability of correctly classifying real and rendered images while the generator tries to foul the discriminator.
     - 特に、標準的な GAN の定式化は、JS ダイバージェンスの損失関数を元にしており、
     - 本物にレンダリングされた画像をに正しく分類する確率を最大化しようとする。
-    - 一方で、生成器は、識別器をdあまそうとする。
+    - 一方で、生成器は、識別器をだまそうとする。
 
 - This loss is potentially not continuous with respect to the generators parameters and can locally saturate leading to vanishing gradients in the discriminator.
     - この損失関数は、生成器のパラメーターに関して、潜在的に連続ではなく、
@@ -390,12 +385,131 @@
 #### Conditional Expression Loss.
 
 - While reducing the image adversarial loss, the generator must also reduce the error produced by the AUs regression head on top of D.
+    - 我々が、画像の adversarial loss を減少させる一方で、
+    - 生成器はまた、<font color="Pink">D の先頭の頭の AUs 回帰</font>によって、生成されたエラーを減らさなければならない。
+
+> AUs 回帰：Action-Unitの状態 y_f で条件づけられて生成された画像が、ちゃんと y_f という状態に従うようにする回帰
+
+> D の先頭の頭：アーキテクチャ図における D への入力部分（＝Action-Unitの状態 y_f で条件づけられて生成された生成器の生成画像）
 
 - In this way, G not only learns to render realistic samples but also learns to satisfy the target facial expression encoded by y_f.
+    - このようにして、G はリアルなサンプルを描写するだけではなく、y_f によってエンコードされた目標の顔の表現を満足するように学習する。
 
 - This loss is dened with two components: an AUs regression loss with fake images used to optimize G, and an AUs regression loss of real images used to learn the regression head on top of D.
+    - この損失は、２つのコンポーネントで定義されている。
+    - 即ち、G を最適化するために使用されている偽物画像での AUs 回帰損失 [AUs regression loss]、
+    - <font color="Pink">D の先頭の頭の AUs 回帰</font>を学習するために使用されている本物画像の AUs 回帰損失 [AUs regression loss]
 
-- This loss Ly(G;Dy; Iyo ; yo; yf ) is computed as:
+- This loss ![image](https://user-images.githubusercontent.com/25688193/58773089-be242680-85f6-11e9-8346-85de65367d83.png)
+ is computed as:
+
+![image](https://user-images.githubusercontent.com/25688193/58772967-4c4bdd00-85f6-11e9-8683-4b0e9823f1c2.png)
+
+> Action-Unitの状態 y_f で条件づけられて生成された画像がちゃんと y_f という状態に従うようにはたらきかける損失項。
+
+> 第１項：偽物画像のAUs 回帰損失 [AUs regression loss]<br>
+> 第２項：本物画像のAUs 回帰損失 [AUs regression loss]<br>
+
+#### Identity Loss.
+
+- With the previously defined losses the generator is enforced to generate photo-realistic face transformations.
+    - 以前に定義された損失関数では、生成器は、フォトリアリスティックな顔の変換を学習することを強いられいる。
+
+- However, without ground-truth supervision, there is no constraint to guarantee that the face in both the input and output images correspond to the same person.
+    - しかしながら、教師信号がなしのもとでは、入力画像と出力画像の両方での顔が、同じ人物に一致するというような、保証する [guarantee] ための制約 [constraint] は存在しない。
+
+- Using a cycle consistency loss [38] we force the generator to maintain the identity of each individual by penalizing the difference between the original image I_{yo} and its reconstruction:
+    - 周期的に連続な損失関数 [cycle consistency loss] を使用して、
+    - 我々は、生成器に各個人のアイデンティティーを維持することを強制する。
+    - もとの画像 I_{yo} とその再構成との間の違いにペナルティーを科す[penalizing] ことによって、
+
+![image](https://user-images.githubusercontent.com/25688193/58773194-1ce9a000-85f7-11e9-8744-8fd1edc03b28.png)
+
+> CycleGANのように戻ってきた結果が同じ画像になるようにする損失項。要素ごとのL1距離で測る。
+
+- To produce realistic images it is critical for the generator to model both low and high frequencies.
+    - リアルな画像を生成するために、生成器に対して、低周波と高周波の両方でモデル化することが重要である。
+
+> 画像の高周波成分、低周波成分とは？<br>
+> 画像は空間周波数という観点からとらえることができ，低い周波数成分は画像のおおまかな形状を，高い周波数成分は緻密な部分の情報を担っていることがわかります。
+
+> 高周波領域：局所的な画像の特徴<br>
+> 低周波領域：大域的な画像の特徴<br>
+
+- Our PatchGan based critic D_I already enforces high-frequency correctness by restricting our attention to the structure in local image patches.
+    - 我々の PatchGAN ベースのクリティック D_I は、局所的な画像のパッチにおける構造に注意を制限する [restricting] ことにによって、既に高周波での正確さを強化している [enforce]。
+
+- To also capture low-frequencies it is sufficient to use l1-norm.
+    - 低周波での（正確さ）も抽出するためには、L1ノルムを使用すれば十分である。
+
+- In preliminary experiments, we also tried replacing l1-norm with a more sophisticated Perceptual [11] loss, although we did not observe improved performance.
+    - 予備の [preliminary] な実験では、より洗練されたパーセプトロン損失関数で、L1　ノルムを置き換えようとした。
+    - しかしながら、我々は、パフォーマンスの改善は観測されなかった。
+
+#### Full Loss. 
+
+- To generate the target image I_{yg} , we build a loss function L by linearly combining all previous partial losses:
+    - 目標画像 I_{yg} を生成するために、前に紹介したすべての部分的な損失関数を線形結合することによって、損失関数 L を構築する。
+
+![image](https://user-images.githubusercontent.com/25688193/58774548-034b5700-85fd-11e9-96ef-4151c11f1a04.png)
+
+- where λ_A, λ_y and λ_{idt} are the hyper-parameters that control the relative importance of every loss term.
+    - ここで、λ_A, λ_y, λ_{idt} は、各損失項の重要性を相対的に制御するような、パイパーパラメーターである。
+
+- Finally, we can define the following minimax problem:
+    - 最後に、我々は、以下のようなミニマックス問題を定義する。
+
+![image](https://user-images.githubusercontent.com/25688193/58774774-29bdc200-85fe-11e9-8303-d592a961d8d4.png)
+
+- where G^* draws samples from the data distribution.
+    - ここで、G^*　は、データ分布からのサンプルを描写する。
+
+- Additionally, we constrain our discriminator D to lie in D, that represents the set of 1-Lipschitz functions.
+    - 加えて、我々は、リプシッツ連続な関数の集合を表す D に横たえるために、識別器 D を制約する。
+
+> WGAN を適用するために、識別器の出力がリプシッツ連続な関数であるような、識別器（＝クリティック）とする。
+
+## 5 Implementation Details
+
+- Our generator builds upon the variation of the network from Johnson et al. [11] proposed by [38] as it proved to achieve impressive results for image-to-image mapping.
+    - 我々の生成器は、image-to-image 写像に対しての印象深い結果を証明しているような、[38] で提案された Johnson ら（の手法）からのネットワークの変種をもとに構築されている。
+
+- We have slightly modified it by substituting the last convolutional layer with two parallel convolutional layers, one to regress the color mask C and the other to define the attention mask A.
+    - 我々は、最後の畳み込み層を、２つの並列的な畳み込み層に置き換えることによって、それを僅かに [slightly] 修正している。
+    - １つは、カラーマスク C を回帰するためのもので、
+    - その他は、attention マスクを定義するためのもの。
+
+- We also observed that changing batch normalization in the generator by instance normalization improved training stability.
+    - 我々はまた、instance normalization による、生成器における batch normalization の変更が、学習の安定性を改善するということを観測した。
+
+- For the critic we have adopted the PatchGan architecture of [10], but removing feature normalization.
+    - クリティックの対して、我々は、[10] のアーキテクチャである PatchGAN を適用した。一方で、feature normalization を除外している。
+
+- Otherwise, when computing the gradient penalty, the norm of the critic’s gradient would be computed with respect to the entire batch and not with respect to each input independently.
+    - さもなければ、勾配ペナルティを計算するとき、クリティックの勾配のノルムは、各入力に独立してではなく、バッチ全体に関して、計算されるであろう。
+
+> batch norm 
+
+---
+
+- The model is trained on the EmotioNet dataset [3].
+
+- We use a subset of 200,000 samples (over 1 million) to reduce training time.
+
+- We use Adam [14] with learning rate of 0.0001, beta1 0.5, beta2 0.999 and batch size 25.
+
+- We train for 30 epochs and linearly decay the rate to zero over the last 10 epochs.
+
+- Every 5 optimization steps of the critic network we perform a single optimization step of the generator.
+
+- The weight coefficients for the loss terms in Eq. (5) are set to λgp = 10, λA = 0.1, λTV = 0.0001, λy = 4000, λidt = 10.
+
+- To improve stability we tried updating the critic using a buffer with generated images in different updates of the generator as proposed in [32] but we did not observe performance improvement.
+
+- The model takes two days to train with a single GeForce GTX 1080 Ti GPU.
+
+
+# ■ 実験結果（主張の証明）・議論（手法の良し悪し）・メソッド（実験方法）
 
 
 # ■ 関連研究（他の手法との違い）

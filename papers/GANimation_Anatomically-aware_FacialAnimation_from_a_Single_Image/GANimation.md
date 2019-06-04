@@ -490,11 +490,16 @@
 
 > batch norm 
 
----
+
+# ■ 実験結果（主張の証明）・議論（手法の良し悪し）・メソッド（実験方法）
+
+## 5 Implementation Details
 
 - The model is trained on the EmotioNet dataset [3].
+    - モデルは、EmotioNet で学習されている。
 
 - We use a subset of 200,000 samples (over 1 million) to reduce training time.
+    - 我々は、学習時間を減らすために、（100万以上のサンプルの内、）200,00サンプルのサブセットを使用する。
 
 - We use Adam [14] with learning rate of 0.0001, beta1 0.5, beta2 0.999 and batch size 25.
 
@@ -505,11 +510,156 @@
 - The weight coefficients for the loss terms in Eq. (5) are set to λgp = 10, λA = 0.1, λTV = 0.0001, λy = 4000, λidt = 10.
 
 - To improve stability we tried updating the critic using a buffer with generated images in different updates of the generator as proposed in [32] but we did not observe performance improvement.
+    - 安定性を向上させるために、[32]で提案されているようにジェネレータの異なる更新において生成された画像を持つバッファを使用して、評論家を更新しようとしましたが、パフォーマンスの改善は観察されませんでした。
 
 - The model takes two days to train with a single GeForce GTX 1080 Ti GPU.
 
 
-# ■ 実験結果（主張の証明）・議論（手法の良し悪し）・メソッド（実験方法）
+## 6 Experimental Evaluation
+
+- This section provides a thorough evaluation of our system.
+    - このセクションでは、我々のシステムの徹底的な評価を提供する。
+
+- We first test the main component, namely the single and multiple AUs editing.
+    - 我々は最初に、メインコンポーネントをテストする。
+    - （これは）所謂、single and multiple AUs editing（単一と複数の AUs 編集)
+
+- We then compare our model against current competing techniques in the task of discrete emotions editing and demonstrate our model's ability to deal with images in the wild and its capability to generate a wide range of anatomically coherent face transformations.
+    - 我々は次に、 離散的な感情編集のタスクにおいて、現在競争しているテクニックと我々のモデルを比較する。
+    - そして、我々のモデルの野生の画像を扱う能力と、解剖学的に [anatomically] 首尾一貫した [coherent] 顔変換の広い範囲での生成能力を実証する。
+
+- Finally, we discuss the model's limitations and failure cases.
+    - 最後に、モデルの限界と失敗ケースについて議論する。
+
+---
+
+- It is worth noting that in some of the experiments the input faces are not cropped.
+    - いくつかの実験では、入力画像の顔がトリミングされて [cropped] いないことは注目 [noting] に値する。
+
+- In this cases we first use a detector <2> to localize and crop the face, apply the expression transformation to that area with Eq. (1), and finally place the generated face back to its original position in the image.
+    - このケースでは、我々はまず初めに、顔の位置を特定し、トリミングするために、検出器を使用し、<2>
+    - 式 (1) を用いて、表情 [expression] 変換を、その領域（＝顔をトリミングした領域）に適用し、
+    - 最後に、生成された顔を、画像内の元の位置に戻す。
+
+- > <2> : We use the face detector from https://github.com/ageitgey/face_recognition.
+
+
+- The attention mechanism guaranties a smooth transition between the morphed cropped face and the original image.
+    - attention メカニズムは、モーフィングされ [morphed] クリッピングされた顔と元の画像との間の、スムーズな変換を保証する。
+
+> モーフィング：モーフィングとは、画像を加工する技術のひとつで、2つの画像を合成させて中間状態を作り、一方の姿形から他方の形へと変形していくような様子を生成することである。
+
+- As we shall see later, this three steps process results on higher resolution images compared to previous models.
+    - 後で見るように、この３つのステップは、以前のモデルと比べて、より高解像度の画像を処理するという結果となる。
+
+> この３つのステップ：<br>
+> 1. まず初めに、顔の位置を特定し、トリミングするために、検出器を使用し<br>
+> 2. 式 (1) を用いて、表情変換を、その領域（＝顔をトリミングした領域）に適用し、<br>
+> 3. 最後に、生成された顔を、画像内の元の位置に戻す。<br>
+
+- Supplementary material can be found on http://www.albertpumarola.com/research/GANimation/.
+
+
+### 6.1 Single Action Units Edition
+
+- We first evaluate our model's ability to activate AUs at diffierent intensities while preserving the person's identity. 
+    - 我々はまず初めに、人のアイデンティティを保持しながら、異なる強度 [intensities] でAUを作動させるためのモデルの能力を評価します。
+
+- Figure 4 shows a subset of 9 AUs individually transformed with four levels of intensity (0, 0.33, 0.66, 1).
+    - 図４は、４つの強度 (0, 0.33, 0.66, 1) での、個々に変換された 9 つの AUs のサブセットを示している。
+
+- For the case of 0 intensity it is desired not to change the corresponding AU.
+    - 強度 0 のケースに対しては、一致する AU を変えないことが望ましい。
+
+- The model properly handles this situation and generates an identical copy of the input image for every case.
+    - モデルはこの状況を適切に処理し、
+    - 全てのケースに対して、入力画像の固有のコピーを生成する。
+
+- The ability to apply an identity transformation is essential to ensure that non-desired facial movement will not be introduced.
+    - **恒等変換を適用する能力は、望まれない顔の動きが導入されないことを確実にするために不可欠です。**
+
+---
+
+![image](https://user-images.githubusercontent.com/25688193/58867149-e1350000-86f4-11e9-8eb5-83035affe5be.png)
+
+- > Fig. 4. Single AUs edition.
+
+- > Specic AUs are activated at increasing levels of intensity (from 0.33 to 1).
+
+- > The first row corresponds to a zero intensity application of the AU which correctly produces the original image in all cases.
+
+---
+
+- For the non-zero cases, it can be observed how each AU is progressively accentuated.
+    - ゼロ以外の場合、各AUがどのようにして徐々に強調される [accentuated] かを観察できます。
+
+- Note the diffierence between generated images at intensity 0 and 1.
+
+- The model convincingly renders complex facial movements which in most cases are difficult to distinguish from real images.
+    - このモデルは説得力を持って複雑な顔の動きをレンダリングしますが、
+    - ほとんどの場合、本物画像と区別するのは困難です。
+
+- It is also worth mentioning that the independence of facial muscle cluster is properly learned by the generator.
+    - 顔面筋群の独立性が生成器によって正しく学習されていることも言及する価値があります
+
+- AUs relative to the eyes and half-upper part of the face (AUs 1, 2, 4, 5, 45) do not affiect the muscles of the mouth.
+
+- Equivalently, mouth related transformations (AUs 10, 12, 15, 25) do not affect eyes nor eyebrow muscles.
+
+> 目と顔の上部分に関連する AUs（AUs1,AUs2,AUs4,AUs5,AUs45）は、口の筋肉に影響を与えていない。<br>
+> 同様にして、口に関連する AUs（AUs10,AUs12,AUs15,AUs25）は、目や眉毛の筋肉に影響を与えていない。<br>
+> この関係を、生成器が正しく学習できているかは、１つのポイントとなる。<br>
+
+---
+
+- Fig. 5 displays, for the same experiment, the attention A and color C masks that produced the final result I_{yg}.
+
+- Note how the model has learned to focus its attention (darker area) onto the corresponding AU in an unsupervised manner.
+    - 教師なしの方法で、モデルがどのようにして対応するAUに attention を集中させる（暗い領域）かを学習したことに注意してください。
+
+- In this way, it relieves the color mask from having to accurately regress each pixel value.
+    - このようにして、それは（＝attentio mask は、）カラーマスクが各ピクセル値を正確に回帰させなければならないことから解放する。
+
+- Only the pixels relevant to the expression change are carefully estimated, the rest are just noise.
+    - 表情の変化に関連するピクセルのみが慎重に推定され、残りは単なるノイズです。
+
+- For example, the attention is clearly obviating background pixels allowing to directly copy them from the original image.
+    - 例えば、attention は、元の画像から直接それらをコピーすることを可能にする背景ピクセルを、明らかに取り除く [obviating] ことです。
+
+- This is a key ingredient to later being able to handle images in the wild (see Section 6.5).
+
+---
+
+![image](https://user-images.githubusercontent.com/25688193/58870446-26f4c700-86fb-11e9-9e38-7d5a0c301ac6.png)
+
+- > Fig. 5. Attention Model.
+
+- > Details of the intermediate attention mask A (first row) and the color mask C (second row).
+
+- > The bottom row images are the synthesized expressions.
+
+- > Darker regions of the attention mask A show those areas of the image more relevant for each specic AU.
+
+- > Brighter areas are retained from the original image.
+
+
+### 6.2 Simultaneous Edition of Multiple AUs
+
+- We next push the limits of our model and evaluate it in editing multiple AUs.
+
+- Additionally, we also assess its ability to interpolate between two expressions.
+
+- The results of this experiment are shown in Fig. 1, the first column is the original image with expression yr, and the right-most column is a synthetically generated image conditioned on a target expression yg.
+
+- The rest of columns result from evaluating the generator conditioned with a linear interpolation of the original and target expressions: yg + (1 􀀀 )yr.
+
+- The outcomes show a very remarkable smooth an consistent transformation across frames.
+
+- We have intentionally selected challenging samples to show robustness to light conditions and even, as in the case of the avatar, to non-real world data distributions which were not previously seen by the model.
+
+- These results are encouraging to further extend the model to video generation in future works.
+
+### 6.3 Discrete Emotions Editing
 
 
 # ■ 関連研究（他の手法との違い）

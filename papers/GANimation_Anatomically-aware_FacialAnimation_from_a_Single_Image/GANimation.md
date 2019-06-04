@@ -645,21 +645,92 @@
 
 ### 6.2 Simultaneous Edition of Multiple AUs
 
+![image](https://user-images.githubusercontent.com/25688193/58874847-d8e4c100-8704-11e9-908b-be693b7c6e18.png)
+
+- > Fig. 1. Facial animation from a single image. We propose an anatomically co-
+herent approach that is not constrained to a discrete number of expressions and can
+animate a given image and render novel expressions in a continuum. In these examples,
+we are given solely the left-most input image Iyr (highlighted by a green square), and
+the parameter  controls the degree of activation of the target action units involved in
+a smiling-like expression. Additionally, our system can handle images with unnatural
+illumination conditions, such as the example in the bottom row.
+
+---
+
+
 - We next push the limits of our model and evaluate it in editing multiple AUs.
+    - 我々は次に、我々のモデルの限界をプッシュし、複数の AUs を編集することで、それを評価する。
 
 - Additionally, we also assess its ability to interpolate between two expressions.
+    - 加えて、２つの表情の間を補間する能力も、それで評価する。
 
 - The results of this experiment are shown in Fig. 1, the first column is the original image with expression yr, and the right-most column is a synthetically generated image conditioned on a target expression yg.
+    - この実験の結果は図１に示されており、
+    - 最初の列は、表情 y_r での元の画像 I_{yr}
+    - 一番右の列は、目標表情 y_g で条件付けされて合成的に生成された画像
 
-- The rest of columns result from evaluating the generator conditioned with a linear interpolation of the original and target expressions: yg + (1 􀀀 )yr.
+- The rest of columns result from evaluating the generator conditioned with a linear interpolation of the original and target expressions: α × y_g + (1 - α) × y_r.
+    - 残りの列は、元の表情と目標表情の線形補間 α × y_g + (1 - α) × y_r で条件付けされた生成器を評価した結果である。
 
 - The outcomes show a very remarkable smooth an consistent transformation across frames.
+    - 結果 [outcomes] は、フレームに渡っての、大変注目に値するスムーズで連続的な変換を示している。
 
 - We have intentionally selected challenging samples to show robustness to light conditions and even, as in the case of the avatar, to non-real world data distributions which were not previously seen by the model.
+    - 我々は、照明条件や
+    - アバターのケースのように、モデルによって、以前は見られなかった非現実世界のデータ分布
+    - に対しての堅牢性を示すために、変換するサンプルを意図的に選択している。
 
 - These results are encouraging to further extend the model to video generation in future works.
+    - これらの結果は、将来の研究において、動画生成のために、モデルを更に拡張することを推奨している。
+
 
 ### 6.3 Discrete Emotions Editing
+
+- We next compare our approach, against the baselines DIAT [20], CycleGAN [28], IcGAN [26] and StarGAN [4].
+    - 我々は次に、ベースラインの DIAT, CycleGAN, IcGAN, StarGAN に対して、我々の手法と比較する。
+
+- For a fair comparison, we adopt the results of these methods trained by the most recent work, StarGAN, on the task of rendering discrete emotions categories (e.g., happy, sad and fearful) in the RaFD dataset [16].
+    - 公正な比較のために、
+    - <font color="Pink">RaFD データセットにおける、離散的な感情のカテゴリ （例えば、幸せ、悲しみ、恐怖など）をレンダリングするタスクにおいて、
+    - 最も最近の研究である StarGAN によって、学習されたこれらの手法の結果を適用した。</font>
+
+- Since DIAT [20] and CycleGAN [28] do not allow conditioning, they were independently trained for every possible pair of source/target emotions.
+    - DIAT と CycleGAN は、条件付けが許可されていないので、
+    - それらは、ソース / ターゲット感情の全ての可能なペアに対して、独立的に学習された。
+
+- We next briefly discuss the main aspects of each approach:
+    - 我々は次に、各アプローチの主な側面について議論する。
+
+
+- DIAT [20].
+    - Given an input image x ∈ X and a reference image y ∈ Y , DIAT learns a GAN model to render the attributes of domain Y in the image x while conserving the person's identity.
+        - 入力画像 x ∈ X と参照画像 y ∈ Y を与えれば、DIAT は、人物の同一性を保存する一方で、画像 x における領域 y の属性をレンダリングするために、GAN のmドエルを学習する。
+    - It is trained with the classic adversarial loss and a cycle loss ![image](https://user-images.githubusercontent.com/25688193/58876349-c66c8680-8708-11e9-9df0-f65137c91e8b.png) to preserve the person's identity.
+        - これは、人物の同一性を保存するために、古典的な adversarial loss と cycle loss ![image](https://user-images.githubusercontent.com/25688193/58876349-c66c8680-8708-11e9-9df0-f65137c91e8b.png) で学習される。
+
+- CycleGAN [28].
+    - Similar to DIAT [20], CycleGAN also learns the mapping between two domains X → Y and Y → X.
+        - DIAT とよく似て、CycleGAN も、２つの領域間の写像 X → Y ; Y → X を学習する。
+    - To train the domain transfer, it uses a regularization term denoted cycle consistency loss combining two cycles: ![image](https://user-images.githubusercontent.com/25688193/58876440-0e8ba900-8709-11e9-8e50-e762c09c90d1.png).
+        - 領域の変換を学習するために、２つのサイクルの組み合したサイクルで一貫性のある [consistency] 損失関数で示される正規化項 ![image](https://user-images.githubusercontent.com/25688193/58876440-0e8ba900-8709-11e9-8e50-e762c09c90d1.png) を使用する。
+
+
+- IcGAN [26].
+    - Given an input image, IcGAN uses a pretrained encoder-decoder to encode the image into a latent representation in concatenation with an expression vector y to then reconstruct the original image.
+    - It can modify the expression by replacing y with the desired expression before going through the decoder.
+
+- StarGAN [4].
+    - An extension of cycle loss for simultaneously training between multiple datasets with diffierent data domains.
+    - It uses a mask vector to ignore unspecied labels and optimize only on known ground-truth labels.
+    - It yields more realistic results when training simultaneously with multiple datasets.
+
+- Our model diffiers from these approaches in two main aspects. 
+
+- First, we do not condition the model on discrete emotions categories, but we learn a basis of anatomically feasible warps that allows generating a continuum of expressions.
+
+- Secondly, the use of the attention mask allows applying the transformation only on the cropped face, and put it back onto the original image without producing any artifact.
+
+- As shown in Fig. 6, besides estimating more visually compelling images than other approaches, this results on images of higher spatial resolution.
 
 
 # ■ 関連研究（他の手法との違い）

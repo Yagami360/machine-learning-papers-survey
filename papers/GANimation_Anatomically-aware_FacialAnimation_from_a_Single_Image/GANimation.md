@@ -647,13 +647,16 @@
 
 ![image](https://user-images.githubusercontent.com/25688193/58874847-d8e4c100-8704-11e9-908b-be693b7c6e18.png)
 
-- > Fig. 1. Facial animation from a single image. We propose an anatomically co-
-herent approach that is not constrained to a discrete number of expressions and can
-animate a given image and render novel expressions in a continuum. In these examples,
-we are given solely the left-most input image Iyr (highlighted by a green square), and
-the parameter  controls the degree of activation of the target action units involved in
-a smiling-like expression. Additionally, our system can handle images with unnatural
-illumination conditions, such as the example in the bottom row.
+- > Fig. 1. Facial animation from a single image.
+
+- > We propose an anatomically coherent approach that is not constrained to a discrete number of expressions and can animate a given image and render novel expressions in a continuum.
+    - > 我々は、離散的な数の表現に制限されない解剖学的に一貫したアプローチを提案し、与えられた画像をアニメートし、連続的に新しい表現をレンダリングすることができる。
+
+- > In these examples, we are given solely the left-most input image I_{yr} (highlighted by a green square), and the parameter α controls the degree of activation of the target action units involved in a smiling-like expression.
+    - > これらの例では、一番左の入力画像 I_{yr}（緑色の四角で強調表示されている）だけが表示され、パラメータ α は笑顔のような表現に含まれる目標 AUs の活性化の程度を制御します。
+
+- > Additionally, our system can handle images with unnatural illumination conditions, such as the example in the bottom row.
+    - > さらに、下の例のように、不自然な照明条件で画像を処理することもできます。
 
 ---
 
@@ -714,23 +717,174 @@ illumination conditions, such as the example in the bottom row.
     - To train the domain transfer, it uses a regularization term denoted cycle consistency loss combining two cycles: ![image](https://user-images.githubusercontent.com/25688193/58876440-0e8ba900-8709-11e9-8e50-e762c09c90d1.png).
         - 領域の変換を学習するために、２つのサイクルの組み合したサイクルで一貫性のある [consistency] 損失関数で示される正規化項 ![image](https://user-images.githubusercontent.com/25688193/58876440-0e8ba900-8709-11e9-8e50-e762c09c90d1.png) を使用する。
 
-
 - IcGAN [26].
     - Given an input image, IcGAN uses a pretrained encoder-decoder to encode the image into a latent representation in concatenation with an expression vector y to then reconstruct the original image.
+        - 入力画像を与えれば、
+        - 画像を、表情ベクトル y で連結した潜在表現にエンコードし、次に元の画像を再構成するために、
+        - IcGAN は事前学習された encoder-decoder を使用する。
     - It can modify the expression by replacing y with the desired expression before going through the decoder.
+        - それは、検出器を通す前に、望ましい表情で y を置き換えることによって、表情を修正することが出来る。
 
 - StarGAN [4].
     - An extension of cycle loss for simultaneously training between multiple datasets with diffierent data domains.
+        - 異なるデータ領域を持つ複数のデータセットの間の同時に学習するための、サイクル loss の拡張
     - It uses a mask vector to ignore unspecied labels and optimize only on known ground-truth labels.
+        - 指定されていない [unspecied] ラベルを無視するためのマスクベクトルを使用し、知られている ground-truth ラベルのみ最適化する。
     - It yields more realistic results when training simultaneously with multiple datasets.
+        - これは、複数のデータセットを同時に学習するとき、よりリアルな結果を生み出す。
+
+---
 
 - Our model diffiers from these approaches in two main aspects. 
+    - **我々のモデルは、２つの側面において、これらのアプローチとは異なる。**
 
 - First, we do not condition the model on discrete emotions categories, but we learn a basis of anatomically feasible warps that allows generating a continuum of expressions.
+    - **まず初めに、我々は、離散的な感情のカテゴリの上で、モデルを条件づけしない。**
+    - **しかし、表情の連続体 [continuum] を生成することを可能にする解剖学的に実現可能な [feasible] 歪み（ねじれ） [warps] のベースを学習する。**
 
 - Secondly, the use of the attention mask allows applying the transformation only on the cropped face, and put it back onto the original image without producing any artifact.
+    - ２つ目は、attention mask の使用は、クリッピングされた顔のみで変換を適用することを許容し、
+    - いかなる人工加工物を生成することなしに、それを（＝クリッピングされた顔のみで変換したもの）元の画像に戻す。
 
 - As shown in Fig. 6, besides estimating more visually compelling images than other approaches, this results on images of higher spatial resolution.
+    - 図６に示されているように、
+    - 他のアプローチよりも、画像をより視覚的に説得力のある [compelling] 推定を行うことに加えて、
+    - この手法は、より高い空間的な解像度となる結果となる。
+
+---
+
+![image](https://user-images.githubusercontent.com/25688193/58924855-66b1c200-8780-11e9-9c0d-8739ed0725c3.png)
+
+- > Fig. 6. Qualitative comparison with state-of-the-art.
+    - > SOTA手法でのクオリティー比較
+
+- > Facial Expression Synthesis results for: DIAT [20], CycleGAN [28], IcGAN [26] and StarGAN [4]; and ours.
+    - > DIAT [20], CycleGAN [28], IcGAN [26] and StarGAN [4]、我々の手法に対しての顔の表情の合成結果
+
+- > In all cases, we represent the input image and seven diffierent facial expressions.
+    - > 全てのケースにおいて、入力画像よ７つの異なる顔の表情を表現している。
+
+- > As it can be seen, our solution produces the best trade-off between visual accuracy and spatial resolution.
+    - > （図から）見られるように、我々の解決法は、視覚的な正確性と空間的な解像度の間のトレードオフでベストな（もの）を生成している
+
+- > Some of the results of StarGAN, the best current approach, show certain level of blur.
+    - > ベストな現在のアプローチである StarGAN の結果のいくつかは、ある程度 [certain] のレベルのぼやけを示している。
+
+- > Images of previous models were taken from [4].
+
+
+### 6.4 High Expressions Variability
+
+- Given a single image, we next use our model to produce a wide range of anatomically feasible face expressions while conserving the person's identity.
+    - 一つの画像を与えれば、人物のアイデンティティを保存しながら、我々は次に、広い範囲での解剖学的に実現可能な顔の表情を生成するために、我々のモデルを使用する。
+
+- In Fig. 7 all faces are the result of conditioning the input image in the top-left corner with a desired face conguration defined by only 14 AUs.
+    - 図７では、全ての顔は、14 個の AUs だけで定義された望ましい顔構成で、最上段左コーナーの画像を条件付けした結果である。
+
+- Note the large variability of anatomically feasible expressions that can be synthesized with only 14 AUs.
+    - 大きな種類の解剖学的に実現可能な表情が、14 個の AUs のみでを合成されることが可能ということに注目。
+
+---
+
+- > Fig. 7. Sampling the face expression distribution space.
+    - > 図７：顔の表情の分布空間のサンプリング
+
+- > As a result of applying our AU-parametrization through the vector y_g, we can synthesize, from the same source image I_{yr} , a large variety of photo-realistic images.
+    - > **AUs 状態ベクトルを通じて、我々の AU-パラメーターを適用した結果として、同じソース画像から大きな種類のフォトリアリスティックな画像合成できる。**
+
+### 6.5 Images in the Wild
+
+- As previously seen in Fig. 5, the attention mechanism not only learns to focus on specic areas of the face but also allows merging the original and generated image background.
+    - 以前に図５で見られたように、attention メカニズムは、顔の特定の領域にフォーカスすることを学習するだけでなく、元の画像と生成された画像の背景をマージ（合併）することを許容する。
+
+- This allows our approach to be easily applied to images in the wild while still obtaining high resolution images.
+    - このことは、高解像の画像を手に入れながら、我々のアプローチを、wild な画像に用意に適用されることを可能にする。
+
+- For these images we follow the detection and cropping scheme we described before.
+    - これらの画像に対して、我々は、検出器と我々が以前記述したクリッピング手法（スキーム）[scheme] に従う。
+
+> 我々が以前記述したクリッピング手法（スキーム）<br>
+> →３つのステップ：<br>
+> 1. まず初めに、顔の位置を特定し、トリミングするために、検出器を使用し<br>
+> 2. 式 (1) を用いて、表情変換を、その領域（＝顔をトリミングした領域）に適用し、<br>
+> 3. 最後に、生成された顔を、画像内の元の位置に戻す。<br>
+
+
+- Fig. 8 shows two examples on these challenging images.
+    - 図８は、これらの画像変換の２つの例を示している。
+
+- Note how the attention mask allows for a smooth and unnoticeable merge between the entire frame and the generated faces.
+    - attention mask は、どうようにして、フレーム全体と生成された顔画像との間のスムーズで目立たない [unnoticeable] マージンを許容しているのかに注目。
+
+---
+
+![image](https://user-images.githubusercontent.com/25688193/58930732-b6e84e80-8797-11e9-84c1-918a0a961ce5.png)
+
+- > Fig. 8. Qualitative evaluation on images in the wild.
+
+- > Top:We represent an image (left) from the film "Pirates of the Caribbean" and an its generated image obtained by our approach (right).
+
+- > Bottom: In a similar manner, we use an image frame (left) from the series "Game of Thrones" to synthesize five new images with diffierent expressions.
+
+
+### 6.6 Pushing the Limits of the Model
+
+- We next push the limits of our network and discuss the model limitations.
+    - 我々は次に、我々のネットワークの限界をプッシュし、モデルの限界を議論する。
+
+- We have split success cases into six categories which we summarize in Fig. 9-top.
+    - 成功事例を６つのカテゴリに分割し、図９の上に示す。
+
+- The first two examples (top-row) correspond to human-like sculptures and non-realistic drawings.
+    - 最初の２つのサンプルは、人間のような彫刻とリアルではない絵に対応している。
+
+- In both cases, the generator is able to maintain the artistic effects of the original image.
+    - 両方のケースにおいて、生成器は、元の画像の芸術的な [artistic] 効果を維持することが出来る。
+
+- Also, note how the attention mask ignores artifacts such as the pixels occluded by the glasses.
+    - また、attention mask がどのようにして、眼鏡で塞がれた [occluded] ピクセルのような、人工物を無視しているのかに注目。
+
+- The third example shows robustness to non-homogeneous textures across the face.
+
+- Observe that the model is not trying to homogenize the texture by adding/removing the beard's hair.
+
+- The middle-right category relates to anthropomorphic faces with non-real textures.
+
+- As for the Avatar image, the network is able to warp the face without affecting its texture.
+
+- The next category is related to non-standard illuminations/colors for which the model has already been shown robust in Fig. 1.
+
+- The last and most surprising category is face-sketches (bottom-right).
+
+- Although the generated face suffers from some artifacts, it is still impressive how the proposed method is still capable of nding suffcient features on the face to transform its expression from worried to excited.
+
+- The second case shows failures with non-previously seen occlusions such as an eye patch causing artifacts in the missing face attributes.
+
+---
+
+- We have also categorized the failure cases in Fig. 9-bottom, all of them pre-sumably due to insufficient training data.
+
+- The first case is related to errors in the attention mechanism when given extreme input expressions.
+
+- The attention does not weight sufficiently the color transformation causing transparencies.
+
+---
+
+- The model also fails when dealing with non-human anthropomorphic distributions as in the case of cyclopes.
+
+- Lastly, we tested the model behavior when dealing with animals and observed artifacts like human face features.
+
+---
+
+![image](https://user-images.githubusercontent.com/25688193/58932607-5b21c380-879f-11e9-92d6-c30f327e3efa.png)
+
+- > Fig. 9. Success and Failure Cases.
+
+- > In all cases, we represent the source image I_{yr} , the target one I_{yg} , and the color and attention masks C and A, respectively. 
+
+- > Top: Some success cases in extreme situations.
+
+- > Bottom: Several failure cases.
 
 
 # ■ 関連研究（他の手法との違い）

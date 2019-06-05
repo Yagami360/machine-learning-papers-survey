@@ -845,34 +845,48 @@
     - また、attention mask がどのようにして、眼鏡で塞がれた [occluded] ピクセルのような、人工物を無視しているのかに注目。
 
 - The third example shows robustness to non-homogeneous textures across the face.
+    - ３つ目の例は、顔のいたるところでの [across] 不均一な [non-homogeneous] テスクチャへの堅牢性を示している。
 
 - Observe that the model is not trying to homogenize the texture by adding/removing the beard's hair.
+    - モデルは、ひげ [berad] の髪を追加 / 削除することによって、テスクチャを均質化しようとしていないことを、観測する。
 
 - The middle-right category relates to anthropomorphic faces with non-real textures.
+    - 中央右のカテゴリは、非現実的なテクスチャーをもつ擬人的な [anthropomorphic] 顔に関連している。
 
 - As for the Avatar image, the network is able to warp the face without affecting its texture.
+    - アバターの画像はというと、ネットワークは、そのテクスチャーに影響を与えることなしに、顔を歪ませることが出来る。
 
 - The next category is related to non-standard illuminations/colors for which the model has already been shown robust in Fig. 1.
+    - 次のカテゴリは、図１のロバスト性で既に示されたようなモデルに対しての、非標準的な照明 [illuminations] や色に関連したものである。
 
 - The last and most surprising category is face-sketches (bottom-right).
+    - 最後のそして最も驚くカテゴリは、顔のイラストである。（右下）
 
-- Although the generated face suffers from some artifacts, it is still impressive how the proposed method is still capable of nding suffcient features on the face to transform its expression from worried to excited.
+- Although the generated face suffers from some artifacts, it is still impressive how the proposed method is still capable of finding sufficient features on the face to transform its expression from worried to excited.
+    - 生成された顔は、いくつかの人工物に悩まされるけれども、
+    - 提案された手法がどのようにして、その表情を心配 [worried] から興奮へ変換するために、顔の十分な特徴見つけ出す能力をもつのかということは、依然として印象深い。
 
 - The second case shows failures with non-previously seen occlusions such as an eye patch causing artifacts in the missing face attributes.
+    - 次のケースでは、欠けている顔の属性で人工物を引き起こす眼帯ような、以前の閉鎖 [occlusion] では見られなかった失敗を示す。
 
 ---
 
-- We have also categorized the failure cases in Fig. 9-bottom, all of them pre-sumably due to insufficient training data.
+- We have also categorized the failure cases in Fig. 9-bottom, all of them presumably due to insufficient training data.
+    - 我々はまた、失敗事例を図9-下に分類したが、それらはすべては、おそらくは [presumably]、十分に訓練データがないためである。
 
 - The first case is related to errors in the attention mechanism when given extreme input expressions.
+    - 最初のケースは、極端な入力表情が与えられたときの、attention メカニズムのエラーに関連したものである。
 
 - The attention does not weight sufficiently the color transformation causing transparencies.
+    - attention は、透過（透明）を引き起こす色変換に十分に重みを与えない。
 
 ---
 
 - The model also fails when dealing with non-human anthropomorphic distributions as in the case of cyclopes.
+    - サイクロプスのような、人間ではない擬人化 [anthropomorphic] 分布を扱うときにも、失敗する。
 
 - Lastly, we tested the model behavior when dealing with animals and observed artifacts like human face features.
+    - 最後に、動物を扱うときの振る舞いでモデルをテストし、人間の顔のような人工物を観測した。
 
 ---
 

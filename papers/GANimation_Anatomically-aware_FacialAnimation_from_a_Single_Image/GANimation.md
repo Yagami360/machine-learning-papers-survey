@@ -130,10 +130,28 @@
 - Figure 1 shows some example of the results we obtain, in which given one input image, we gradually change the magnitude of activation of the AUs used to produce a smile.
 
 
-
 # ■ 結論
 
-## x. 論文の項目名 (Conclusion)
+## 7. Conclusion
+
+- We have presented a novel GAN model for face animation in the wild that can be trained in a fully unsupervised manner.
+
+- It advances current works which, so far, had only addressed the problem for discrete emotions category editing and portrait images. 
+    - それは、これまでのところ、離散感情カテゴリ編集および肖像画 [portrait] に関する問題にのみ対処していた現在の研究を進歩させる。
+
+- Our model encodes anatomically consistent face deformations parameterized by means of AUs.
+
+- Conditioning the GAN model on these AUs allows the generator to render a wide range of expressions by simple interpolation.
+
+- Additionally, we embed an attention model within the network which allows focusing only on those regions of the image relevant for every specic expression.
+
+- By doing this, we can easily process images in the wild, with distracting backgrounds and illumination artifacts.
+
+- We have exhaustively evaluated the model capabilities and limits in the EmotioNet [3] and RaFD [16] datasets as well as in images from movies.
+
+- The results are very promising, and show smooth transitions between diffierent expressions.
+
+- This opens the possibility of applying our approach to video sequences, which we plan to do in the future.
 
 
 # ■ 何をしたか？詳細

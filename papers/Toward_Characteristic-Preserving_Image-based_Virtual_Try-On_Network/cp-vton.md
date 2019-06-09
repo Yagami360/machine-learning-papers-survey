@@ -23,6 +23,8 @@
     - 以前の研究は、形状コンテキストマッチングを使用して空間的な変形 [deformation] に明示的に取り組んだ [tackled] が、
     - その coarse-to-fine 法？（その粗密な戦略？）のために、衣服の詳細を保存することができなかった。
 
+> 形状コンテキストマッチング：Shape Context Matching Module (SCMM) のこと？
+
 - In this work, we propose a new fully-learnable Characteristic-Preserving Virtual Try-On Network (CP-VTON) for addressing all real-world challenges in this task.
     - この研究では、このタスクにおけるすべての現実的な課題に対処する [adressing] ために、新しい完全に学習可能な Characteristic-Preserving Virtual Try-On Network (CP-VTON) を提案します。
 
@@ -195,28 +197,11 @@
 
 ---
 
-![image](https://user-images.githubusercontent.com/25688193/58456118-49686c80-815e-11e9-962f-bf209d17ec26.png)
-
-- > Fig. 2. An overview of our CP-VTON, containing two main modules.
-    - > 図２。我々の CP-VTON の概要で、２つのメインネットワークを含んでいる。
-
-- > (a) Geometric Matching Module: the in-shop clothes c and input image representation p are aligned via a learnable matching module. 
-    - > (a) GAMM : 店内の服 c と入力画像表現 p は、学習可能なマッチングモジュール経由で整理されている。
-
-- > (b) Try-On Module: it generates a composition mask M and a rendered person I_r.
-    - > (b) Try-On Module  : これは、構成マスク M とレンダリングされた人物 I_r を生成する。
-
-- > The final results I_o is composed by warped clothes c^ and the rendered person I_r with the composition mask M.
-    - > 最終的な結果 I_o は、歪んだ服 c^ と、構成マスク M で描写された人物 I_r によって構成される。
-
----
-
-
 - Training with sample triplets (I_i, c, I_t) where I_t is the ground truth of I_o and c is coupled with I_t wearing in clothes c_t, is straightforward but undesirable in practice.
     - ３つの組のサンプル (I_i, c, I_t) での学習は、簡単である [straightforward] が、実際には、望ましくない。
     - （ここで、I_t は、試着者の新しい画像 I_o の ground truth であり、目標の服 ｃ は I_t と衣服 c_t を着用することとを組み合わせる。）
 
-> I_t は教師信号の役割？
+> I_t は、I_o に対しての教師データ
 
 - Because these triplets are difficult to collect.
     - これらの３つの組み合わせは、収集するのが困難である。
@@ -230,6 +215,8 @@
 
 - But directly training on (I_t, c, I_t) harms the model generalization ability at testing phase when only decoupled inputs (I_i, c) are available.
     - しかし、(I_t, c, I_t) で直接的に学習することは、分離された [decoupled] 入力 (I_i, c) のみが利用可能であるとき、テストフェイズにおいて、モデルの生成能力を妨げる。
+
+> 汎化性能の問題のことを述べている？
 
 - Prior work [10] addressed this dilemma by constructing a clothing-agnostic person representation p to eliminate the effiects of source clothing item c_i.
     - 以前の研究では、衣服アイテム c_i のソースとしての影響を除外するために、衣服にとらわれない [clothing-agnostic] 人物表現 p を構築することによって、このジレンマに対処した。
@@ -270,6 +257,22 @@
 
 - The overall pipeline is depicted in Fig. 2.
     - パイプラインの全体は、図に２図示されている。
+
+---
+
+![image](https://user-images.githubusercontent.com/25688193/58456118-49686c80-815e-11e9-962f-bf209d17ec26.png)
+
+- > Fig. 2. An overview of our CP-VTON, containing two main modules.
+    - > 図２。我々の CP-VTON の概要で、２つのメインネットワークを含んでいる。
+
+- > (a) Geometric Matching Module: the in-shop clothes c and input image representation p are aligned via a learnable matching module. 
+    - > (a) GAMM : 店内の服 c と入力画像表現 p は、学習可能なマッチングモジュール経由で整理されている。
+
+- > (b) Try-On Module: it generates a composition mask M and a rendered person I_r.
+    - > (b) Try-On Module  : これは、構成マスク M とレンダリングされた人物 I_r を生成する。
+
+- > The final results I_o is composed by warped clothes c^ and the rendered person I_r with the composition mask M.
+    - > 最終的な結果 I_o は、歪んだ服 c^ と、構成マスク M で描写された人物 I_r によって構成される。
 
 ### 3.1 Person Representation
 
@@ -646,7 +649,7 @@
 - Precisely, VITON learns to synthesis a coarse person image at first, then to align the clothes with target person with shape context matching, then to produce a composition mask for fusing UNet rendered person with warped clothes and finally producing a refined result.
     - 簡単に言えば、VITON はまず初めに、粗い [coarse] 人物の画像を合成することを学習し、
     - 次に、形状コンテキストマッチングで、服を対象の人物に整形し、
-    - 歪んだ服を着ている UNet でレンダリングされた人物を融合するための、構成マスクを生成し、
+    - UNet でレンダリングされた歪んだ服を着ている人物を融合するための、構成マスクを生成し、
     - そして最後に、洗練された [refined] 結果を生成する。
 
 - After extensive training, the rendered person image has already a small VGG perceptual loss with respect to ground truth.
@@ -754,8 +757,11 @@
     - 図７は、構成マスクが、L1正則化することなしにレンダリングされる人物の画像を選択する傾向を示している。
 
 - This verifies that even minor misalignment introduces large perceptual disagreement between warped clothes and ground truth.
-    - これは、小さな不整合さえ、歪んだ服と ground truth との間の、大きな知覚的な　不一致 [disagreement] を取り込む [introduces] ことを証明している。
+    - これは、小さな不整合さえ、歪んだ服と ground truth との間の、大きな知覚的な不一致 [disagreement] を取り込む [introduces] ことを証明している。
     
+> 歪んだ服と ground truth との間の、大きな知覚的な不一致：損失関数（VGG perceptual loss） L_VGG のこと？
+
+
 ---
 
 ![image](https://user-images.githubusercontent.com/25688193/58605297-3a0a3000-82d2-11e9-819b-54c631693a12.png)
@@ -773,7 +779,7 @@
 
 - In Sec. 4.5 we argue that VITON is vulnerable to minor misalignment due to its coarse-to-fine strategy, while our pipeline sidesteps imperfect alignment by simultaneously producing rendered person and composition mask.
     - セクション 4.5 では、我々は、VITON は、その coarse-to-fine 法のために、小さな不整合に脆弱である [vulnerable] と主張した。
-    - 一方で、我々のパイプラインは、レンダリングされた人物と構成マスクを同時に学習することによって、湯完全な整形を回避することを主張した。
+    - 一方で、我々のパイプラインは、レンダリングされた人物と構成マスクを同時に学習することによって、不完全な整形を回避することを主張した。
 
 - This is further clarified below in a controlled condition with simulated warped clothes.
     - これは、シミュレートされた歪んだ服と共に、制御された条件のもとで、更に明らかにされる [be clarified]。

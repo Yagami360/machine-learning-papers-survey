@@ -76,21 +76,86 @@
 
 ---
 
-- This problem can be more broadly described as image- to-image translation [22], converting an image from one representation of a given scene, x, to another, y, e.g., grayscale to color, image to semantic labels, edge-map to photograph.
 
-- Years of research in computer vision, image processing, computational photography, and graphics have produced powerful translation systems in the supervised setting, where example image pairs {xi,yi}Ni=1 are avail- able (Figure 2, left), e.g., [11, 19, 22, 23, 28, 33, 45, 56, 58, 62]. 
+![image](https://user-images.githubusercontent.com/25688193/59155378-24132100-8ac3-11e9-8c51-1fe48c1de569.png)
+
+- > Figure 2: Paired training data (left) consists of training examples {xi,yi}_{i=1}^N, where the correspondence between xi and yi exists [22].
+
+- > We instead consider unpaired training data (right), consisting of a source set {xi }Ni=1 (xi ∈ X ) and a target set {yj }j =1 (yj ∈ Y ), with no information provided as to which xi matches which yj.
+
+---
+
+- This problem can be more broadly described as image-to-image translation [22], converting an image from one representation of a given scene, x, to another, y, e.g., grayscale to color, image to semantic labels, edge-map to photograph.
+    - この問題は、より広くは [broadly]、image-to-image 変換として記述され、
+    - 与えられたシーン x の１つの表現から、別の y へ、画像を変換する。
+    - 例えば、グレースケールからカラー画像、画像からセマンティックラベル、エッジマップから写真など。
+
+- Years of research in computer vision, image processing, computational photography, and graphics have produced powerful translation systems in the supervised setting, where example image pairs {xi,yi}_{i=1}^N are available (Figure 2, left), e.g., [11, 19, 22, 23, 28, 33, 45, 56, 58, 62]. 
+    - コンピュータビジョン、画像処理、計算写真学 [computational photography]、コンピュータグラフィックにおける永年の [Years of] 研究では、画像ペアの例 {xi,yi}_{i=1}^N が利用可能であるような教師あり設定において（図２の左）、パワフルな変換システムを生成した。
+
+> computational photography : 計算写真学（けいさんしゃしんがく、英:computational photography）とは二次元的な画像のみならず奥行きや物体の反射特性などの情報をも撮像素子によりデータとして記録して計算によってその情報を復元する写真。
+
+光学によって被写体の像を得るのではなく、デジタル処理によって画像を生成することを前提としたイメージング技術。
 
 - However, obtaining paired training data can be difficult and expensive. 
+    - しかしながら、学習データのペアを取得することは、難関で費用がかかる。
 
 - For example, only a couple of datasets exist for tasks like semantic segmentation (e.g., [4]), and they are relatively small.
+    - 例えば、セマンティックセグメンテーションのようなタスクに対しては、２，３個のデータセットだけしか存在せず、それらは比較的少ない。
 
 - Obtaining input-output pairs for graphics tasks like artistic stylization can be even more difficult since the desired output is highly complex, typically requiring artistic authoring.
+    - 芸術的な様式化 [stylization] のようなグラフィックタスクに対して、入出力ペアを手に入れることは、望ましい出力が非常の複雑で、芸術的なオーサリング（＝マルチメディアの作成）を比較的要求するので、より困難である。
 
-- For many tasks, like object transfigu- ration (e.g., zebra↔horse, Figure 1 top-middle), the desired output is not even well-defined.
+- For many tasks, like object transfiguration (e.g., zebra↔horse, Figure 1 top-middle), the desired output is not even well-defined.
+    - 多くのタクスでは、物体変換（図１の上中央のシマウマ↔馬）のように、望ましい出力は、うまく定義されさえしていない。
+
+---
+
+- We therefore seek an algorithm that can learn to translate between domains without paired input-output examples (Figure 2, right).
+    - 我々はそれゆえに、ペア付けされた入出力例なしに、領域間の変換を学習することの出来るアルゴリズムを探す。（図２の右）
+
+- We assume there is some underlying relationship between the domains – for example, that they are two different renderings of the same underlying scene – and seek to learn that relationship.
+    - 我々は、領域間にいくつかの根本的な [underlying] 関係が存在することを仮定する。
+    - 即ち、例えば、それらは同じ根本的なシーンの２つの異なるレンダリングである。
+    - そして、関連性を学習しようとする [seek to]。
+
+- Although we lack supervision in the form of paired examples, we can exploit supervision at the level of sets: we are given one set of images in domain X and a different set in domain Y.
+    - 我々はペア付けされた例の形式での教師ありを欠いているけれども、
+    - セットのレベルで教師ありを利用する [exploit] ことが出来る。
+    - 即ち、領域 X では画像の１つのセットが与えられ、領域 Y では画像の異なるセットが与えられている。
+
+- We may train a mapping G : X → Y such that the output yˆ = G(x), x ∈ X, is indistinguishable from images y ∈ Y by an adversary trained to classify yˆ apart from y.
+    - 我々は、y と区別して y^ を分類するように学習された敵対者によって、
+    - 出力 yˆ = G(x), x ∈ X が、画像 y ∈ Y から区別できないように、写像 G : X → Y を学習するだろう。
+
+- In theory, this objective can induce an output distribution over yˆ that matches the empirical distribution p_{data}(y) (in general, this requires G to be stochastic) [16].
+    - 理論的には、この目的 [objective] は経験分布 [empirical distribution] p_ {data}（y）と一致する y^ 上の出力分布を誘導する [induce] ことができます（一般に、これは写像 G が確率的であることを必要とします）[16]。
+
+> GAN で出てくる真のデータ分布（＝経験分布） p_ {data}（y）とモデルの分布（＝y^ 上の出力分布） p_g を一致させる話
+
+- The optimal G thereby translates the domain X to a domain Yˆ distributed identically to Y.
+    - G の最適化は、それ故に、領域 X から、Y と恒等的に分布する領域 Y^ への変換となる。
+
+- However, such a translation does not guarantee that an individual input x and output y are paired up in a meaningful way – there are infinitely many mappings G that will induce the same distribution over yˆ. 
+
+- Moreover, in practice, we have found it difficult to optimize the adversarial objective in isolation: standard procedures often lead to the well-known problem of mode collapse, where all input images map to the same output image and the optimization fails to make progress [15].
+
+---
+
+- These issues call for adding more structure to our objective.
+
+- Therefore, we exploit the property that translation should be “cycle consistent”, in the sense that if we translate, e.g., a sentence from English to French, and then translate it back from French to English, we should arrive back at the original sentence [3].
+
+- Mathematically, if we have a translator G : X → Y and another translator F : Y → X, then G and F should be inverses of each other, and both mappings should be bijections.
+
+- We apply this structural assumption by training both the mapping G and F simultaneously, and adding a cycle consistency loss [64] that encourages F (G(x)) ≈ x and G(F (y)) ≈ y.
+
+- Combining this loss with adversarial losses on domains X and Y yields our full objective for unpaired image-to-image translation.
 
 ---
 
 - xxx
+
 
 # ■ 結論
 

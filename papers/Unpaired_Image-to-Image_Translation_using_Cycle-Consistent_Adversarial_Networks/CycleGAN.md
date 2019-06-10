@@ -304,14 +304,163 @@
 
 - The behavior induced by the cycle consistency loss can be observed in Figure 4: the reconstructed images F (G(x)) end up matching closely to the input images x.
     - cycle consistency loss によって誘発される振る舞いは、図４で観測される。
-    - 即ち、再構築された画像 F (G(x)) が、入力画像 x と近くで一致するという結果になる。
+    - 即ち、再構築された画像 F (G(x)) が、入力画像 x と近くで一致するという結果になる
+
+---
+
+![image](https://user-images.githubusercontent.com/25688193/59171930-62bae100-8b80-11e9-8a6a-189062b254f0.png)
+
+- > Figure 4: The input images x, output images G(x) and the reconstructed images F(G(x)) from various experiments.
+    - > 図４：様々な実験に対しての、入力画像 x、出力画像 G(x)、と再構築された画像 F(G(x))
+    
+- > From top to bottom: photo↔Cezanne, horses↔zebras, winter→summer Yosemite, aerial photos↔Google maps.
+
+
+### 3.3. Full Objective
+
+- Our full objective is:
+
+![image](https://user-images.githubusercontent.com/25688193/59172044-e4ab0a00-8b80-11e9-857e-193b80d623c3.png)
+
+- where λ controls the relative importance of the two objectives.
+
+- We aim to solve:
+
+![image](https://user-images.githubusercontent.com/25688193/59172098-423f5680-8b81-11e9-901b-273fe40022ff.png)
+
+- Notice that our model can be viewed as training two “autoencoders” [20]:
+    - 我々のモデルは、２つのオートエンコーダーの学習としてみなすことが出来ることに注意。
+
+- we learn one autoencoder F ◦ G : X → X jointly with another G ◦ F : Y → Y .
+    - 即ち、我々は、１つのオートエンコーダー F ◦ G : X → X を、別のオートエンコーダー G ◦ F : Y → Y と共同で [jointly with] 学習する。
+
+- However, these autoencoders each have special internal structures:
+    - しかしながら、これらのオートエンコーダーは、お互いに特別な乃構造を持っている。
+
+- they map an image to itself via an intermediate representation that is a translation of the image into another domain.
+    - 即ち、それら（＝オートエンコーダー）は、画像の他の領域での変換である中間表現経由で、画像を自身に写像する。
+
+- Such a setup can also be seen as a special case of “adversarial autoencoders” [34], which use an adversarial loss to train the bottleneck layer of an autoencoder to match an arbitrary target distribution. 
+    - このようなセットアップはまた、“adversarial autoencoders” の特別なケースとして見られる。
+    - <font color="Pink">（この “adversarial autoencoders” というのは、）任意の目標分布に一致するための、オートエンコーダーのボトルネック層を学習するために adversarial loss を使用するようなもの。</font>
+
+- In our case, the target distribution for the X → X autoencoder is that of the domain Y .
+    - 我々のケースにおいては、オートエンコーダー X → X に対しての目標分布は、ターゲット Y のそれとなる。
+
+---
+
+- In Section 5.1.4, we compare our method against ablations of the full objective, including the adversarial loss L_GAN alone and the cycle consistency loss L_cyc alone, and empirically show that both objectives play critical roles in arriving at high-quality results.
+    - セクション 5.1.4 では、完全な目的関数の切除 [ablations] に対して、我々の手法を比較する。
+    - （これは、）adversarial loss L_GAN のみを含み、cycle consistency loss のみを含むようなもの
+    - そして、両方の目的関数が、高品質の結果となることにおいて、重要な役割を演じていることを実験的に [empirically] 示す。
+
+> ablations study でパフォーマンス比較
+
+- We also evaluate our method with only cycle loss in one direction and show that a single cycle is not sufficient to regularize the training for this under-constrained problem.
+    - 我々はまた、１つの方向の cycle loss のみを用いて、我々の手法を評価し、
+    - single loss が、この制約化での問題に対して、学習を正則化するのに十分でないことを示す。
+
+
+## 4. Implementation
+
+### Network Architecture
+
+![image](https://user-images.githubusercontent.com/25688193/59174338-e9c18680-8b8b-11e9-9c62-3c1c43d703ea.png)
+
+---
+
+- We adopt the architecture for our generative networks from Johnson et al. [23] who have shown impressive results for neural style transfer and superresolution. 
+    - 我々は、我々の生成器のネットワークに対して、スタイル変換と超高解像度化に対しての印象深い結果を示した Johnson らの [23] を適用した。
+
+> [23] : . Johnson, A. Alahi, and L. Fei-Fei. Perceptual losses for real-time style transfer and super-resolution. In ECCV, 2016. 2, 3, 5, 7, 18
+
+- This network contains two stride-2 convolutions, several residual blocks [18], and two fractionally-strided convolutions with stride 1/2.
+    - このネットワークは、ストライド幅２の畳み込み層、いくつかの ResNet の residual blocks、そして、ストライド幅 1/2 の２つの逆畳み込み層 [fractionally-strided convolutions] を含んでいる。
+
+> fractionally-strided convolutions : 逆畳み込み層のこと 
+
+- We use 6 blocks for 128 × 128 images and 9 blocks for 256 × 256 and higher- resolution training images. 
+    - 128 × 128 の画像に対して、6 つのブロックを使用し、
+    - 256 × 256 の画像とそれ以上の解像度の学習用画像に対して、9 つのブロックを使用する。
+
+- Similar to Johnson et al. [23], we use instance normalization [53].
+    - Johnson らの論文と同じく、instance normalization を使用する。
+    
+- For the discriminator networks we use 70 × 70 PatchGANs [22, 30, 29], which aim to classify whether 70 × 70 overlapping image patches are real or fake. 
+    - 識別器のネットワークに対しては、70 × 70 の PaschGAN を使用する。
+    - これは、70 × 70 でオーバラップしている画像パッチが本物か偽物であるかを分類することを狙いとしている。
+
+- Such a patch-level discriminator architecture has fewer parameters than a full-image discriminator and can work on arbitrarily-sized images in a fully convolutional fashion [22].
+    - このようなパッチレベルの識別器のアーキテクチャは、フル画像の識別器と比べて、より少ないパラメーターを持ち、
+    - 全畳込みの形式において、任意のサイズの画像で動作できる。
+
+### Training details
+
+- We apply two techniques from recent works to stabilize our model training procedure.
+    - 我々が、我々のモデルの学習手順を安定化させるための最近の研究から、２つのテクニックを適用する。
+
+- First, for LGAN (Equation 1), we replace the negative log likelihood objective by a least-squares loss [35]. 
+    - はじめに、式 (1) の L_GAN に対して、least-squares loss [35] によって、負対数尤度目的関数を置き換える。
+
+- This loss is more stable during training and generates higher quality results.
+    - この損失関数は、学習がより安定し、より高い品質の結果を生成する。
+
+- In particular, for a GAN loss ![image](https://user-images.githubusercontent.com/25688193/59173508-1f647080-8b88-11e9-9603-1860a55323c0.png), we train the G to ![image](https://user-images.githubusercontent.com/25688193/59173839-bc73d900-8b89-11e9-88ff-a70e2c56893b.png) and train the D to ![image](https://user-images.githubusercontent.com/25688193/59173922-12488100-8b8a-11e9-9368-17e647b9593b.png).
+    - 特に、損失関数 L_GAN 対しては、G を ![image](https://user-images.githubusercontent.com/25688193/59173839-bc73d900-8b89-11e9-88ff-a70e2c56893b.png) になるように学習し、
+    - D を ![image](https://user-images.githubusercontent.com/25688193/59173922-12488100-8b8a-11e9-9368-17e647b9593b.png) となるように学習する。
+
+---
+
+- Second, to reduce model oscillation [15], we follow Shrivastava et al.’s strategy [46] and update the discriminators using a history of generated images rather than the ones produced by the latest generators.
+    - ２つ目に、モデルの発振を軽減するために、Shrivastava らの戦略 [46] に従い、最新の生成器によって生成されたものよりも、生成された画像の履歴を使用する。
+
+- We keep an image buffer that stores the 50 previously created images.
+    - 我々は、50 回以前で生成された画像をストアする画像バッファを保持する。
+
+---
+
+- For all the experiments, we set λ = 10 in Equation 3. 
+    - すべての実験に対して、式 (3) で λ = 10 を使用する。
+
+- We use the Adam solver [26] with a batch size of 1.
+    - 我々は、バッチサイズ１を持つ Adam を使用する。
+
+- All networks were trained from scratch with a learning rate of 0.0002.
+    - すべてのネットワークは、学習率 0.0002 でスクラッチで学習する。
+
+- We keep the same learning rate for the first 100 epochs and linearly decay the rate to zero over the next 100 epochs.
+    - 我々は、はじめの 100 エポックで同じ学習率を使用し、次の 100 エポックでゼロに向かって線形に減衰する。
+
+- Please see the appendix (Section 7) for more details about the datasets, architectures, and training procedures
+    - データセット、アーキテクチャ、学習手順についてのより詳細は、補足（セクション７）を参照してください。
 
 
 # ■ 実験結果（主張の証明）・議論（手法の良し悪し）・メソッド（実験方法）
 
-## x. 論文の項目名
+## 5. Results
 
+- We first compare our approach against recent methods for unpaired image-to-image translation on paired datasets where ground truth input-output pairs are available for evaluation.
 
+- We then study the importance of both the adversarial loss and the cycle consistency loss and compare our full method against several variants.
+
+- Finally, we demonstrate the generality of our algorithm on a wide range of applications where paired data does not exist.
+
+- For brevity, we refer to our method as CycleGAN.
+
+- The PyTorch and Torch code, models, and full results can be found at our website.
+
+### 5.1. Evaluation
+
+- Using the same evaluation datasets and metrics as “pix2pix” [22], we compare our method against several baselines both qualitatively and quantitatively.
+
+- The tasks include semantic labels↔photo on the Cityscapes dataset [4], and map↔aerial photo on data scraped from Google Maps.
+
+- We also perform ablation study on the full loss function.
+
+####  5.1.1 Evaluation Metrics
+
+- AMT perceptual studies
+    - 
 # ■ 関連研究（他の手法との違い）
 
 ## x. 論文の項目名（Related Work）

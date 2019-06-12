@@ -183,6 +183,87 @@
 - Check out more results at our website.
 
 
+####  5.1.5 Image reconstruction quality
+
+- xxx
+
+#### 5.1.6 Additional results on paired datasets
+
+- xxx
+
+### 5.2. Applications
+
+- xxx
+
+
+## 6. Limitations and Discussion
+
+![image](https://user-images.githubusercontent.com/25688193/59324054-42be2580-8d18-11e9-9638-f48ba7f3d975.png)
+
+- > Figure 17: Typical failure cases of our method.
+    - > 1我々の手法の典型的な失敗ケース
+
+- > Left: in the task of dog→cat transfiguration, CycleGAN can only make minimal changes to the input. 
+    - > 左：犬 ↔ 猫の変換のタスクにおいて、CycleGAN は、入力に最小の変更しか行えない。
+
+- > Right: CycleGAN also fails in this horse → zebra example as our model has not seen images of horseback riding during training.
+    - > 右：我々のモデルが学習中に乗馬の画像を見ていないので、CycleGAN は、馬→シマウマの例でも失敗する。
+
+- > Please see our website for more comprehensive results.
+
+---
+
+- Although our method can achieve compelling results in many cases, the results are far from uniformly positive. 
+    - 我々の手法は、多くのケースにおいて説得力のある結果を達成できるけれども、結果は一様に [uniformly] ポジティブとは程遠い。
+
+- Figure 17 shows several typical failure cases.
+    - 図１７は、いくつかの典型的な失敗ケースを示している。
+
+- On translation tasks that involve color and texture changes, like many of those reported above, the method often succeeds.
+    - 色やテクスチャーの変換含む変換タスクにおいて、上記の多くのそれらで報告されているように、手法はたいてい成功する。
+
+- We have also explored tasks that require geometric changes, with little success.
+    - 我々はまた、幾何学的な変更を要求するタスクも探索したが、ほとんど成功しなかった。
+
+- For example, on the task of dog→cat transfiguration, the learned translation degenerates into making minimal changes to the input (Figure 17).
+    - 例えば、犬↔猫の変換においては、学習された変換は、入力の最小限の変更のみを行うことに劣化する [degenerates]。（図１７）
+
+- This failure might be caused by our generator architectures which are tailored for good performance on the appearance changes.
+    - この失敗は、見た目の変化によりパフォーマンスを適合する [tailored] ような、我々の生成器のアーキテクチャによって引き起こされると思われる。
+
+- Handling more varied and extreme transformations, especially geometric changes, is an important problem for future work.
+    - より種類豊富で極端な変換を処理することは、特に形状変化において、将来の研究に対して重要な問題である。
+
+- Some failure cases are caused by the distribution characteristics of the training datasets.
+    - いくつかの失敗ケースでは、学習用データセットの特性の分布によって引き起こされる。
+
+- For example, our method has got confused in the horse → zebra example (Figure 17, right), because our model was trained on the wild horse and zebra synsets of ImageNet, which does not contain images of a person riding a horse or zebra.
+    - 例えば、我々の手法は、馬 ↔ シマウマの変換タスクにおいて、混乱した（図１７の右）
+    - なぜならば、我々のモデルは、馬かシマウマに乗馬している人の画像を含まないような ImageNet の広い範囲での馬とシマウマの合成で学習されているためである。
+
+---
+
+- We also observe a lingering gap between the results achievable with paired training data and those achieved by our unpaired method.
+    - 我々はまた、ペア付けされた学習用データで達成される結果と、我々のペア付けされていない学習用データで達成される結果との間に、長引く [lingering] ギャップを観測する。
+
+- In some cases, this gap may be very hard – or even impossible – to close: for example, our method sometimes permutes the labels for tree and building in the output of the photos→labels task.
+    - 多くのケースにおいて、このギャップはとても埋めるのがとても困難で、場合によっては不可能である。
+    - <font color="Pink">例えば、ツリーのラベルを並び替えて [permutes]、写真↔ラベル変換タスクの出力を構築する。</font>
+
+- To resolve this ambiguity may require some form of weak semantic supervision.
+    - この曖昧さ [ambiguity] を解くために、いくつかのセマンティック（意味的な）弱い教師データ（＝半教師データ）の形式が要求するだろう。
+
+- Integrating weak or semi-supervised data may lead to substantially more powerful translators, still at a fraction of the annotation cost of the fully-supervised systems.
+    - 弱い教師データ or 半教師データを統合することは、
+    - まだ、完全な教師ありデータのシステムのアノテーションコスト（＝注釈付けコスト）のほんの一部 [a fraction of]で、
+    - 実質的に [substantially]、よりパワフルな変換器を導く。
+
+- Nonetheless, in many cases completely unpaired data is plentifully available and should be made use of.
+    - にも関わらず、多くのケースにおいてペア付けされていないデータは、豊富に [plentifully] 利用可能で、利用されるべきである。
+
+- This paper pushes the boundaries of what is possible in this “unsupervised” setting.
+    - この論文では、教師なし設定において、何が可能であるかの境界を推し進める。
+
 # ■ 結論
 
 ## x. 論文の項目名 (Conclusion)

@@ -118,27 +118,161 @@
 
 ---
 
+![image](https://user-images.githubusercontent.com/25688193/59489324-cfa1e400-8ebc-11e9-9ae4-1d207f6e7fee.png)
+
+- > Figure 2. Comparison between cross-domain models and our proposed model, StarGAN.
+    - > 図２：cross-domainモデルと我々の手法 StarGAN との間の比較
+
+- > (a) To handle multiple domains, cross- domain models should be built for every pair of image domains.
+    - > (a) 複数のドメインを処理するためには、cross- domain モデルは画像のドメインの全てのペア毎に構築されなくてはならない。
+
+- > (b) StarGAN is capable of learning mappings among multiple domains using a single generator.
+    - > StarGAN は、１つの生成器を使用して、複数のドメイン間の学習写像を可能にする。
+
+- > The figure represents a star topology connecting multi-domains.
+    - > 図は、複数のドメインを結合する星型のトポロジーを表している。
+
+---
+
 - As a solution to such problems we propose StarGAN, a novel and scalable approach capable of learning mappings among multiple domains.
+    - このような問題の解決法として、我々は、StarGAN を提案する。
+    - これは、複数のドメイン間の学習写像を可能にする新しいスケーラビリティーな手法である。
 
 - As demonstrated in Fig. 2 (b), our model takes in training data of multiple domains, and learns the mappings between all available domains using only a single generator.
+    - 図２の (b) で示されたように、我々のモデルは複数のドメインの学習用データを受け取り、１つの生成器のみを使用して、全ての可能なドメイン間の写像を学習する。
 
 - The idea is simple.
 
 - Instead of learning a fixed translation (e.g., black-to-blond hair), our generator takes in as inputs both image and domain information, and learns to flexibly translate the image into the corresponding domain.
+    - 固定された変換（例えば、黒髪から茶色の髪での変換）を学習する代わりに、
+    - **我々の生成器は、入力として画像とドメインの情報の両方を受け取り、**
+    - 画像を対応するドメインへ柔軟に変換することを学習する。
 
-- We use a label (e.g., binary or one-hot vector) to represent domain information. During training, we randomly generate a target domain label and train the model to flexibly translate an input image into the target domain. 
+- We use a label (e.g., binary or one-hot vector) to represent domain information.
+    - **我々は、ドメインの情報を表現するために、ラベル（例えば、バイナリ or one-hot ベクトル）を使用する。**
+
+- During training, we randomly generate a target domain label and train the model to flexibly translate an input image into the target domain. 
+- 学習中、目標のドメインのラベルをランダムに生成し、
+- 入力画像を目標ドメインに、柔軟に変換するために、モデルを学習する。
 
 - By doing so, we can control the domain label and translate the image into any desired domain at testing phase.
+    - そうすることによって、ドメインラベルを制御できるようになり、テストフェイズにおいて、画像を任意の望ましいドメインに変換することが出来る。
 
+---
+
+- We also introduce a simple but effective approach that enables joint training between domains of different datasets by adding a mask vector to the domain label.
+    - 我々はまた、マスクベクトルをドメインラベルに追加することによって、異なるデータセットのドメイン間の一緒に学習することを可能にするような、シンプルであるが効果的なアプローチを提示する。
+
+- Our proposed method ensures that the model can ignore unknown labels and focus on the label provided by a particular dataset.
+    - 我々の提案された手法は、モデルが、未知のラベルを無視し、特定のデータセットによって提供されたラベルに焦点を当てることが出来るということを保証する。
+
+- In this manner, our model can perform well on tasks such as synthesizing facial expressions of CelebA images using features learned from RaFD, as shown in the right- most columns of Fig. 1.
+    - この形式では、図１の最右端で示されているように、RaFD から学習された特徴を用いて、CelebA 画像の表情の合成といったようなタスクを、うまく実行することが出来る。
+
+- As far as our knowledge goes, our work is the first to successfully perform multi-domain image translation across different datasets.
+    - 我々の知る限りでは、我々の研究は、異なるデータセットに渡っての、複数のドメインでの画像変換の最初の成功である。
+
+---
+
+- Overall, our contributions are as follows:
+    - We propose StarGAN, a novel generative adversarial network that learns the mappings among multiple domains using only a single generator and a discriminator, training effectively from images of all domains.
+        - 我々は StarGAN を提示する。これは、１つの生成器と識別器のみを使用した複数ドメイン間の写像を学習し、全てのドメインの画像から効果的に学習するような、新しい GAN である。
+
+    - We demonstrate how we can successfully learn multi- domain image translation between multiple datasets by utilizing a mask vector method that enables StarGAN to control all available domain labels.
+        - 我々は、StarGAN に全ての利用可能なドメインラベルを制御することを可能にする手法であるマスクベクトルを利用することにより、複数のデータセット感の複数のドメイン変換をうまく学習する方法を実証する。
+
+    - We provide both qualitative and quantitative results on facial attribute transfer and facial expression synthesis tasks using StarGAN, showing its superiority over baseline models.
+        - 我々は、StarGAN を使用して、表情の属性の変換と表情の合成タスクでの、定量的な結果と定性的な結果を提供し、
+        - それがベースラインモデルより優れていることを示す。
 
 # ■ 結論
 
-## x. 論文の項目名 (Conclusion)
+## 6. Conclusion
 
+-  In this paper, we proposed StarGAN, a scalable image- to-image translation model among multiple domains using a single generator and a discriminator.
+    - この論文では、我々は StarGAN を提案した。これは、１つの生成器と識別器を使用した、複数のドメイン間のスケーラビリティーな image-to-image 変換である。
+
+- Besides the advantages in scalability, StarGAN generated images of higher visual quality compared to existing methods [16, 23, 33], owing to the generalization capability behind the multi-task learning setting.
+    - スケーラビリティーにける利点に加えて、
+    - 複数のタスクの学習設定の背後の汎化能力 [generalization capability] のために、
+    - StarGAN は既存の手法に比べて視覚的な品質の高い画像を生成する。
+
+- In addition, the use of the proposed simple mask vector enables StarGAN to utilize multiple datasets with different sets of domain labels, thus handling all available labels from them.
+    - 加えて、提案されたシンプルなマスクベクトルの使用は、StarGAN に、異なるドメインのセットで複数のデータセットを使用することを可能にする。
+
+- We hope our work to enable users to develop interesting image translation applications across multiple domains.
+    - 我々は、我々の研究が、ユーザーに、複数のドメインに渡っての興味深い画像変換の応用を開発することを可能にすることを望んでいる。
 
 # ■ 何をしたか？詳細
 
-## x. 論文の項目名
+## 3. Star Generative Adversarial Networks
+
+- We first describe our proposed StarGAN, a framework to address multi-domain image-to-image translation within a single dataset.
+    - 我々ははじめに、我々の提案した　StarGAN を説明する。これは、１つのデータセットでの複数のドメインの image-to-image 変換を解決するフレームワークである。
+
+- Then, we discuss how StarGAN incorporates multiple datasets containing different label sets to flexibly perform image translations using any of these labels.
+    - 次に、我々は、これらの（＝異なるラベル集合の）いずれかのラベルを使用して、画像変換を柔軟に実行するために、StarGAN がどのようにして異なるラベル集合を含むような複数のデータセットを取り入れる [incorporates] のかを議論する。
+
+
+### 3.1. Multi-Domain Image-to-Image Translation
+
+- Our goal is to train a single generator G that learns mappings among multiple domains.
+    - 我々のゴールは、複数のドメイン感の写像を学習する１つの生成器を学習することである。
+
+- To achieve this, we train G to translate an input image x into an output image y conditioned on the target domain label c, G(x, c) → y.
+    - これを達成するために、
+    - **我々は、目標ドメインラベル c で条件付けされた、入力画像 x から出力画像 y への変換 G(x, c) → y を G に学習する。**
+
+- We randomly generate the target domain label c so that G learns to flexibly translate the input image.
+    - **我々は、G が柔軟に入力画像を変換するように、目標ドメインラベルをランダムに生成する。**
+
+- We also introduce an auxiliary classifier [22] that allows a single discriminator to control multiple domains.
+    - **我々はまた、補助的な分類器 [auxiliary classifier] [22] を提案する。**
+    - **これは、１つの識別器で、複数のドメインを制御することを可能にする。**
+
+> 補助的な分類器 [auxiliary classifier] [22] : ACGAN の論文で提案されている補助的な分類器
+
+- That is, our discriminator produces probability distributions over both sources and domain labels, D : x → {D_src(x), D_cls(x)}.
+    - 即ち [That is]、我々の識別器は、ソースとドメインラベルの両方の上で、確率分布 ![image](https://user-images.githubusercontent.com/25688193/59498231-f4ec1d80-8ecf-11e9-91ba-97910cab93f0.png) を生成する。
+
+- Fig. 3 illustrates the training process of our proposed approach.
+    - 図３は、我々のアプローチの学習プロセスを図示している。
+
+> Generatorに今どのドメインへと変化させようとしているか表すベクトルをconcatして加え、Discriminatorにその画像のReal/Fakeを見分けるだけでなく、どのドメインの画像かの分類も同時に行うようにしています。これによって、多ドメインの多ドメインへの変換を一つの学習器によって行うことが可能となります。
+
+---
+
+![image](https://user-images.githubusercontent.com/25688193/59498315-249b2580-8ed0-11e9-86c6-b246a9d1753c.png)
+
+- > Figure 3. Overview of StarGAN, consisting of two modules, a discriminator D and a generator G.
+    - > 図３：StarGAN の概要、識別器と生成器の２つのモジュールで構成されている。
+
+- > (a) D learns to distinguish between real and fake images and classify the real images to its corresponding domain.
+    - > (a) 識別器 D は本物画像と偽物画像を区別することを学習し、本物画像をそれに対応するドメインに分類する。
+
+- > (b) G takes in as input both the image and target domain label and generates an fake image. The target domain label is spatially replicated and concatenated with the input image.
+    - > (b) 生成器 G は、入力として、画像と目標ドメインラベルの両方を受け取し、偽物画像を生成する。目標ドメインラベルは、部分的に複製され [replicated]、入力画像に連結される。
+
+- > (c) G tries to reconstruct the original image from the fake image given the original domain label.
+    - > (c) 生成器 G は、元のドメインラベルを与えれば、偽物画像から元の入力画像を再構成しようとする。
+
+> CycleGAN の逆写像に対応した構造
+
+- > (d) G tries to generate images indistinguishable from real images and classifiable as target domain by D.
+    - > (d) 生成器 G は、本物画像から区別のつかない画像を生成しようとし、識別器によって目標ドメインとして分類可能な画像を生成しようとする。
+
+
+#### Adversarial Loss. 
+
+- To make the generated images indistin- guishable from real images, we adopt an adversarial loss
+
+- where G generates an image G(x, c) conditioned on both the input image x and the target domain label c, while D tries to distinguish between real and fake images.
+
+- In this paper, we refer to the term Dsrc(x) as a probability distribution over sources given by D.
+
+- The generator G tries to minimize this objective, while the discriminator D tries to maximize it.
+
+![image](https://user-images.githubusercontent.com/25688193/59499905-56fa5200-8ed3-11e9-8911-595d0d5558a8.png)
 
 
 # ■ 実験結果（主張の証明）・議論（手法の良し悪し）・メソッド（実験方法）

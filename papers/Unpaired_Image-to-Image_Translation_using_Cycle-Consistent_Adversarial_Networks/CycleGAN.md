@@ -276,6 +276,8 @@
 - Our goal is to learn mapping functions between two domains X and Y given training samples ![image](https://user-images.githubusercontent.com/25688193/59166788-2f6c5800-8b68-11e9-8471-769ad1b1ed95.png) where x_i ∈ X and {y_j}_{j=1}^M where y_j ∈ Y <1>.
     - 我々のゴールは、学習サンプル ![image](https://user-images.githubusercontent.com/25688193/59166788-2f6c5800-8b68-11e9-8471-769ad1b1ed95.png) （ここで、x_i ∈ X）と ![image](https://user-images.githubusercontent.com/25688193/59166813-7a866b00-8b68-11e9-9c71-3a10223d5892.png) （ここで、y_i ∈ Y）が与えられた２つのソース X とターゲット Y との間の写像関数を学習することである。
 
+> ドメイン [domain] : ここでの意味は、同じ属性（金髪、男、女など）をもつ画像の組のこと。
+
 - We denote the data distribution as x ∼ p_data(x) and y ∼ pdata(y).
     - 我々は、x ~ p_data(x), y ~ p_data(y) として画像データ分布を示す。
 

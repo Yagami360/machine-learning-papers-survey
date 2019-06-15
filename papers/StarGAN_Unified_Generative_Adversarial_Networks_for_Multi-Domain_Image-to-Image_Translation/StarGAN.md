@@ -264,15 +264,144 @@
 
 #### Adversarial Loss. 
 
-- To make the generated images indistin- guishable from real images, we adopt an adversarial loss
-
-- where G generates an image G(x, c) conditioned on both the input image x and the target domain label c, while D tries to distinguish between real and fake images.
-
-- In this paper, we refer to the term Dsrc(x) as a probability distribution over sources given by D.
-
-- The generator G tries to minimize this objective, while the discriminator D tries to maximize it.
+- To make the generated images indistinguishable from real images, we adopt an adversarial loss
+    - 本物画像から区別のつかない生成された画像を作るために、我々は敵対的損失関数を適用した。
 
 ![image](https://user-images.githubusercontent.com/25688193/59499905-56fa5200-8ed3-11e9-8911-595d0d5558a8.png)
+
+- where G generates an image G(x, c) conditioned on both the input image x and the target domain label c, while D tries to distinguish between real and fake images.
+    - ここで、生成器 G は、入力画像 x と目標ドメインラベル c の両方で条件付けされた画像　G(x,c) を生成する。
+    - 一方で、識別器 D は本物画像と偽物画像の間を区別しようとする。
+
+- In this paper, we refer to the term Dsrc(x) as a probability distribution over sources given by D.
+    - この論文では、D_src(x) の項を、識別器 D によって与えられたソース上の確率分布としてみなす。
+
+- The generator G tries to minimize this objective, while the discriminator D tries to maximize it.
+    - 生成器 G は、この目的関数を最小化しようとし、一方で、識別器 D はそれを最大化しようとする。
+
+#### Domain Classification Loss.
+
+- For a given input image x and a target domain label c, our goal is to translate x into an output image y, which is properly classified to the target domain c.
+    - 与えられた入力画像 x と目標ドメインラベル c に対して、
+    - 我々のゴールは、x を、目標ドメイン c で適切に分類される出力画像 y に変換することである。
+
+- To achieve this condition, we add an auxiliary classifier on top of D and impose the domain classification loss when optimizing both D and G. 
+    - この条件を達成するために、
+    - 我々は、識別器 D の先頭に、補助的な分類器を追加し、
+    - 識別器 D と生成器 G の両方を最適化するとき、"domain classification loss" を課す [impose]。
+
+- That is, we decompose the objective into two terms: a domain classification loss of real images used to optimize D, and a domain classification loss of fake images used to optimize G.
+    - 即ち、目的関数を２つの項で分解する [decompose]。
+    - 即ち、識別器 D を最適化するために使用される、本物画像の domain classification loss
+    - そして、生成器 G を最適化するために使用される、偽物画像の domain classification loss
+
+- In detail, the former is defined as
+    - 詳細には、前者は以下のように定義される。
+
+![image](https://user-images.githubusercontent.com/25688193/59514904-d9e1d380-8ef8-11e9-99ca-1d86794821f8.png)
+
+- where the term D_cls(c′|x) represents a probability distribution over domain labels computed by D.
+    - ここで、項 D_cls(c′|x) は、識別器 D によって計算されたドメインラベル上の確率分布を表している。
+
+- By minimizing this objective, D learns to classify a real image x to its corresponding original domain c′.
+    - この目的関数を最小化することによって、
+    - 識別器 D は、本物画像 x を、それと一致する元のドメイン c' に分類することを学習する。
+
+- We assume that the input image and domain label pair (x, c′) is given by the training data.
+    - 我々は、入力画像とドメインラベルのペア (x, c′) が、学習用データによって与えられているということを仮定する。
+
+- On the other hand, the loss function for the domain classification of fake images is defined as
+    - 他方では、偽物画像のドメイン分類の対しての損失関数は、以下のように定義される。
+
+![image](https://user-images.githubusercontent.com/25688193/59514927-e9f9b300-8ef8-11e9-90cb-8d069c76688e.png)
+
+- In other words, G tries to minimize this objective to generate images that can be classified as the target domain c.
+
+---
+
+![image](https://user-images.githubusercontent.com/25688193/59548491-2ece2a00-8f8b-11e9-94bb-52f039c86629.png)
+
+#### Reconstruction Loss.
+
+- By minimizing the adversarial and classification losses, G is trained to generate images that are realistic and classified to its correct target domain.
+    - 敵対的損失関数と classification losses を最小化することによって、
+    - 生成器 G は、リアルでそれを正しい目標ドメインに識別するような画像を生成することを学習される。
+
+- However, minimizing the losses (Eqs. (1) and (3)) does not guarantee that translated images preserve the content of its input images while changing only the domain-related part of the inputs.
+    - しかしながら、損失関数を最小化すること（式 (1), (3)）は、
+    - 変換された画像が、その入力画像の内容を保存しながら、一方で、入力のドメインに関連した部分のみを変化させるということを保証しない。
+
+- To alleviate this problem, we apply a cycle consistency loss [9, 33] to the generator, defined as
+    - この問題を軽減する [alleviate] ために、我々は、生成器に以下で定義される  cycle consistency loss を適用する。
+
+![image](https://user-images.githubusercontent.com/25688193/59547892-3be61b80-8f81-11e9-8f88-b84da31a0e17.png)
+
+- where G takes in the translated image G(x, c) and the original domain label c′ as input and tries to reconstruct the original image x.
+    - ここで、G は変換された画像 G(x, c) と元の目標ラベル c' を入力としてを受け取り、
+    - 元の画像 x を再構成しようとする。
+
+- We adopt the L1 norm as our reconstruction loss.
+    - 我々は、我々の再構成損失 [reconstruction loss] として、L1 ノルムを採用した。
+
+- Note that we use a single generator twice, first to translate an original image into an image in the target domain and then to reconstruct the original image from the translated image.
+    - 我々は、１つの生成器を２回使用することに注意。
+    - １つ目は、元の画像を目標ドメインにおける１つの画像に変換し、
+    - 次に、変換された画像から元の画像を再構成する。
+
+#### Full Objective. 
+
+- Finally, the objective functions to optimize G and D are written, respectively, as
+    - 最後に、生成器 G と識別器 D を最適化するための目的関数は、それぞれ、以下のように書かれる。
+
+![image](https://user-images.githubusercontent.com/25688193/59548020-b879f980-8f83-11e9-9c54-fefc6738b271.png)
+
+- where λ_cls and λ_rec are hyper-parameters that control the relative importance of domain classification and reconstruction losses, respectively, compared to the adversarial loss.
+    - ここで、λ_cls と λ_rec は、それぞれ domain classification と reconstruction losses の敵対的損失関数と比較しての相対的な重要度を制御するパイパーパラメーターである。
+
+- We use λ_cls = 1 and λ_rec = 10 in all of our experiments.
+    - 全ての実験で、λ_cls = 1 と λ_rec = 10 を使用する。
+
+
+### 3.2. Training with Multiple Datasets
+
+- An important advantage of StarGAN is that it simultaneously incorporates multiple datasets containing different types of labels, so that StarGAN can control all the labels at the test phase.
+    - StarGAN の重要な利点は、異なるラベルの種類を含んでいる複数のデータセットを同時に取り込むことであり、
+    - そういうわけで、StarGAN は、テストフェイズで全てのラベルを制御することが出来る。
+
+- An issue when learning from multiple datasets, however, is that the label information is only partially known to each dataset.
+    - しかしながら、複数のデータセットから学習するときの１つの問題は、
+    - ラベル情報が各データセットで部分的にしか知られていないということである。
+
+- In the case of CelebA [19] and RaFD [13], while the former contains labels for attributes such as hair color and gender, it does not have any labels for facial expressions such as ‘happy’ and ‘angry’, and vice versa for the latter.
+    - CelebA と RaFD のケースでは、
+    - 前者はが髪の色や性別といった属性に対してのラベルを含むのに対し、幸福・怒りのような表情のラベルを持たない。
+    - 後者はその逆である。
+
+- This is problematic because the complete information on the label vector c′ is required when reconstructing the input image x from the translated image G(x, c) (See Eq. (4)).
+    - これは問題である。
+    - なぜならば、変換された画像 G(x,c) から入力画像 x を再構成するときに、ラベルベクトル c' での完全な情報が要求されるためである。（式 (4) を参照）
+
+> 式 (4) の損失関数は、L1ノルムの式であり、これはピクセルの単位での情報で、全てのピクセル間情報（＝完全な情報）を要求している。
+
+#### Mask Vector.
+
+- To alleviate this problem, we introduce a mask vector m that allows StarGAN to ignore unspecified labels and focus on the explicitly known label provided by a particular dataset.
+    - この問題を軽減する [alleviate] ために、我々は
+
+- In StarGAN, we use an n-dimensional one-hot vector to represent m, with n being the number of datasets.
+
+- In addition, we define a unified version of the label as a vector
+
+![image](https://user-images.githubusercontent.com/25688193/59548131-312d8580-8f85-11e9-90a8-e6cb3c63511f.png)
+
+- where [·] refers to concatenation, and ci represents a vector for the labels of the i-th dataset.
+
+- The vector of the known label ci can be represented as either a binary vector for bi- nary attributes or a one-hot vector for categorical attributes.
+
+- For the remaining n−1 unknown labels we simply assign zero values.
+
+- In our experiments, we utilize the CelebA and RaFD datasets, where n is two.
+
 
 
 # ■ 実験結果（主張の証明）・議論（手法の良し悪し）・メソッド（実験方法）

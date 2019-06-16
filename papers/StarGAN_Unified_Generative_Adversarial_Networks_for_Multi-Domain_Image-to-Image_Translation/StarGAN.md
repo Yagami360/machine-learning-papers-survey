@@ -386,23 +386,55 @@
 #### Mask Vector.
 
 - To alleviate this problem, we introduce a mask vector m that allows StarGAN to ignore unspecified labels and focus on the explicitly known label provided by a particular dataset.
-    - この問題を軽減する [alleviate] ために、我々は
+    - この問題を軽減する [alleviate] ために、我々は、StaGAN に不特定のラベルを無視し、特定のデータセットによって提供される既知のラベルに明示的に [explicitly] 焦点を当てることを可能にする、マスクベクトル m を導入する。
 
 - In StarGAN, we use an n-dimensional one-hot vector to represent m, with n being the number of datasets.
+    - StarGAN では、m を表現するために、データセットの数 n を持つ n 次元の one-hot ベクトルを使用する。
 
 - In addition, we define a unified version of the label as a vector
+    - 加えて、我々はベクトルとしてラベルの統一 [unified] バージョンを定義する。
 
 ![image](https://user-images.githubusercontent.com/25688193/59548131-312d8580-8f85-11e9-90a8-e6cb3c63511f.png)
 
-- where [·] refers to concatenation, and ci represents a vector for the labels of the i-th dataset.
+- where [·] refers to concatenation, and c_i represents a vector for the labels of the i-th dataset.
+    - ここで、[·] は連結とみなし、c_i は i 番目のデータセットのラベルに対してのベクトルを表わしている。
 
-- The vector of the known label ci can be represented as either a binary vector for bi- nary attributes or a one-hot vector for categorical attributes.
+- The vector of the known label c_i can be represented as either a binary vector for binary attributes or a one-hot vector for categorical attributes.
+    - 既知のラベル c_i のベクトルは、バイナリ属性に対するバイナリベクトルか、カテゴリ属性に対する one-hot ベクトルかとして表現される。
 
 - For the remaining n−1 unknown labels we simply assign zero values.
+    - n-1 個の未知のラベルに対しては、単純にゼロの値を割り当てる [assign]。
 
 - In our experiments, we utilize the CelebA and RaFD datasets, where n is two.
+    - 我々の実験においては、CelebA と　ReFD データセットを利用する。ここで、n は 2 である。
 
 
+#### Training Strategy
+
+- Training Strategy.
+
+- When training StarGAN with multiple datasets, we use the domain label c ̃ defined in Eq. (7) as input to the generator.
+    - StarGAN を複数のデータセットで学習するとき、生成器への入力として、我々は式 (7) で定義されたドメインラベル c を使用する。
+
+- By doing so, the generator learns to ignore the unspecified labels, which are zero vectors, and focus on the explicitly given label.
+    - そうすることによって、生成器は、0ベクトルである不特定のラベルを無視することを学習し、明示的に与えられているラベルに集中する。
+
+- The structure of the generator is exactly the same as in training with a single dataset, except for the dimension of the input label c ̃. 
+    - 生成器の構造は、入力ラベル c~ の次元を除いて、１つのデータセットを学習するのと全く同じである。
+
+- On the other hand, we extend the auxiliary classifier of the discriminator to generate probability distributions over labels for all datasets.
+    - 他方では、全てのデータセットに対してラベルに渡って、確率分布を生成するために、識別器の補助的な分類器を拡張する。
+
+- Then, we train the model in a multi-task learning setting, where the discriminator tries to minimize only the classification error associated to the known label.
+    - 次に、識別器が、既知のラベルに関連した [associated] 分類エラー（＝Domain Classification Loss）のみを最小化しようとするような、マルッチタスクの学習設定において、モデルを学習する。
+
+- For example, when training with images in CelebA, the discriminator minimizes only classification errors for labels related to CelebA attributes, and not facial expressions related to RaFD.
+    - 例えば、CelebA の画像を学習するとき、
+    - 識別器は、RaFD に関連した表情ではなく、CelebA の属性に関連するラベルに対してのみ分類エラーを最小化する。
+
+- Under these settings, by alternating between CelebA and RaFD the discriminator learns all of the discriminative features for both datasets, and the generator learns to control all the labels in both datasets.
+    - **このような設定のもとでは、CelebA と RaFD を交互に交換する [alternating] ことによって、識別器は、両方のデータセットに対しての全ての識別可能な特徴を学習し、**
+    - **生成器は、両方のデータセットでの全てのラベルを学習する。**
 
 # ■ 実験結果（主張の証明）・議論（手法の良し悪し）・メソッド（実験方法）
 

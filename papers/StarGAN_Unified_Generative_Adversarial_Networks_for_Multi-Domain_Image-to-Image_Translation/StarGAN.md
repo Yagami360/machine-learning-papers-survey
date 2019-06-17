@@ -426,7 +426,7 @@
     - 他方では、全てのデータセットに対してラベルに渡って、確率分布を生成するために、識別器の補助的な分類器を拡張する。
 
 - Then, we train the model in a multi-task learning setting, where the discriminator tries to minimize only the classification error associated to the known label.
-    - 次に、識別器が、既知のラベルに関連した [associated] 分類エラー（＝Domain Classification Loss）のみを最小化しようとするような、マルッチタスクの学習設定において、モデルを学習する。
+    - 次に、識別器が、既知のラベルに関連した [associated] 分類エラー（＝Domain Classification Loss）のみを最小化しようとするような、マルチタスクの学習設定において、モデルを学習する。
 
 - For example, when training with images in CelebA, the discriminator minimizes only classification errors for labels related to CelebA attributes, and not facial expressions related to RaFD.
     - 例えば、CelebA の画像を学習するとき、
@@ -436,9 +436,193 @@
     - **このような設定のもとでは、CelebA と RaFD を交互に交換する [alternating] ことによって、識別器は、両方のデータセットに対しての全ての識別可能な特徴を学習し、**
     - **生成器は、両方のデータセットでの全てのラベルを学習する。**
 
+## 4. Implementation
+
+### Improved GAN Training.
+
+- To stabilize the training process and generate higher quality images, we replace Eq. (1) with Wasserstein GAN objective with gradient penalty [1, 4] defined as
+    - 学習プロセスを安定化させ、より高い品質の画像を生成するために、我々は、以下のように定義される勾配ペナルティをもつ WGAN の目的関数で置き換える。
+
+![image](https://user-images.githubusercontent.com/25688193/59573555-8afd8f00-90ee-11e9-9fb7-a61a215df507.png)
+
+- where xˆ is sampled uniformly along a straight line between a pair of a real and a generated images.
+    - ここで、x^ は、本物画像と偽物画像のペアの間の直線にそって一様にサンプリングされた値である。
+    
+- We use λgp = 10 for all experiments.
+    - 我々は全ての実験に対して、λgp = 10 を使用する。
+
+### Network Architecture. 
+
+- Adapted from CycleGAN [33], StarGAN has the generator network composed of two convolutional layers with the stride size of two for downsampling, six residual blocks [5], and two transposed convolutional layers with the stride size of two for upsampling.
+    - CycleGAN から適用され、SatrGAN の生成器は、ダウンサンプリングのためのストライド幅２での２つの畳み込み層、６つの residual blocks、アップサンプリングのためのストライド幅２の２つの逆畳み込み層で構成される。
+
+- We use instance normalization [29] for the generator but no normalization for the discriminator.
+    - 生成器に対して、instance normalization を使用する。
+    - しかし識別器に対しては、正規化を行わない。
+
+- We leverage PatchGANs [7, 15, 33] for the discriminator network, which classifies whether local image patches are real or fake.
+    - 識別器のネットワークに対して、局所的な画像パッチが本物か偽物かを分類するPatchGAN を利用する [leverage]。
+
+- See the appendix (Section 7.2) for more details about the network architecture.
+
+
 # ■ 実験結果（主張の証明）・議論（手法の良し悪し）・メソッド（実験方法）
 
-## x. 論文の項目名
+## 5. Experiments
+
+- In this section, we first compare StarGAN against recent methods on facial attribute transfer by conducting user studies.
+
+- Next, we perform a classification experiment on facial expression synthesis.
+
+- Lastly, we demonstrate empirical results that StarGAN can learn image-to-image translation from multiple datasets.
+
+- All our experiments were conducted by using the model output from unseen images during the training phase.
+
+### 5.1. Baseline Models
+
+### 5.2. Datasets
+
+#### CelebA.
+
+- The CelebFaces Attributes (CelebA) dataset [19] contains 202,599 face images of celebrities, each annotated with 40 binary attributes.
+    - CelebFaces Attributes (CelebA) データセットは、有名人の 202,599 枚の顔画像を含んでおり、４０個のバイナル属性でアノテーションされている。
+
+- We crop the initial 178 × 218 size images to 178 × 178, then resize them as 128 × 128.
+    - 我々は、初期の 178 × 218 サイズの画像を、178 × 178 にトリミングし、
+    - その後、128 × 128 にリサイズする。
+
+- We randomly select 2,000 images as test set and use all remaining images for training data.
+    - 我々は、テストデータとして、ランダムに 2000 枚の画像を選択し、残り全てを学習用データ押して使用する。
+
+- We construct seven domains using the following attributes: hair color (black, blond, brown), gender (male/female), and age (young/old).
+    - 我々は、以下の属性を使用して、７つのドメインを構築する。
+    - 髪の色（黒髪、金髪、茶色髪）、性別（女性、男性）、年齢（若い、年寄り）
+
+#### RaFD. 
+
+- The Radboud Faces Database (RaFD) [13] consists of 4,824 images collected from 67 participants.
+    - Radboud Faces Database (RaFD) は、67 人の参加者から収集した 4,824 枚の画像から構成される。
+
+- Each participant makes eight facial expressions in three different gaze directions, which are captured from three different angles.
+    - 各参加者は、３つの異なる角度からキャプチャーされた３つの異なる視線方向での、８つの表情を作っている。
+
+- We crop the images to 256 × 256, where the faces are centered, and then resize them to 128 × 128.
+    - 顔が中央にある 256 × 256 の画像にトリミングし、128 × 128 の画像にリサイズする。
+
+### 5.3. Training
+
+- All models are trained using Adam [11] with β1 = 0.5 and β2 = 0.999. 
+
+- For data augmentation we flip the images horizontally with a probability of 0.5.
+    - データオーギュメンテーションのために、確率 0.5 で画像を水平に反転する。
+
+- We perform one generator update after five discriminator updates as in [4].
+
+- The batch size is set to 16 for all experiments.
+
+- For experiments on CelebA, we train all models with a learning rate of 0.0001 for the first 10 epochs and linearly decay the learning rate to 0 over the next 10 epochs.
+
+- To compensate for the lack of data, when training with RaFD we train all models for 100 epochs with a learning rate of 0.0001 and apply the same decaying strategy over the next 100 epochs.
+    - データの不足を補う [compensate] するために、RaFD で学習するときに、学習率 0.0001 で 100 エポックで全てのモデルを学習し、
+    - 次の 100 エポックに渡って、同じ減衰戦略を適用する。
+
+- Training takes about one day on a single NVIDIA Tesla M40 GPU.
+
+### 5.4. Experimental Results on CelebA
+
+- We first compare our proposed method to the baseline models on a single and multi-attribute transfer tasks.
+    - 我々は最初に、単一の属性変換タスクと複数の属性変換タスクにおいて、我々の提案された手法とベースラインモデルを比較する。
+
+- We train the cross-domain models such as DIAT and CycleGAN multiple times considering all possible attribute value pairs.
+    - 全ての可能な属性値のペアを考慮して、DIAT や CycleGAN のような cross-domain モデルを複数回学習する。
+
+- In the case of DIAT and CycleGAN, we perform multi-step translations to synthesize multiple attributes (e.g. transferring a gender attribute after changing a hair color).
+    - DIAT と CycleGAN のケースにおいては、複数の属性を合成するための変換を実行する。
+    - 例えば、髪の色を変化した後の性別属性の変換
+
+#### Qualitative evaluation.
+
+![image](https://user-images.githubusercontent.com/25688193/59578787-e6d31280-9104-11e9-99d4-2ea3edc2566a.png)
+
+- > Figure 4. Facial attribute transfer results on the CelebA dataset. 
+
+- > The first column shows the input image, next four columns show the single attribute transfer results, and rightmost columns show the multi-attribute transfer results. H: Hair color, G: Gender, A: Aged.
+
+---
+
+- Fig.4 shows the facial attribute transfer results on CelebA.
+    - 図４は、CelebA での顔の属性変換の結果を示している。
+
+- We observed that our method provides a higher visual quality of translation results on test data compared to the cross-domain models.
+    - cross-domain モデルと比較して、我々の手法は、テストデータにおいて、視覚的により高い品質の変換結果を提供しているということを観測した。
+
+- One possible reason is the regularization effect of StarGAN through a multi-task learning framework.
+    - １つの可能性のある理由は、複数タスク学習フレームワークを通じての StarGAN の正則化効果である。
+
+- In other words, rather than training a model to perform a fixed translation (e.g., brown- to-blond hair), which is prone to overfitting, we train our model to flexibly translate images according to the labels of the target domain.
+    - 言い換えると、過学習しがちな [be prone to] 固定された変換（例えば、茶色の髪 → 茶色の髪への変換）を実行するためにモデルを学習するよりも、
+    - 我々は、目標ドメインのラベルに関して、柔軟に画像を変換するために、モデルを学習する。
+
+- This allows our model to learn reliable features universally applicable to multiple domains of images with different facial attribute values.
+    - これにより、異なる表情の属性値をもつ画像の複数のドメインに普遍的に [universally] 適用できる信頼性のある特徴を学習することが出来る。
+
+---
+
+- Furthermore, compared to IcGAN, our model demonstrates an advantage in preserving the facial identity feature of an input.
+    - 更には、IcGAN と比較して、
+    - 我々のモデルは、１つの入力の顔の特徴を保存することにおいて、利点を実証する。
+
+- We conjecture that this is because our method maintains the spatial information by using activation maps from the convolutional layer as latent representation, rather than just a low-dimensional latent vector as in IcGAN.
+    - これは我々の手法では、潜在表現として、畳み込み層から活性化マップを使用することによって、空間的な情報を保持するためであり、
+    - IcGAN のような低次元の潜在ベクトルにではないということを推測する [conjecture]。
+
+#### Quantitative evaluation protocol.
+
+- For quantitative evaluations, we performed two user studies in a survey format using Amazon Mechanical Turk (AMT) to assess single and multiple attribute transfer tasks.
+    - 定量的な評価のために、
+    -単一の属性変換タスクと複数の属性変換タスクを評価するための Amazon Mechanical Turk (AMT) を使用した調査フォーマットにおいて、２人のユーザ調査を実施した。
+
+- Given an input image, the Turkers were instructed to choose the best generated image based on perceptual realism, quality of transfer in attribute(s), and preservation of a figure’s original identity.
+    - 入力画像を与えれば、Turkers は、
+    - 知覚的なリアリズム、属性(s) での変換品質、人物の元の特徴の保存性に基づいて、
+    - 最高の生成画像を選択するように指示されている [instructed]。
+
+- The options were four randomly shuffled images generated from four different methods.
+    - オプションは、４つの異なる手法から生成されたランダムにシャッフルされた４つの画像である。
+
+- The generated images in one study have a single attribute transfer in either hair color (black, blond, brown), gender, or age.
+    - ある１つの研究で生成された画像は、髪の色、性別、年齢のいずれかにおいて、１つの属性の変換をもつ。
+
+- In another study, the generated images involve a combination of attribute transfers.
+    - 別の研究では、生成画像は、属性変換の組み合わせを含む。
+
+- Each Turker was asked 30 to 40 questions with a few simple yet logical questions for validating human effort.
+    - 各 Turker は、人間の効果を検証するために、いくつかの簡単な論理的な質問と一緒に、30 から 40 の質問を尋ねられる。
+
+- The number of validated Turkers in each user study is 146 and 100 in single and multiple transfer tasks, respectively.
+    - 検証される Turkers の人数は、各ユーザー研究で、それぞれシングル変換タスクで 100 人、複数変換タスクで 146 人である。
+
+#### Quantitative results.
+
+![image](https://user-images.githubusercontent.com/25688193/59580173-14bb5580-910b-11e9-80a5-efdddcf61ed8.png)
+
+---
+
+- Tables 1 and 2 show the results of our AMT experiment on single- and multi-attribute transfer tasks, respectively.
+    - 表１と表２は、それぞれ単一の属性変換タスクと複数の属性変換タスクにおいて、我々の AMT 実験の結果を示している。
+
+- StarGAN obtained the majority of votes for best transferring attributes in all cases.
+    - StarGAN は
+
+- In the case of gender changes in Table 1, the voting difference between our model and other models was marginal, e.g., 39.1% for StarGAN vs. 31.4% for DIAT.
+
+- However, in multi-attribute changes, e.g., the ‘G+A’ case in Table 2, the performance difference becomes significant, e.g., 49.8% for StarGAN vs. 20.3% for IcGAN), clearly showing the advantages of StarGAN in more complicated, multi-attribute transfer tasks.
+
+- This is because unlike the other methods, StarGAN can handle image translation involving multiple attribute changes by randomly generating a target domain label in the training phase.
+
+
+### 5.5. Experimental Results on RaFD
+
 
 
 # ■ 関連研究（他の手法との違い）

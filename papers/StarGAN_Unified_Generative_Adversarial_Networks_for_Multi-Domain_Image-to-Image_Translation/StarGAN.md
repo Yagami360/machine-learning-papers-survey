@@ -580,7 +580,7 @@
 
 - For quantitative evaluations, we performed two user studies in a survey format using Amazon Mechanical Turk (AMT) to assess single and multiple attribute transfer tasks.
     - 定量的な評価のために、
-    -単一の属性変換タスクと複数の属性変換タスクを評価するための Amazon Mechanical Turk (AMT) を使用した調査フォーマットにおいて、２人のユーザ調査を実施した。
+    -単一の属性変換タスクと複数の属性変換タスクを評価するための Amazon Mechanical Turk (AMT) を使用した調査フォーマットにおいて、２つののユーザ調査を実施した。
 
 - Given an input image, the Turkers were instructed to choose the best generated image based on perceptual realism, quality of transfer in attribute(s), and preservation of a figure’s original identity.
     - 入力画像を与えれば、Turkers は、
@@ -622,6 +622,56 @@
 
 
 ### 5.5. Experimental Results on RaFD
+
+- We next train our model on the RaFD dataset to learn the task of synthesizing facial expressions.
+
+- To compare StarGAN and baseline models, we fix the input domain as the ‘neutral’ expression, but the target domain varies among the seven remaining expressions.
+    - StarGAN とベースラインモデルを比較するために、標準の表情としての入力ドメインを固定するが、
+    - 目標ドメインは、残りの７つの表情の間で異なる [varies]。
+
+#### Qualitative evaluation. 
+
+![image](https://user-images.githubusercontent.com/25688193/59590017-18a8a100-9126-11e9-8069-ce53362544a6.png)
+
+---
+
+- As seen in Fig. 5, StarGAN clearly generates the most natural-looking expressions while properly maintaining the personal identity and facial features of the input.
+
+- While DIAT and CycleGAN mostly preserve the identity of the input, many of their results are shown blurry and do not maintain the degree of sharpness as seen in the input.
+
+- IcGAN even fails to preserve the personal identity in the image by generating male images.
+
+---
+
+- We believe that the superiority of StarGAN in the image quality is due to its implicit data augmentation effect from a multi-task learning setting.
+    - 画像品質における StarGAN の優位性は、マルチタスク学習設定からの暗黙の [implicit] データオーギュメンテイション効果によるものだと考えられる。
+
+- RaFD images contain a relatively small size of samples, e.g., 500 images per domain.
+    - RaFD 画像は、比較的少ないサンプルのサイズを含んでいる。例えば、ドメインあたり500 枚の画像
+
+- When trained on two domains, DIAT and CycleGAN can only use 1,000 training images at a time, but StarGAN can use 4,000 images in total from all the available domains for its training.
+    - ２つのドメインを学習するとき、DIAT と CycleGAN は一度に 1000 枚の学習用画像を使用するのみである。
+    - しかし、StarGAN は、学習のために、全ての利用可能なドメインから、合計 4000 枚の画像を使用する。
+
+- This allows StarGAN to properly learn how to maintain the quality and sharpness of the generated output.
+
+#### Quantitative evaluation.
+
+- For a quantitative evaluation, we compute the classification error of a facial expression on synthesized images.
+
+- We trained a facial expression classifier on the RaFD dataset (90%/10% splitting for training and test sets) using a ResNet-18 architecture [5], resulting in a near-perfect accuracy of 99.55%.
+
+- We then trained each of image translation models using the same training set an performed image translation on the same, unseen test set. 
+
+- Finally, we classified the expression of these translated images using the above-mentioned classifier.
+
+- As can be seen in Table 3, our model achieves the lowest classification error, indicating that our model produces the most realistic facial expressions among all the methods compared.
+
+---
+
+- Another important advantage of our model is the scala- bility in terms of the number of parameters required.
+
+- The last column in Table 3 shows that the number of parameters required to learn all translations by StarGAN is seven times smaller than that of DIAT and fourteen times smaller than that of CycleGAN. This is because StarGAN requires only a single generator and discriminator pair, regardless of the number of domains, while in the case of cross-domain mod- els such as CycleGAN, a completely different model should be trained for each source-target domain pair.
 
 
 

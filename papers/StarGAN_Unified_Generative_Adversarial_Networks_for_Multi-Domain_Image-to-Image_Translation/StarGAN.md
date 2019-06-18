@@ -657,23 +657,93 @@
 
 #### Quantitative evaluation.
 
-- For a quantitative evaluation, we compute the classification error of a facial expression on synthesized images.
-
-- We trained a facial expression classifier on the RaFD dataset (90%/10% splitting for training and test sets) using a ResNet-18 architecture [5], resulting in a near-perfect accuracy of 99.55%.
-
-- We then trained each of image translation models using the same training set an performed image translation on the same, unseen test set. 
-
-- Finally, we classified the expression of these translated images using the above-mentioned classifier.
-
-- As can be seen in Table 3, our model achieves the lowest classification error, indicating that our model produces the most realistic facial expressions among all the methods compared.
+![image](https://user-images.githubusercontent.com/25688193/59595774-6676d680-9131-11e9-8c3b-66411553fdd3.png)
 
 ---
 
-- Another important advantage of our model is the scala- bility in terms of the number of parameters required.
+- For a quantitative evaluation, we compute the classification error of a facial expression on synthesized images.
+    - 定量的な評価のために、合成画像における表情の分類エラーを計算する。
 
-- The last column in Table 3 shows that the number of parameters required to learn all translations by StarGAN is seven times smaller than that of DIAT and fourteen times smaller than that of CycleGAN. This is because StarGAN requires only a single generator and discriminator pair, regardless of the number of domains, while in the case of cross-domain mod- els such as CycleGAN, a completely different model should be trained for each source-target domain pair.
+- We trained a facial expression classifier on the RaFD dataset (90%/10% splitting for training and test sets) using a ResNet-18 architecture [5], resulting in a near-perfect accuracy of 99.55%.
+    - ResNet-18 のアーキテクチャを使用して、RaFD データセットで、顔表情の分類器を学習し、パーフェクトに近い正解率 99.55% の結果になる。
 
+- We then trained each of image translation models using the same training set an performed image translation on the same, unseen test set. 
+    - 我々は次に、同じ学習データセットを使用して、各画像変換モデルを学習し、
+    - 同じ目に見えない [unseen] テストデータセットで画像変換を実施した。
 
+- Finally, we classified the expression of these translated images using the above-mentioned classifier.
+    - 最後に、上で言及した分類器を使用して、これらの変換された画像の表情を分類した。
+
+- As can be seen in Table 3, our model achieves the lowest classification error, indicating that our model produces the most realistic facial expressions among all the methods compared.
+    - 表３に見られるように、我々のモデルは最も低い分類エラーを達成し、全ての手法と比較して最もリアルな表情を生成している。
+
+---
+
+- Another important advantage of our model is the scalability in terms of the number of parameters required.
+    - 我々のモデルを多の重要な利点は、要求されるパラメーターの数に関してのスケーラビリティーである。
+
+- The last column in Table 3 shows that the number of parameters required to learn all translations by StarGAN is seven times smaller than that of DIAT and fourteen times smaller than that of CycleGAN.
+    - 表３の最後の列は、StarGAN による全ての変換を学習するために要求されるパラメーターの数が、DIAT のそれより７倍小さく、CycleGAN のそれより１４倍小さいことを示している。
+
+- This is because StarGAN requires only a single generator and discriminator pair, regardless of the number of domains, while in the case of cross-domain models such as CycleGAN, a completely different model should be trained for each source-target domain pair.
+    - これは、StarGAN が、ドメインの数に関わらず１つの生成器と識別器のペアのみを要求し、
+    - 一方、CycleGAN のような cross-domain モデルのケースでは、完全に異なるモデルが、各ソース・ターゲットドメインのペアに対して学習されるべきである。
+
+### 5.6. Experimental Results on CelebA+RaFD
+
+- Finally, we empirically demonstrate that our model can learn not only from multiple domains within a single dataset, but also from multiple datasets.
+    - 最後に、我々のモデルは１つのデータセット内での複数ドメインだけでなく、複数データセット内で学習できることを強調して実証する。
+
+- We train our model jointly on the CelebA and RaFD datasets using the mask vector (see Section 3.2).
+    - 我々は、マスクベクトルを使用して、CelebA と RaFD データセットを共同で、我々のモデルを学習する。
+
+- To distinguish between the model trained only on RaFD and the model trained on both CelebA and RaFD, we denote the former as StarGAN-SNG (single) and the latter as StarGAN-JNT (joint).
+    - RaFD だけで学習されたモデルと、CelebA と RaFD の両方で学習されたモデルを区別するために、前者を StarGAN-SNG (single)、後者を StarGAN-JNT (joint) を示す。
+
+#### Effects of joint training.
+
+![image](https://user-images.githubusercontent.com/25688193/59647264-7fc16680-91b5-11e9-8ac0-94fe400105b3.png)<br>
+
+---
+
+- Fig.6 shows qualitative comparisons between StarGAN-SNG and StarGAN-JNT, where the task is to synthesize facial expressions of images in CelebA. 
+    - 表は、StarGAN-SNG と StarGAN-JST の間の定量的な比較と示している。
+    - ここで、タスクはCelebA における画像の表情合成である。
+
+- StarGAN-JNT exhibits emotional expressions with high visual quality, while StarGAN-SNG generates reasonable but blurry images with gray backgrounds.
+
+- This difference is due to the fact that StarGAN-JNT learns to translate CelebA images during training but not StarGAN-SNG.
+
+- In other words, StarGAN-JNT can leverage both datasets to improve shared low-level tasks such facial keypoint detection and segmentation. 
+
+- By utilizing both CelebA and RaFD, StarGAN-JNT can improve these low-level tasks, which is beneficial to learning facial expression synthesis.
+
+#### Learned role of mask vector.
+
+![image](https://user-images.githubusercontent.com/25688193/59648913-a84c5f00-91bb-11e9-87e6-916e5f453e33.png)
+
+---
+
+- In this experiment, we gave a one-hot vector c by setting the dimension of a particular facial expression (available from the second dataset, RaFD) to one.
+    - この実験では、特定の顔表情の表現の次元を 1 に設定することで、one-hot ベクトル c を得た。（２番目のデータセットから利用可能な RaFD）
+
+- In this case, since the label associated with the second data set is explicitly given, the proper mask vector would be [0, 1].
+    - このケースでは、２番目のデータセットで関連付けられている [associated with] ラベルは明示的に [explicitly] に与えられているので、適切なマスクベクトルは [0,1] になるだろう。
+
+- Fig. 7 shows the case where this proper mask vector was given and the opposite case where a wrong mask vector of [1, 0] was given.
+    - 図７は、この適切なマスクベクトルが与えられているケースと、誤った [1,0] のマスクベクトルが与えられているケースを示している。
+
+- When the wrong mask vector was used, StarGAN-JNT fails to synthesize facial expressions, and it manipulates the age of the input image.
+    - 誤ったマスクベクトルが使用されたとき、StarGAN-JNT は顔表情の合成に失敗し、入力画像の年齢を操作する [manipulates]。
+
+- This is because the model ignores the facial expression label as unknown and treats the facial attribute label as valid by the mask vector.
+    - これは、モデルが表情ラベルを未知のものとして無視し、顔の属性ラベルをマスクベクトルによって検証されたものとして扱うためである。
+
+- Note that since one of the facial attributes is ‘young’, the model translates the image from young to old when it takes in a zero vector as input.
+    - 顔の属性の１つは若さであるので、入力としてゼロベクトルを受け取ったとき、モデルが画像を若いものから年寄りのものへ変換するということに注目。
+
+- From this behavior, we can confirm that StarGAN properly learned the intended role of a mask vector in image-to-image translations when involving all the labels from multiple datasets altogether.
+    - この振る舞いから、複数のデータセット全てをお互いに巻き込むときに、StarGAN が、image-to-image 変換において、マスクベクトルの役割を適切に意図したように学習出来ていることが確認できる。 
 
 # ■ 関連研究（他の手法との違い）
 

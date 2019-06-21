@@ -679,22 +679,84 @@
 ![image](https://user-images.githubusercontent.com/25688193/59905212-7ac41780-9440-11e9-85f1-df9095eaa5be.png)
 
 - > Figure 4: Effect of progressive growing on training speed and convergence.
+    - > 図４：学習スピートと収束性での progressive growing の効果
 
 - > The timings were measured on a single-GPU setup using NVIDIA Tesla P100.
+    - > タイミングは、NVIDIA Tesla P100 を使用して計測された。
 
 - > (a) Statistical similarity with respect to wall clock time for Gulrajani et al. (2017) using CELEBA at 128 × 128 resolution.
+    - > (a) 128 × 128 の解像度での CELEBA を使用した、Gulrajani らの壁時計に関しての統計的な類似度
 
 - > Each graph represents sliced Wasserstein distance on one level of the Laplacian pyramid, and the vertical line indicates the point where we stop the training in Table 1.
+    - > 各グラフは、ラプラシアンピラミッドのレベルにおける、SWD を表現しており、
+    - > 垂線 [vertical line] は表１において学習を停止する場所を示している
 
 - > (b) Same graph with progressive growing enabled.
+    - > (b) progressive growing が有効である同じグラフ
 
 - > The dashed vertical lines indicate points where we double the resolution of G and D.
+    - > 点垂線は、G と D の解像度が２倍である場所を示している。
 
 - > (c) Effect of progressive growing on the raw training speed in 1024 × 1024 resolution.
+    - > (c) 1024 × 1024 の解像度での、生の [on the row] 学習スピードにおける progressive growing の影響
 
 ---
 
-- Figure 4 illustrates the effect of progressive growing in terms of the SWD metric and raw image throughput. The first two plots correspond to the training configuration of Gulrajani et al. (2017) without and with progressive growing. We observe that the progressive variant offers two main ben- efits: it converges to a considerably better optimum and also reduces the total training time by about a factor of two. The improved convergence is explained by an implicit form of curriculum learn- ing that is imposed by the gradually increasing network capacity. Without progressive growing, all layers of the generator and discriminator are tasked with simultaneously finding succinct interme- diate representations for both the large-scale variation and the small-scale detail. With progressive growing, however, the existing low-resolution layers are likely to have already converged early on, so the networks are only tasked with refining the representations by increasingly smaller-scale ef- fects as new layers are introduced. Indeed, we see in Figure 4(b) that the largest-scale statistical similarity curve (16) reaches its optimal value very quickly and remains consistent throughout the rest of the training. The smaller-scale curves (32, 64, 128) level off one by one as the resolution is increased, but the convergence of each curve is equally consistent. With non-progressive training in Figure 4(a), each scale of the SWD metric converges roughly in unison, as could be expected.
+- Figure 4 illustrates the effect of progressive growing in terms of the SWD metric and raw image throughput.
+    - 図４は、SWD 指標と生の画像のスループット（＝単位時間あたりの処理能力） [throughput] の観点で、progressive growing の効果を図示している。
+
+- The first two plots correspond to the training configuration of Gulrajani et al. (2017) without and with progressive growing.
+    - 最初の２つのプロットは、progressive growing 有り無しでの Gulrajani らの学習設定に一致する。
+
+- We observe that the progressive variant offers two main benefits: it converges to a considerably better optimum and also reduces the total training time by about a factor of two.
+    - 我々は、progressive の変種は２つの利点をもたらすと観測する。
+    - 即ち、それはかなりよい最適点に収束し、約 1/2 に全体の学習時間をへらす。[by a factor of ~ : ~ 倍で]
+
+- The improved convergence is explained by an implicit form of curriculum learning that is imposed by the gradually increasing network capacity. 
+    - <font color="Pink">改善された収束性は、徐々に増加するネットワーク容量によって、課せられる [imposed] ような、カリキュラム [curriculum] 学習の暗黙の [implicit] 形式によって、説明される。</font>
+
+- Without progressive growing, all layers of the generator and discriminator are tasked with simultaneously finding succinct intermediate representations for both the large-scale variation and the small-scale detail.
+    - progressive growing なしでは、生成器と識別器の全ての層は、大きなスケールでの変動と小さなスケールでの詳細の両方に対して、簡潔な [succinct] な中間表現を同時に見つけることを任されている [tasked]。
+
+- With progressive growing, however, the existing low-resolution layers are likely to have already converged early on, so the networks are only tasked with refining the representations by increasingly smaller-scale effects as new layers are introduced.
+    - progressive growing 有りでは、しかしながら、存在する低解像度の層は、既に初期段階で収束しそうである。
+    - なので、ネットワークは、新しい層が導入されるにつれて、ますます [increasingly] より小さいスケールでの効果によって、表現を洗練する [refining] ように任されているのみである。
+
+- Indeed, we see in Figure 4(b) that the largest-scale statistical similarity curve (16) reaches its optimal value very quickly and remains consistent throughout the rest of the training.
+    - 実際に [Indeed]、図 4 (b) において、最も大きいスケールでの統計的類似性の曲線 (16) は、とても素早くその最適点に到達し、学習の残りを通じて一定のままである。
+
+- The smaller-scale curves (32, 64, 128) level off one by one as the resolution is increased, but the convergence of each curve is equally consistent.
+    - より小さいスケールでの曲線 (32, 64, 128) は、解像度が増加するにつれて、１つづつ平らになる [level off] が、各曲線の収束性は、等しく一定である。
+
+- With non-progressive training in Figure 4(a), each scale of the SWD metric converges roughly in unison, as could be expected.
+    - 図 4 (a) における非 progressive 学習では、SWD 指標の各スケールは、予想できるように、一致して [in unison] 大まかに収束する。
+
+---
+
+- The speedup from progressive growing increases as the output resolution grows.
+    - 出力解像度の成長するにつれて、progressive growing からのスピードは増加する。
+
+- Figure 4(c) shows training progress, measured in number of real images shown to the discriminator, as a function of training time when the training progresses all the way to 1024^2 resolution.
+    - 図 4 (c) は、
+    - 学習段階が、1024 * 1024 までずっと [all the way] 進むときの、学習時間の関数として、識別器へ見せる本物画像の数を計測されるような、学習段階を示している。
+
+- We see that progressive growing gains a significant head start because the networks are shallow and quick to evaluate at the beginning.
+    - progressive gan が重要な優先スタート [head start] を得ることが見て取れる。
+    - なぜならば、ネットワークが浅く、最初は [at the beginning] すばやく評価するので、
+
+- Once the full resolution is reached, the image throughput is equal between the two methods.
+    - いったんフルの解像度に到達すれば、画像の処理能力は２つの手法で等しい。
+
+- The plot shows that the progressive variant reaches approximately 6.4 million images in 96 hours, whereas it can be extrapolated that the non-progressive variant would take about 520 hours to reach the same point.
+    - プロットは、progressive 変種が、96 時間でおよそ 6.4 万画像に到達することを示している。
+    - 一方で [whereas]、非 progressive 変種が、同じポイントに到達するのに、約 520 時間かかっていることを推定 [extrapolated] する。
+
+- In this case, the progressive growing offers roughly a 5.4× speedup.
+    - このケースでは、progressive growing は大まかに 5.4 倍のスピードアップを提供している。
+
+###  6.3 HIGH-RESOLUTION IMAGE GENERATION USING CELEBA-HQ DATASET
+
+- To meaningfully demonstrate our results at high output resolutions, we need a sufficiently varied high-quality dataset. However, virtually all publicly available datasets previously used in GAN literature are limited to relatively low resolutions ranging from 322 to 4802. To this end, we created a high-quality version of the CELEBA dataset consisting of 30000 of the images at 1024 × 1024 resolution. We refer to Appendix C for further details about the generation of this dataset.
 
 ---
 

@@ -508,6 +508,10 @@
 
 ---
 
+![image](https://user-images.githubusercontent.com/25688193/59900287-b35cf480-9432-11e9-881e-725356514499.png)
+
+---
+
 - A single Laplacian pyramid level corresponds to a specific spatial frequency band.
     - １つのラプラシアンのレベルは、特定の空間的な周波数バンドに一致する。
 
@@ -515,20 +519,20 @@
     - 16384 枚の画像をランダムにサンプルし、ラプラシアンの各レベルから、128 個の記述子 [descriptors] を展開し、
     - 各レベルに対して、221（2.1M）個の記述子が得られる。
 
-- Each descriptor is a 7 × 7 pixel neighborhood with 3 color channels, denoted by $x \in R^{7 \times 7 \times 3}=R^{147}$.
+- Each descriptor is a 7 × 7 pixel neighborhood with 3 color channels, denoted by ![image](https://user-images.githubusercontent.com/25688193/59900255-890b3700-9432-11e9-899d-802904d69350.png).
     - 各記述子は、３つのカラーチャンネルで、7 × 7 ピクセルの近傍であり、
-    - $x \in R^{7 \times 7 \times 3}=R^{147}$ で示される。
+    - ![image](https://user-images.githubusercontent.com/25688193/59900255-890b3700-9432-11e9-899d-802904d69350.png) で示される。
 
-- We denote the patches from level l of the training set and generated set as $(x_i^l)_{i=1}^{2^{21}}$ and $(y_i^l)_{i=1}^{2^{21}}$, respectively.
-    - 学習データセットと生成されたセットのレベル l からのパッチを、それぞれ [respectively]、$(x_i^l)_{i=1}^{2^{21}}$ and $(y_i^l)_{i=1}^{2^{21}}$ として示す。
+- We denote the patches from level l of the training set and generated set as ![image](https://user-images.githubusercontent.com/25688193/59900341-e8694700-9432-11e9-9b78-e008e7040b56.png) and ![image](https://user-images.githubusercontent.com/25688193/59900383-0fc01400-9433-11e9-9079-e7490b00e355.png), respectively.
+    - 学習データセットと生成されたセットのレベル l からのパッチを、それぞれ [respectively]、![image](https://user-images.githubusercontent.com/25688193/59900341-e8694700-9432-11e9-9b78-e008e7040b56.png) and ![image](https://user-images.githubusercontent.com/25688193/59900383-0fc01400-9433-11e9-9079-e7490b00e355.png) として示す。
 
-- We first normalize $(x_i^l)$ and $(y_i^l)$ w.r.t. the mean and standard deviation of each color channel, and then estimate the statistical similarity by computing their sliced Wasserstein distance SWD$( (x_i^l), (y_i^l) )$, an efficiently computable randomized approximation to earthmovers distance, using 512 projections (Rabin et al., 2011).
+- We first normalize ![image](https://user-images.githubusercontent.com/25688193/59900469-63caf880-9433-11e9-92c8-1b75c9c34c7c.png) and ![image](https://user-images.githubusercontent.com/25688193/59900637-d340e800-9433-11e9-9ea1-90af2f793278.png) w.r.t. the mean and standard deviation of each color channel, and then estimate the statistical similarity by computing their sliced Wasserstein distance SWD ![image](https://user-images.githubusercontent.com/25688193/59900434-3b42fe80-9433-11e9-9189-2f9316411156.png), an efficiently computable randomized approximation to earthmovers distance, using 512 projections (Rabin et al., 2011).
     - 我々は最初に、
     - 各カラーチャンネルの平均と標準偏差に関して [w.r.t. : with reference to]、
-    - $(x_i^l)$ と $(y_i^l)$ を正規化する。
+    - ![image](https://user-images.githubusercontent.com/25688193/59900469-63caf880-9433-11e9-92c8-1b75c9c34c7c.png) と ![image](https://user-images.githubusercontent.com/25688193/59900637-d340e800-9433-11e9-9ea1-90af2f793278.png) を正規化する。
     - そして次に、
     - 512 個の射影を使用した、効率的な計算可能な earthmovers 距離へのランダム化された近似し、
-    - スライスされた Wasserstein 距離 SWD$( (x_i^l), (y_i^l) )$ を計算することによって、統計的な類似性を推定する。
+    - スライスされた Wasserstein 距離 SWD ![image](https://user-images.githubusercontent.com/25688193/59900434-3b42fe80-9433-11e9-9189-2f9316411156.png) を計算することによって、統計的な類似性を推定する。
 
 ---
 
@@ -552,18 +556,145 @@
 - We also invite the reader to consult the accompanying video (https://youtu.be/G06dEcZ-QTg) for additional result images and latent space interpolations.
 
 - In this section we will distinguish between the network structure (e.g., convolutional layers, resizing), training configuration (various normalization layers, minibatch-related operations), and training loss (WGAN-GP, LSGAN).
+    - このセクションでは、ネットワーク構造（例えば、畳み込み層、リサイズ）、学習設定（様々な正規化層、ミニバッチ関連の演算）、学習損失（WGAN-GP, LSGAN）を区別する。
 
 ### 6.1 IMPORTANCE OF INDIVIDUAL CONTRIBUTIONS IN TERMS OF STATISTICAL SIMILARITY
 
 - We will first use the sliced Wasserstein distance (SWD) and multi-scale structural similarity (MSSSIM) (Odena et al., 2017) to evaluate the importance our individual contributions, and also perceptually validate the metrics themselves.
+    - 我々はまず、我々の個々の貢献の重要性を評価するために、sliced Wasserstein distance (SWD) と multi-scale structural similarity (MSSSIM) を使用し、
+    - 指標自体を知覚的に検証する。
 
-- We will do this by building on top of a previous state-of-theart loss function (WGAN-GP) and training configuration (Gulrajani et al., 2017) in an unsupervised setting using CELEBA (Liu et al., 2015) and LSUN BEDROOM (Yu et al., 2015) datasets in 1282 resolution.
+- We will do this by building on top of a previous state-of-the-art loss function (WGAN-GP) and training configuration (Gulrajani et al., 2017) in an unsupervised setting using CELEBA (Liu et al., 2015) and LSUN BEDROOM (Yu et al., 2015) datasets in 128^2 resolution.
+    - 我々は、これを以前の SOTA 損失関数（WGAN-GP）と、
+    - CELEBA と 128 * 128 の解像度のデータセットである LSUN BEAROOM を用いた教師なし設定における学習設定とを、
+    - 構築することによって行う。
+
+> training configuration 学習設定：様々な正規化層、ミニバッチ関連の演算など
 
 - CELEBA is particularly well suited for such comparison because the training images contain noticeable artifacts (aliasing, compression, blur) that are difficult for the generator to reproduce faithfully.
+    - CELEBA は、このような比較に特に適している。
+    - なぜならば、学習画像が、生成器にとって忠実な [faithfully] 再現 [reproduce] が困難であるような注目に値する（＝目立つ） [noticeable] 人工物（エイリアシング、圧縮、ぼやけ）を含むためである。
 
 - In this test we amplify the differences between training configurations by choosing a relatively low-capacity network structure (Appendix A.2) and terminating the training once the discriminator has been shown a total of 10M real images.
+    - このテストでは、比較的低い容量のネットワーク構造を選択し、
+    - いったん識別器が、トータル 10M の本物画像が表示されれば、学習を終了させる [terminating] ことによって 、
+    - 学習設定との間の違いを増幅 [amplify] する。
 
 - As such the results are not fully converged.
+    - このような結果は、完全に収束しない。
+
+---
+
+![image](https://user-images.githubusercontent.com/25688193/59899201-d71e3b80-942e-11e9-9445-786ce77f0782.png)
+
+- > Table 1: Sliced Wasserstein distance (SWD) between the generated and training images (Section 5) and multi-scale structural similarity (MS-SSIM) among the generated images for several training setups at 128 × 128.
+    - > 表１：128 × 128 での、生成された画像と学習画像の間の Sliced Wasserstein distance (SWD) と
+    - > いくつかの学習設定に対して生成された画像の間の multi-scale structural similarity (MS-SSIM)
+
+- > For SWD, each column represents one level of the Laplacian pyramid, and the last one gives an average of the four distances.
+    - > SWD に対しては、各列はラプラシアンピラミッドのレベルを表し、最後の列は４つの距離の平均を与えている
+
+---
+
+![image](https://user-images.githubusercontent.com/25688193/59902350-f02bea00-9438-11e9-9f6c-b845f84d5e85.png)
+
+- > Figure 3: (a) – (g) CELEBA examples corresponding to rows in Table 1. 
+
+- > These are intentionally non-converged.
+
+- > (h) Our converged result.
+
+- > Notice that some images show aliasing and some are not sharp – this is a flaw of the dataset, which the model learns to replicate faithfully.
+    - > いくつかの画像は、エイリアシングを示し、いくつかの画像はシャープでないことに注意。即ち、これはデータセットの欠陥 [flaw] であり、モデルは忠実に [faithfully] 再現することを学習する。
+
+---
+
+- Table 1 lists the numerical values for SWD and MS-SSIM in several training configurations, where our individual contributions are cumulatively enabled one by one on top of the baseline (Gulrajani et al., 2017).
+    - 表１は、いくつかの学習設定における SWD と MS-SSIM に対しての数値をリストしている。
+    - ここで、我々の個々の貢献が、ベースラインの上に１つづつ累積的に [cumulatively] 有効になっている。
+
+- The MS-SSIM numbers were averaged from 10000 pairs of generated images, and SWD was calculated as described in Section 5.
+    - MS-SSIM 数は、生成画像の 10000 個のペアから平均化され、SWD はセクション５において記述されたように計算される。
+
+- Generated CELEBA images from these configurations are shown in Figure 3.
+    - これらの設定から生成された CELEBA 画像は、図３に示される。
+
+- Due to space constraints, the figure shows only a small number of examples for each row of the table, but a significantly broader set is available in Appendix H.
+    - スペースの制約のため、図は、表の各行に対しての小さな数の例のみを示すが、かなり [significantly] 広い [broader] セットが、補足 H で利用可能である。
+
+- Intuitively, a good evaluation metric should reward plausible images that exhibit plenty of variation in colors, textures, and viewpoints.
+    - 直感的には [Intuitively]、良い評価指標は、色やテクスチャー、視点の沢山の変動を展開するような、もっともらしい [plausible] 画像に報いるべきである。
+
+- However, this is not captured by MS-SSIM: we can immediately see that configuration (h) generates significantly better images than configuration (a), but MS-SSIM remains approximately unchanged because it measures only the variation between outputs, not similarity to the training set.
+    - しかしながら、これは MS-SSIMによって抽出されない。
+    - 即ち、設定 (h) は設定 (a) よりかなり良い画像を生成しているが、MS-SSIM は、学習データセットの類似性ではなく、出力の間の変動のみを計測するため、おおよそ変化していないとうことを即座に見ることが出来る。
+
+- SWD, on the other hand, does indicate a clear improvement.
+    - 一方、SWD は、明らかな改善を示している。
+
+---
+
+- The first training configuration (a) corresponds to Gulrajani et al. (2017), featuring batch normalization in the generator, layer normalization in the discriminator, and minibatch size of 64.
+    - 最初の学習設定 (a) は、Gulrajaniらのものと一致する。
+    - （これは、）生成器における featuring batch normalizationｍ、識別器における layer normalization、ミニバッチサイズ 64（をもつ）
+
+- (b) enables progressive growing of the networks, which results in sharper and more believable output images.
+    - (b) は、ネットワークの progressive growing を有効にしており、しょりシャープで信頼性のある出力画像という結果になっている。
+
+- SWD correctly finds the distribution of generated images to be more similar to the training set.
+    - SWD は、生成画像の分布が、学習データセットのものとより似ているようになることを正確に見つけ出す。
+
+---
+
+- Our primary goal is to enable high output resolutions, and this requires reducing the size of minibatches in order to stay within the available memory budget.
+    - 我々の主要なゴールは、高解像度の出力を可能にすることであり、これは利用可能なメモリの予算の中に留まるために、ミニバッチのサイズを減らすことを要求する。
+
+> 高解像度での学習フェイズにて、ミニバッチサイズが大きいと大量のメモリを消費し、メモリアロケーションエラーとなるので、高解像度での学習フェイズではミニバッチサイズを減らす必要がある。
+
+- We illustrate the ensuing challenges in (c) where we decrease the minibatch size from 64 to 16.
+    - 我々は (c) においてその後の [ensuing] 変化を図示している。ここで、ミニバッチサイズを 64 から 16 に減らしている。
+
+- The generated images are unnatural, which is clearly visible in both metrics.
+    - 生成画像は、不自然になり、これは両方の指標（＝SWD, MS-SSIM）で明らかに見られる。
+
+- In (d), we stabilize the training process by adjusting the hyperpa- rameters as well as by removing batch normalization and layer normalization (Appendix A.2).
+    - (d) では、ハイパーパラメーターを適合することによって、同様にして、batch norm を除外し layer norm を加えることによって、学習プロセスを安定化している。
+
+- As an intermediate test (e∗), we enable minibatch discrimination (Salimans et al., 2016), which somewhat surprisingly fails to improve any of the metrics, including MS-SSIM that measures output variation.
+    - 中間のテスト (e*) では、我々は、minibatch discrimination を有効にしており、
+    - これは、いくらかの驚くことに、出力変動を計算する MS-SSIM を含む全ての指標を改善しない。
+
+- In contrast, our minibatch standard deviation (e) improves the average SWD scores and images.
+    - 反対に、我々の minibatch standard deviation (e) は、平均の SWD スコアと画像を改善する。
+
+- We then enable our remaining contributions in (f) and (g), leading to an overall improvement in SWD and subjective visual quality.
+    - 我々は次に、(f), (g) において、全体に渡っての SWD と主観的な視覚品質での改善を導く、残りの貢献を可能にする。
+
+- Finally, in (h) we use a non-crippled network and longer training – we feel the quality of the generated images is at least comparable to the best published results so far.
+    - 最後に、(h) では、我々はクリッピングされていいないネットワークとより長い時間での学習を使用する。
+    - 即ち、我々は、生成画像の品質が、以前に公開されたベストの結果と少なくとも比較できると感じている。
+
+### 6.2 CONVERGENCE AND TRAINING SPEED
+
+![image](https://user-images.githubusercontent.com/25688193/59905212-7ac41780-9440-11e9-85f1-df9095eaa5be.png)
+
+- > Figure 4: Effect of progressive growing on training speed and convergence.
+
+- > The timings were measured on a single-GPU setup using NVIDIA Tesla P100.
+
+- > (a) Statistical similarity with respect to wall clock time for Gulrajani et al. (2017) using CELEBA at 128 × 128 resolution.
+
+- > Each graph represents sliced Wasserstein distance on one level of the Laplacian pyramid, and the vertical line indicates the point where we stop the training in Table 1.
+
+- > (b) Same graph with progressive growing enabled.
+
+- > The dashed vertical lines indicate points where we double the resolution of G and D.
+
+- > (c) Effect of progressive growing on the raw training speed in 1024 × 1024 resolution.
+
+---
+
+- Figure 4 illustrates the effect of progressive growing in terms of the SWD metric and raw image throughput. The first two plots correspond to the training configuration of Gulrajani et al. (2017) without and with progressive growing. We observe that the progressive variant offers two main ben- efits: it converges to a considerably better optimum and also reduces the total training time by about a factor of two. The improved convergence is explained by an implicit form of curriculum learn- ing that is imposed by the gradually increasing network capacity. Without progressive growing, all layers of the generator and discriminator are tasked with simultaneously finding succinct interme- diate representations for both the large-scale variation and the small-scale detail. With progressive growing, however, the existing low-resolution layers are likely to have already converged early on, so the networks are only tasked with refining the representations by increasingly smaller-scale ef- fects as new layers are introduced. Indeed, we see in Figure 4(b) that the largest-scale statistical similarity curve (16) reaches its optimal value very quickly and remains consistent throughout the rest of the training. The smaller-scale curves (32, 64, 128) level off one by one as the resolution is increased, but the convergence of each curve is equally consistent. With non-progressive training in Figure 4(a), each scale of the SWD metric converges roughly in unison, as could be expected.
 
 ---
 

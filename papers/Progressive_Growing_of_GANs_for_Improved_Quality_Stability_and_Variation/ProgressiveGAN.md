@@ -738,7 +738,7 @@
 
 - Figure 4(c) shows training progress, measured in number of real images shown to the discriminator, as a function of training time when the training progresses all the way to 1024^2 resolution.
     - 図 4 (c) は、
-    - 学習段階が、1024 * 1024 までずっと [all the way] 進むときの、学習時間の関数として、識別器へ見せる本物画像の数を計測されるような、学習段階を示している。
+    - 学習段階が、1024 * 1024 までずっと [all the way] 進むときの、学習時間の関数として���識別器へ見せる本物画像の数を計測されるような、学習段階を示している。
 
 - We see that progressive growing gains a significant head start because the networks are shallow and quick to evaluate at the beginning.
     - progressive gan が重要な優先スタート [head start] を得ることが見て取れる。
@@ -756,11 +756,111 @@
 
 ###  6.3 HIGH-RESOLUTION IMAGE GENERATION USING CELEBA-HQ DATASET
 
-- To meaningfully demonstrate our results at high output resolutions, we need a sufficiently varied high-quality dataset. However, virtually all publicly available datasets previously used in GAN literature are limited to relatively low resolutions ranging from 322 to 4802. To this end, we created a high-quality version of the CELEBA dataset consisting of 30000 of the images at 1024 × 1024 resolution. We refer to Appendix C for further details about the generation of this dataset.
+- To meaningfully demonstrate our results at high output resolutions, we need a sufficiently varied high-quality dataset.
+    - 高い解像度での我々の結果を、意味をもつように実証するために、我々は様々な高品質のデータセットを必要とする。
+
+- However, virtually all publicly available datasets previously used in GAN literature are limited to relatively low resolutions ranging from 32^2 to 480^2.
+    - しかしながら、GANの文脈で以前に使用されていた実質的に [virtually] 全ての公開されている利用可能なデータセットは、32 * 32 から 480 * 480 の範囲でという、比較的低い解像度で制限されている。
+
+- To this end, we created a high-quality version of the CELEBA dataset consisting of 30000 of the images at 1024 × 1024 resolution.
+    - この目的で [to this end]、我々は、1024 * 1024 の解像度での 30000 枚の画像を含む CELEBA データセットの高解像度バージョンを作成した。
+
+- We refer to Appendix C for further details about the generation of this dataset.
+    - このデータセットの生成についてのさらなる詳細は、補足 C を参照
 
 ---
 
-- xxx
+- Our contributions allow us to deal with high output resolutions in a robust and efficient fashion.
+    - 我々の貢献は、ロバストで効果的な流儀 [fashion] において、高解像度の出力に対処する [deal with] ことである。
+
+- Figure 5 shows selected 1024 × 1024 images produced by our network. 
+    - 図５は、我々のネットワークによって生成された選択された 1024 * 1024 画像を示している。
+
+- While megapixel GAN results have been shown before in another dataset (Marchesi, 2017), our results are vastly more varied and of higher perceptual quality.
+    - メガピクセルの GAN の結果が、以前に、他のデータセットで見られた一方で、
+    - 我々の結果は、非常に [vastly] より多様 [varied] で、知覚的な品質がより高い。
+
+- Please refer to Appendix F for a larger set of result images as well as the nearest neighbors found from the training data.
+    - 結果の画像のより大きなセットと同様にして、学習データセットから見つかった 最近傍画像も、
+    - 補足 F を参照してください。
+
+- The accompanying video shows latent space interpolations and visualizes the progressive training.
+    - 添付のビデオは、潜在空間の補間と段階的な学習を視覚化している。
+
+- The interpolation works so that we first randomize a latent code for each frame (512 components sampled individually from N (0, 1)), then blur the latents across time with a Gaussian (σ = 45 frames @ 60Hz), and finally normalize each vector to lie on a hypersphere.
+    - この補間は、最初に各フレーム（ N(0,1) からサンプリングされた 512 個のコンポーネント）に対して潜在変数をランダム化し、次にガウジアンでの時間に渡って潜在変数をぼかし、最後に超球面に横たえるように（＝超球面上で）各ベクトルを正規化する。
+
+---
+
+- We trained the network on 8 Tesla V100 GPUs for 4 days, after which we no longer observed qualitative differences between the results of consecutive training iterations.
+    - 我々はネットワークを、8 個の Tesla V100 GPU で 4 日間で学習した。
+    - その後、連続的な [consecutive] 学習イテレーションの結果との間の定性的な違いがもはや [no longer] 観測されなくなった。
+
+- Our implementation used an adaptive minibatch size depending on the current output resolution so that the available memory budget was optimally utilized.
+    - 我々の実装では、利用可能なメモリの予算が最適に使用されるように、現在の出力解像度度に依存した適合的なミニバッチサイズを使用した
+
+---
+
+- In order to demonstrate that our contributions are largely orthogonal to the choice of a loss function, we also trained the same network using LSGAN loss instead of WGAN-GP loss.
+    - 我々の貢献が、損失関数の選択に大きく直交していることを実証するために、我々はまた、WGAN-GP の損失関数の代わりに LSGAN の損失関数を使用した同じネットワークを学習した。
+
+- Figure 1 shows six examples of 1024^2 images produced using our method using LSGAN. Further details of this setup are given in Appendix B.
+    - 図１は、LSGAN を用いた我々の手法使用して生成された 1024 * 1024 の６つの画像の例を示している。
+
+### 6.4 LSUN RESULTS
+
+![image](https://user-images.githubusercontent.com/25688193/59957901-2456e780-94d9-11e9-95ad-407d3d6f4d44.png)
+
+![image](https://user-images.githubusercontent.com/25688193/59957933-916a7d00-94d9-11e9-93c7-d73919baaa0f.png)
+
+- Figure 6 shows a purely visual comparison between our solution and earlier results in LSUN BEDROOM. 
+    - 図６は、LSUN BEDROOM における我々の解決法と初期の結果との間の純粋な視覚的な比較を示している。
+
+- Figure 7 gives selected examples from seven very different LSUN categories at 256^2.
+    - 図７は、256 * 256 での７つの異なる LSUN カテゴリから選択された例を与えている。
+
+- A larger, non-curated set of results from all 30 LSUN categories is available in Appendix G, and the video demonstrates interpolations.
+    - より大きく、30 個の LSUN カテゴリ全てからの結果のキューレート（＝収集）されていない [non-curated] セットは補足 G で利用可能である。
+
+- We are not aware of earlier results in most of these categories, and while some categories work better than others, we feel that the overall quality is high.
+    - これらのカテゴリの大部分において、初期の結果に気づかず、
+    - いくつかのカテゴリがよりよく動作している一方で、全体の品質が高いと感じる。
+
+### 6.5 CIFAR10 INCEPTION SCORES
+
+![image](https://user-images.githubusercontent.com/25688193/59958143-cb894e00-94dc-11e9-9109-d6b7f41deb85.png)
+
+![image](https://user-images.githubusercontent.com/25688193/59958134-a4328100-94dc-11e9-849e-80d15289745c.png)
+
+---
+
+- The best inception scores for CIFAR10 (10 categories of 32 × 32 RGB images) we are aware of are 7.90 for unsupervised and 8.87 for label conditioned setups (Grinblat et al., 2017).
+    - 我々が気づいている CIFAR-10 に対しての最良の inseption score (IS) は、教師なし設定に対して 7.90 であり、ラベルで条件づけされた設定に対して 8.87 である。
+
+- The large difference between the two numbers is primarily caused by “ghosts” that necessarily appear between classes in the unsupervised setting, while label conditioning can remove many such transitions.
+    - ２つの数字の間の大きな違いは、教師なし設定のクラスとの間に必ず [necessarily] 現れる "ghosts" によって主に引き起こされる。
+    - 一方で、ラベル条件づけは、このような多くの変換を除外することが出来る。
+
+---
+
+- When all of our contributions are enabled, we get 8.80 in the unsupervised setting.
+    - 我々の貢献が全て有効であるとき、教師なし設定において 8.80 の inception score を手に入れる。
+
+- Appendix D shows a representative set of generated images along with a more comprehensive list of results from earlier methods.
+    - 補足 D では、以前の手法からの結果のより包括的な [comprehensive] リストとともに、生成画像の代表的な [representative] セットを示している。
+
+- The network and training setup were the same as for CELEBA, progres- sion limited to 32 × 32 of course.
+    - ネットワークと学習設定は、CELEBA と同じであり、段階学習は、32 * 32 にもちろん [of course] 制限されている。
+
+- The only customization was to the WGAN-GP’s regularization term ![image](https://user-images.githubusercontent.com/25688193/59957987-8e23c100-94da-11e9-8923-d32a1749cdbf.png).
+    - 唯一のカスタムは、WGAN-GP の正則化項 ![image](https://user-images.githubusercontent.com/25688193/59957987-8e23c100-94da-11e9-8923-d32a1749cdbf.png) のみである。
+
+- Gulrajani et al. (2017) used γ = 1.0, which corresponds to 1-Lipschitz, but we noticed that it is in fact significantly better to prefer fast transitions (γ = 750) to minimize the ghosts.
+    - Gulrajani らは γ = 1.0 を使用し、これは 1-リプシッツ連続に一致する。
+    - しかし、我々は、ghosts を最小化するためには、早い変換 (γ = 750) のほうが遥かに望ましいという事実に気がついた。
+
+- We have not tried this trick with other datasets.
+    - 我々は、このトリックを他のデータセットに対しては試していない。
 
 
 # ■ 関連研究（他の手法との違い）

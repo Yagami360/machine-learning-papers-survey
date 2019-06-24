@@ -99,18 +99,156 @@
 
 ### 3.1 Image Transformation Networks
 
-- Our image transformation networks roughly follow the architectural guidelines set forth by Radford et al [42]. 
-
+- Our image transformation networks roughly follow the architectural guidelines set forth by Radford et al [42].
+  - 私たちの画像変換ネットワークは、Radford et al [42]によって示されたアーキテクチャガイドラインに大体従っています。 
+  
 - We do not use any pooling layers, instead using strided and fractionally strided convolutions for in-network downsampling and upsampling.
+    - 我々は、任意のプール層を使用せず、代わりに、ネットワーク内ダウンサンプリングおよびアップサンプリングのためにストライドおよび逆ストライドの畳み込み層を使用する。
 
 - Our network body consists of five residual blocks [43] using the architecture of [44].
+    -  我々のネットワーク本体は、[44]のアーキテクチャを使用する5つの残余ブロック[43]で構成されています。
 
 - All non-residual convolutional layers are followed by spatial batch normalization [45] and ReLU nonlinearities with the exception of the output layer, which instead uses a scaled tanh to ensure that the output image has pixels in the range [0, 255].
+    - 出力レイヤを除いて、すべての非残余畳み込みレイヤの後に空間バッチ正規化[45]とReLU非線形性が続きます。これは、代わりにスケーリングされたtanhを使用して出力画像が範囲[0、255]のピクセルを持つようにします。
 
 - Other than the first and last layers which use 9 × 9 kernels, all convolutional layers use 3 × 3 kernels.
+    - 9×9カーネルを使用する最初と最後のレイヤを除いて、すべての畳み込みレイヤは3×3カーネルを使用します。
 
 - The exact architectures of all our networks can be found in the supplementary material.
     - すべてのネットワークの正確なアーキテクチャは副教材 [supplementary material] に記載されています。
+
+#### Inputs and Outputs.
+
+- For style transfer the input and output are both color images of shape 3 × 256 × 256. 
+    - スタイル変換の場合、入力と出力はどちらも形状3×256×256のカラー画像です。
+
+- For super-resolution with an upsampling factor of f, the output is a high-resolution image patch of shape 3 × 288 × 288 and the input is a low-resolution patch of shape 3 × 288/f × 288/f .
+    - アップサンプリング要因 f の超解像化の場合、出力は、形状3×288×288の高解像度画像パッチと低解像度の 3× 288/f × 288/f の形状パッチです。
+
+- Since the image transformation networks are fully-convolutional, at test-time they can be applied to images of any resolution.
+    - 画像変換ネットワークは完全に畳み込み式であるため、テスト時には任意の解像度の画像に適用できます。
+
+
+#### Downsampling and Upsampling.
+
+- For super-resolution with an upsampling factor of f, we use several residual blocks followed by log2 f convolutional layers with stride 1/2. 
+    - f のアップサンプリング要因で超解像度化に対して、いくつかの残差ブロックとそれに続くストライド1/2のlog2 f畳み込み層を使います。
+
+- This is different from [1] who use bicubic interpolation to up- sample the low-resolution input before passing it to the network.
+    - これは、低解像度入力をネットワークに渡す前にアップサンプリングするためにバイキュービック補間を使用する[1]とは異なります。
+
+- Rather than relying on a fixed upsampling function, fractionally-strided convolution allows the upsampling function to be learned jointly with the rest of the network.
+    - 逆畳み込み層は、固定のアップサンプリング関数に頼るのではなく、アップサンプリング関数を他のネットワークと共同で学習することを可能にします。
+
+---
+
+- For style transfer our networks use two stride-2 convolutions to downsample the input followed by several residual blocks and then two convolutional layers with stride 1/2 to upsample.
+    - スタイル転送のために私たちのネットワークは入力をダウンサンプリングするために2つのストライド2畳み込みを使い、その後いくつかの残差ブロックを続け、次にストライド1/2の2つの畳み込み層を使ってアップサンプルを行います。
+
+- Although the input and output have the same size, there are several benefits to networks that downsample and then upsample.
+    - **入力と出力は同じサイズですが、ダウンサンプリングしてからアップサンプリングするネットワークにはいくつかの利点があります。**
+
+---
+
+- The first is computational. 
+    - **1つ目は計算です。**
+    
+- With a naive implementation, a 3×3 convolution with C filters on an input of size C × H × W requires 9 × H × W × C^2 multiply-adds, which is the same cost as a 3 × 3 convolution with DC filters on an input of shape DC × H/D × W/D.
+    - 単純な実装では、サイズC×H×Wの入力に対するCフィルタの3×3畳み込みには 9 × H × W × C^2 乗加算が必要です。これは、形状 DC × H/D × W/D の入力に対するDCフィルタの3×3畳み込みと同じコストです。
+
+- After downsampling, we can therefore use a larger network for the same computational cost.
+    - ダウンサンプリング後は、同じ計算コストでより大きなネットワークを使用できます。
+
+---
+
+- The second benefit has to do with effective receptive field sizes. 
+    - **2番目の利点は、有効な受容野 [receptive field] の大きさと関係があります。**
+
+- High-quality style transfer requires changing large parts of the image in a coherent way; therefore it is advantageous for each pixel in the output to have a large effective receptive field in the input.
+    - 高品質のスタイル変換では、画像の大部分を首尾一貫した [coherent] 方法で変更する必要があります。 したがって、出力内の各ピクセルが入力内に大きな有効受容野を有することが有利である。
+
+- Without downsampling, each additional 3×3 convolutional layer increases the effective receptive field size by 2.
+    - ダウンサンプリングなしでは、追加の３×３畳み込み層はそれぞれ、有効受容野サイズを２だけ増加させる。
+
+- After downsampling by a factor of D, each 3×3 convolution instead increases effective receptive field size by 2D, giving larger effective receptive fields with the same number of layers.
+    - 係数Ｄでダウンサンプリングした後、各３×３畳み込みは代わりに有効受容野サイズを２Ｄだけ増加させ、同じ層数を有するより大きな有効受容野を与える。
+
+#### Residual Connections. 
+
+- He et al [43] use residual connections to train very deep networks for image classification.
+    - 彼ら[43]は、残差接続を使用して、画像分類のために非常に深いネットワークをトレーニングします。
+
+- They argue that residual connections make it easy for the network to learn the identify function; this is an appealing property for image transformation networks, since in most cases the output image should share structure with the input image.
+    - 彼らは、residual connections は、ネットワークが恒等写像を学ぶことを容易にすると主張します。 ほとんどの場合、出力画像は入力画像と構造を共有するはずなので、これは画像変換ネットワークにとって魅力的な特性です。
+
+- The body of our network thus consists of several residual blocks, each of which contains two 3 × 3 convolutional layers.
+    - したがって、我々のネットワークの本体はいくつかの残差ブロックからなり、各残差ブロックは2つの3×3畳み込み層を含んでいます。
+
+- We use the residual block design of [44], shown in the supplementary material.
+    - 補足資料に示されている [44] の残差ブロック設計を使用します。
+
+
+### 3.2 Perceptual Loss Functions
+
+- We define two perceptual loss functions that measure high-level perceptual and semantic differences between images.
+    - 画像間の高レベルの知覚的および意味的な違いを測定する2つの perceptual 損失関数を定義します。
+
+- They make use of a loss network φ pre-trained for image classification, meaning that these perceptual loss functions are themselves deep convolutional neural networks.
+    - それらは（＝２つの perceptual 損失関数）、画像分類のために事前に訓練された損失ネットワーク φ を利用する。これは、これらの perceptual 損失関数はそれ自体が深い畳み込みニューラルネットワークであることを意味する。
+
+- In all our experiments φ is the 16-layer VGG network [46] pretrained on the ImageNet dataset [47].
+    - 我々のすべての実験において、φはImageNetデータセット[47]で事前学習された16層のVGGネットワーク[46]です。
+
+#### Feature Reconstruction Loss
+
+- Rather than encouraging the pixels of the output image $\hat{y} = f_W (x)$ to exactly match the pixels of the target image y, we instead encourage them to have similar feature representations as computed by the loss network φ.
+    - 出力画像 $\hat{y} = f_W(x)$ のピクセルを、ターゲット画像yのピクセルと完全に一致するように推奨するのではなく、損失ネットワークφによって計算されたものと類似の特徴表現を持つようにします。
+
+- Let $\phi_j(x)$ be the activations of the jth layer of the network φ when processing the image x; if j is a convolutional layer then φj(x) will be a feature map of shape Cj × Hj × Wj.
+    - 画像ｘを処理するときに $\phi_j(x)$ をネットワークφのｊ番目の層の活性化とする。 もしｊが畳み込み層であれば、$\phi_j(x)$ は形状 Ｃj × Ｈj × Ｗj の特徴マップとなる。
+
+- The feature reconstruction loss is the (squared, normalized) Euclidean distance between feature representations:
+    - feature reconstruction loss は、特徴表現間の（二乗、正規化）ユークリッド距離です。
+
+![image](https://user-images.githubusercontent.com/25688193/59993551-9b33e200-968b-11e9-9d02-b5d224615e0d.png)
+
+---
+
+![image](https://user-images.githubusercontent.com/25688193/59993624-e817b880-968b-11e9-9104-d9cdf8de3a17.png)
+
+- > Fig. 3. Similar to [6], we use optimization to find an image $\hat{y}$ that minimizes the feature reconstruction loss $l_{feat}^{\phi,j} (\hat{y},y)$ for several layers j from the pretrained VGG-16 network φ.
+
+- > As we reconstruct from higher layers, image content and overall spatial structure are preserved, but color, texture, and exact shape are not.
+
+---
+
+
+- As demonstrated in [6] and reproduced in Figure 3, finding an image yˆ that minimizes the feature reconstruction loss for early layers tends to produce images that are visually indistinguishable from y.
+    - [6]で実証され、図3で再現されるように、初期層の feature reconstruction loss を最小にする画像y ^を見つけることは、yと視覚的に区別がつかない画像を生成する傾向がある。
+
+- As we reconstruct from higher layers, image content and overall spatial structure are preserved but color, texture, and exact shape are not. 
+    - より高い層から再構成するとき、画像内容と全体的な空間構造は保存されますが、色、質感、そして正確な形状は保存されません。
+
+- Using a feature reconstruction loss for training our image transformation networks encourages the output image yˆ to be perceptually similar to the target image y, but does not force them to match exactly.
+    - 我々の画像変換ネットワークを訓練するために feature reconstruction loss を使用することは、出力画像ｙ ＾が目標画像ｙと知覚的に類似するように促すが、それらを厳密に一致させることは強制しない。
+
+
+#### Style Reconstruction Loss.
+
+- The feature reconstruction loss penalizes the output image yˆ when it deviates in content from the target y.
+    - feature reconstruction loss は、出力画像ｙ＾ が内容 ｙ において目標 ｙ から逸脱する [deviates] ときに、出力画像ｙ＾ を不利にする。
+
+- We also wish to penalize differences in style: colors, textures, common patterns, etc.
+
+- To achieve this effect, Gatys et al [9,10] propose the following style reconstruction loss.
+
+---
+
+- As above, let $\phi_j(x)$ be the activations at the jth layer of the network φ for the input x, which is a feature map of shape Cj × Hj × Wj .
+
+- Define the Gram matrix $G_j^{\phi}(x)$ to be the Cj × Cj matrix whose elements are given by
+
+![image](https://user-images.githubusercontent.com/25688193/59994544-32e6ff80-968f-11e9-80ad-d2fcb5751f82.png)
 
 
 # ■ 実験結果（主張の証明）・議論（手法の良し悪し）・メソッド（実験方法）

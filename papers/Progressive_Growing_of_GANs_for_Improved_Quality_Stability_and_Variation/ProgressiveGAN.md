@@ -613,6 +613,8 @@
     - 表１は、いくつかの学習設定における SWD と MS-SSIM に対しての数値をリストしている。
     - ここで、我々の個々の貢献が、ベースラインの上に１つづつ累積的に [cumulatively] 有効になっている。
 
+> baseline (Gulrajani et al., 2017): WGAN-GP
+
 - The MS-SSIM numbers were averaged from 10000 pairs of generated images, and SWD was calculated as described in Section 5.
     - MS-SSIM 数は、生成画像の 10000 個のペアから平均化され、SWD はセクション５において記述されたように計算される。
 
@@ -636,7 +638,7 @@
 
 - The first training configuration (a) corresponds to Gulrajani et al. (2017), featuring batch normalization in the generator, layer normalization in the discriminator, and minibatch size of 64.
     - 最初の学習設定 (a) は、Gulrajaniらのものと一致する。
-    - （これは、）生成器における featuring batch normalizationｍ、識別器における layer normalization、ミニバッチサイズ 64（をもつ）
+    - （これは、）生成器における featuring batch normalization、識別器における layer normalization、ミニバッチサイズ 64（をもつ）
 
 - (b) enables progressive growing of the networks, which results in sharper and more believable output images.
     - (b) は、ネットワークの progressive growing を有効にしており、しょりシャープで信頼性のある出力画像という結果になっている。
@@ -738,7 +740,7 @@
 
 - Figure 4(c) shows training progress, measured in number of real images shown to the discriminator, as a function of training time when the training progresses all the way to 1024^2 resolution.
     - 図 4 (c) は、
-    - 学習段階が、1024 * 1024 までずっと [all the way] 進むときの、学習時間の関数として���識別器へ見せる本物画像の数を計測されるような、学習段階を示している。
+    - 学習段階が、1024 * 1024 までずっと [all the way] 進むときの、学習時間の関数として識別器へ見せる本物画像の数を計測されるような、学習段階を示している。
 
 - We see that progressive growing gains a significant head start because the networks are shallow and quick to evaluate at the beginning.
     - progressive gan が重要な優先スタート [head start] を得ることが見て取れる。

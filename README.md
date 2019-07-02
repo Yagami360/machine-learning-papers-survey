@@ -21,7 +21,7 @@
 - image-to-image
     - [Toward Characteristic-Preserving Image-based Virtual Try-On Network](https://github.com/Yagami360/MachineLearning-Papers_Survey/blob/master/papers/Toward_Characteristic-Preserving_Image-based_Virtual_Try-On_Network/cp-vton.md)
 - Style Transfer
-    - [Perceptual Losses for Real-Time Style Transfer and Super-Resolution]()
+    - [Perceptual Losses for Real-Time Style Transfer and Super-Resolution](https://github.com/Yagami360/MachineLearning-Papers_Survey/blob/master/papers/Perceptual_Losses_for_Real-Time_Style_Transfer_and_Super-Resolution/Perceptual_Losses_for_Real-Time_Style_Transfer_and_Super-Resolution.md)
 - Others
     - xxx
 

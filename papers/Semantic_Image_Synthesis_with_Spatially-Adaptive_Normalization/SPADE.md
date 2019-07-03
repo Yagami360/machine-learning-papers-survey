@@ -103,11 +103,64 @@
 ## 3. Semantic Image Synthesis
 
 - Let m ∈ L^H×W be a semantic segmentation mask where L is a set of integers denoting the semantic labels, and H and W are the image height and width.
+    - ｍ∈Ｌ^Ｈ×Ｗ をセマンティックセグメンテーションマスクとする。
+    - ここで、Ｌはセマンティックラベルを表す整数の集合であり、ＨおよびＷは画像の高さおよび幅である。
 
 - Each entry in m denotes the semantic label of a pixel.
+    - m の各エントリは、ピクセルの意味ラベルを表します。
 
 - We aim to learn a mapping function that can convert an input segmentation mask m to a photorealistic image.
+    - **入力セグメンテーションマスクｍを写実的な画像に変換することができる写像関数を学ぶことを目的とする。**
 
+### Spatially-adaptive denormalization
+
+- > Figure 2: In SPADE, the mask is first projected onto an embedding space, and then convolved to produce the modulation parameters γ and β. 
+    - > **SPADEでは、マスクはまず埋め込み空間に投影され、次に畳み込まれて調整パラメータγとβが生成されます。**
+
+- > Unlike prior conditional normalization methods, γ and β are not vectors, but tensors with spatial dimensions.
+    - > 従来の条件付き正規化法とは異なり、γとβはベクトルではなく空間次元を持つテンソルです。
+
+- > The produced γ and β are multiplied and added to the normalized activation element-wise.
+    - > 生成されたγおよびβは乗算され、正規化された活性化要素に要素ごとに加算される。
+    
+---
+
+- Let h^i denote the activations of the i-th layer of a deep convolutional network given a batch of N samples.
+
+- Let Ci be the number of chan- nels in the layer.
+
+- Let Hi and Wi be the height and width of the activation map in the layer.
+
+- We propose a new conditional normalization method called SPatially-Adaptive (DE)normalization1 (SPADE).
+    - SPatially-Adaptive（DE）正規化1（SPADE）と呼ばれる新しい条件付き正規化方法を提案します。
+
+- Similar to Batch Normaliza- tion [19], the activation is normalized in the channel-wise manner, and then modulated with learned scale and bias.
+    - バッチ正規化[19]と同様に、活性化はチャネルごとに正規化され、その後学習されたスケールとバイアスで変調されます。 
+
+- Figure 2 illustrates the SPADE design. The activation value at site (n ∈ N,c ∈ Ci,y ∈ Hi,x ∈ Wi) is given by
+    - 図2は、SPADEデザインを示しています。 サイトでの活性化値（n∈N、c∈Ci、y∈Hi、x∈Wi）は次式で与えられます。
+
+- where h_{n,c,y,x}^i is the activation at the site before normalization, μ_c^i and σ_c^i are the mean and standard deviation of the activation in channel c:
+
+---
+
+- The variables γci,y,x(m) and βci,y,x(m) in (1) are the learned modulation parameters of the normalization layer.
+
+- In contrast to BatchNorm [19], they depend on the input segmentation mask and vary with respect to the location (y, x).
+    - BatchNorm [19]とは対照的に、それらは入力セグメンテーションマスクに依存し、位置（y、x）に関して変化します。
+
+- We use the symbol γci,y,x and βci,y,x to denote the functions that convert the input segmentation mask m to the scaling and bias values at the site (c, y, x) in the i-th activation map.
+
+- We implement the functions γci,y,x and βci,y,x using a simple two-layer convolutional network, whose detail design can be found in the appendix.
+
+---
+
+- In fact, SPADE is related to, and is a generalization of several existing normalization layers.
+    - 実際、SPADEはいくつかの既存の正規化層に関連しており、それを一般化したものです。
+
+- First, replacing the segmentation mask m with the image class label and making the modulation parameters spatially-invariant (i.e.,γci,y1,x1 ≡ γci,y2,x2 and βci,y1,x1 ≡ βci,y2,x2 for any y1, y2 ∈ {1,2,...,Hi} and x1,x2 ∈ {1,2,...,Wi}), we arrive at the form of Conditional Batch Normalization layer [10].
+
+- Indeed, for any spatially-invariant conditional data, our method reduces to Conditional BN. Similarly, we can arrive at AdaIN [17] by replacing the segmentation mask with an- other image, making the modulation parameters spatially- invariant and setting N = 1. As the modulation parameters are adaptive to the input segmentation mask, the proposed SPADE is better suited for semantic image synthesis.
 
 # ■ 実験結果（主張の証明）・議論（手法の良し悪し）・メソッド（実験方法）
 

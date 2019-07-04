@@ -234,7 +234,7 @@
 ---
 
 - We train the generator with the same multi-scale discriminator and loss function used in pix2pixHD except that we replace the least squared loss term [28] with the hinge loss term [25, 30, 45].
-    - 最小二乗損失項[28]をヒンジ損失項[25、30、45]で置き換えることを除いて、pix2pixHDで使用されているものと同じマルチスケール弁別器および損失関数を使用してジェネレータをトレーニングします。
+    - 最小二乗損失項[28]をヒンジ損失項[25、30、45]で置き換えることを除いて、pix2pixHDで使用されているものと同じマルチスケール識別器および損失関数を使用してジェネレータをトレーニングします。
 
 - We test several ResNet-based discrim- inators used in recent unconditional GANs [1, 29, 31] but observe similar results at the cost of a higher GPU mem- ory requirement.
     - 我々は最近の無条件GAN [1、29、31]で使用されているいくつかのResNetベースの識別器をテストしますが、より高いGPUメモリ要件を犠牲にして同様の結果を観察します。
@@ -247,6 +247,15 @@
 
 ### Why does SPADE work better?
 
+- A short answer is that it can better preserve semantic information against common normalization layers. Specifically, while normalization layers such as the InstanceNorm [38] are essential pieces in almost all the state-of-the-art conditional image synthesis models [40], they tend to wash away semantic information when applied to uniform or flat segmentation masks
+    - 簡単な答えは、それが一般的な正規化層に対してセマンティック情報をよりよく保存することができるということです。 
+    - 具体的には、InstanceNorm [38]のような正規化層は、ほとんどすべての　SOTA の条件付き画像合成モデル[40]において不可欠な要素ですが、均一またはフラットセグメンテーションマスクに適用するとセマンティック情報を洗い流す傾向があります。
+
+- Let us consider a simple module that first applies convolution to a segmentation mask and then normalization. Furthermore, let us assume that a segmentation mask with a single label is given as input to the module (e.g., all the pixels have the same label such as sky or grass). Under this setting, the convolution outputs are again uniform with different labels having different uniform values. Now after we apply InstanceNorm to the output, the normalized activation will become all zeros no matter what the input semantic label is given. Therefore, semantic information is totally lost. This limitation applies to a wide range of generator architectures, including pix2pixHD and its variant that concatenates the semantic mask at all intermediate layers, as long as a network applies convolution and then normalization to the semantic mask. In Figure 3, we empirically show this is precisely the case for pix2pixHD. Because a segmentation mask consists of a few uniform regions in general, the issue of information loss emerges when applying normalization.
+    - 最初に畳み込みをセグメンテーションマスクに適用し、次に正規化を適用する単純なモジュールを考えてみましょう。さらに、単一のラベルを有するセグメンテーションマスクがモジュールへの入力として与えられると仮定しよう（例えば、すべてのピクセルは空または芝生のような同じラベルを有する）。この設定の下では、畳み込み出力はやはり均一であり、異なるラベルは異なる均一値を有する。 InstanceNormを出力に適用した後、入力意味ラベルが何であっても正規化された活性化はすべてゼロになります。したがって、意味情報は完全に失われます。この制限は、ネットワークが畳み込みを適用してからセマンティックマスクに正規化を適用する限り、すべての中間層でセマンティックマスクを連結するpix2pixHDおよびそのバリアントを含む、幅広いジェネレーターアーキテクチャに適用されます。図3では、これがpix2pixHDの場合とまったく同じであることを経験的に示しています。セグメンテーションマスクは一般にいくつかの均一な領域からなるため、正規化を適用すると情報損失の問題が発生します。
+
+- In contrast, the segmentation mask in the SPADE Gen- erator is fed through spatially adaptive modulation without normalization. Only activations from the previous layer are normalized. Hence, the SPADE generator can better pre- serve semantic information. It enjoys the benefit of normal- ization without losing the semantic input information.
+    - これとは対照的に、SPADEジェネレータのセグメンテーションマスクは、正規化なしで空間適応変調を介して供給されます。 前のレイヤーからのアクティベーションのみが正規化されます。 したがって、SPADEジェネレータはセマンティック情報をより適切に保存できます。 意味入力情報を失うことなく正規化の恩恵を受けます。
 
 ### Multi-modal synthesis.
 
@@ -288,4 +297,21 @@
 - where the prior distribution p(z) is a standard Gaussian dis- tribution and the variational distribution q is fully deter- mined by a mean vector and a variance vector [22]. We use the reparamterization trick [22] for back-propagating the gradient from the generator to the image encoder. The weight for the KL Divergence loss is 0.05.
     - ここで、事前分布p（z）は標準ガウス分布であり、変分分布qは平均ベクトルと分散ベクトルによって完全に決定されます[22]。 ジェネレータから画像エンコーダへの勾配の逆伝播には、再パラメータ化の手法[22]を使用します。 KL発散損失の重みは0.05です。
 
+
+## B. Additional Ablation Study
+
+- Table 5: Additional ablation study results regarding mIoU scores: the table shows that both the perceptual loss and GAN feature matching loss terms are important. Making the discriminator deeper does not lead to a performance boost.
+    - 表５：mIoU スコアに関する追加のアブレーション研究の結果：
+    - この表は、perceptual loss と feature matching loss の両方の項が重要であることを示している。 識別器を深くしても、パフォーマンスは向上しません。
+
+- The table also shows that the components (Synchro- nized Batch Normalization, Spectral Normalization, TTUR, Hinge loss, and SPADE) used in the proposed method also helps our strong baseline, pix2pixHD++.
+    - この表はまた、提案された方法で使用される成分（同期化されたバッチ正規化、スペクトル正規化、TTUR、ヒンジ損失、およびSPADE）も我々の強力なベースラインpix2pixHD ++を助けることを示しています。
+
+---
+
+- Table 5 provides additional ablation study results analyzing the contribution of individual components in the proposed method. We first find that both of the perceptual loss and GAN feature matching loss inherited from the learning objective function of the pix2pixHD [40] are impor- tant. Removing any of them leads to a performance drop. We also find that increasing the depth of the discrimina- tor by inserting one more convolutional layer to the top of the pix2pixHD discriminator does not lead to a performance boost.
+    - 表５は、提案された方法における個々の構成要素の寄与を分析する追加のアブレーション研究結果を提供する。 まず、pix2pixHDの学習目的関数[40]から受け継いだ知覚的損失とGAN特徴マッチング損失の両方が重要であることがわかった。 いずれかを削除すると、パフォーマンスが低下します。 また、pix2pixHDディスクリミネーターの上部にもう1つの畳み込みレイヤーを挿入してディスクリミネーターの深さを増やしても、パフォーマンスが向上するわけではないこともわかりました。
+
+- In Table 5, we also analyze the effectiveness of each component used in our strong baseline, the pix2pixHD++ method, derived from the pix2pixHD method. We found that the spectral norm, synchronized batch norm, TTUR [15], and hinge loss all contribute to the perfor- mance boost. However, with adding the SPADE to the strong baseline, the performance further improves. Note that pix2pixHD++ w/o Sync Batch Norm and w/o Spec- tral Norm still differs from pix2pixHD in that it uses the hinge loss, TTUR, a large batch size, and Glorot initializa- tion [11].
+    - 表5では、pix2pixHDメソッドから派生した、強力なベースラインであるpix2pixHD ++メソッドで使用される各コンポーネントの有効性も分析しています。 スペクトルノルム、シンクロナイズドバッチノルム、TTUR [15]、ヒンジ損失がすべて性能向上に寄与することがわかりました。 ただし、強力なベースラインにSPADEを追加すると、パフォーマンスはさらに向上します。 同期バッチノルムとスペクトルノルムなしのpix2pixHD ++は、ヒンジ損失、TTUR、大規模バッチサイズ、およびGlorot初期化[11]を使用するという点でpix2pixHDとは異なります。
 

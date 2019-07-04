@@ -248,6 +248,22 @@
 ### Why does SPADE work better?
 
 
+### Multi-modal synthesis.
+
+- By using a random vector as the input of the generator, our architecture provides a simple way for multi-modal synthesis. Namely, one can attach an encoder that processes a real image into a random vector, which will be then fed to the generator. The encoder and generator form a variational autoencoder [22], in which the encoder tries to capture the style of the image, while the generator combines the encoded style and the segmentation mask information via SPADE to reconstruct the original im- age. The encoder also serves as a style guidance network at test time to capture the style of target images, as used in Fig- ure 1. For training, we add a KL-Divergence loss term [22].
+    - 生成器の入力としてランダムベクトルを使用することによって、私たちのアーキテクチャはマルチモーダル合成のための簡単な方法を提供します。
+    - すなわち、実画像を処理する符号器をランダムベクトルに取り付けることができ、それは次に発生器に供給される。
+    - エンコーダーと生成器は変分オートエンコーダー（VAE）[22]を形成し、エンコーダーはエンコードされたスタイルとSPADEを介してセグメンテーションマスク情報を組み合わせて元の画像を再構築します。
+    - 図1で使用されているように、エンコーダはテスト時にターゲット画像のスタイルをキャプチャするスタイルガイダンスネットワークとしても機能します。
+    - **トレーニングのために、KL-Divergence loss termを追加します[22]。**
+
+
+---
+
+
+- > Figure 3: Comparing results given uniform segmentation maps: while SPADE generator produces plausible textures, pix2pixHD [40] produces identical outputs due to the loss of the semantic information after the normalization layer.
+    - > 図3：一様なセグメンテーションマップを与えられた結果を比較する：
+    - > ＳＰＡＤＥ生成器はもっともらしいテクスチャを生成するが、ｐｉｘ２ｐｉｘＨＤ ［４０］は正規化層の後の意味情報の損失のために同一の出力を生成する。
 
 # ■ 実験結果（主張の証明）・議論（手法の良し悪し）・メソッド（実験方法）
 
@@ -257,5 +273,19 @@
 # ■ 関連研究（他の手法との違い）
 
 ## x. 論文の項目名（Related Work）
+
+
+## A. Additional Implementation Details
+
+### Learning objective. 
+
+- We use the learning objective function in the pix2pixHD work [40] except that we replace its LS- GAN loss [28] term with the Hinge loss term [25, 30, 45]. We use the same weighting among the loss terms in the ob- jective function as that in the pix2pixHD work.
+    - pix2pixHDの研究[40]では、学習目的関数を使用していますが、そのLS-GAN損失[28]の項をヒンジ損失の項[25、30、45]に置き換えています。 目的関数の損失項の間では、pix2pixHDの研究と同じ重み付けを使用します。
+
+- When training the proposed framework with the image encoder for multi-modal synthesis and style-guided image synthesis, we include a KL Divergence loss:
+    - マルチモーダル合成およびスタイルガイド画像合成のための画像エンコーダを用いて提案されたフレームワークをトレーニングするとき、我々はKL発散損失を含める：
+
+- where the prior distribution p(z) is a standard Gaussian dis- tribution and the variational distribution q is fully deter- mined by a mean vector and a variance vector [22]. We use the reparamterization trick [22] for back-propagating the gradient from the generator to the image encoder. The weight for the KL Divergence loss is 0.05.
+    - ここで、事前分布p（z）は標準ガウス分布であり、変分分布qは平均ベクトルと分散ベクトルによって完全に決定されます[22]。 ジェネレータから画像エンコーダへの勾配の逆伝播には、再パラメータ化の手法[22]を使用します。 KL発散損失の重みは0.05です。
 
 

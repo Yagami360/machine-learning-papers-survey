@@ -546,6 +546,17 @@
 
 ### Multi-modal synthesis.
 
+![image](https://user-images.githubusercontent.com/25688193/60755853-afcf8d00-a030-11e9-945d-d857050cbf68.png)
+
+- > Figure 9: Our model attains multimodal synthesis capability when trained with the image encoder.
+    - > 図9：我々のモデルは、画像エンコーダで訓練されたときにマルチモーダル合成能力を達成します [attains]。
+
+- > During deployment, by using different random noise, our model synthesizes outputs with diverse appearances but all having the same semantic layouts depicted in the input mask.
+
+- > For reference, the ground truth image is shown inside the input segmentation mask.
+
+---
+
 - In Figure 9, we show the multimodal image synthesis results on the Flickr Landscape dataset.
 
 - For the same input segmentation mask, we sample different noise inputs to achieve different outputs.

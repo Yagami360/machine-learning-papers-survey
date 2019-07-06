@@ -439,22 +439,126 @@
 ### Human evaluation.
 
 - We use Amazon Mechanical Turk (AMT) to compare the perceived visual fidelity of our method against existing approaches.
+    - 私たちはAmazon Mechanical Turk（AMT）を使用して、既存のアプローチに対して、私たちの手法の近く的な視覚的忠実度を比較する。
 
 - Specifically, we give the AMT workers an input segmentation mask and two synthesis outputs from different methods and ask them to choose the output image that looks more like a corresponding image of the segmentation mask.
+    - 具体的には、我々は、AMT ワーカーに、１つの入力セマンティックセグメンテーションマスクと、異なる手法からの２つの合成画像を与え、
+    - セグメンテーションマスクの画像と対応するような出力画像を選ぶように依頼する。
 
 - The workers are given unlimited time to make the selection.
 
 - For each comparison, we randomly generate 500 questions for each dataset, and each question is answered by 5 different workers.
 
 - For quality control, only workers with a lifetime task approval rate greater than 98% can participate in our evaluation.
+    - 品質管理については、生涯のタスク承認率が98％を超える作業員のみが評価に参加できます。
 
 ---
+
+![image](https://user-images.githubusercontent.com/25688193/60753505-666e4600-a00e-11e9-94e3-ad94ea3d741b.png)
 
 - Table 2 shows the evaluation results.
 
 - We find that users strongly favor our results on all the datasets, especially on the challenging COCO-Stuff and ADE20K datasets.
 
 - For the Cityscapes, even when all the competing methods achieve high image fidelity, users still prefer our results.
+
+### The effectiveness of SPADE.
+
+- To study the importance of SPADE, we introduce a strong baseline called pix2pixHD++, which combines all the techniques we find useful for enhancing the performance of pix2pixHD except SPADE.
+    - SPADE の重要性を研究するために、pix2pixHD++ と呼ばれる強力なベースラインを紹介する。
+    - これは、SPADE を除いて、pix2pixHD のパフォーマンスを高めるために有益である我々が見つけた全てのテクニックを組み合わている。
+
+- We also train models that receive segmentation mask input at all the intermediate layers via concatenation (pix2pixHD++ w/ Concat) in the channel direction.
+    - 我々はまた、チャンネル方向で連結（pix2pixHD++ w/ concat）経由で、
+    - 全ての中間層で、セグメンテーションマスクを入力として受け取るモデルを学習する。
+
+- Finally, the model that combines the strong baseline with SPADE is denoted as pix2pixHD++ w/ SPADE.
+    - 最後に、強力なベースラインと SPADE を組み合わせたモデルを、pix2pixHD++ w/ SPADE として示す。
+
+- Additionally, we compare models with different capacity by using a different number of convolutional filters in the generator.
+    - 加えて、我々は、生成器において、異なる数の畳み込みフィルターを使用することによって、容量が異なるモデルを比較する。
+
+---
+
+![image](https://user-images.githubusercontent.com/25688193/60753643-f4e3c700-a010-11e9-8c84-ac3e8a78ee08.png)
+
+- Table 3: mIoU scores are boosted when SPADE layers are used, for both the decoder architecture (Figure 4) and encoder-decoder architecture of pix2pixHD++ (our improved baseline over pix2pixHD [40]).
+    - 表３：mIoU スコアは、生成器のデコーダーのアーキテクチャにと pix2pixHD++ の encoder-decoder アーキテクチャの両方対して、SPADE の正規化層が使用されるときに、ブーストされる。
+
+- On the other hand, simply concatenating semantic input at every layer fails to do so.
+    - 一方で、各層で、セマンティック入力を単純に連結することは、そうしない。
+
+- Moreover, our compact model with smaller depth at all layers outperforms all baselines.
+    - さらに、すべての層で深さがより浅い、我々のコンパクトなモデルは、すべてのベースラインよりも優れています。
+
+---
+
+- As shown in Table 3 the architectures with the proposed SPADE consistently outperforms its counterparts, in both the decoder-style architecture described in Figure 4 and more traditional encoder-decoder architecture used in pix2pixHD.
+    - 表3に示すように、提案されたSPADEのアーキテクチャは、図4で説明した decoder スタイルのアーキテクチャと、pix2pixHDで使用されているより伝統的な encoder-decoder スタイルのアーキテクチャの両方において、常に該当するものを上回っています。
+
+- We also find that concatenating segmentation masks at all intermediate layers, an intuitive alternative to SPADE to provide semantic signal, does not achieve the same performance as SPADE.
+    - 我々はまた、セマンティック信号を提供するためのSPADEの直感的な代替手段である、すべての中間層でのセグメンテーションマスクの結合は、SPADEと同じパフォーマンスを達成しないことを見出した。
+
+- Furthermore, the decoder-style SPADE generator achieves better performance than the strong baselines even when using a smaller number of parameters.
+    - 更に言えば、decoder スタイルの SPADE 生成器は、パラメーターの数が少ないにも関わらず、強力なベースラインよりもよいパラメーターを達成する。
+
+### Variations of SPADE generator.
+
+![image](https://user-images.githubusercontent.com/25688193/60753952-09c25980-a015-11e9-8329-6f61de93a7c6.png)
+
+- Table 4: The SPADE generator works with different configurations.
+    - 表４：異なる設定での SPADE 生成器の動作。
+
+- We change the input of the generator, the convolutional kernel size acting on the segmentation map, the capacity of the network, and the parameter-free normalization method.
+    - 生成器の入力、セグメンテーションマスク画像で動作する畳み込みカーネルサイズ、ネットワークの容量、パラメーターなしの正規化手法を変える。
+
+- The settings used in the paper are boldfaced.
+    - この論文で使用されている設定は太字 [太字活字] で示しています。
+
+---
+
+- Table 4 reports the performance of variations of our generator.
+    - 表４は、我々の生成器の変種のパフォーマンスを報告している。
+
+- First, we compare two types of the input to the generator: random noise or downsampled segmentation maps.
+    - 最初に、生成器の入力の２つのタイプを比較する。
+    - 即ち、入力ランダムノイズか、ダウンサンプリングされたセグメンテーションマップ
+
+- We find that both render similar performance, and conclude that the modulation by SPADE alone provides sufficient signal about the input mask.
+    - 我々は両者が同様の性能を与えることを見出し、
+    - そして SPADE 単独による変調は入力マスクについて十分な信号を提供すると結論づける。
+
+- Second, we vary the type of parameter-free normalization layers before applying the modulation parameters.
+    - 次に、変調パラメーター γ, β を適用する前のパラメーターフリーな正規化層をのタイプを変更する。 [vary]
+
+- We observe that SPADE works reliably across different normalization methods.
+    - SPADEはさまざまな正規化方法に渡って、確実に機能することを観測する。
+
+- Next, we vary the convolutional kernel size acting on the label map, and find that kernel size of 1x1 hurts performance, likely because it prohibits utilizing the context of the label.
+    - 次に、ラベルマップに作用する畳み込みカーネルサイズを変えて、1x1 のカーネルサイズがパフォーマンスを損なうことを見いし、これはおそらくラベルの内容を利用することを禁止するためである。
+
+- Lastly, we modify the capacity of the generator network by changing the number of convolutional filters.
+    - 最後に、畳み込みフィルターの数を変えることによって、生成器のネットワークの容量を修正する。
+
+- We present more variations and ablations in the appendix for more detailed investigation.
+    - より詳細な調査のために、付録にはより多くの変種と切断があります。
+
+
+### Multi-modal synthesis.
+
+- In Figure 9, we show the multimodal image synthesis results on the Flickr Landscape dataset.
+
+- For the same input segmentation mask, we sample different noise inputs to achieve different outputs.
+
+- More results are included in the appendix.
+
+### Semantic manipulation and guided image synthesis
+
+- In Figure 1, we show an application where a user draws different segmentation masks, and our model renders the corresponding landscape images.
+
+- Moreover, our model allows users to choose an external style image to control the global appearances of the output image.
+
+- We achieve it by replacing the input noise with the embedding vector of the style image computed by the image encoder.
 
 
 # ■ 関連研究（他の手法との違い）

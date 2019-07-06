@@ -269,6 +269,7 @@
 
 ---
 
+![image](https://user-images.githubusercontent.com/25688193/60729693-4bec8c00-9f7e-11e9-8be1-29cd76bb8242.png)
 
 - > Figure 3: Comparing results given uniform segmentation maps: while SPADE generator produces plausible textures, pix2pixHD [40] produces identical outputs due to the loss of the semantic information after the normalization layer.
     - > 図3：一様なセグメンテーションマップを与えられた結果を比較する：
@@ -276,7 +277,184 @@
 
 # ■ 実験結果（主張の証明）・議論（手法の良し悪し）・メソッド（実験方法）
 
-## x. 論文の項目名
+## 4. Experiments
+
+### Implementation details. 
+
+- We apply the Spectral Norm [30] to all the layers in both the generator and discriminator.
+    - **生成器と識別器の全ての層に、Spectral Norm を適用している。**
+
+- The learning rates for the generator and discriminator are set to 0.0001 and 0.0004, respectively [15]. We use the ADAM [21] and set β1 = 0, β2 = 0.999. All the exper- iments are conducted on an NVIDIA DGX1 with 8 V100 GPUs.
+
+- We use synchronized mean and variance computation, i.e., these statistics are collected from all the GPUs.
+    - 我々は、同期された平均および分散計算を使用する、すなわち、これらの統計はすべてのＧＰＵから収集される。
+
+### Datasets.
+
+- We conduct experiments on several datasets.
+
+---
+
+- COCO-Stuff [5] is derived from the COCO dataset [26].
+    - COCO-Stuff [5]は、COCOデータセット[26]から派生した [derived from] ものです。
+
+- It has 118,000 training images and 5,000 validation images captured from diverse scenes. 
+    - 多様なシーンから抽出した 118,000 枚の学習用画像と 5,000 の検証用画像があります。
+
+- It has 182 semantic classes.
+
+- Due to its large diversity, existing image synthesis models perform poorly on this dataset.
+    - その多様性が大きいため、既存の画像合成モデルはこのデータセットではうまく機能しません。
+
+---
+
+- ADE20K [48] consists of 20,210 training and 2,000 validation images. 
+
+- Similarly to COCO, the dataset contains challenging scenes with 150 semantic classes.
+    - COCOと同様に、データセットには150の意味クラスを持つ難しいシーンが含まれています。
+
+---
+
+- ADE20K-outdoor is a subset of the ADE20K dataset that only contains outdoor scenes, used in Qi et al. [35].
+    - ADE20K-outdoorは、屋外 [outdoor] シーンのみを含むADE20Kデータセットのサブセットです。 [35]。
+
+---
+
+- Cityscapes dataset [8] contains street scene images in German cities. 
+    - Cityscapesデータセット[8]には、ドイツの都市における街路 [street] シーンの画像が含まれています。
+
+- The training and validation set sizes are 3,000 and 500, respectively. 
+
+- Recent work has achieved photorealistic semantic image synthesis results [35, 39] on the Cityscapes dataset.
+
+---
+
+- Flickr Landscapes. We collect 41,000 photos from Flickr and use 1,000 samples for the validation set.
+    - Flickrの風景 Flickrから41,000枚の写真を収集し、検証セットに1,000個のサンプルを使用します。
+
+- Instead of manual annotation, we use a pre-trained DeepLabV2 model [6] to compute the input segmentation masks.
+
+---
+
+- We train the competing semantic image synthesis methods on the same training set and report their results on the same validation set for each dataset.
+    - 我々は同じトレーニングセット上で競合する意味的画像合成方法を訓練し、それらの結果を各データセットについて同じ検証セット上で報告する。
+
+### Performance metrics.
+
+- We adopt the evaluation protocol from previous work [7, 40]. 
+
+- Specifically, we run a semantic segmentation model on the synthesized images and compare how well the predicted segmentation mask matches the ground truth input.
+    - 具体的には、合成された画像に対してセマンティックセグメンテーションモデルを実行し、予測されたセグメンテーションマスクがグランドトゥルース入力とどの程度うまく一致するかを比較します。
+
+- This is based on the intuition that if the output images are realistic then a well-trained semantic segmentation model should be able to predict the ground truth label.
+    - これは、出力画像がリアルなものであれば、十分に学習されたセマンティックセグメンテーションモデルがグランドトゥルースラベルを予測できるはずであるという直感に基づいています。
+
+- For measuring the segmentation accuracy, we use the mean Intersection-over-Union (mIoU) and pixel accuracy (accu) metrics.
+    - **セグメンテーション精度を測定するために、mIoU (平均 IoU) 指標、およびピクセル単位での正解率指標を使用する。**
+
+- We use state-of-the-art segmentation networks for each dataset: DeepLabV2 [6, 32] for COCO-Stuff, UperNet101 [42] for ADE20K, and DRN-D-105 [44] for Cityscapes.
+    - 我々は、各データセットに対して、SOTA のセグメンテーションネットワークを使用する。
+    - 即ち、COCO-Stuff データセットに対しては、DeepLabV2、ADE20K データセットに対しては、UperNet101、Cityscapes データセットに関しては、DRN-D-105
+
+- In addition to segmentation accuracy, we use the Fre ́chet Inception Distance (FID) [15] to measure the distance between the distributions of synthesized results and the distribution of real images.
+    - **セグメンテーションの精度に加えて、我々は合成結果の分布と本物画像の分布との間の距離を測定するためにフレシェント開始距離（FID）[15]を使用する。**
+
+### Baselines.
+
+- We compare our method with three leading semantic image synthesis models: the pix2pixHD model [40], the cascaded refinement network model (CRN) [7], and the semi-parametric image synthesis model (SIMS) [35]. 
+
+- pix2pixHD is the current state-of-the-art GAN-based conditional image synthesis framework.
+
+- CRN uses a deep network that repeatedly refines the output from low to high resolution, while the SIMS takes a semi-parametric approach that composites real segments from a training set and refines the boundaries. 
+    - CRNは低解像度から高解像度まで繰り返し出力を改善する [refines] ような、深層ネットワークを使用する。
+    - 一方で、SIMSは学習用データセットからリアルなセグメントを合成して境界を改善する半パラメトリックアプローチを採用しています。
+
+- Both the CRN and SIMS are mainly trained using image reconstruction loss.
+    - CRN と SIMS は。、主に画像 reconstruction loss を使用して学習される。
+
+- For a fair comparison, we train the CRN and pix2pixHD models using the implementations provided by the authors.
+    - **公正な比較のために、著者らが提供した実装を使用してCRNとpix2pixHDモデルを学習します。**
+
+- As synthesizing an image using SIMS requires many queries to the training dataset, it is computationally prohibitive for a large dataset such as COCO-stuff and the full ADE20K.
+    - SIMS を使用して画像を合成することは、学習データセットに多くのクエリ（＝問い合わせ） [queries] を要求するので、[as]
+    - COCO-stuff や full ADE20K のような多くなデータセットに対しては、計算上では禁止 [prohibitive] である。
+
+- Therefore, we use the result images provided by the authors whenever possible.
+    - したがって、可能な限り著者らによって提供された結果画像を使用します。
+
+### Quantitative comparisons.
+
+![image](https://user-images.githubusercontent.com/25688193/60750651-8a1d9600-9fe6-11e9-8429-e18c59082f7e.png)
+
+- As shown in Table 1, our method outperforms the current state-of-the-art methods by a large margin in all the datasets.
+
+- For COCO-Stuff, our method achieves a mIoU score of 35.2, which is about 1.5 times better than the previous leading method.
+
+- Our FID is also 2.2 times better than the previous leading method.
+
+- We note that the SIMS model produces a lower FID score but has poor segmentation performances on the Cityscapes dataset.
+    - SIMSモデルではFIDスコアが低くなりますが、Cityscapeデータセットではセグメンテーションパフォーマンスが低下します。
+
+- This is because the SIMS synthesizes an image by first stitching image patches from the training dataset.
+    - これは、ＳＩＭＳが最初に学習用データセットから画像パッチをつなぎ合わせることによって画像を合成するためである。
+
+- As using the real image patches, the resulting image distribution can better match the distribution of real images.
+    - 本物画像パッチを使用しているので、結果として得られる画像分布は本物画像の分布によりよく一致することができる。
+
+- However, because there is no guarantee that a perfect query (e.g., a person in a particular pose) exists in the dataset, it tends to copy objects with mismatched segments.
+    - しかしながら、完全な問い合わせ（例えば特定のポーズをとっている人）がデータセット内に存在するという保証はないので、それは不一致セグメントを有するオブジェクトをコピーする傾向がある。
+
+#### Qualitative results.
+
+![image](https://user-images.githubusercontent.com/25688193/60751071-45e0c480-9feb-11e9-9796-1cb9784f29c9.png)
+
+---
+
+- In Figures 5 and 6, we provide a qualitative comparison of the competing methods.
+
+- We find that our method produces results with much better visual quality and fewer artifacts, especially for diverse scenes in the COCO-Stuff and ADE20K dataset.
+    - 私たちの方法は、特にCOCO-StuffとADE20Kデータセットの多様なシーンに対して、はるかに良い視覚品質と少ないアーティファクトで結果を生み出すことがわかりました。
+
+- When the training dataset size is small, the SIMS model also renders images with good visual quality.
+    - 学習用データセットのサイズが小さい場合、SIMSモデルは画像を優れた視覚品質でレンダリングします。
+
+- However, the depicted content often deviates from the input segmentation mask (e.g., the shape of the swimming pool in the second row of Figure 6).
+    - しかしながら、描かれた内容は、入力セグメンテーションマスク（例えば、図６の第２行のプールの形状）から逸脱することが多い。
+
+---
+
+![image](https://user-images.githubusercontent.com/25688193/60751170-4e85ca80-9fec-11e9-9d0d-e627763e8e17.png)
+
+![image](https://user-images.githubusercontent.com/25688193/60751238-54c87680-9fed-11e9-910a-5617e20d694c.png)
+
+---
+
+- In Figures 7 and 8, we show more example results from the Flickr Landscape and COCO-Stuff datasets.
+
+- The proposed method can generate diverse scenes with high image fidelity.
+    - 提案した方法は、高い画像忠実度で多様なシーンを生成することができる。
+
+- More results are included in the appendix.
+
+### Human evaluation.
+
+- We use Amazon Mechanical Turk (AMT) to compare the perceived visual fidelity of our method against existing approaches.
+
+- Specifically, we give the AMT workers an input segmentation mask and two synthesis outputs from different methods and ask them to choose the output image that looks more like a corresponding image of the segmentation mask.
+
+- The workers are given unlimited time to make the selection.
+
+- For each comparison, we randomly generate 500 questions for each dataset, and each question is answered by 5 different workers.
+
+- For quality control, only workers with a lifetime task approval rate greater than 98% can participate in our evaluation.
+
+---
+
+- Table 2 shows the evaluation results.
+
+- We find that users strongly favor our results on all the datasets, especially on the challenging COCO-Stuff and ADE20K datasets.
+
+- For the Cityscapes, even when all the competing methods achieve high image fidelity, users still prefer our results.
 
 
 # ■ 関連研究（他の手法との違い）

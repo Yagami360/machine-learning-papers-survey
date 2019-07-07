@@ -201,10 +201,10 @@
     - **したがって、最近のアーキテクチャで一般的に使用されているジェネレータのエンコーダ部分を破棄します[20、40]。**
 
 - This simplification results in a more lightweight network.
-    - この単純化により、ネットワークはより軽量になります。
+    - **この単純化により、ネットワークはより軽量になります。**
 
 - Furthermore, similarly to existing class-conditional generators [29,31,45], the new generator can take a random vector as input, enabling a sim- ple and natural way for multi-modal synthesis [18, 50].
-    - さらに、既存のクラス条件付きジェネレータ[29、31、45]と同様に、新しいジェネレータはランダムベクトルを入力として使用できるため、マルチモーダル合成のための単純で自然な方法が可能になります[18、50]。
+    - **さらに、既存のクラス条件付きジェネレータ[29、31、45]と同様に、新しいジェネレータはランダムベクトルを入力として使用できるため、マルチモーダル合成のための単純で自然な方法が可能になります[18、50]。**
 
 ---
 
@@ -578,6 +578,54 @@
 
 
 ## A. Additional Implementation Details
+
+### Generator. 
+
+- The architecture of the generator consists of a series of the proposed SPADE ResBlks with nearest neighbor upsampling.
+    - 発生器のアーキテクチャは、最近傍アップサンプリングを用いた一連の提案されたＳＰＡＤＥ ＲｅｓＢｌｋからなる。
+
+- We train our network using 8 GPUs simultaneously and use the synchronized version of the batch normalization.
+    - 私たちは同時に8つのGPUを使ってネットワークをトレーニングし、バッチ正規化の同期バージョンを使います。
+
+- We apply the spectral normalization [30] to all the convolutional layers in the generator.
+    - 生成器内のすべての畳み込み層にスペクトル正規化[30]を適用します。
+    
+- The architectures of the proposed SPADE and SPADE ResBlk are given in Figure 10 and Figure 11, respectively.
+    - 提案されたSPADEとSPADE ResBlkのアーキテクチャは、それぞれ図10と図11に示されています。
+
+- The architecture of the generator is shown in Figure 12.
+
+---
+
+- > Figure 10: SPADE Design. The term 3x3-Conv-k denotes a 3-by-3 convolutional layer with k convolutional filters. The segmentation map is resized to match the resolution of the corresponding feature map using nearest-neighbor down- sampling.
+
+---
+
+![image](https://user-images.githubusercontent.com/25688193/60764261-65e2b780-a0c1-11e9-949b-b1697121f525.png)
+
+- > Figure 11: SPADE ResBlk.
+
+- > The residual block design largely follows that in [29] and [31].
+
+- > We note that for the case that the number of channels before and after the residual block is different, the skip connection is also learned (dashed box in the figure).
+
+
+---
+
+- > Figure 12: SPADE Generator.
+
+- > Different from prior image generators [20, 40], the semantic segmentation mask is passed to the generator through the proposed SPADE ResBlks in Figure 11.
+
+
+### Discriminator. 
+
+- The architecture of the discriminator fol- lows the one used in the pix2pixHD method [40], which uses a multi-scale design with instance normalization (IN). The only difference is that we apply the spectral normalization to all the convolutional layers of the discriminator.
+
+- The details of the discriminator architecture is shown in Fig- ure 13.
+
+### Image Encoder.
+
+-  The image encoder consists of 6 stride-2 convolutional layers followed by two linear layers to pro- duce the mean and variance of the output distribution as shown in Figure 14.
 
 ### Learning objective. 
 

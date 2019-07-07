@@ -619,13 +619,46 @@
 
 ### Discriminator. 
 
-- The architecture of the discriminator fol- lows the one used in the pix2pixHD method [40], which uses a multi-scale design with instance normalization (IN). The only difference is that we apply the spectral normalization to all the convolutional layers of the discriminator.
+- The architecture of the discriminator follows the one used in the pix2pixHD method [40], which uses a multi-scale design with instance normalization (IN).
+    - 識別器のアーキテクチャは、インスタンス正規化（IN）を伴うマルチスケール設計を使用するpix2pixHD手法[40]で使用されているものに従います。
 
-- The details of the discriminator architecture is shown in Fig- ure 13.
+- The only difference is that we apply the spectral normalization to all the convolutional layers of the discriminator.
+    - 唯一の違いは、識別器のすべての畳み込み層にスペクトル正規化を適用することです。
+
+- The details of the discriminator architecture is shown in Figure 13.
+
+---
+
+![image](https://user-images.githubusercontent.com/25688193/60768154-9e53b700-a0fc-11e9-9c26-56cf93e1559e.png)
+
+- > Figure 13: Our discriminator design largely follows that in the pix2pixHD [40].
+
+- > It takes the concatenation the segmentation map and the image as input.
+
+- > It is based on the PatchGAN [20].
+
+- > Hence, the last layer of the discriminator is a convolutional layer.
 
 ### Image Encoder.
 
--  The image encoder consists of 6 stride-2 convolutional layers followed by two linear layers to pro- duce the mean and variance of the output distribution as shown in Figure 14.
+-  The image encoder consists of 6 stride-2 convolutional layers followed by two linear layers to produce the mean and variance of the output distribution as shown in Figure 14.
+    - 画像エンコーダは、図14に示すように、出力分布の平均と分散を生成するために、ストライド2の６しゅの畳み込み層とそれに続く2つの線形層で構成されています。
+
+---
+
+![image](https://user-images.githubusercontent.com/25688193/60768178-e2df5280-a0fc-11e9-9536-7fc54ea525cc.png)
+
+- > Figure 15: The image encoder encodes a real image to a latent representation for generating a mean vector and a variance vector.
+    - > 図１５：image encode は、平均ベクトルおよび分散ベクトルを生成するために、本物画像を潜在表現にエンコードする。
+
+- > They are used to compute the noise input to the generator via the reparameterization trick [22].
+    - > それらは、再パラメータ化トリック[22]を介して発生器へのノイズ入力を計算するために使用されます。
+
+- > The generator also takes the segmentation mask of the input image as input via the proposed SPADE ResBlks.
+    - > ジェネレータはまた、提案されたSPADE ResBlksを介して入力として入力画像のセグメンテーションマスクを取ります。
+
+- > The discriminator takes concatenation of the segmentation mask and the output image from the generator as input and aims to classify that as fake.
+    - > 識別器はセグメンテーションマスクと発生器からの出力画像の連結を入力として取り、それを偽物として分類することを目的とする。
 
 ### Learning objective. 
 

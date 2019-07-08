@@ -1,7 +1,7 @@
 # ■ 論文
 - 論文タイトル："Semantic Image Synthesis with Spatially-Adaptive Normalization"
 - 論文リンク：https://arxiv.org/abs/1903.07291
-- 論文投稿日付：
+- 論文投稿日付：2019/03/18
 - 著者（組織）：
 - categories：
 

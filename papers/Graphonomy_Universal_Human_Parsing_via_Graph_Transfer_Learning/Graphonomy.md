@@ -208,6 +208,44 @@
 - The visual features that are correlated to a specific semantic part (e.g., face) are aggregated to depict the characteristic of its corresponding graph node.
     - 特定の意味部分（例えば、顔）に相関する視覚的特徴は、その対応するグラフノードの特徴を表すために集められる。
 
+---
+
+- Firstly, We define an undirected graph as G = (V,E) where V denotes the vertices, E denotes the edges, and N = |V|. 
+    - まず、無向グラフを G =（V、E）と定義します。
+    - ここで、Vは頂点、Eは辺（エッジ）、N = |V|を表します。
+
+- Formally, we use the feature maps X ∈ R^{H×W×C} as the module inputs, where H, W and C are height, width and channel number of the feature maps.
+
+- We first produce high-level graph representation Z ∈ R^{N×D} of all N vertices, where D is the desired feature dimension for each v ∈ V , and the number of nodes N typically corresponds to the number of target part labels of a dataset.
+    - 最初に、すべてのN個の頂点の高レベルグラフ表現 Z∈R^{N×D} を生成します。
+    - ここで、Dは各v∈Vに必要な特徴次元であり、ノード数Nは通常ターゲット１つのデータセットの部分ラベルの数に対応します。
+
+- Thus, the projection can be formulated as the function φ:
+
+![image](https://user-images.githubusercontent.com/25688193/60801266-b1748e80-a1b1-11e9-8208-7a0c2e499048.png)
+
+- where W is the trainable transformation matrix for converting each image feature xi ∈ X into the dimension D.
+
+---
+
+- Based on the high-level graph feature Z, we leverage semantic constraints from the human body structured knowledge to evolve global representations by graph reasoning.
+
+- We introduce the connections between the human body parts to encode the relationship between two nodes, as shown in Fig 3.
+
+- For example, hair usually appears with the face so these two nodes are linked. While the hat node and the leg node are disconnected because they have nothing related.
+
+---
+
+- Following Graph Convolution [19], we perform graph propagation over representations Z of all part nodes with matrix multiplication, resulting in the evolved features Ze:
+
+![image](https://user-images.githubusercontent.com/25688193/60801297-c0f3d780-a1b1-11e9-99da-cb7e02032172.png)
+
+- where W e ∈ RD×D is a trainable weight matrix and σ is a nonlinear function. The node adjacency weight av→v′ ∈ Ae is defined according the edge connections in (v,v′) ∈ E, which is a normalized symmetric adjacency matrix. To suf- ficiently propagate the global information, we employ such graph convolution multiple times (3 times in practice).
+
+---
+
+- Finally, the evolved global context can be used to fur- ther boost the capability of image representation. Similar to the projection operation (Eq. 1), we again use another transformation matrix to re-project the graph nodes to im- ages features. We apply residual connection [16] to fur- ther enhance visual representation with the original feature maps X. As a result, The image features are updated by the weighted mappings from each graph node that represents different characteristics of semantic parts.
+
 
 # ■ 実験結果（主張の証明）・議論（手法の良し悪し）・メソッド（実験方法）
 

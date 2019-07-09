@@ -1,7 +1,7 @@
 # ■ 論文
-- 論文タイトル："xxx"
-- 論文リンク：
-- 論文投稿日付：
+- 論文タイトル："Vibrotactile Signal Generation from Texture Images or Attributes using Generative Adversarial Network"
+- 論文リンク：https://dl.acm.org/citation.cfm?id=3275484
+- 論文投稿日付：2018/12/04
 - 著者（組織）：
 - categories：
 

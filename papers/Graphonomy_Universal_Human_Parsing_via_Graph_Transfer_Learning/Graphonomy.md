@@ -284,7 +284,7 @@
     - ノード隣接ウェイトav→v '∈Aeは、正規化された対称隣接行列である（v、v'）∈Eのエッジ接続に従って定義される。
     
 - To sufficiently propagate the global information, we employ such graph convolution multiple times (3 times in practice).
-    グローバル情報を十分に伝播するために、我々はそのようなグラフ畳み込みを複数回（実際には３回）用いる。
+    - グローバル情報を十分に伝播するために、我々はそのようなグラフ畳み込みを複数回（実際には３回）用いる。
 
 ---
 
@@ -324,20 +324,34 @@
 ---
 
 - Let Gs = (Vs,Es) denotes a source graph and Gt = (Vt , Et ) denotes a target graph, where Gs and Gt may have different structures and characteristics.
+    - Ｇｓ ＝（Ｖｓ、Ｅｓ）がソースグラフを表し、Ｇｔ ＝（Ｖｔ、Ｅｔ）がターゲットグラフを表すとする。ここで、ＧｓおよびＧｔは異なる構造および特性を有し得る。
 
-- We can represent a graphasamatrixZ ∈ RN×D,whereN = |V|andDis the dimension of each vertex v ∈ V .
+- We can represent a graph as a matrix Z ∈ R^{N×D}, where N = |V| and D is the dimension of each vertex v ∈ V .
+    - グラフを行列 Z∈R^{N×D} として表すことができます。ここで、N = |V| で、D は各頂点の次元v∈Vである。
 
 - The graph transformer can be formulated as:
 
 ![image](https://user-images.githubusercontent.com/25688193/60810982-446cf300-a1c9-11e9-8a73-66ce19e0e485.png)
 
 - where Atr ∈ RNt×Ns is a transfer matrix for mapping the graph representation from Zs to Zt . Wtr ∈ RDs ×Dt is a trainable weight matrix.
+    - ここで、Atr∈RNt×Nsはグラフ表現をZsからZtに写像するための伝達行列である。 Wtr∈RDs×Dtは学習可能な重み行列です。
 
-- We seek to find a better graph transfer dependency Atr = ai,j, i=[1,Nt ], j =[1,Ns ] , where ai,j means the transfer weight from the jth semantic node of source graph to the ith semantic node of target graph. We consider and compare four schemes for the transfer matrix.
+- We seek to find a better graph transfer dependency Atr = ai,j, i=[1,Nt ], j =[1,Ns ] , where ai,j means the transfer weight from the jth semantic node of source graph to the ith semantic node of target graph.
+    - より良いグラフ転送依存性Atr = ai、j、i = [1、Nt]、j = [1、Ns]を見つけようとします。ここで、ai、jはソースグラフのj番目の意味ノードからi番目への転送重みを意味します ターゲットグラフのセマンティックノード。
+
+- We consider and compare four schemes for the transfer matrix.
+    - 伝達行列について4つの方式を検討し、比較します。
 
 
 #### Handcraft relation.
 
+- Considering the inherent correla- tion between two semantic parts, we first define the relation matrix as a hard weight, i.e., {0, 1}.
+
+- When two nodes have a subordinate relationship, the value of edge between them is 1, else is 0. For example, hair is a part of head, so the edge value between hair node of the target graph and the head node of the source graph is 1.
+
+#### Learnable matrix.
+
+- 
 
 # ■ 実験結果（主張の証明）・議論（手法の良し悪し）・メソッド（実験方法）
 

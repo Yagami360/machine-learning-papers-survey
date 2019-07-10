@@ -431,61 +431,197 @@
 
 #### Implementation Details
 
-- We use the basic structure and network settings provided by DeepLab v3+ [3]. Following [3], we employ the Xception [7] pre-trained on COCO [31] as our network backbone and output stride = 16.
-    - 私たちはDeepLab v3 + [3]が提供する基本構造とネットワーク設定を使います。 [3]に続いて、COCO [31]で事前にトレーニングされたXception [7]をネットワークバックボーンとして使用し、ストライド= 16を出力します。
+- We use the basic structure and network settings provided by DeepLab v3+ [3].
+    - 私たちはDeepLab v3 + [3]が提供する基本構造とネットワーク設定を使います。
+    
+- Following [3], we employ the Xception [7] pre-trained on COCO [31] as our network backbone and output stride = 16.
+    - [3]に続いて、COCO [31]で事前にトレーニングされたXception [7]をネットワークバックボーンとして使用し、ストライド= 16を出力します。
     
 - The number of nodes in the graph is set according to the number of categories of the datasets, i.e., N = 7 for Pascal- Person-Part dataset, N = 18 for ATR dataset, N = 20 for CIHP dataset.
+    - グラフ中のノードの数は、データセットのカテゴリの数に従って設定される、すなわち、パスカルパーソンパートデータセットについてはＮ ＝ ７、ＡＴＲデータセットについてはＮ ＝ １８、ＣＩＨＰデータセットについてはＮ ＝ ２０である。
 
 - The feature dimension D of each semantic node is 128.
 
 - The Intra-Graph Reasoning module has three graph convolution layers with ReLU activate function.
 
-- For Inter-Graph Transfer, we use the pre-trained model on source dataset and randomly initialize the weight of the target graph. Then we perform end-to-end joint training for the whole network on the target dataset.
+- For Inter-Graph Transfer, we use the pre-trained model on source dataset and randomly initialize the weight of the target graph.
+
+- Then we perform end-to-end joint training for the whole network on the target dataset.
 
 ---
 
 - During training, the 512x512 inputs are randomly resized between 0.5 and 2, cropped and flipped from the images.
 
-- The initial learning rate is 0.007. Following [3], we employ a “ploy” learning rate policy. We adopt SGD opti- mizer with momentum = 0.9 and weight decay of 5e − 4.
+- The initial learning rate is 0.007. Following [3], we employ a “ploy” learning rate policy. We adopt SGD optimizer with momentum = 0.9 and weight decay of 5e − 4.
 
 - To stabilize the predictions, we perform inference by averaging results of left-right flipped images and multi-scale inputs with the scale from 0.50 to 1.75 in increments of 0.25.
+    - 予測を安定させるために、我々は０．２５の増分で０．５０から１．７５までのスケールで左右反転画像とマルチスケール入力の結果を平均することによって推論を実行する。
 
 ---
 
 - Our method is implemented by extending the Pytorch framework [33] and we reproduce DeepLab v3+ [3] following all the settings in its paper.
+    - 私たちの方法はPytorchフレームワークを拡張することによって実装され[33]、その論文のすべての設定に従ってDeepLab v3 + [3]を再現します。
 
-- All networks are trained on four TITAN XP GPUs. Due to the GPU memory limitation, the batch size is set to be 12. For each dataset, we train all models at the same settings for 100 epochs for the good convergence. To stabilize the inference, the resolution of every input is consistent with the original image. The code and models are available at https://github.com/Gaoyiminggithub/Graphonomy.
+- All networks are trained on four TITAN XP GPUs. Due to the GPU memory limitation, the batch size is set to be 12.
+
+- For each dataset, we train all models at the same settings for 100 epochs for the good convergence.
+
+- To stabilize the inference, the resolution of every input is consistent with the original image.
+
+- The code and models are available at https://github.com/Gaoyiminggithub/Graphonomy.
 
 
 #### Dataset and Evaluation Metric
 
 - We evaluate the performance of our Graphonomy on three human parsing datasets with different label definition and annotations, including PASCAL-Person-Part dataset [6], ATR dataset [28], and Crowd Instance-Level Human Parsing (CIHP) dataset [13].
+    - PASCAL-Person-Partデータセット[6]、ATRデータセット[28]、およびCrowd Instance-Level Human Parsing（CIHP）データセット[13]を含む、ラベル定義と注釈が異なる3つのヒューマン解析データセットに対するGraphonomyのパフォーマンスを評価します。 。
 
 - The part labels among them are hierarchically correlated and the label granularity is from coarse to fine.
+    - それらの間の部品ラベルは階層的に相関しており、ラベルの粒度は粗いものから細かいものまであります。
 
 - Referring to their dataset papers, we use the evaluation metrics including accuracy, the standard intersection over union (IoU) criterion, and average F-1 score.
+    - 彼らのデータセットの論文を参考にして、我々は、正解率、標準的なintersection over union (IoU) 基準、および平均F-1スコアを含む評価指標を使用する。
 
 ### 4.2. Comparison with state-of-the-arts
 
+#### ASCAL-Person-Part
+
+- dataset [6] is a set of additional annotations for PASCAL-VOC-2010 [11]. It goes beyond the original PASCAL object detection task by providing pixel-wise labels for six human body parts, i.e., head, torso, upper-arms, lower-arms, upper-legs, lower-legs. There are 3,535 annotated images in the dataset, which is split into separate training set containing 1,717 images and test set containing 1,818 images.
+    - dataset [6]はPASCAL-VOC-2010 [11]のための追加の注釈のセットです。
+    - それは、６つの人体部分、すなわち、頭、胴、上腕、下腕、上脚、下脚のためのピクセル単位のラベルを提供することによって、元のＰＡＳＣＡＬ物体検出タスクを超えている
+    - データセットには3,535個の注釈付き画像があり、1,717個の画像を含む個別のトレーニングセットと1,818個の画像を含むテストセットに分割されています。
+
+---
+
+![image](https://user-images.githubusercontent.com/25688193/60967792-7495cc80-a356-11e9-8d19-54844bc21671.png)
+
+- > Table 1. Comparison of human parsing performance with several state-of-the-art methods on PASCAL-Person-Part dataset [6].
+
+---
+
+- We report the human parsing results compared with the state-of-the-art methods in Table 1.
+    - 表1に、最先端の方法と比較した人間の解析結果を報告します。
+    
+- “Graphonomy (CIHP)” is the method that transfers the semantic graph constructed on the CIHP dataset to enhance the graph representation on the PASCAL-Person-Part dataset.
+    - 「Graphonomy（CIHP）」は、CIASデータセット上に構築されたセマンティックグラフをPASCAデータセット上のグラフ表現を強化するために転送する方法です。
+
+- Some previous methods achieve high performance with over 68% Mean IoU, thanks to the wiper or deeper architecture [1, 30], and multi-task learning [13].
+    - ワイパーまたはより深いアーキテクチャ[1、30]、およびマルチタスク学習[13]のおかげで、以前のいくつかの方法は68％以上の平均IoUで高性能を達成します。
+
+- Although our basic network (DeepLab v3+ [3]) is not the best, the performance is improved by our graph transfer leaning, which explicitly incorporates human
+    - 私たちの基本的なネットワーク（DeepLab v3 + [3]）は最善ではありませんが、グラフ転送の学習により、パフォーマンスは向上します。
+
+#### ATR
+
+- dataset [28] aims to predict every pixel with 18 labels: face, sunglass, hat, scarf, hair, upper-clothes, left- arm, right-arm, belt, pants, left-leg, right-leg, skirt, left- shoe, right-shoe, bag and dress. 
+
+- Totally, 17,700 images are included in the dataset, with 16,000 for training, 1,000 for testing and 700 for validation.
+
+---
+
+- We report the human parsing results on ATR dataset compared with the state-of-the-art methods in Table 2.
+
+- “Graphonomy (PASCAL)” denotes the method that transfer the high-level graph representation on PASCAL-Person- Part dataset to enrich the semantic information.
+
+- Some previous works [24, 26, 27] use the LSTM architecture to improve the performance. Instead, we use the graph structure to propagate and update the high-level information. The advanced results demonstrate that our Graphonomy has stronger capability to learn and enhance the feature repre- sentations.
+
+
+#### CIHP
+
+- dataset [13] is a new large-scale benchmark for human parsing task, including 38,280 images with pixel- wise annotations on 19 semantic part labels. The images are collected from the real-world scenarios, containing persons appearing with challenging poses and viewpoints, heavy oc- clusions, and in a wide range of resolutions. Following the benchmark, we use 28,280 images for training, 5,000 im- ages for validation and 5,000 images for testing.
+
+---
+
+- The human parsing results evaluated on CIHP dataset is reported in Table 3. The previous work [13] achieve high performance with 55% Mean IoU in this challenging dataset by using multi-task learning. Our Graphonomy (PASCAL) improves the results up to 58.58%, which demonstrates its superiority and capability to takes full advantages of seman- tic information to boost the human parsing performance.
+
 ### 4.3. Universal Human Parsing
 
-- To sufficiently utilize all human parsing resources and unify label annotations from different domains or at various levels of granularity, we train a universal human parsing model to unify all kinds of label annotations from different resources and tackle different levels of human parsing, which is denoted as “Graphonomy (Universal Human Pars- ing)”.
+- To sufficiently utilize all human parsing resources and unify label annotations from different domains or at various levels of granularity, we train a universal human parsing model to unify all kinds of label annotations from different resources and tackle different levels of human parsing, which is denoted as “Graphonomy (Universal Human Parsing)”.
+    - すべてのヒューマンパースリソースを十分に活用し、さまざまなドメインまたはさまざまなレベルの粒度でラベルアノテーションを統一するために、さまざまなリソースからのあらゆる種類のラベルアノテーションを統一し、さまざまなレベルのヒューマンパースに取り組むユニバーサルヒューマンパージングモデルを訓練します。 「Graphonomy（Universal Human Parsing）」。
 
 - We combine all training samples from three datasets and select images from the same dataset to construct one batch at each step.
+    - 3つのデータセットからすべてのトレーニングサンプルを組み合わせ、同じデータセットから画像を選択して、各ステップで1つのバッチを作成します。
 
 - As reported in Table 1, 2, 3, our method achieves favorable performance on all datasets.
+    - 表1、2、3で報告されているように、我々の方法は全てのデータセットに対して好ましい性能を達成している。
 
 - We also compare our Graphonomy with multi-task learning method by appending three parallel branches upon the backbone with each branch predicting the labels of one dataset respectively.
+    - また、バックボーンに3つの並列ブランチを追加し、各ブランチがそれぞれ1つのデータセットのラベルを予測することによって、Graphonomyとマルチタスク学習法を比較します。
 
 - Superior to multi-task learning, our Graphonomy is able to distill universal semantic graph representation and enhance individualized representation for each label graph.
+    - マルチタスク学習より優れている、私たちのGraphonomyは普遍的な意味グラフ表現を蒸留し、各ラベルグラフの個別表現を強化することができます。
+    
+---
+
+![image](https://user-images.githubusercontent.com/25688193/60969650-056ea700-a35b-11e9-9a04-7178e06ad976.png)
+
+- > Figure 4. Examples of different levels of human parsing results generated by our universal human parsing agent, Graphonomy.
 
 ---
 
 - We also present the qualitative universal human parsing results in Fig. 4.
+    - また、定性的なユニバーサルヒューマン解析結果を図4に示します。
 
 - Our Graphonomy is able to generate precise and fine-grained results for different levels of human parsing tasks by distilling universal semantic graph representation to each specific task, which further verifies the rationality of our Graphonomy based on the assumption that incorporating hierarchical graph transfer learning upon the deep convolutional networks can capture the critical information across the datasets to achieve good capability in universal human parsing.
+    - 我々のGraphonomyは、普遍的な意味グラフ表現をそれぞれの特定のタスクに蒸留することによって、異なるレベルの人間の解析タスクに対して正確できめの細かい結果を生成することができます。 
+    - （このことは、）深い畳み込みネットワークの上に、階層的な graph transfer learning を組み込む [incorporating] ような、推定に基づく我々の Graphonomy の関係を更に確かにする。 
+    - 人間の構文解析における優れた能力を達成するために、データセット全体の重要な情報を捉えることができます。
 
 ### 4.4. Ablation Studies
+
+- We further discuss and validate the effectiveness of the main components of our Graphonomy on PASCAL-Person-Part dataset [6].
+
+---
+
+![image](https://user-images.githubusercontent.com/25688193/60970710-82028500-a35d-11e9-8ab9-17ecd1907fc4.png)
+
+- > Table 4. Ablation experiments on on PASCAL-Person-Part dataset [6].
+
+#### Intra-Graph Reasoning.
+
+- As reported in Table 4, by encoding human body structure information to enhance the semantic graph representation and propagation, our Intra- Graph Reasoning acquires 0.50% improvements compared with the basic network (#1 vs #3).
+    - 表4に示すように、人体構造情報を符号化して意味グラフの表現と伝播を強化することで、グラフ内推論は基本ネットワークと比較して0.50％の改善を得ています（＃1 vs＃3）。
+
+- To validate the significance of adjacency matrix Ae, which is defined according to the connectivity between human body parts and enables the semantic messages propagation, we compare our methods with and without Ae (#2 vs #3).
+    - To validate the significance of adjacency matrix Ae, which is defined according to the connectivity between human body parts and enables the semantic messages propagation, we compare our methods with and without Ae (#2 vs #3).
+
+- The comparison result shows that the human prior knowledge makes a larger contribution than the extra network parameters brought by the graph convolutions.
+    - 比較結果は、グラフのたたみ込みによってもたらされる追加のネットワークパラメータよりも人間の事前知識が大きな貢献をすることを示しています。
+
+#### Inter-Graph Transfer.
+
+- To utilize the annotated data from other datasets, previous human parsing methods must be pre-trained on the other dataset and fine-tuned on the evaluation dataset, as the #4 result in Table 4.
+    - 他のデータセットからの注釈付きデータを利用するには、表4の結果4のように、以前の人間の解析方法を他のデータセットで事前に訓練し、評価データセットで微調整する必要があります。
+
+- Our Graphonomy provides a Inter-Graph Transfer module for better cross-domain information sharing.
+    - 私たちのGraphonomyは、より良いクロスドメイン情報共有のためのInter-Graph Transferモジュールを提供します。
+
+- We further compare the results of difference graph transfer dependencies introduced in Section 3.2, to find out the best transfer matrix to enhance graph representations.
+    - グラフ表現を強化するための最良の伝達行列を見つけるために、セクション3.2で導入された差分グラフ伝達依存性の結果をさらに比較します。
+
+- Interestingly, it is observed that transferring according to handcraft relation (#6) diminishes the performance and the feature similarity (#8) is the most powerful dependency.
+    - 興味深いことに、手芸の関係（＃6）に従って転送するとパフォーマンスが低下し、機能の類似性（＃8）が最も強力な依存関係になることがわかります。
+
+- It is reasonable that the label discrepancy of multiple levels of human parsing tasks cannot be solved by simply defining the relation manually and the hierarchical relationship encoded by the feature similarity and semantic similarity is more reliable for information transferring. 
+    - 関係を手作業で定義するだけでは複数レベルの人間の解析作業のラベルの不一致を解決できず、特徴の類似性と意味的な類似性によって符号化された階層関係は情報転送に対してより信頼性が高い。
+
+- Moreover, we compare the results of different combinations of the transfer methods, which bring in a little more improvement.
+    - さらに、転送方法のさまざまな組み合わせの結果を比較すると、もう少し改善されます。
+
+- In our Graphonomy, we combine feature similarity and semantic similarity for the Inter-Graph Transfer, as more combinations cannot contribute to more improvements.
+    - 我々のGraphonomyでは、Inter-Graph Transferのために特徴の類似性と意味の類似性を組み合わせています。より多くの組み合わせはより多くの改善に寄与することができないからです。
+
+#### Different number of traning data.
+
+- Exploiting the in- trinsic relations of semantic labels and incorporating hierar- chical graph transfer learning upon the conventional human parsing network, our Graphonomy not noly tackle multiple levels of human praing tasks, but also alleviate the need of heavy annotated traning data to achieve the desired perfor- mance. We conduct extensive experiments on transferring the model pre-trained on CIHP dataset to PASCAL-Person- Part dataset. We use different annotated data in training set by random sampling for training and evaluate the models on the whole test set. As summarized in Table 5, simply fine- tuning the pre-trained model without our proposed Inter- Graph Transfer obtains 70.33% mean IoU with all training data. However, our complete Graphonomy architecture uses only 50% of the training data and achieves comparable per- formance. With 100% training data, our approach can even outperforms the fine-tuning baseline for 0.81% in average IoU. This superior performance confirms the effectiveness of our Graphonomy that seamlessly bridges all semantic la- bels from different datasets and attains the best utilization of data annotations.
+
+### 4.5. Qualitative Results
+
+- > Figure 5. Visualized comparison of human parsing results on PASCAL-Person-Part dataset [6] (Left) and CIHP dataset [13] (Right).
+
+---
+
+- The qualitative results on the PASCAL-Person-Part dataset [6] and the CIHP dataset [13] are visualized in Fig. 5. As can be observed, our approach outputs more semantically meaningful and precise predictions than other two methods despite the existence of large appearance and position variations. Taking (b) and (e) for example, when parsing the clothes, other methods are suffered from strange fashion style and the big logo on the clothes, which leads to incorrect predictions for some small regions. However, thanks to the effective semantic information propagation by graph reasoning and transferring, our Graphonomy success- fully segments out the large clothes regions. More superi- orly, with the help of the compact high-level graph represen- tation integrated from different sources, our method gener- ates more robust results and gets rid of the disturbance from the occlusion and background, like (c) and (d). Besides, we also present some failure cases (g) and (h), and find that the overlapped parts and the very small persons cannot be predicted precisely, which indicates more knowledge is de- sired to be incorporated into our graph structure to tackle the challenging cases.
 
 
 # ■ 関連研究（他の手法との違い）

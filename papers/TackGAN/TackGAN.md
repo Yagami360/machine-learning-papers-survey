@@ -23,8 +23,14 @@
 
 ## 1. Introduction
 
-- The vibrotactile sense enables humans to perceive texture surface properties through tool-surface interaction. Unfortunately, the richness of the vibrotactile responses from virtual texture surfaces is missing from current tool-surface interactions on a touchscreen. The tool-surface interactions are composed of simple gestures such as tapping or flickering, so vibrotactile designer should find the appropriate vibrotactile signals for each gesture. However, it is difficult to find ones. Though there are vibrotactile datasets which is made public, it is rare to find the appropriate vibrotactile signals from them. It is because such datasets contains at most 100 kinds of textures, as compared to countless kind of texture in the real world.
-    - 振動触覚は人間が道具 - 表面相互作用を通してテクスチャー表面特性を知覚することを可能にする。 残念なことに、仮想テクスチャ表面からの振動触覚応答の豊富さは、タッチスクリーン上の現在のツール - 表面相互作用から欠けている。 ツールとサーフェスの相互作用は、タップやちらつきなどの単純なジェスチャで構成されているため、振動触覚設計者は各ジェスチャに適した振動触覚信号を見つける必要があります。 しかし、見つけるのは難しいです。 公開されている振動触覚データセットがありますが、それらから適切な振動触覚信号を見つけることは稀です。 これは、現実の世界では数え切れないほどの種類のテクスチャと比較して、このようなデータセットには最大100種類のテクスチャが含まれているためです。
+- The vibrotactile sense enables humans to perceive texture surface properties through tool-surface interaction. Unfortunately, the richness of the vibrotactile responses from virtual texture surfaces is missing from current tool-surface interactions on a touchscreen.
+    - 振動触覚は人間が道具 - 表面相互作用を通してテクスチャー表面特性を知覚することを可能にする。 残念なことに、仮想テクスチャ表面からの振動触覚応答の豊富さは、タッチスクリーン上の現在のツール - 表面相互作用から欠けている。
+    
+- The tool-surface interactions are composed of simple gestures such as tapping or flickering, so vibrotactile designer should find the appropriate vibrotactile signals for each gesture. However, it is difficult to find ones.
+    - ツールとサーフェスの相互作用は、タップやちらつきなどの単純なジェスチャで構成されているため、振動触覚設計者は各ジェスチャに適した振動触覚信号を見つける必要があります。 しかし、見つけるのは難しいです。
+    
+- Though there are vibrotactile datasets which is made public, it is rare to find the appropriate vibrotactile signals from them. It is because such datasets contains at most 100 kinds of textures, as compared to countless kind of texture in the real world.
+    - 公開されている振動触覚データセットがありますが、それらから適切な振動触覚信号を見つけることは稀です。 これは、現実の世界では数え切れないほどの種類のテクスチャと比較して、このようなデータセットには最大100種類のテクスチャが含まれているためです。
 
 ---
 
@@ -35,8 +41,11 @@
 
 ---
 
-- Emerging, recent data-driven approach for haptic modeling mainly focus on the interactivity of the tool’s state. Prior studies mapped the normal force and the velocity magnitude of the tool with vibrational patterns [1, 2]. These vibrational patterns were encoded in the autoregressive model. Their model succeeded in mapping the tool’s state and the vibration patterns. They are suitable for interactions where there is much variability with tool’s velocity and applied force. However, the single model generating vibrational signals only supported single kind of texture that is used during training. Thus, when you try to generate vibrations of another kind of texture, you need to replace the model with another one.
-    - ハプティックモデリングに対する最近のデータ駆動型アプローチは、主にツールの状態の対話性に焦点を当てています。 以前の研究では、ツールの垂直力と速度の大きさを振動パターンとマッピングしました[1、2]。 これらの振動パターンは自己回帰モデルでエンコードされています。 彼らのモデルは、ツールの状態と振動パターンをマッピングすることに成功しました。 それらは、ツールの速度や加えられた力に大きなばらつきがある相互作用に適しています。 ただし、振動信号を生成する単一モデルは、トレーニング中に使用される単一種類のテクスチャのみをサポートしていました。 したがって、別の種類のテクスチャの振動を生成しようとすると、モデルを別のモデルと置き換える必要があります。
+- Emerging, recent data-driven approach for haptic modeling mainly focus on the interactivity of the tool’s state. Prior studies mapped the normal force and the velocity magnitude of the tool with vibrational patterns [1, 2]. 
+    - ハプティックモデリングに対する最近のデータ駆動型アプローチは、主にツールの状態の対話性に焦点を当てています。 以前の研究では、ツールの垂直力と速度の大きさを振動パターンとマッピングしました[1、2]。
+    
+- These vibrational patterns were encoded in the autoregressive model. Their model succeeded in mapping the tool’s state and the vibration patterns. They are suitable for interactions where there is much variability with tool’s velocity and applied force. However, the single model generating vibrational signals only supported single kind of texture that is used during training. Thus, when you try to generate vibrations of another kind of texture, you need to replace the model with another one.
+    - これらの振動パターンは自己回帰モデルでエンコードされています。 彼らのモデルは、ツールの状態と振動パターンをマッピングすることに成功しました。 それらは、ツールの速度や加えられた力に大きなばらつきがある相互作用に適しています。 ただし、振動信号を生成する単一モデルは、トレーニング中に使用される単一種類のテクスチャのみをサポートしていました。 したがって、別の種類のテクスチャの振動を生成しようとすると、モデルを別のモデルと置き換える必要があります。
 
 ---
 
@@ -64,8 +73,11 @@
 
 ## 5. Conclusion
 
-- In this study, we introduced the problem of vibrotactile generation based on various texture images or attributes during predefined tool-surface interaction, and solved it by adversarial training. The user study showed that users could not discriminate generated signals and genuine ones. Our approach is applicable to any case where the users touch the various surfaces in a predefined way. Thus, our study contributes to the broadening the options of vibrotactile signal preparation in such cases.
-    - 本研究では、事前定義されたツールとサーフェスの相互作用中のさまざまなテクスチャ画像または属性に基づく振動触覚生成の問題を紹介し、それを敵対者の訓練によって解決しました。 ユーザー調査は、ユーザーが生成された信号と本物の信号を区別できないことを示しました。 私たちのアプローチは、ユーザーが事前定義された方法でさまざまなサーフェスに触れるような場合にも適用できます。 したがって、我々の研究は、そのような場合の振動触覚信号処理の選択肢を広げることに貢献しています。
+- In this study, we introduced the problem of vibrotactile generation based on various texture images or attributes during predefined tool-surface interaction, and solved it by adversarial training.
+    - **本研究では、事前定義されたツールとサーフェスの相互作用中のさまざまなテクスチャ画像または属性に基づく振動触覚生成の問題を紹介し、**それを敵対者の訓練によって解決しました。 
+    
+- The user study showed that users could not discriminate generated signals and genuine ones. Our approach is applicable to any case where the users touch the various surfaces in a predefined way. Thus, our study contributes to the broadening the options of vibrotactile signal preparation in such cases.
+    - ユーザー調査は、ユーザーが生成された信号と本物の信号を区別できないことを示しました。 私たちのアプローチは、ユーザーが事前定義された方法でさまざまなサーフェスに触れるような場合にも適用できます。 したがって、我々の研究は、そのような場合の振動触覚信号処理の選択肢を広げることに貢献しています。
 
 # ■ 何をしたか？詳細
 

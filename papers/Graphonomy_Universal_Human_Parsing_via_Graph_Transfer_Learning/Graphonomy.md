@@ -17,8 +17,8 @@
 
 - This poses many fundamental learning challenges, e.g. discovering underlying semantic structures among different label granularity, performing proper transfer learning across different image domains, and identifying and utilizing label redundancies across related tasks.    
     - これは多くの基本的な学習課題を引き起こす [poses]。 
-    - 例えば、異なるラベルの粒度の間で根本的な [underlying] セマンティック構造を発見し、異なる画像ドメインにわたって適切な転移学習を実行し、
-    - そして関連するタスクにわたってラベルの冗長性（余剰性） [redundancies] を識別し利用する。
+    - <font color="Pink">例えば、異なるラベルの粒度の間で根本的な [underlying] セマンティック構造を発見し、異なる画像ドメインにわたって適切な転移学習を実行し、
+    - そして関連するタスクにわたってラベルの冗長性（余剰性） [redundancies] を識別し利用する。</font>
 
 ---
 
@@ -102,7 +102,7 @@
     - 汎用的ヒューマンパースエージェントを設計する際の1つの重要な要素は、異なるヒューマンパーシングタスク間で適切な transfer learning と知識統合を持つことです。
 
 - In this paper, we achieve this goal by explicitly incorporating human knowledge and label taxonomy into intermediate graph representation learning beyond local convolutions, called “Graphonomy” (graph taxonomy).
-    - **本論文では、この目標を達成するために、「Graphonomy」（グラフ分類法）と呼ばれる、局所的な畳み込みを超えた中間グラフ表現学習に、人間の知識とラベル分類法 [taxonomy] を明示的に取り入れます。**
+    - **本論文では、この目標を達成するために、「Graphonomy」と呼ばれる、局所的な畳み込みを超えた中間グラフ表現学習に、人間の知識とラベル分類法 [taxonomy] を明示的に取り入れます。**
 
 - Our Graphonomy learns the global and common semantic coherency in multiple domains via graph transfer learning to solve multiple levels of human parsing tasks and enforce their mutual benefits upon each other.
     - **我々の Graphonomy は、複数レベルのヒューマンパースタスクを解決し、互いの利益を強化するために、**
@@ -218,10 +218,10 @@
     - > 図2.グラフ転送学習による普遍的な人間の構文解析に取り組む私たちのGraphonomyの図。人間の構文解析のタスクの複数のレベルとより良い注釈の利用を達成する。
 
 - > The image features extracted by deep convolutional networks are projected into a high-level graph representation with semantic nodes and edges defined according to the body structure.
-    - > 大域的情報は、グラフ内推論によって伝播され、視覚的特徴の識別可能性を高めるために再投影される。
+    - > ディープコンボリューションネットワークによって抽出された画像特徴は、体構造に従って定義された意味論的ノードおよびエッジを有する高水準グラフ表現に投影される。
 
 - > The global information is propagated via Intra-Graph Reasoning and re-projected to enhance the discriminability of visual features.
-    - > ディープコンボリューションネットワークによって抽出された画像特徴は、体構造に従って定義された意味論的ノードおよびエッジを有する高水準グラフ表現に投影される。
+    - > 大域的情報は、グラフ内推論によって伝播され、視覚的特徴の識別可能性を高めるために再投影される。
 
 - > Further, we transfer and fuse the semantic graph representations via Inter-Graph Transfer driven by hierarchical label correlation to alleviate the label discrepancy across different datasets.
     - > さらに、階層的ラベル相関によって駆動されるグラフ間転送を介して意味グラフ表現を転送し融合させて、異なるデータセットにわたるラベルの不一致を軽減する。
@@ -295,7 +295,7 @@
     - 射影演算（式１）と同様に、我々はまた別の変換行列を使用してグラフノードを画像特徴に再射影する。
 
 - We apply residual connection [16] to further enhance visual representation with the original feature maps X.
-    - 原特徴マップＸを用いた視覚的表現をさらに向上させるために、残差接続［１６］を適用する。
+    - 元の特徴マップＸを用いた視覚的表現をさらに向上させるために、残差接続［１６］を適用する。
 
 - As a result, The image features are updated by the weighted mappings from each graph node that represents different characteristics of semantic parts.
     - その結果、画像特徴は、意味的部分の異なる特性を表す各グラフノードからの加重マッピングによって更新される。
@@ -345,17 +345,147 @@
 
 #### Handcraft relation.
 
-- Considering the inherent correla- tion between two semantic parts, we first define the relation matrix as a hard weight, i.e., {0, 1}.
+- Considering the inherent correlation between two semantic parts, we first define the relation matrix as a hard weight, i.e., {0, 1}.
+    - ２つの意味部分間の固有の [inherent] 相関を考慮して、我々は最初に関係行列をハードウェイト、すなわち｛０、１｝として定義する。
 
-- When two nodes have a subordinate relationship, the value of edge between them is 1, else is 0. For example, hair is a part of head, so the edge value between hair node of the target graph and the head node of the source graph is 1.
+- When two nodes have a subordinate relationship, the value of edge between them is 1, else is 0.
+    - 2つのノードが従属関係にある場合、それらの間のedgeの値は1です。それ以外の場合は0です。
+
+- For example, hair is a part of head, so the edge value between hair node of the target graph and the head node of the source graph is 1.
+    - たとえば、hairはheadの一部であるため、ターゲットグラフのhairノードとソースグラフのheadノードの間のエッジ値は1です。
 
 #### Learnable matrix.
 
-- 
+- In this way, we randomly initialize the transfer matrix Atr , which can be learned with the whole network during training.
+    - このようにして、我々はトレーニング中にネットワーク全体で学習することができる伝達行列Atrをランダムに初期化する。
+
+#### Feature similarity.
+
+- The transfer matrix can also be dynamically established by computing the similarity between the source graph nodes and target graph nodes, which have encoded high-level semantic information. The transfer weight ai,j can be calculated as:
+    - 伝達行列はまた、高レベルの意味情報を符号化したソースグラフノードとターゲットグラフノードとの間の類似性を計算することによって動的に確立することができる。 移送重量ａ ｉ、ｊは、次のように計算することができる。
+
+![image](https://user-images.githubusercontent.com/25688193/60958531-799c5100-a341-11e9-86f5-a46ea7edac9a.png)
+
+- where sim(x, y) is the cosine similarity between x and y. vis is the features of the ith target node, and vjt is the features of the jth source node.
+    - ここで、sim（x、y）はxとyのコサイン類似度です。 visはi番目のターゲットノードの機能、vjtはj番目のソースノードの機能です。
+
+#### Semantic similarity. 
+
+- Besides the visual information, we further explore the linguistic knowledge to construct the transfer matrix.
+    - 視覚情報に加えて、我々はさらに伝達マトリックスを構築するための言語学的知識を探求する。
+
+- We use the word2vec model [34] to map the semantic word of labels to a word embedding vector.
+    - ラベルの意味語を単語埋め込みベクトルにマッピングするためにword2vecモデル[34]を使用します。
+    
+- Then we compute the similarity between the nodes of the source graph Vs and the nodes of the target graph Vt, which can be formulated as:
+    - 次に、ソースグラフVsのノードとターゲットグラフVtのノードとの間の類似度を計算します。これは次のように定式化できます。
+
+![image](https://user-images.githubusercontent.com/25688193/60958580-8e78e480-a341-11e9-8f47-c90c8effc5fd.png)
+
+- where sij means the cosine similarity between the word embedding vectors of ith target node and jth source node.
+    - ここで、sij は、i番目のターゲットノードとj番目のソースノードのベクトルを埋め込む単語間のコサイン類似度を意味します。
+
+---
+
+- With the well-defined transfer matrix, the target graph features and source graph knowledge can be combined and propagated again by graph reasoning, the same as the Eq. 3.
+    - 明確に定義された伝達行列を用いて、式３と同様に、ターゲットグラフ特徴とソースグラフ知識とを graph reasoning によって再び組み合わせて伝播させることができる。
+
+- Furthermore, the direction of the transfer is flexible, that is, two graphs can be jointly transferred from each other.
+    - さらに、転送の方向は柔軟であり、すなわち、２つのグラフを互いに一緒に転送することができる。
+
+- Accordingly, the hierarchical information of different label sets can be associated and propagated via the cooperation of Intra-Graph Reasoning and Inter-Graph Transfer, which enables the whole network to generate more discriminative features to perform fine-grained pixel-wise classification.
+    - したがって、異なるラベルセットの階層情報は、グラフ内推論およびグラフ間転送の協働を介して関連付けおよび伝播することができ、これにより、ネットワーク全体が、よりきめの細かいピクセル単位の分類を実行するためのより識別可能な特徴を生成することができる。
+
+### 3.3. Universal Human Parsing
+
+- As shown in Fig. 2, apart from improving the performance of one model by utilizing the information transferred from other graphs, our Graphonomy can also be naturally used to train a universal human parsing task for combining diverse parsing datasets.
+    - 図2に示すように、他のグラフから転送された情報を利用して1つのモデルのパフォーマンスを向上させることとは別に、私たちのGraphonomyは自然に多様な解析データセットを組み合わせるための普遍的な人間解析タスクを訓練するために使用できます。
+
+- As different datasets have large label discrepancy, previous parsing works must tune highly- specific models for each dataset or perform multi-task learning with several independent branches where each of them handles one level of the tasks.
+    - 異なるデータセットはラベルの不一致が大きいため、以前の解析作業では各データセットに固有のモデルを調整するか、それぞれが1つのレベルのタスクを処理する複数の独立したブランチでマルチタスク学習を実行する必要があります。
+
+- By contrast, with the proposed Intra-Graph Reasoning and Inter-Graph Transfer, our Graphonomy is able to alleviate the label discrepancy issues and stabilize the parameter optimization during joint training in an end-to-end way.
+    - 対照的に、提案されたグラフ内推論およびグラフ間転送を用いると、我々のGraphonomyは、ラベル間の不一致の問題を軽減し、エンドツーエンドの方法で共同トレーニング中のパラメータ最適化を安定させることができる。
+
+---
+
+- Another merit of our Graphonomy is the ability to extend the model capacity in an online way.
+    - 私たちのGraphonomyのもう一つの利点は、オンラインでモデル容量を拡張できることです。
+
+- Benefiting from the usage of graph transfer learning and joint training strategy, we can dynamically add and prune semantic labels for different purposes (e.g., adding more dataset) while keeping the network structure and previously learned parameters.
+    - グラフ転送学習および共同トレーニング戦略の使用の恩恵を受けて、
+    - ネットワーク構造および以前に学習したパラメータを維持しながら、
+    - 異なる目的（たとえば、データセットの追加）のために意味ラベルを動的に追加および取り除く [prune] ことができる。
 
 # ■ 実験結果（主張の証明）・議論（手法の良し悪し）・メソッド（実験方法）
 
-## x. 論文の項目名
+## 4. Experiments
+
+- In this section, we first introduce implementation details and related datasets. Then, we report quantitative comparisons with several state-of-the-art methods.
+    - このセクションでは、最初に実装の詳細と関連データセットを紹介します。 次に、いくつかの最先端の方法と定量的比較を報告します。
+
+- Furthermore, we conduct ablation studies to validate the effectiveness of each main component of our Graphonomy and present some qualitative results for the perceptual comparison.
+    - さらに、我々は我々のGraphonomyの各主成分の有効性を検証し、知覚的比較のためにいくつかの定性的結果を提示するためにアブレーション研究を行っています。
+
+### 4.1. Experimental Settings
+
+#### Implementation Details
+
+- We use the basic structure and network settings provided by DeepLab v3+ [3]. Following [3], we employ the Xception [7] pre-trained on COCO [31] as our network backbone and output stride = 16.
+    - 私たちはDeepLab v3 + [3]が提供する基本構造とネットワーク設定を使います。 [3]に続いて、COCO [31]で事前にトレーニングされたXception [7]をネットワークバックボーンとして使用し、ストライド= 16を出力します。
+    
+- The number of nodes in the graph is set according to the number of categories of the datasets, i.e., N = 7 for Pascal- Person-Part dataset, N = 18 for ATR dataset, N = 20 for CIHP dataset.
+
+- The feature dimension D of each semantic node is 128.
+
+- The Intra-Graph Reasoning module has three graph convolution layers with ReLU activate function.
+
+- For Inter-Graph Transfer, we use the pre-trained model on source dataset and randomly initialize the weight of the target graph. Then we perform end-to-end joint training for the whole network on the target dataset.
+
+---
+
+- During training, the 512x512 inputs are randomly resized between 0.5 and 2, cropped and flipped from the images.
+
+- The initial learning rate is 0.007. Following [3], we employ a “ploy” learning rate policy. We adopt SGD opti- mizer with momentum = 0.9 and weight decay of 5e − 4.
+
+- To stabilize the predictions, we perform inference by averaging results of left-right flipped images and multi-scale inputs with the scale from 0.50 to 1.75 in increments of 0.25.
+
+---
+
+- Our method is implemented by extending the Pytorch framework [33] and we reproduce DeepLab v3+ [3] following all the settings in its paper.
+
+- All networks are trained on four TITAN XP GPUs. Due to the GPU memory limitation, the batch size is set to be 12. For each dataset, we train all models at the same settings for 100 epochs for the good convergence. To stabilize the inference, the resolution of every input is consistent with the original image. The code and models are available at https://github.com/Gaoyiminggithub/Graphonomy.
+
+
+#### Dataset and Evaluation Metric
+
+- We evaluate the performance of our Graphonomy on three human parsing datasets with different label definition and annotations, including PASCAL-Person-Part dataset [6], ATR dataset [28], and Crowd Instance-Level Human Parsing (CIHP) dataset [13].
+
+- The part labels among them are hierarchically correlated and the label granularity is from coarse to fine.
+
+- Referring to their dataset papers, we use the evaluation metrics including accuracy, the standard intersection over union (IoU) criterion, and average F-1 score.
+
+### 4.2. Comparison with state-of-the-arts
+
+### 4.3. Universal Human Parsing
+
+- To sufficiently utilize all human parsing resources and unify label annotations from different domains or at various levels of granularity, we train a universal human parsing model to unify all kinds of label annotations from different resources and tackle different levels of human parsing, which is denoted as “Graphonomy (Universal Human Pars- ing)”.
+
+- We combine all training samples from three datasets and select images from the same dataset to construct one batch at each step.
+
+- As reported in Table 1, 2, 3, our method achieves favorable performance on all datasets.
+
+- We also compare our Graphonomy with multi-task learning method by appending three parallel branches upon the backbone with each branch predicting the labels of one dataset respectively.
+
+- Superior to multi-task learning, our Graphonomy is able to distill universal semantic graph representation and enhance individualized representation for each label graph.
+
+---
+
+- We also present the qualitative universal human parsing results in Fig. 4.
+
+- Our Graphonomy is able to generate precise and fine-grained results for different levels of human parsing tasks by distilling universal semantic graph representation to each specific task, which further verifies the rationality of our Graphonomy based on the assumption that incorporating hierarchical graph transfer learning upon the deep convolutional networks can capture the critical information across the datasets to achieve good capability in universal human parsing.
+
+### 4.4. Ablation Studies
 
 
 # ■ 関連研究（他の手法との違い）

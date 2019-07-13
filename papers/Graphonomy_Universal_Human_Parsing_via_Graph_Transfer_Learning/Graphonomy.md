@@ -622,7 +622,7 @@
     - 私たちのGraphonomyは、より良いクロスドメイン情報共有のためのInter-Graph Transferモジュールを提供します。
 
 - We further compare the results of difference graph transfer dependencies introduced in Section 3.2, to find out the best transfer matrix to enhance graph representations.
-    - グラフ表現を強化するための最良の伝達行列を見つけるために、セクション3.2で導入された差分グラフ伝達依存性の結果をさらに比較します。
+    - グラフ表現を強化するための最良の伝達行列を見つけるために、セクション3.2で導入された graph transfer 依存性の差分結果をさらに比較します。
 
 - Interestingly, it is observed that transferring according to handcraft relation (#6) diminishes the performance and the feature similarity (#8) is the most powerful dependency.
     - 興味深いことに、手芸の関係（＃6）に従って転送するとパフォーマンスが低下し、機能の類似性（＃8）が最も強力な依存関係になることがわかります。
@@ -638,7 +638,24 @@
 
 #### Different number of traning data.
 
-- Exploiting the in- trinsic relations of semantic labels and incorporating hierar- chical graph transfer learning upon the conventional human parsing network, our Graphonomy not noly tackle multiple levels of human praing tasks, but also alleviate the need of heavy annotated traning data to achieve the desired perfor- mance. We conduct extensive experiments on transferring the model pre-trained on CIHP dataset to PASCAL-Person- Part dataset. We use different annotated data in training set by random sampling for training and evaluate the models on the whole test set. As summarized in Table 5, simply fine- tuning the pre-trained model without our proposed Inter- Graph Transfer obtains 70.33% mean IoU with all training data. However, our complete Graphonomy architecture uses only 50% of the training data and achieves comparable per- formance. With 100% training data, our approach can even outperforms the fine-tuning baseline for 0.81% in average IoU. This superior performance confirms the effectiveness of our Graphonomy that seamlessly bridges all semantic la- bels from different datasets and attains the best utilization of data annotations.
+- Exploiting the intrinsic relations of semantic labels and incorporating hierarchical graph transfer learning upon the conventional human parsing network, our Graphonomy not noly tackle multiple levels of human praing tasks, but also alleviate the need of heavy annotated traning data to achieve the desired performance.
+    - セマンティックラベルの本質的な関係を利用し [Exploiting]、従来の人間の構文解析ネットワークに階層的グラフ転送学習を組み入れて、
+    - 私たちのGraphonomyは、最終的に複数のレベルの人物パースタスクに取り組むことだけでなく、
+    - 望ましいパフォーマンスを達成するために、アノテーションされた重い学習データの必要性も軽減する [alleviate] 
+
+- We conduct extensive experiments on transferring the model pre-trained on CIHP dataset to PASCAL-Person- Part dataset.
+    - CIHPデータセットで事前学習されたモデルをPASCAL-Person-Partデータセットに転送することにおいて、広範な実験を行います。
+
+- We use different annotated data in training set by random sampling for training and evaluate the models on the whole test set.
+    - 我々は、学習のために無作為抽出による学習用データセット内の異なる注釈付きデータを使用し、そしてテストデータセット全体でモデルを評価する。
+
+- As summarized in Table 5, simply fine-tuning the pre-trained model without our proposed Inter- Graph Transfer obtains 70.33% mean IoU with all training data.
+
+- However, our complete Graphonomy architecture uses only 50% of the training data and achieves comparable performance.
+
+- With 100% training data, our approach can even outperforms the fine-tuning baseline for 0.81% in average IoU.
+
+- This superior performance confirms the effectiveness of our Graphonomy that seamlessly bridges all semantic labels from different datasets and attains the best utilization of data annotations.
 
 ### 4.5. Qualitative Results
 

@@ -650,12 +650,16 @@
     - 我々は、学習のために無作為抽出による学習用データセット内の異なる注釈付きデータを使用し、そしてテストデータセット全体でモデルを評価する。
 
 - As summarized in Table 5, simply fine-tuning the pre-trained model without our proposed Inter- Graph Transfer obtains 70.33% mean IoU with all training data.
+    - 表5に要約されているように、我々の提案したグラフ間転送なしで事前訓練されたモデルを単に微調整することは、すべての訓練データで70.33％の平均IoUを得る。
 
 - However, our complete Graphonomy architecture uses only 50% of the training data and achieves comparable performance.
+    - しかし、私たちの完全なGraphonomyアーキテクチャは学習用データの50％しか使用せず、匹敵する性能を達成しています。
 
 - With 100% training data, our approach can even outperforms the fine-tuning baseline for 0.81% in average IoU.
+    - 100％の学習用データで、私たちのアプローチは平均IoUで0.81％の微調整ベースラインよりも優れています。
 
 - This superior performance confirms the effectiveness of our Graphonomy that seamlessly bridges all semantic labels from different datasets and attains the best utilization of data annotations.
+    - この優れた性能は、さまざまなデータセットからすべてのセマンティックラベルをシームレスにつなぎ、データアノテーションを最大限に活用するという我々の Graphonomy の有効性を裏付けています。
 
 ### 4.5. Qualitative Results
 

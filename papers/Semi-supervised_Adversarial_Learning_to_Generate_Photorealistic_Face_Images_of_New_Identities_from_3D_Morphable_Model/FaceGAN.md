@@ -99,7 +99,7 @@
     - そのような強い制約は、現在のＧＡＮ方法が直面する主な課題の１つであるモード崩壊問題を回避するのに自然に役立つ。
 
 - Fig. 1 shows the general overview of the proposed method. We discuss the proposed method in more details in Sec. 3.
-    - 提案手法の概要を図1に示す。 提案手法については、セクション３ででさらに詳しく議論する。
+    - 提案手法の概要を図1に示す。 提案手法については、セクション３でさらに詳しく議論する。
 
 ---
 
@@ -168,23 +168,30 @@
     - 既存のアイデンティティの新しい画像を生成することに焦点を当てている既存の研究とは異なり、私たちは新しいアイデンティティの複数の画像自体を生成することに興味を持っています。
 
 - Therefore, such techniques are not directly applicable to our problem.
+    - したがって、そのようなテクニックは、私たちの問題に直接適用することはできません。
 
 - To address this challenge, we propose to use set-based center [50] and pushing loss functions [16] on top of a pre-trained face embedding network.
+    - この課題に取り組むために、我々は事前学習された顔埋め込みネットワークの上に、set-based center [50]および pushing loss functions [16]を使用することを提案する。
 
 - This will keep track of the changing average of embeddings of generated images belonging to same identity (i.e. centroids).
+    - これは、同一のアイデンティティに属する生成された画像の埋め込みの変化する平均（すなわち重心）を追跡するであろう。
 
 - In this way identity preservation becomes adaptive to changing feature space during the training of the generator network unlike softmax layer that converges very quickly at the beginning of the training before meaningful images are generated.
+    - このように、アイデンティティ保存は、意味のある画像が生成される前に、学習の開始時に非常に早く収束するソフトマックス層とは異なり、ジェネレータネットワークの学習中に変化する特徴空間に適応するようになる。
 
 ---
 
 - Our contributions can be summarized as follows:
 
 - We propose a novel end-to-end adversarial training framework to generate photorealistic face images of new identities constrained by synthetic 3DMM images with identity, pose, illumination and expression diversity. The resulting synthetic face images are visually plausible and can be used to boost face recognition as additional training data or any other graphical purposes.
+    - アイデンティティ、ポーズ、照明と表情の多様性を持つ合成3DMM画像によって制約された新しいアイデンティティの写実的な顔画像を生成するための新しい end-to-end の敵対的学習フレームワークを提案する。 
+    - 結果として生じる合成顔画像は視覚的にもっともらしく、追加の学習用データまたは他の任意のグラフィック目的として顔認識を高めるために使用することができる。
 
 - We propose a novel semi-supervised adversarial style transfer approach that trains an inverse mapping network as a discriminator with paired synthetic-real images.
+    - ペア付けされた合成本物画像を持つ識別器として、逆写像ネットワークを学習する新しい半教師つき敵対的 style transfer アプローチを提案する。
 
-- Weemployanovelset-basedlossfunctiontopreserveconsistencyamongunknown identities during GAN training.
-
+- We employ a novel set-based loss function to preserve consistency among unknown identities during GAN training.
+    - **我々は、GANトレーニング中に未知のアイデンティティ間の一貫性を保つために、新しい set-based loss function を採用しています。**
 
 # ■ 結論
 
@@ -193,7 +200,113 @@
 
 # ■ 何をしたか？詳細
 
-## x. 論文の項目名
+## 3 Adversarial Identity Generation
+
+- In this Section, we describe in details the proposed method.
+
+- Fig. 1 shows the detailed schematic diagram of our method.
+
+- Specifically, the synthetic image set x ∈ S is formed by a graphical engine for the randomly sampled 3DMM, pose and lighting parameters α. 
+    - 具体的には、合成画像セットｘ∈Ｓは、ランダムにサンプリングされた３ＤＭＭ、姿勢および照明パラメータαのためのグラフィカルエンジンによって形成される。
+
+- Then they are translated into more photorealistic domain G(x) through the network G and mapped back to synthetic domain (G′(G(x))) through the network G′ to retain x.
+    - 次に、それらは、ネットワークGを介してより写実的なドメインG（x）に変換され、ネットワークG 'を介して合成ドメイン（G'（G（x）））にマッピングされてxを保持する。
+
+- Adversarial synthetic and real domain translation of G and G′ networks are supervised by the discriminator networks DR and DS , with an additional adversarial game between G and G′ as generator and discriminator respectively.
+    - GおよびG 'ネットワークの敵対的合成および実ドメイン変換は、識別器ネットワークDRおよびDSによって監督され、GおよびG'間の追加の敵対的ゲームがそれぞれ生成器および識別器として行われる。
+
+- During training, generated identities by 3DMM is preserved with a set-based loss on a pre-trained embedding network C.
+    - トレーニング中、３ＤＭＭによって生成されたアイデンティティは、事前学習された埋め込みネットワークＣ上で set-based loss で保存される。
+
+- In the following subsections, we further describe these components i.e. domain adaptation, real-synthetic pair discriminator, and identity preservation.
+    - 以下のサブセクションでは、これらの構成要素、すなわちドメイン適応、実合成ペア識別子、およびアイデンティティ保存についてさらに説明する。
+
+---
+
+![image](https://user-images.githubusercontent.com/25688193/61192596-8679c580-a6f0-11e9-97bd-78f207a47279.png)
+
+- > Fig. 1: Our approach aims to synthesize photorealistic images conditioned by a given synthetic image by 3DMM.
+    - > 図１：我々のアプローチは、３ＤＭＭによって与えられた合成画像で条件付けされた写実的な画像を合成することを目的としている。
+
+- > It regularizes cycle consistency [63] by introducing an additional adversarial game between the two generator networks in an unsupervised fashion.
+    - > それは、教師なし形式で、2つのジェネレータネットワークの間に追加の敵対的なゲームを導入することによって cycle consistency  を正則化する[63]。
+
+> CycleGAN の cycle consistency
+
+- > Thus the under-constraint cycle loss is supervised to have correct matching between the two domains by the help of a limited number of paired data.
+    - > したがって、制限されていないサイクル損失は、限られた数のペア付けされたデータの助けを借りることによって、2つのドメイン間で、正しく一致するように管理されます。
+
+- > We also encourage the generator to preserve face identity by a set-based supervision through a pretrained classification network.
+    - > 私達はまた生成器が、事前学習された分類ネットワークを通して、集合ベースの監査？ [set-based supervision] によって、顔のアイデンティティを保存することを促進します。
+
+### 3.1 Unsupervised Domain Adaptation
+
+- Given a 3D morphable model (3DMM) [3], we synthesize face images of new identities sampled from its Principal Components Analysis (PCA) coefficients’ space with random variation of expression, lighting and pose.
+    - 3Dモーファブルモデル（3DMM）[3]を与えれば、主成分分析（PCA）係数の空間から、表現・照明・ポーズをランダムに変化させて、サンプリングした新しいアイデンティティの顔画像を合成します。
+
+- Similar to [63], a synthetic input image (x ∈ S) is mapped to photorealistic domain by a residual network (G : S → Rˆ) and mapped back to synthetic domain by a 3DMM fitting network (G′ : Rˆ → Sˆ) to complete forward cycle only.
+    - CycleGAN ［63］と同様にして、順方向サイクルのみを完了するために、
+    - 合成入力画像（ｘ∈Ｓ）は、残差ネットワーク（Ｇ：Ｓ→Ｒ ＾）によって写実的ドメインに写像され、
+    - ３ＤＭＭフィッティングネットワーク（Ｇ '：Ｒ ＾→Ｓ ＾）によって合成ドメインに写像される。 
+
+- To preserve cycle consistency, the resulting image G′(G(x)) is encouraged to be the same as input x by a pixel level L1 loss:
+    - サイクルの一貫性を保つために、結果として生じる画像Ｇ '（Ｇ（ｘ））は、画素レベルＬ１損失によって入力ｘと同じであることが推奨される。
+
+![image](https://user-images.githubusercontent.com/25688193/61195461-1c1e5080-a703-11e9-8cd6-1e600d8e8e97.png)
+
+
+---
+
+- In order to encourage the resulting images G(x) and G′(G(x)) to have similar distribution as real and synthetic domains respectively, those refiner networks are supervised by discriminator networks DR and DS with images of the respective domains.
+    - 結果として生じる画像Ｇ（ｘ）およびＧ '（Ｇ（ｘ））がそれぞれ実ドメインおよび合成ドメインと同様の分布を有するように促すために、それらのリファイナネットワークは、それぞれのドメインの画像と共に弁別ネットワークＤＲおよびＤＳによって監視される。
+
+- The discriminator networks are formed as auto-encoders as in boundary equilibrium GAN (BEGAN) architecture [2] in which the generator and discriminator networks are trained by the following adversarial training formulation:
+    - 弁別器ネットワークは、境界平衡GAN（BEGAN）アーキテクチャ[2]のようにオートエンコーダとして形成されます。
+    - このアーキテクチャでは、ジェネレータネットワークと識別器ネットワークは、次の敵対者学習での定式化によって学習されます。
+
+![image](https://user-images.githubusercontent.com/25688193/61195477-36f0c500-a703-11e9-9ec2-38aa1fe83f57.png)
+
+- where for each training step t and the network G we update the balancing term with ![image](https://user-images.githubusercontent.com/25688193/61195714-d06ca680-a704-11e9-99c3-276c12035c21.png).
+
+- As suggested by [2], this term helps to balance between generator and discriminator and stabilize the training.
+
+
+### 3.2 Adversarial Pair Matching
+
+- Cycle consistency loss ensures bijective transitivity of functions G and G′ which means generated image G(x) ∈ Rˆ should be transformed back to x ∈ Sˆ.
+    - 周期の一貫性の損失は、関数GとG 'の全単射 [bijective] 推移性を保証します。これは、生成された画像G（x）∈R ˆをx∈S ˆに変換し直す必要があることを意味します。
+
+- Convolutional networks are highly under-constrained and they are free to make any unintended changes as long as the cycle consistency is satisfied.
+    - 畳み込みネットワークは非常に制約が少なく、サイクルの一貫性が満たされている限り、意図しない変更を自由に行うことができます。
+
+- Therefore, without additional supervision, it is not guaranteed to achieve the correct mapping that preserves shape, texture, expression, pose and lighting attributes of the face image from domains S to Rˆ and Rˆ to Sˆ.
+    - したがって、追加の監督なしには、ドメインＳからＲ ＾およびＲ ＾からＳ ＾から顔画像の形状、テクスチャ、表情、姿勢および照明属性を保存する正しいマッピングを達成することは保証されない。
+
+- This problem is often addressed by introducing pixel-level penalization between input and output of the networks [63,42] which is sub-optimal for domain adaptation as it encourages to stay in the same domain.
+    - この問題は、ネットワークの入力と出力との間にピクセルレベルのペナルティを導入することによって対処されることが多く[63、42]、これは同じドメインに留まることを奨励するので、ドメイン適応には最適ではない。
+
+---
+
+- To overcome this issue, we propose an additional pair-wise adversarial loss that assign G′ network an additional role as a pair-wise discriminator to supervise G network.
+
+- Given a set of paired synthetic and real images (PS , PR ), the discriminator loss is computed by BEGAN as follows:
+
+![image](https://user-images.githubusercontent.com/25688193/61196060-3823f100-a707-11e9-86d7-497d3e322db2.png)
+
+---
+
+- While G′ network is itself a generator network (G′ : Rˆ → Sˆ) with a separate discriminator (DS), we use it as a third pair-matching discriminator to supervise G by means of distribution of paired correspondence of real and synthetic images.
+
+- Thus while cycle-loss optimizes for biject correspondence, we expect resulting pairs of (x ∈ S,G(x) ∈ Rˆ) to have similar correlation distribution as paired training data (s ∈ PS,r ∈ PR).
+
+- Fig 2 shows its relation to the previous related arts and comparison to an alternative which is matching aware discriminator with paired inputs for text to image synthesis as suggested by [36].
+
+- Please notice that how BEGAN autoencoder architecture is utilized to align the distribution of pair of synthetic and real images with synthetic and generated images.
+
+
+### 3.3 Identity Preservation
+
+### Full Objective
 
 
 # ■ 実験結果（主張の証明）・議論（手法の良し悪し）・メソッド（実験方法）

@@ -262,7 +262,7 @@
 - By using a random vector as the input of the generator, our architecture provides a simple way for multi-modal synthesis. Namely, one can attach an encoder that processes a real image into a random vector, which will be then fed to the generator. The encoder and generator form a variational autoencoder [22], in which the encoder tries to capture the style of the image, while the generator combines the encoded style and the segmentation mask information via SPADE to reconstruct the original im- age. The encoder also serves as a style guidance network at test time to capture the style of target images, as used in Fig- ure 1. For training, we add a KL-Divergence loss term [22].
     - 生成器の入力としてランダムベクトルを使用することによって、私たちのアーキテクチャはマルチモーダル合成のための簡単な方法を提供します。
     - すなわち、実画像を処理する符号器をランダムベクトルに取り付けることができ、それは次に発生器に供給される。
-    - エンコーダーと生成器は変分オートエンコーダー（VAE）[22]を形成し、エンコーダーはエンコードされたスタイルとSPADEを介してセグメンテーションマスク情報を組み合わせて元の画像を再構築します。
+    - **エンコーダーと生成器は変分オートエンコーダー（VAE）[22]を形成し、エンコーダーはエンコードされたスタイルとSPADEを介してセグメンテーションマスク情報を組み合わせて元の画像を再構築します。**
     - 図1で使用されているように、エンコーダはテスト時にターゲット画像のスタイルをキャプチャするスタイルガイダンスネットワークとしても機能します。
     - **トレーニングのために、KL-Divergence loss termを追加します[22]。**
 
@@ -642,7 +642,7 @@
 ### Image Encoder.
 
 -  The image encoder consists of 6 stride-2 convolutional layers followed by two linear layers to produce the mean and variance of the output distribution as shown in Figure 14.
-    - 画像エンコーダは、図14に示すように、出力分布の平均と分散を生成するために、ストライド2の６しゅの畳み込み層とそれに続く2つの線形層で構成されています。
+    - 画像エンコーダは、図14に示すように、出力分布の平均と分散を生成するために、ストライド2の６つの畳み込み層とそれに続く2つの線形層で構成されています。
 
 ---
 
@@ -652,7 +652,7 @@
     - > 図１５：image encode は、平均ベクトルおよび分散ベクトルを生成するために、本物画像を潜在表現にエンコードする。
 
 - > They are used to compute the noise input to the generator via the reparameterization trick [22].
-    - > それらは、再パラメータ化トリック[22]を介して発生器へのノイズ入力を計算するために使用されます。
+    - > それらは、reparameterization trick [22]を介して、発生器へのノイズ入力を計算するために使用されます。
 
 - > The generator also takes the segmentation mask of the input image as input via the proposed SPADE ResBlks.
     - > ジェネレータはまた、提案されたSPADE ResBlksを介して入力として入力画像のセグメンテーションマスクを取ります。

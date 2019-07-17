@@ -158,11 +158,11 @@
 
 - For our purposes, the chief difficulty of using CVAE [34] directly is that the high DoF networks of qψ (·|·) and pφ (·|·) are not easily separable in (1) with the KL distance easily driven towards zero, and is approximately equivalent to maximizing Epφ(zc|Im)[logpθ(Ic|zc,Im)] (the “GSNN” variant in [34]).
     - **我々の目的のために、CVAE [34]を直接使用することの主な困難は、**
-    - **qψ（・|・）とpφ（・|・）の高DoFネットワークが、KL距離が容易にゼロに追いやられると、簡単に (1) 式で分離できないことです。** 
+    - **qψ（・|・）とpφ（・|・）の高DoFネットワークが、容易にゼロに追いやられるKL距離で、簡単に (1) 式で分離できないことです。** 
     - **これは、Epφ（zc | Im）[logpθ（Ic | zc、Im）]（[34]の "GSNN"の変形）を最大化することとほぼ等価である。**
 
 - This consequently learns a delta-like prior of p_φ(zc|Im) → δ(zc − z_c^*), where z∗c is the maximum latent likelihood point of pθ (Ic |·, Im ).
-    - **その結果、これはデルタ状の事前事前確率 p_φ（zc | Im）→δ（z_c  -  z_c^*）を学習します。ここで、z * cはpθの最大潜在尤度点（Ic |・、Im）です。**
+    - **その結果、これはデルタ状の事前確率 p_φ（zc | Im）→δ（z_c  -  z_c^*）を学習します。ここで、z * cはpθの最大潜在尤度点（Ic |・、Im）です。**
 
 - While this low variance prior may be useful in estimating a single solution, sampling from it will lead to negligible diversity in image completion results (as seen in fig. 9).
     - **この低分散事前分布は単一の解を推定するのに有用であり得るが、それからサンプリングすることは画像完成結果において無視できるほどの多様性をもたらすであろう（図９に見られるように）。**
@@ -175,26 +175,61 @@
 
 ---
 
-- A possible way to diversify the output is to simply not incentivize the output to reconstruct the instance-specific Ig during training, only needing it to fit in with the training set distribution as deemed by an learned adversarial discriminator (see fig. 2 “Instance Blind”). However, this approach is unstable, especially for large and complex scenes [35].
-    - 出力を多様化するための可能な方法は、学習中のインスタンス固有の I_g を再構築するために出力を単純にインセンティブにしないことであり、
-    - 学習された敵対的識別器によって見なされるトレーニングセット分布に適合することのみを必要とする（図2 」）。 しかしながら、このアプローチは、特に大きくて複雑なシーンでは不安定です[35]。
+- A possible way to diversify the output is to simply not incentivize the output to reconstruct the instance-specific Ig during training, only needing it to fit in with the training set distribution as deemed by an learned adversarial discriminator (see fig. 2 “Instance Blind”). 
+    - 出力を多様化するための可能な方法は、学習中のインスタンス固有の I_g を再構築するために出力を単純に動機づけ [incentivize] しないことであり、
+    - 学習された敵対的識別器によって見なされる [deemed] 場合は？、学習データセット分布に適合することのみを必要とする（図2 の“Instance Blind”参照）。
+    
+- However, this approach is unstable, especially for large and complex scenes [35].
+    - しかしながら、このアプローチは、特に大きくて複雑なシーンでは不安定です[35]。
+
+##### B. Mathematical Derivation and Analysis
+
+###### B.1.3 Unconstrained Learning of the Conditional Prior
+
+- Assuming that there is a unique global maximum for log p_φ(zc | Im), the bound achieves equality when the conditional prior becomes a Dirac delta function centered at the maximum latent likelihood point
+    - logp_φ（zc | Im）に一意の大域的最大値があると仮定すると、条件付き事前確率が最大潜在尤度点を中心とするディラックデルタ関数になると、範囲は等式になります。
+
+- Intuitively, subject to the vagaries of stochastic gradient descent, the network for p_φ(zc | Im) without further constraints will learn a narrow delta-like function that sifts out maximum latent likelihood value of log p_φ(Ic | zc; Im).
+    - 直感的には、確率的勾配降下の変動に応じて、それ以上制約を受けないp_φ（zc | Im）のネットワークは、logp_φ（Ic | zc; Im）の最大潜在尤度値を除外する狭いデルタ様関数を学習する。
+    
+- As mentioned in section 3.1, although this narrow conditional prior may be helpful in estimating a single solution for Ic given Im during testing during testing, this is poor for sampling a diversity of solutions.
+    - セクション3.1で述べたように、この狭い条件付き事前条件は、テスト中のテスト中にImが与えられた場合のIcの単一解を推定するのに役立ちますが、これは多様な解をサンプリングするには不十分です。
+
+- In our framework, the (unconditional) latent priors are imposed for the partial images themselves, which prevent this delta function degeneracy.
+    - 我々のフレームワークでは、（無条件の）潜在的な前置詞が部分画像自体に課され、それがこのデルタ関数の縮退を防ぎます。
+
 
 
 #### Latent Priors of Holes
 
-- In our approach, we require that missing partial images, as a superset of full images, to also arise from a latent space distribution, with a smooth prior of p(zc). The variational lower bound is:
-    - 我々のアプローチでは、完全画像のスーパーセットとしての欠けている部分画像も、滑らかな事前確率p（zc）をもつ潜在空間分布から生じることを要求する。 変分下限は次のとおりです。
+- In our approach, we require that missing partial images, as a superset of full images, to also arise from a latent space distribution, with a smooth prior of p(zc).
+    - 我々のアプローチでは、完全画像のスーパーセットとしての欠けている部分画像も、滑らかな事前確率p（zc）をもつ潜在空間分布から生じることを要求する。 
+
+- The variational lower bound is:    
+    - 変分下限は次のとおりです。
 
 ![image](https://user-images.githubusercontent.com/25688193/61367091-eaa1b280-a8c5-11e9-8ad1-0cd0cf8d0d33.png)
 
-- where in [19] the prior is set as p(zc ) = N (0, I). However, we can be more discerning when it comes to partial images since they have different numbers of pixels. A missing partial image zc with more pixels (larger holes) should have greater latent prior variance than a missing partial image zc with fewer pixels (smaller holes). Hence we generalize the prior p(zc) = Nm(0, σ2(n)I) to adapt to the number of pixels n.
-    - ここで、[19]では、事前確率はp（zc）= N（0、I）として設定されています。 ただし、部分画像はピクセル数が異なるため、部分画像の場合はより見やすくなります。 より多くの画素（より大きな穴）を有する欠けている部分画像ｚｃは、より少ない画素（より小さな穴）を有する欠けている部分画像ｚｃよりも大きい潜在的事前分散を有するべきである。 それ故、我々は、ピクセル数ｎに適応するために、事前のｐ（ｚｃ）＝ Ｎｍ（０、σ２（ｎ）Ｉ）を一般化する。
+- where in [19] the prior is set as p(z_c) = N (0, I). 
+    - ここで、[19]では、事前確率はp（zc）= N（0、I）として設定されています。
+
+- However, we can be more discerning when it comes to partial images since they have different numbers of pixels.
+    - ただし、部分画像はピクセル数が異なるため、部分画像の場合はより見やすくなります。
+
+- A missing partial image zc with more pixels (larger holes) should have greater latent prior variance than a missing partial image zc with fewer pixels (smaller holes).
+    - より多くの画素（より大きな穴）を有する欠けている部分画像ｚｃは、より少ない画素（より小さな穴）を有する欠けている部分画像ｚｃよりも大きい潜在的事前分散を有するべきである。
+
+- Hence we generalize the prior p(z_c) = N_m(0, σ2(n)I) to adapt to the number of pixels n.
+    - それ故、我々は、ピクセル数ｎに適応するために、事前のｐ（ｚｃ）＝ Ｎｍ（０、σ２（ｎ）Ｉ）を一般化する。
 
 
 #### Prior-Conditional Coupling
 
-- Next, we combine the latent priors into the conditional lower bound of (1). This can be done by assuming zc is much more closely related to Ic than to Im, so qψ(zc|Ic, Im)≈qψ(zc|Ic).
-    - 次に、潜在プライアを（1）の条件付き下限に結合します。 これは、zcがImよりもIcにはるかに密接に関連していると仮定することによって行うことができます。したがって、qψ（zc | Ic、Im）≒qψ（zc | Ic）です。
+- Next, we combine the latent priors into the conditional lower bound of (1).
+    - 次に、潜在プライアを（1）の条件付き下限に結合します。 
+
+- This can be done by assuming zc is much more closely related to Ic than to Im, so qψ(zc|Ic, Im)≈qψ(zc|Ic).
+    - これは、zcがImよりもIcにはるかに密接に関連していると仮定することによって行うことができます。したがって、qψ（zc | Ic、Im）≒qψ（zc | Ic）です。
 
 ![image](https://user-images.githubusercontent.com/25688193/61367149-0442fa00-a8c6-11e9-9f71-ba2976ad7226.png)
 
@@ -237,6 +272,16 @@
 
 
 ### 3.2. Dual Pipeline Network Structure
+
+- > Figure 3. Overview of our architecture with two parallel pipelines.
+
+- > The reconstructive pipeline (yellow line) combines information from Im and Ic, which is used only for training.
+
+- > The generative pipeline (blue line) infers the conditional distribution of hidden regions, that can be sampled during testing. 
+
+- > Both representation and generation networks share identical weights.
+
+---
 
 - This formulation is implemented as our dual pipeline framework, shown in fig. 3. It consists of two paths: the upper reconstructive path uses information from the whole image, i.e. Ig={Ic,Im}, while the lower generative path only uses information from visible regions Im. Both representation and generation networks share identical weights. Specifically:
     - この定式化は、図3に示すように、私たちのデュアルパイプラインフレームワークとして実装されています。

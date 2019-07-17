@@ -514,26 +514,50 @@
 #### ATR
 
 - dataset [28] aims to predict every pixel with 18 labels: face, sunglass, hat, scarf, hair, upper-clothes, left- arm, right-arm, belt, pants, left-leg, right-leg, skirt, left- shoe, right-shoe, bag and dress. 
+    - dataset [28]は、18個のラベル（顔、サングラス、帽子、スカーフ、髪、上着、左腕、右腕、ベルト、ズボン、左脚、右脚、スカート、左靴、右靴、バッグ、ドレス）ですべてのピクセルを予測することを目的としています。  - 。
 
 - Totally, 17,700 images are included in the dataset, with 16,000 for training, 1,000 for testing and 700 for validation.
+    - 全部で17,700枚の画像がデータセットに含まれています。トレーニング用に16,000枚、テスト用に1,000枚、検証用に700枚です。
 
 ---
 
 - We report the human parsing results on ATR dataset compared with the state-of-the-art methods in Table 2.
+    - 最新の手法と比較したATRデータセットでの人間の解析結果を表2に示します。
 
 - “Graphonomy (PASCAL)” denotes the method that transfer the high-level graph representation on PASCAL-Person- Part dataset to enrich the semantic information.
+    - 「Graphonomy（PASCAL）」は、PASCAL-Person-Partデータセット上の高水準グラフ表現を転送して意味情報を充実させる方法を示します。
 
-- Some previous works [24, 26, 27] use the LSTM architecture to improve the performance. Instead, we use the graph structure to propagate and update the high-level information. The advanced results demonstrate that our Graphonomy has stronger capability to learn and enhance the feature repre- sentations.
+- Some previous works [24, 26, 27] use the LSTM architecture to improve the performance.
+    - いくつかの以前の研究[24、26、27]は性能を改善するためにLSTMアーキテクチャを使用しています。
+
+- Instead, we use the graph structure to propagate and update the high-level information.
+    - 代わりに、グラフ構造を使用して、高レベルの情報を伝播および更新します。
+
+- The advanced results demonstrate that our Graphonomy has stronger capability to learn and enhance the feature representations.
+    - 高度な結果は、私たちのGraphonomyが特徴表現を学びそして強化するより強い能力を持っていることを示しています。
 
 
 #### CIHP
 
-- dataset [13] is a new large-scale benchmark for human parsing task, including 38,280 images with pixel- wise annotations on 19 semantic part labels. The images are collected from the real-world scenarios, containing persons appearing with challenging poses and viewpoints, heavy oc- clusions, and in a wide range of resolutions. Following the benchmark, we use 28,280 images for training, 5,000 im- ages for validation and 5,000 images for testing.
+- dataset [13] is a new large-scale benchmark for human parsing task, including 38,280 images with pixel- wise annotations on 19 semantic part labels.
+    - dataset [13]は、19の意味的部分ラベルにピクセル単位の注釈を付けた38,280の画像を含む、人間の解析作業のための新しい大規模なベンチマークです。
+
+- The images are collected from the real-world scenarios, containing persons appearing with challenging poses and viewpoints, heavy occlusions, and in a wide range of resolutions.    
+    - 挑戦的なポーズや視点で登場する人物を含む実世界のシナリオから、さまざまな解像度で画像が収集されます。
+    
+- Following the benchmark, we use 28,280 images for training, 5,000 images for validation and 5,000 images for testing.
+    - ベンチマークに続いて、トレーニングに28,280枚の画像、検証に5,000枚の画像、テストに5,000枚の画像を使用します。
 
 ---
 
-- The human parsing results evaluated on CIHP dataset is reported in Table 3. The previous work [13] achieve high performance with 55% Mean IoU in this challenging dataset by using multi-task learning. Our Graphonomy (PASCAL) improves the results up to 58.58%, which demonstrates its superiority and capability to takes full advantages of seman- tic information to boost the human parsing performance.
+- The human parsing results evaluated on CIHP dataset is reported in Table 3.
 
+- The previous work [13] achieve high performance with 55% Mean IoU in this challenging dataset by using multi-task learning.
+    - 以前の研究[13]は、マルチタスク学習を使用することによって、この困難なデータセットにおいて55％平均IoUで高いパフォーマンスを達成しています。
+
+- Our Graphonomy (PASCAL) improves the results up to 58.58%, which demonstrates its superiority and capability to takes full advantages of semantic information to boost the human parsing performance.
+    - 当社のGraphonomy（PASCAL）は、結果を最大58.58％まで向上させています。これは、意味情報を最大限に活用して人間の解析パフォーマンスを向上させることの優位性と機能を示しています。
+    
 ### 4.3. Universal Human Parsing
 
 - To sufficiently utilize all human parsing resources and unify label annotations from different domains or at various levels of granularity, we train a universal human parsing model to unify all kinds of label annotations from different resources and tackle different levels of human parsing, which is denoted as “Graphonomy (Universal Human Parsing)”.
@@ -570,6 +594,7 @@
 ### 4.4. Ablation Studies
 
 - We further discuss and validate the effectiveness of the main components of our Graphonomy on PASCAL-Person-Part dataset [6].
+    - PASCAL-Person-Partデータセットに対する私たちの Graphonomy の主要コンポーネントの有効性についてさらに議論し検証します[6]。
 
 ---
 
@@ -583,7 +608,7 @@
     - 表4に示すように、人体構造情報を符号化して意味グラフの表現と伝播を強化することで、グラフ内推論は基本ネットワークと比較して0.50％の改善を得ています（＃1 vs＃3）。
 
 - To validate the significance of adjacency matrix Ae, which is defined according to the connectivity between human body parts and enables the semantic messages propagation, we compare our methods with and without Ae (#2 vs #3).
-    - To validate the significance of adjacency matrix Ae, which is defined according to the connectivity between human body parts and enables the semantic messages propagation, we compare our methods with and without Ae (#2 vs #3).
+    - 人体の部分間の接続性に従って定義され、意味メッセージの伝播を可能にする隣接行列Aeの重要性を検証するために、Aeありとなしの方法を比較します（＃2 vs＃3）。
 
 - The comparison result shows that the human prior knowledge makes a larger contribution than the extra network parameters brought by the graph convolutions.
     - 比較結果は、グラフのたたみ込みによってもたらされる追加のネットワークパラメータよりも人間の事前知識が大きな貢献をすることを示しています。
@@ -597,7 +622,7 @@
     - 私たちのGraphonomyは、より良いクロスドメイン情報共有のためのInter-Graph Transferモジュールを提供します。
 
 - We further compare the results of difference graph transfer dependencies introduced in Section 3.2, to find out the best transfer matrix to enhance graph representations.
-    - グラフ表現を強化するための最良の伝達行列を見つけるために、セクション3.2で導入された差分グラフ伝達依存性の結果をさらに比較します。
+    - グラフ表現を強化するための最良の伝達行列を見つけるために、セクション3.2で導入された graph transfer 依存性の差分結果をさらに比較します。
 
 - Interestingly, it is observed that transferring according to handcraft relation (#6) diminishes the performance and the feature similarity (#8) is the most powerful dependency.
     - 興味深いことに、手芸の関係（＃6）に従って転送するとパフォーマンスが低下し、機能の類似性（＃8）が最も強力な依存関係になることがわかります。
@@ -613,15 +638,53 @@
 
 #### Different number of traning data.
 
-- Exploiting the in- trinsic relations of semantic labels and incorporating hierar- chical graph transfer learning upon the conventional human parsing network, our Graphonomy not noly tackle multiple levels of human praing tasks, but also alleviate the need of heavy annotated traning data to achieve the desired perfor- mance. We conduct extensive experiments on transferring the model pre-trained on CIHP dataset to PASCAL-Person- Part dataset. We use different annotated data in training set by random sampling for training and evaluate the models on the whole test set. As summarized in Table 5, simply fine- tuning the pre-trained model without our proposed Inter- Graph Transfer obtains 70.33% mean IoU with all training data. However, our complete Graphonomy architecture uses only 50% of the training data and achieves comparable per- formance. With 100% training data, our approach can even outperforms the fine-tuning baseline for 0.81% in average IoU. This superior performance confirms the effectiveness of our Graphonomy that seamlessly bridges all semantic la- bels from different datasets and attains the best utilization of data annotations.
+- Exploiting the intrinsic relations of semantic labels and incorporating hierarchical graph transfer learning upon the conventional human parsing network, our Graphonomy not noly tackle multiple levels of human praing tasks, but also alleviate the need of heavy annotated traning data to achieve the desired performance.
+    - セマンティックラベルの本質的な関係を利用し [Exploiting]、従来の人間の構文解析ネットワークに階層的グラフ転送学習を組み入れて、
+    - 私たちのGraphonomyは、最終的に複数のレベルの人物パースタスクに取り組むことだけでなく、
+    - 望ましいパフォーマンスを達成するために、アノテーションされた重い学習データの必要性も軽減する [alleviate] 
+
+- We conduct extensive experiments on transferring the model pre-trained on CIHP dataset to PASCAL-Person- Part dataset.
+    - CIHPデータセットで事前学習されたモデルをPASCAL-Person-Partデータセットに転送することにおいて、広範な実験を行います。
+
+- We use different annotated data in training set by random sampling for training and evaluate the models on the whole test set.
+    - 我々は、学習のために無作為抽出による学習用データセット内の異なる注釈付きデータを使用し、そしてテストデータセット全体でモデルを評価する。
+
+- As summarized in Table 5, simply fine-tuning the pre-trained model without our proposed Inter- Graph Transfer obtains 70.33% mean IoU with all training data.
+    - 表5に要約されているように、我々の提案したグラフ間転送なしで事前訓練されたモデルを単に微調整することは、すべての訓練データで70.33％の平均IoUを得る。
+
+- However, our complete Graphonomy architecture uses only 50% of the training data and achieves comparable performance.
+    - しかし、私たちの完全なGraphonomyアーキテクチャは学習用データの50％しか使用せず、匹敵する性能を達成しています。
+
+- With 100% training data, our approach can even outperforms the fine-tuning baseline for 0.81% in average IoU.
+    - 100％の学習用データで、私たちのアプローチは平均IoUで0.81％の微調整ベースラインよりも優れています。
+
+- This superior performance confirms the effectiveness of our Graphonomy that seamlessly bridges all semantic labels from different datasets and attains the best utilization of data annotations.
+    - この優れた性能は、さまざまなデータセットからすべてのセマンティックラベルをシームレスにつなぎ、データアノテーションを最大限に活用するという我々の Graphonomy の有効性を裏付けています。
 
 ### 4.5. Qualitative Results
+
+![image](https://user-images.githubusercontent.com/25688193/61049016-5c898000-a41e-11e9-8ded-7c506f5eefc7.png)
 
 - > Figure 5. Visualized comparison of human parsing results on PASCAL-Person-Part dataset [6] (Left) and CIHP dataset [13] (Right).
 
 ---
 
-- The qualitative results on the PASCAL-Person-Part dataset [6] and the CIHP dataset [13] are visualized in Fig. 5. As can be observed, our approach outputs more semantically meaningful and precise predictions than other two methods despite the existence of large appearance and position variations. Taking (b) and (e) for example, when parsing the clothes, other methods are suffered from strange fashion style and the big logo on the clothes, which leads to incorrect predictions for some small regions. However, thanks to the effective semantic information propagation by graph reasoning and transferring, our Graphonomy success- fully segments out the large clothes regions. More superi- orly, with the help of the compact high-level graph represen- tation integrated from different sources, our method gener- ates more robust results and gets rid of the disturbance from the occlusion and background, like (c) and (d). Besides, we also present some failure cases (g) and (h), and find that the overlapped parts and the very small persons cannot be predicted precisely, which indicates more knowledge is de- sired to be incorporated into our graph structure to tackle the challenging cases.
+- The qualitative results on the PASCAL-Person-Part dataset [6] and the CIHP dataset [13] are visualized in Fig. 5.
+
+- As can be observed, our approach outputs more semantically meaningful and precise predictions than other two methods despite the existence of large appearance and position variations.
+    - 見て取れるように、我々のアプローチは、大きな外観および位置の変動があるにもかかわらず、他の２つの方法よりも意味的に意味のある正確な予測を出力する。
+
+- Taking (b) and (e) for example, when parsing the clothes, other methods are suffered from strange fashion style and the big logo on the clothes, which leads to incorrect predictions for some small regions.
+    - 例えば（b）と（e）を取ると、服を解析するとき、他の方法は奇妙なファッションスタイルと服の大きなロゴに苦しんでいます。
+
+- However, thanks to the effective semantic information propagation by graph reasoning and transferring, our Graphonomy successfully segments out the large clothes regions.
+    - しかし、グラフ推論と転送による効果的な意味情報伝達のおかげで、私たちのGraphonomyは大きな服装領域をうまく切り出しました。
+
+- More superiorly, with the help of the compact high-level graph representation integrated from different sources, our method generates more robust results and gets rid of the disturbance from the occlusion and background, like (c) and (d).
+    - さらに優れているのは、異なる情報源から統合されたコンパクトな高水準グラフ表現の助けを借りて、我々の方法はよりロバストな結果を生成し、（c）と（d）のように閉塞 [occlusion] と背景からの外乱を取り除く。
+
+- Besides, we also present some failure cases (g) and (h), and find that the overlapped parts and the very small persons cannot be predicted precisely, which indicates more knowledge is desired to be incorporated into our graph structure to tackle the challenging cases.
+    - そのうえ、いくつかの失敗事例（g）と（h）を提示して、重複部分と非常に小さい人を正確に予測することができないことを見つけた。それは挑戦的な事例に取り組むためにより多くの知識が我々のグラフ構造に組み込まれることが望ましい 。
 
 
 # ■ 関連研究（他の手法との違い）

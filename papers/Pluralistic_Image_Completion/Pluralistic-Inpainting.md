@@ -159,7 +159,7 @@
 
 - > (Ours) uses a generative path during testing, but is guided by a parallel reconstructive path during training. Yellow path is used for training.
     - > （Ours）はテスト中に生成パスを使用しますが、トレーニング中は並列再構成パスによって導かれます。 黄色い道は訓練のために使われます。
-    
+
 ### 3.1. Probabilistic Framework
 
 - In order to have a distribution to sample from, a current approach is to employ the CVAE [34] which estimates a parametric distribution over a latent space, from which sampling is possible (see fig. 2 “CVAE”). This involves a variational lower bound of the conditional log-likelihood of observing the training instances:
@@ -497,6 +497,13 @@
 
 - Finally, we report the performance on the more challenging ImageNet dataset by comparing to the previous Patch- Match [3], CE [29], GL [14] and CA [42]. Different from the CE and GL models that were trained on the 100k sub- set of training images of ImageNet, our model is directly trained on original ImageNet training dataset with all images resized to 256 × 256. Visual results on a variety of objects from the validation set are shown in fig 7. Our model was able to infer the content quite effectively.
     - 最後に、以前のPatch-Match [3]、CE [29]、GL [14]、CA [42]と比較して、より困難なImageNetデータセットのパフォーマンスを報告します。 ImageNetの100kサブセットのトレーニング画像でトレーニングされたCEおよびGLモデルとは異なり、このモデルは元のImageNetトレーニングデータセットで直接トレーニングされ、すべての画像は256×256にサイズ変更されます。 検証セットを図7に示します。私たちのモデルは内容を非常に効果的に推論することができました。
+
+### 4.3. Ablation Study
+
+#### Our PICNet vs CVAE vs “Instance Blind” vs Bicycle- GAN
+
+- We investigated the influence of using our two-path training structure in comparison to other variants such as the CVAE [34] and “instance blind” structures in fig. 2. We trained the three models using common parameters. As shown in fig. 9, for the CVAE, even after sampling from the latent prior distribution, the outputs were almost iden- tical, as the conditional prior learned is narrowly centered at the maximum latent likelihood solution. As for “instance blind”, if reconstruction loss was used only on visible pix- els, the training may become unstable. If we used recon- struction loss on the full generated image, there is also lit- tle variation as the framework has likely learned to ignore the sampling and predicted a deterministic outcome purely from Im.
+
 
 # ■ 関連研究（他の手法との違い）
 

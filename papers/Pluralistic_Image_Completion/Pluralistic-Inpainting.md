@@ -120,7 +120,13 @@
 
 # ■ 結論
 
-## x. 論文の項目名 (Conclusion)
+## 5. Conclusion
+
+- We proposed a novel dual pipeline training architecture for pluralistic image completion. Unlike existing methods, our framework can generate multiple diverse solutions with plausible content for a single masked input.
+    - 多元的画像完成のための新しい二重パイプライン訓練アーキテクチャを提案した。 既存の方法とは異なり、私たちのフレームワークは単一のマスクされた入力のためのもっともらしい内容で複数の多様な解決策を生み出すことができます。
+
+- The experimental results demonstrate this prior-conditional lower bound coupling is significant for conditional image generation. We also introduced an enhanced short+long term attention layer which improves realism. Experiments on a variety of datasets showed that our multiple solutions were diverse and of high-quality, especially for large holes.
+    - 実験結果は、この事前条件付き下限結合が条件付き画像生成にとって重要であることを実証している。 また、リアリズムを向上させる、強化された短期および長期の注目層を導入しました。 さまざまなデータセットを実験した結果、私たちの複数の解決策は多様で高品質、**特に大きな穴の場合に有効であることがわかりました。**
 
 
 # ■ 何をしたか？詳細
@@ -137,8 +143,23 @@
     - 古典的な画像補完方法は、Imから決定論的な方法でグラウンドトルースマスクされていない画像Igを再構築しようとします（図2「決定論的」を参照）。
 
 - This results in only a single solution. In contrast, our goal is to sample from p(Ic|Im).
-    - これは唯一の解決策になります。 対照的に、私たちの目標はpからサンプリングすることです（Ic | Im）。
+    - これは唯一の解決策になります。 対照的に、私たちの目標は p（Ic | Im） からサンプリングすることです。
 
+---
+
+![image](https://user-images.githubusercontent.com/25688193/61445555-8ac01000-a988-11e9-9e5c-9f522b65788a.png)
+
+- > Figure 2. Completion strategies given masked input. 
+
+- > (Deterministic) structure directly predicts the ground truth instance.
+
+- > (CVAE) adds in random sampling to diversify the output. 
+
+- > (Instance Blind) only matches the visible parts, but training is unstable.
+
+- > (Ours) uses a generative path during testing, but is guided by a parallel reconstructive path during training. Yellow path is used for training.
+    - > （Ours）はテスト中に生成パスを使用しますが、トレーニング中は並列再構成パスによって導かれます。 黄色い道は訓練のために使われます。
+    
 ### 3.1. Probabilistic Framework
 
 - In order to have a distribution to sample from, a current approach is to employ the CVAE [34] which estimates a parametric distribution over a latent space, from which sampling is possible (see fig. 2 “CVAE”). This involves a variational lower bound of the conditional log-likelihood of observing the training instances:
@@ -245,31 +266,68 @@
 #### Reconstruction vs Creative Generation
 
 - One issue with (3) is that the sampling is taken from qψ(zc|Ic) during training, but is not available during testing, whereupon sampling must come from pφ(zc|Im) which may not be adequately learned for this role.
-    - （３）に関する１つの問題は、サンプリングがトレーニング中にｑψ（ｚｃ ｜ Ｉｃ）から取られるが、試験中には利用できないことであり、サンプリングはｐφ（ｚｃ ｜ Ｉｍ）から来なければならない。
+    - （３）に関する１つの問題は、サンプリングが学習中に qψ(zc|Ic) から取られるが、推論中には利用できないことであり、サンプリングは pφ(zc|Im) から来なければならない。
 
 - In order to mitigate this problem, we modify (3) to have a blend of formulations with and without importance sampling. So, with simplified notation:
     - この問題を軽減するために、我々は（３）を修正して、重要度サンプリングを伴う、また伴わない定式化のブレンドを持つようにする。 そのため、表記を簡略化して、
 
 ![image](https://user-images.githubusercontent.com/25688193/61367194-17ee6080-a8c6-11e9-9ec2-43cf6825e2fb.png)
 
-- where 0 ≤ λ ≤ 1 is implicitly set by training loss coefficients in section 3.3. When sampling from the importance function qψ (·|Ic ), the full training instance is available and we formulate the likelihood prθ (Ic |zc , Im ) to be focused on reconstructing Ic.
+- where 0 ≤ λ ≤ 1 is implicitly set by training loss coefficients in section 3.3. 
     - ここで、0≦λ≦1はセクション3.3の学習損失係数によって暗黙的に設定されます。
-    - 重要度関数ｑψ（・｜ Ｉｃ）からサンプリングすると、完全な訓練事例が利用可能であり、Ｉｃの再構築に焦点を合わせるために尤度ｐｒθ（Ｉｃ ｜ ｚｃ、Ｉｍ）を定式化する。
 
-- Conversely, when sampling from the learned conditional prior pφ (·|Im ) which does not contain Ic, we facilitate creative generation by having the likelihood model pgθ (Ic |zc , Im ) ∼= lgθ (zc , Im ) be independent of the original instance of Ic.
-    - 逆に、Icを含まない学習された条件付き事前確率pφ（・| Im）からサンプリングするとき、我々は尤度モデルpgθ（Ic | zc、Im）〜=lgθ（zc、Im）を独立にすることによって創造的生成を促進する。 Icの元のインスタンス。
+- When sampling from the importance function qψ (·|Ic ), the full training instance is available and we formulate the likelihood prθ (Ic |zc , Im ) to be focused on reconstructing Ic.
+    - 重点サンプリング qψ (·|Ic ) からサンプリングすると、完全な訓練事例が利用可能であり、Ｉｃの再構築に焦点を合わせるために尤度 prθ (Ic |zc , Im) を定式化する。
+
+- Conversely, when sampling from the learned conditional prior pφ (·|Im ) which does not contain Ic, we facilitate creative generation by having the likelihood model ![image](https://user-images.githubusercontent.com/25688193/61435049-96084100-a972-11e9-99e9-8803293ad760.png) be independent of the original instance of Ic.
+    - 逆に、Icを含まない学習された条件付き事前確率pφ（・| Im）からサンプリングするとき、
+    - 我々は尤度モデル ![image](https://user-images.githubusercontent.com/25688193/61435049-96084100-a972-11e9-99e9-8803293ad760.png) をIcの元のインスタンスとは無関係にすることによって創造的生成を促進する [facilitate]。 
 
 - Instead it only encourages generated samples to fit in with the overall training distribution.
     - 代わりに、生成されたサンプルが全体のトレーニング分布に適合するように奨励するだけです。
 
 ---
 
-- Our overall training objective may then be expressed as jointly maximizing the lower bounds in (2) and (4), with the likelihood in (2) unified to that in (4) as pθ (Ic |zc ) ∼= prθ(Ic|zc,Im).
+- Our overall training objective may then be expressed as jointly maximizing the lower bounds in (2) and (4), with the likelihood in (2) unified to that in (4) as ![image](https://user-images.githubusercontent.com/25688193/61435584-c43a5080-a973-11e9-88f7-c1499353c534.png).
+    - 我々の全体的な訓練目的は次に、![image](https://user-images.githubusercontent.com/25688193/61435584-c43a5080-a973-11e9-88f7-c1499353c534.png) として (4) で統一された [unified]、式 (2) の尤度とともに、(2）と (4) の下限を共同で最大化するように表現される。
+
     - そして、我々の全体的な訓練目的は、（２）と（４）の下限を（４）のものに統一して、（２）と（４）の下限を共同で最大化するように表現される。 zc、Im）。
-    
+
 - See the supplemental section B.2.
     - 補足セクションB.2を参照してください。
 
+#### B.2. Joint Maximization of Unconditional and Conditional Variational Lower Bounds
+
+- The overall training loss function (5) used in our framework has a direct link to jointly maximizing the unconditional and unconditional variational lower bounds, respectively expressed by (2) and (4).
+    - 我々のフレームワークで使用される全体のトレーニング損失関数（５）は、それぞれ（２）および（４）によって表される無条件および無条件変分の下限を共同で最大化することへの直接のリンクを有する。
+
+- Using simplified notation, we rewrite these bounds respectively as:
+    - 簡略化した表記法を使用して、これらの範囲をそれぞれ次のように書き換えます。
+
+![image](https://user-images.githubusercontent.com/25688193/61435956-ad482e00-a974-11e9-8e40-a49562225d74.png)
+
+- To clarify, B1 is the lower bound related to the unconditional log likelihood of observing Ic, while B2 relates to the log likelihood of observing Ic conditioned on Im.
+    - 明確にするために、Ｂ１はＩｃを観測する無条件対数尤度に関する下限であり、Ｂ２はＩｍを条件とするＩｃを観測する対数尤度に関する下限である。
+
+- The expression of B2 reflects a blend of conditional likelihood formulations with and without the use of importance sampling, which are matched to different likelihood models, as explained in section 3_1.
+    - B2の表現は、セクション3_1で説明したように、重要度サンプリングを使用する場合と使用しない場合の条件付き尤度定式化の組み合わせを反映しています。
+
+- Note that the (1 − λ) coefficient from (4) is left out here for simplicity, but there is no loss of generality since we can ignore a constant factor of the true lower bound if we are simply maximizing it.
+    - （4）からの（1  - λ）係数は単純化のためにここで省略されているが、我々が単にそれを最大化しているならば我々が真の下限の定数因子を無視できるので一般性の損失はない。
+
+---
+
+- We can then define a combined objective function as our maximization goal
+    - そして、最大化目標として複合目的関数を定義できます。
+
+![image](https://user-images.githubusercontent.com/25688193/61436684-49bf0000-a976-11e9-9e18-409cffe4a5fb.png)
+
+---
+
+- To understand the relation between B in (B.11) and L in (5), we consider the equivalence of:
+    - （B.11）のBと（5）のLの関係を理解するために、以下の等価性を考えます。
+
+![image](https://user-images.githubusercontent.com/25688193/61436743-6824fb80-a976-11e9-9bd7-7ce824534b2e.png)
 
 ### 3.2. Dual Pipeline Network Structure
 
@@ -353,8 +411,92 @@
 
 # ■ 実験結果（主張の証明）・議論（手法の良し悪し）・メソッド（実験方法）
 
-## x. 論文の項目名
+## 4. Experimental Results
 
+- We evaluated our proposed model on four datasets including Paris [9], CelebA-HQ [25, 17], Places2 [45], and ImageNet [31] using the original training and test splits for those datasets.
+    - パリ[9]、CelebA-HQ [25、17]、Places2 [45]、およびImageNet [31]を含む4つのデータセットについて、それらのデータセットのオリジナルのトレーニングとテスト分割を使用して、提案モデルを評価しました。
+
+- Since our model can generate multiple outputs, we sampled 50 images for each masked image, and chose the top 10 results based on the discriminator scores.
+    - 我々のモデルは複数の出力を生成することができるので、我々は各マスクされた画像について５０個の画像をサンプリングし、そして弁別スコアに基づいてトップ１０の結果を選んだ。
+
+- We trained our models for both regular and irregular holes.
+    - 私たちは規則的な穴と不規則な穴の両方について私たちのモデルを訓練しました。 
+
+- For brevity, we refer to our method as PICNet. We provide PyTorch implementations and interactive demo
+    - 簡潔にするために、このメソッドをPICNetと呼びます。 PyTorchの実装とインタラクティブなデモを提供します
+
+### 4.1. Implementation Details
+
+- Our generator and discriminator networks are inspired by SA-GAN [43], but with several important modifications, including the short+long term attention layer.
+    - **私たちのジェネレータとディスクリミネータネットワークはSA-GAN [43]に触発されていますが、短期+長期のアテンションレイヤを含むいくつかの重要な変更が加えられています。**
+
+- Furthermore, inspired by the growing-GAN [17], multi-scale output is applied to make the training faster.
+    - さらに、growing-GAN [17]に触発されて、マルチスケール出力がトレーニングをより速くするために適用されます。
+
+---
+
+- The image completion network, implemented in Pytorch v0.4.0, contains 6M trainable parameters. During optimization, the weights of different losses are set to αKL = αrec =20, αad =1.
+    - Pytorch v0.4.0で実装された画像補完ネットワークは6Mのトレーニング可能なパラメータを含んでいます。 最適化中、異なる損失の重みは、αＫＬ ＝ αｒｅｃ ＝ ２０、αａｄ ＝ １に設定される。
+
+- We used Orthogonal Initialization [33] and the Adam solver [18].
+
+- All networks were trained from scratch, with a fixed learning rate of λ=10-4. Details are in the supplemental section D.
+
+#### D. Experimental Details
+
+- Our network is implemented in Pytorch v0.4.0, and employs the architectures of Appendix C. To reduce memory cost, we restrained the feature channel width to 4 · ch and selected ch = 32.
+
+- We experimented with different channels with largest being 16 · ch = 1024, but found that the improvement was not obvious. In addition, we applied the self-attention layer of the discriminator and the short+long term attention layer of the generator on a 32 × 32 feature size.
+
+- Spectral Normalization is used in all networks.
+
+- All networks are initialized with Orthogonal Initialization and trained from scratch with a fixed learning rate of λ = 10−4. We used the Adam optimizer with β1 = 0 and β2 = 0.999.
+
+--- 
+- The final weights we used were αKL = αapp=20, αad=1. The KL loss and appearance matching loss weights come from the variational lower bound. Since the appearance matching loss is used in four output scales, the final weight for the KL loss is αKL = αKL × Nscale, where Nscale is the number of output scales. We also tried different values of αKL and αapp, and ′found that the bigger the KL loss weight, the greater the diversity of the generated Ic, but it was also harder to retain the ′appearance consistency of the generated Ic to the visible region Im. The values of αapp and αad were obtained from α-GAN.
+
+- We experimented with the number of D steps per G step (varying it from 1 to 5), and found that one D step per G step gave the best results. When αapp is smaller than 1, we can use two or four D steps per G step, but the full generated Ig does not reconstruct the original conditional visible regions Im well. When αapp is larger than 100, we needed two or four G steps per D step, if not the discriminator loss will become zero and the generated Ic will be blurry.
+
+---
+
+- We trained each model on a single GPU, with a batch size of 20 on a GTX 1080TI (11GB) and 32 on a NVIDIA V100 (16GB). Training models for centered holes of Paris and CelebA-HQ takes roughly 3 days, while for ImageNet and Places2 it takes roughly 2 weeks. On the other hand, training models for random irregular and uncentered holes takes about twice the time compared to models for centered holes.
+    - GTX 1080TI（11GB）では20、NVIDIA V100（16GB）では32のバッチサイズで、各モデルを単一のGPUでトレーニングしました。 パリとCelebA-HQの中央穴のトレーニングモデルは約3日かかりますが、ImageNetとPlaces2の場合は約2週間かかります。 一方、不規則で不規則で穴の開いていない穴のモデルのトレーニングは、穴の中央の穴のモデルに比べて約2倍の時間がかかります。
+
+- Moreover, since the prior distribution of random holes p(z) = Nm(0, σ2(n)I) is changed with the number of pixels in each hole n, the training loss may sometimes change abruptly due to the KL loss component.
+
+#### Quantitative Comparisons
+
+- Quantitative evaluation is hard for the pluralistic image completion task, as our goal is to get diverse but reasonable solutions for one masked image. The original image is only one solution of many, and comparisons should not be made based on just this image.
+    - 私たちの目標は一つのマスクされた画像に対して多様だが合理的な解決策を得ることであるので、定量的評価は多元的画像完成タスクにとって難しい。 元のイメージは多くの解決策の1つにすぎず、このイメージだけで比較を行うべきではありません。
+
+---
+
+- However, just for the sake of obtaining quantitative measures, we will assume that one of our top 10 samples (ranked by the discriminator) will be close to the original ground truth, and select the single sample with the best balance of quantitative measures for comparison.
+    - ただし、定量的測定値を取得するために [sake of]、上位10個のサンプルの1つ（弁別子によるランク付け）が元の基本的な真実に近いと仮定し、比較のために定量的測定値のバランスが最も良い単一サンプルを選択します。
+
+- The comparison is conducted on ImageNet 20,000 test images, with quantitative measures of mean l1 loss, peak signal-to-noise ration (PSNR), total variation (TV), and Inception Score (IS) [32]. We used a 128 × 128 mask in the center.
+    - 比較はImageNet 20,000テスト画像で行われ、平均l 1損失、ピーク信号対雑音比（PSNR）、総変動（TV）、およびインセプションスコア（IS）の定量的尺度が用いられます[32]。 中央に128×128のマスクを使用しました。
+
+#### Qualitative Comparisons
+
+- First, we show the results in fig 5 on the Paris dataset [9]. For fair comparison among learning-based methods, we only compared with those trained on this dataset.
+    - まず、パリのデータセット[9]の結果を図5に示します。 学習に基づく方法の間の公正な比較のために、我々はこのデータセットに関して訓練されたものと比較しただけです。
+
+- PatchMatch [3] worked by copying similar patches from visible regions and obtained good results on this dataset with repetitive structures. Context Encoder (CE) [29] generated reasonable structures with blurry textures.
+    - PatchMatch [3]は、可視領域から同様のパッチをコピーすることによって機能し、このデータセットで反復構造を使用して良好な結果を得ました。 Context Encoder（CE）[29]は、ぼやけたテクスチャで妥当な構造を生成しました。
+
+- Shift-Net [38] made improvements by feature copying. Compared to these, our model not only generated more natural images, but also with multiple solutions, e.g. different numbers of windows and varying door sizes.
+    - Shift-Net [38]は、機能コピーによって改善されました。 これらと比較して、我々のモデルはより自然な画像を生成するだけでなく、複数の解決策を用いても生成した。 窓の数とドアの大きさが異なります。
+
+---
+
+- Next, we evaluated our methods on CelebA-HQ face dataset, with fig. 6 showing examples with large regular holes to highlight the diversity of our output. Context Attention (CA) [42] generated reasonable completion for many cases, but for each masked input they were only able to generate a single result; furthermore, on some occasions, the single solution may be poor. Our model produced various plausible results by sampling from the latent space conditional prior.
+    - 次に、CelebA-HQの顔データセットに対する手法を評価しました。 私達の出力の多様性を強調するために大きな規則的な穴がある例を示す6。 Context Attention（CA）[42]は多くの場合妥当な補完を生み出したが、マスクされた入力ごとに一つの結果しか生み出すことができなかった。 さらに、場合によっては、単一の解決策では不十分な場合があります。 我々のモデルは、潜在空間条件付き事前条件からサンプリングすることによって様々なもっともらしい結果を生み出した。
+
+---
+
+- Finally, we report the performance on the more challenging ImageNet dataset by comparing to the previous Patch- Match [3], CE [29], GL [14] and CA [42]. Different from the CE and GL models that were trained on the 100k sub- set of training images of ImageNet, our model is directly trained on original ImageNet training dataset with all images resized to 256 × 256. Visual results on a variety of objects from the validation set are shown in fig 7. Our model was able to infer the content quite effectively.
+    - 最後に、以前のPatch-Match [3]、CE [29]、GL [14]、CA [42]と比較して、より困難なImageNetデータセットのパフォーマンスを報告します。 ImageNetの100kサブセットのトレーニング画像でトレーニングされたCEおよびGLモデルとは異なり、このモデルは元のImageNetトレーニングデータセットで直接トレーニングされ、すべての画像は256×256にサイズ変更されます。 検証セットを図7に示します。私たちのモデルは内容を非常に効果的に推論することができました。
 
 # ■ 関連研究（他の手法との違い）
 

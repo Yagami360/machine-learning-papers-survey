@@ -192,7 +192,7 @@
     - **代わりに固定された潜在事前確率を持つ[37]のCVAE変種が使われるとき、ネットワークは潜在的なサンプリングを無視することを学び、Imから直接Icを推定し、やはり単一の解をもたらします。**
 
 - This is due to the image completion scenario when there is only one training instance per condition label, which is a partial image Im. Details are in the supplemental section B.1.
-    - これは、条件ラベルごとに部分的な画像Ｉｍである訓練インスタンスが１つしかないときの画像完成シナリオによるものである。 詳細は補足のセクションB.1にあります。
+    - **これは、条件ラベルごとに部分的な画像Ｉｍである訓練インスタンスが１つしかないときの画像完成シナリオによるものである。** 詳細は補足のセクションB.1にあります。
 
 ---
 
@@ -334,8 +334,10 @@
 - > Figure 3. Overview of our architecture with two parallel pipelines.
 
 - > The reconstructive pipeline (yellow line) combines information from Im and Ic, which is used only for training.
+    - > **再構築パイプライン（黄色い線）は、トレーニングにのみ使用されるImとIcからの情報を組み合わせたものです。**
 
 - > The generative pipeline (blue line) infers the conditional distribution of hidden regions, that can be sampled during testing. 
+    - > **生成パイプライン（青い線）は、テスト中にサンプリングできる隠れ領域の条件付き分布を推測します。**
 
 - > Both representation and generation networks share identical weights.
 
@@ -502,8 +504,41 @@
 
 #### Our PICNet vs CVAE vs “Instance Blind” vs Bicycle- GAN
 
-- We investigated the influence of using our two-path training structure in comparison to other variants such as the CVAE [34] and “instance blind” structures in fig. 2. We trained the three models using common parameters. As shown in fig. 9, for the CVAE, even after sampling from the latent prior distribution, the outputs were almost iden- tical, as the conditional prior learned is narrowly centered at the maximum latent likelihood solution. As for “instance blind”, if reconstruction loss was used only on visible pix- els, the training may become unstable. If we used recon- struction loss on the full generated image, there is also lit- tle variation as the framework has likely learned to ignore the sampling and predicted a deterministic outcome purely from Im.
+- We investigated the influence of using our two-path training structure in comparison to other variants such as the CVAE [34] and “instance blind” structures in fig 2.
+    - 図2のCVAE [34]や “instance blind” 構造などの他の変種と比較して、2パストレーニング構造を使用した場合の影響を調べました。
 
+- We trained the three models using common parameters. As shown in fig 9, for the CVAE, even after sampling from the latent prior distribution, the outputs were almost identical, as the conditional prior learned is narrowly centered at the maximum latent likelihood solution.
+    - 我々は共通のパラメータを用いて３つのモデルを訓練した。
+    - 図9に示すように、**CVAEでは、潜在的事前分布からサンプリングした後でも、学習された条件付き事前確率は最大潜在尤度解を中心にしているため、出力はほぼ同一でした。**
+
+- As for “instance blind”, if reconstruction loss was used only on visible pixels, the training may become unstable. If we used reconstruction loss on the full generated image, there is also little variation as the framework has likely learned to ignore the sampling and predicted a deterministic outcome purely from Im.
+    - “instance blind” に関しては、再構成損失が可視ピクセルにのみ使用された場合、トレーニングは不安定になる可能性があります。
+    - 完全に生成された画像に対して再構成損失を使用した場合、フレームワークはサンプリングを無視することを学習し、純粋にImから決定論的な結果を予測する可能性が高いため、変動もほとんどありません。
+
+---
+
+- We also trained and tested BicycleGAN [47] for center masks. As is obvious in fig 8, BicycleGAN is not directly suitable, leading to poor results or minimal variation.
+    - 我々はまた、中央マスクについてBicycleGAN [47]を訓練しテストした。 図8から明らかなように、BicycleGANは直接の使用には適しておらず、結果が悪くなったり、ばらつきが最小限になったりします。
+
+#### Diversity Measure
+
+- We computed diversity scores using the LPIPS metric reported in [46]. The average score is calculated between 50K pairs generated from a sampling of 1K center-masked images.
+    - [46]で報告されたLPIPSメトリックを使用してダイバーシティスコアを計算しました。 平均スコアは、1Kの中央マスク画像のサンプリングから生成された50Kペアの間で計算されます。
+
+- Iout and Iout(m) are the full output and mask-region output, respectively.
+    - IoutとIout（m）は、それぞれフル出力とマスク領域出力です。
+
+- While [46] obtained relatively higher diversity scores (still lower than ours), most of their generated images look unnatural (fig 8).
+    - [46]が比較的高いダイバーシティスコア（まだ我々のものより低い）を得たが、それらの生成された画像のほとんどは不自然に見える（図8）。
+
+#### Short+Long Term Attention vs Contextual Attention
+
+- We visualized our attention maps as in [43]. To compare to the contextual attention (CA) layer [42], we retrained CA on the Paris dataset via the authors’ code, and used their publicly released face model.
+    - 私たちは注意マップを[43]のように視覚化しました。 コンテキストアテンション（CA）レイヤ[42]と比較するために、著者のコードを使用してCAをパリのデータセットに再トレーニングし、公開されている顔モデルを使用しました。
+
+- The CA attention maps are presented in their color-directional format. As shown in fig. 10, our short+long term attention layer borrowed features from different positions with varying attention weights, rather than directly copying similar features from just one visible position. 
+
+- For the building scene, CA’s results were of similar high quality to ours, due to the repeated structures present. However for a face with a large mask, CA was unable to borrow features for the hidden content (e.g. mouth, eyes) from visible regions, with poor output. Our attention map is able to utilize both decoder features (which do not have masked parts) and encoder features as appropriate.
 
 # ■ 関連研究（他の手法との違い）
 

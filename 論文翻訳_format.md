@@ -12,7 +12,7 @@
 
 # ■ イントロダクション（何をしたいか？）
 
-## x. 論文の項目名 (Introduction)
+## x. Introduction
 
 - 第１パラグラフ
 
@@ -22,7 +22,7 @@
 
 # ■ 結論
 
-## x. 論文の項目名 (Conclusion)
+## x. Conclusion
 
 
 # ■ 何をしたか？詳細
@@ -37,6 +37,6 @@
 
 # ■ 関連研究（他の手法との違い）
 
-## x. 論文の項目名（Related Work）
+## x. Related Work
 
 

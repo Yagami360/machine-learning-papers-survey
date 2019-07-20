@@ -17,7 +17,7 @@
     - 即ち、画像補完のための複数の多様なもっともらしい解決策を生成するタスク
 
 - A major challenge faced by learning-based approaches is that usually only one ground truth training instance per label. As such, sampling from conditional VAEs still leads to minimal diversity.
-    - 学習ベースのアプローチが直面する大きな課題は、通常、ラベルごとに1つのグラウンドトゥルーストレーニングインスタンスしかないことです。 そういうものとして、条件付きVAEからのサンプリングは依然として最小の多様性につながります。
+    - **学習ベースのアプローチが直面する大きな課題は、通常、ラベルごとに1つのグラウンドトゥルーストレーニングインスタンスしかないことです。 そういうものとして、条件付きVAEからのサンプリングは依然として最小の多様性につながります。**
 
 - To overcome this, we propose a novel and probabilistically principled framework with two parallel paths.
     - これを克服するために、我々は２つの平行な経路を有する新規かつ確率論的原理に基づくフレームワークを提案する。
@@ -38,11 +38,12 @@
 
 ## 1. Introduction
 
-- Image completion is a highly subjective process. Supposing you were shown the various images with missing regions in fig. 1, what would you imagine to be occupying these holes?
-    - 画像補完は非常に主観的なプロセスです。 図の中に、欠けている領域を含むさまざまな画像が表示されたとします。 1、これらの穴を埋めるために何を想像しますか？
+- Image completion is a highly subjective process. Supposing you were shown the various images with missing regions in fig 1, what would you imagine to be occupying these holes?
+    - 画像補完は非常に主観的なプロセスです。 あなたが図1で欠けている領域を持つ様々な画像を見せられたと仮定すると、あなたはこれらの穴を占めることに何を想像するでしょうか？
 
 - Bertalmio et al. [4] related how expert conservators would inpaint damaged art by: 1) imagining the semantic content to be filled based on the overall scene; 2) ensuring structural continuity between the masked and unmasked regions; and 3) filling in visually realistic content for missing regions. 
-    - Ｂｅｒｔａｌｍｉｏ ｅｔ ａｌ。 [4]専門家の保護者がどのようにして損傷したアートを修復するかを以下のように関連付けた。- 1）シーン全体に基づいてセマンティックコンテンツを埋めることを想像する。
+    - Ｂｅｒｔａｌｍｉｏ ｅｔ ａｌら[4]は、専門家の保護者がどのようにして損傷したアートを修復するかを以下のように関連付けた。
+    - 1）シーン全体に基づいてセマンティックコンテンツを埋めることを想像する。
     - ２）マスク領域と非マスク領域との間の構造的連続性を保証する。
     - ３）欠けている領域について視覚的に現実的な内容を記入する。
 
@@ -71,12 +72,13 @@
     - 多様な結果セットを得るために、いくつかの方法は、サンプリング可能な分布を明示的に符号化する、条件付き変分オートエンコーダ（ＣＶＡＥ）［３４、３７、２、１０］、ＶＡＥの条件付き拡張［１９］を利用する。 しかしながら、特に画像完成シナリオの場合、標準的なシングルパス定式化は通常、著しく過小評価された分散をもたらす。
 
 - This is because when the condition label is itself a partial image, the number of instances in the training data that match each label is typically only one. Hence the estimated conditional distributions tend to have very limited variation since they were trained to reconstruct the single ground truth. This is further elaborated on in section 3.1.
-    - これは、条件ラベル自体が部分画像である場合、各ラベルに一致するトレーニングデータ内のインスタンス数は通常1つだけであるためです。 したがって、推定された条件付き分布は、単一のグランドトゥルースを再構築するように訓練されているため、変動が非常に限られている傾向があります。 これについてはセクション3.1でさらに詳しく説明します。
+    - **これは、条件ラベル自体が部分画像である場合、各ラベルに一致するトレーニングデータ内のインスタンス数は通常1つだけであるためです。**
+    - **したがって、推定された条件付き分布は、単一のグランドトゥルースを再構築するように訓練されているため、変動が非常に限られている傾向があります。 これについてはセクション3.1でさらに詳しく [elaborated] 説明します。**
 
 ---
 
-- An important insight we will use is that partial images, as a superset of full images, may also be considered as gen- erated from a latent space with smooth prior distributions.
-    - 私たちが使用する重要な洞察は、部分画像は、フル画像のスーパーセットとして、滑らかな事前分布を持つ潜在空間から生成されたものと見なすこともできるということです。
+- An important insight we will use is that partial images, as a superset of full images, may also be considered as generated from a latent space with smooth prior distributions.
+    - **私たちが使用する重要な洞察は、フル画像の上位集合 [superset] としての部分画像も、滑らかな事前分布を持つ潜在空間から生成されたものと見なすことができるということです。**
 
 - This provides a mechanism for alleviating the problem of having scarce samples per conditional partial image. To do so, we introduce a new image completion network with two parallel but linked training pipelines.
     - これは、条件付き部分画像当たりのサンプルが少ないという問題を軽減するためのメカニズムを提供する。 そうするために、**我々は２つの並列だがリンクされた学習パイプラインを有する新しい画像完成ネットワークを紹介する。**
@@ -170,7 +172,7 @@
 ![image](https://user-images.githubusercontent.com/25688193/61367030-c940c680-a8c5-11e9-9584-92ad2c708931.png)
 
 - where zc is the latent vector, qψ(·|·) the posterior importance sampling function, pφ(·|·) the conditional prior, pθ(·|·) the likelihood, with ψ, φ and θ being the deep network parameters of their corresponding functions. 
-    - ここで、zcは潜在ベクトル、qψ（・|・）は事後重要度サンプリング関数、pφ（・|・）は条件付き事前確率、pθ（・|・）は尤度、ψ、φ、θはディープネットワークです。 対応する関数のパラメータ 
+    - ここで、zcは潜在ベクトル、qψ(·|·) は事後重点サンプリング、pφ(·|·) は条件付き事前確率、pθ(·|·) は尤度、ψ、φ、θ はディープネットワークです。 対応する関数のパラメータ 
 
 - This lower bound is maximized w.r.t. all parameters.
     - この下限は、最大化されている。 すべてのパラメータ
@@ -224,7 +226,7 @@
 #### Latent Priors of Holes
 
 - In our approach, we require that missing partial images, as a superset of full images, to also arise from a latent space distribution, with a smooth prior of p(zc).
-    - 我々のアプローチでは、完全画像のスーパーセットとしての欠けている部分画像も、滑らかな事前確率p（zc）をもつ潜在空間分布から生じることを要求する。 
+    - 我々のアプローチでは、**完全画像の上位集合としての欠けている部分画像**も、滑らかな事前確率p（zc）をもつ潜在空間分布から生じることを要求する。 
 
 - The variational lower bound is:    
     - 変分下限は次のとおりです。

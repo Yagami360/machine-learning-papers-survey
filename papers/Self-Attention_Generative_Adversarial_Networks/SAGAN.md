@@ -33,7 +33,7 @@
 
 # ■ イントロダクション（何をしたいか？）
 
-## x. Introduction
+## 1. Introduction
 
 - Image synthesis is an important problem in computer vision. There has been remarkable progress in this direction with the emergence of Generative Adversarial Networks (GANs) (Goodfellow et al., 2014), though many open problems remain (Odena, 2019). GANs based on deep convolutional networks (Radford et al., 2016; Karras et al., 2018; Zhang et al.) have been especially successful. 
     - 画像合成は、コンピュータビジョンにおける重要な問題です。 多くの未解決の問題が残っているが（Odena、2019）、生成的敵対的ネットワーク（GAN）の出現により、この方向への著しい進歩があった（Goodfellow et al。、2014）。 ディープコンボリューションネットワークに基づくGAN（Radfordら、2016年; Karrasら、2018年; Zhangら）は特に成功している。
@@ -89,6 +89,16 @@
 
 - Our code is available at https://github.com/ brain-research/self-attention-gan.
 
+---
+
+![image](https://user-images.githubusercontent.com/25688193/61586929-24bacf00-abba-11e9-95f1-b218ad7a6ddc.png)
+
+- > Figure 1. The proposed SAGAN generates images by leveraging complementary features in distant portions of the image rather than local regions of fixed shape to generate consistent objects/scenarios.
+    - > 図１：提案されたＳＡＧＡＮは、一貫したオブジェクト／シナリオを生成するために、固定形状の局所領域ではなく画像の離れた部分における相補的な特徴を利用することによって画像を生成する。
+
+- > In each row, the first image shows five representative query locations with color coded dots. The other five images are attention maps for those query locations, with corresponding color coded arrows summarizing the most-attended regions.
+    - > 各行で、最初の画像は色分けされたドットで5つの代表的なクエリの場所を示しています。
+    - > 他の5つの画像は、最も注目されている領域をまとめた対応する色分けされた矢印とともに、それらのクエリの場所に対してのアテンションマップです。
 
 # ■ 結論
 
@@ -153,6 +163,39 @@
     - SAGANでは、提案されたアテンションモジュールは、生成器と識別器の両方に適用されてきました。 他、２０１８）、
 
 ![image](https://user-images.githubusercontent.com/25688193/61578233-a2d19400-ab2e-11e9-9b94-32b9a3191249.png)
+
+
+## 4. Techniques to Stabilize the Training of GANs
+
+- We also investigate two techniques to stabilize the training of GANs on challenging datasets.
+
+- First, we use spectral normalization (Miyato et al., 2018) in the generator as well as in the discriminator.
+
+- Second, we confirm that the two- timescale update rule (TTUR) (Heusel et al., 2017) is effective, and we advocate using it specifically to address slow learning in regularized discriminators.
+    - 次に、2倍スケールの更新規則（TTUR）（Heusel et al。、2017）が有効であることを確認し、それを正則化された弁別器の遅い学習に対処するために特に使用することを主張します。[advocate]
+
+
+### 4.1. Spectral normalization for both generator and discriminator
+
+- Miyato et al. (Miyato et al., 2018) originally proposed stabilizing the training of GANs by applying spectral normalization to the discriminator network. Doing so constrains the Lipschitz constant of the discriminator by restricting the spectral norm of each layer. Compared to other normalization techniques, spectral normalization does not require extra hyper-parameter tuning (setting the spectral norm of all weight layers to 1 consistently performs well in practice). Moreover, the computational cost is also relatively small.
+    - 宮戸ら。 （Miyato et al。、2018）はもともとスペクトル正規化を弁別器ネットワークに適用することによってGANの訓練を安定化することを提案した。 そうすることは、各層のスペクトルノルムを制限することによって弁別子のリプシッツ定数を制約する。 他の正規化手法と比較して、スペクトル正規化は余分なハイパーパラメータ調整を必要としません（すべてのウェイトレイヤのスペクトルノルムを1に設定すると、実際には常にうまく機能します）。 さらに、計算コストも比較的小さい。
+
+---
+
+- We argue that the generator can also benefit from spectral normalization, based on recent evidence that the conditioning of the generator is an important causal factor in GANs’ performance (Odena et al., 2018). Spectral normalization in the generator can prevent the escalation of parameter magnitudes and avoid unusual gradients. 
+    - ジェネレーターのコンディショニングがGANのパフォーマンスにおける重要な因果要因であるという最近の証拠に基づいて、ジェネレーターもスペクトル正規化の恩恵を受けることができると主張しています（Odena et al。、2018）。 発生器におけるスペクトル正規化は、パラメータの大きさの増大を防ぎ、異常な勾配を避けることができます。
+    
+- We find empirically that spectral normalization of both generator and discriminator makes it possible to use fewer discriminator updates per generator update, thus significantly reducing the computational cost of training. The approach also shows more stable training behavior.
+    - 我々は経験的に、発生器と弁別器の両方のスペクトル正規化が発生器更新当たりのより少ない弁別器更新を使用することを可能にし、従って訓練の計算コストを著しく減少させることを発見した。 このアプローチはまた、より安定したトレーニング行動を示します。
+
+
+### 4.2. Imbalanced learning rate for generator and discriminator updates
+
+- In previous work, regularization of the discriminator (Miyato et al., 2018; Gulrajani et al., 2017) often slows down the GANs’ learning process. In practice, methods using regularized discriminators typically require multiple (e.g., 5) discriminator update steps per generator update step during training.
+    - 以前の研究では、弁別子の正則化（Miyato et al。、2018; Gulrajani et al。、2017）はGANの学習プロセスを遅くすることがよくあります。 実際には、正規化された弁別器を使用する方法は通常、訓練中に発生器更新ステップごとに複数（例えば５）の識別器更新ステップを必要とする。
+    
+- Independently, Heusel et al (Heusel et al., 2017) have advocated using separate learning rates (TTUR) for the generator and the discriminator. We propose using TTUR specifically to compensate for the problem of slow learning in a regularized discriminator, making it possible to use fewer discriminator steps per generator step. Using this approach, we are able to produce better results given the same wall-clock time.
+    - 独立して、Heusel ら（Heusel et al。、2017）は、発生器と弁別器に別々の学習率（TTUR）を使用することを提唱しています。 本発明者らは、正則化された弁別器における遅い学習の問題を補償するために特にＴＴＵＲを使用することを提案し、それにより発生器ステップ当たりより少ない弁別器ステップを使用することを可能にする。 このアプローチを使用すると、同じ実時間で同じ結果が得られます。
 
 
 # ■ 実験結果（主張の証明）・議論（手法の良し悪し）・メソッド（実験方法）

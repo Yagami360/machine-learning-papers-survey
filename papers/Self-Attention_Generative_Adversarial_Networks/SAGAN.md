@@ -192,15 +192,26 @@
 ### 4.2. Imbalanced learning rate for generator and discriminator updates
 
 - In previous work, regularization of the discriminator (Miyato et al., 2018; Gulrajani et al., 2017) often slows down the GANs’ learning process. In practice, methods using regularized discriminators typically require multiple (e.g., 5) discriminator update steps per generator update step during training.
-    - 以前の研究では、弁別子の正則化（Miyato et al。、2018; Gulrajani et al。、2017）はGANの学習プロセスを遅くすることがよくあります。 実際には、正規化された弁別器を使用する方法は通常、訓練中に発生器更新ステップごとに複数（例えば５）の識別器更新ステップを必要とする。
+    - 以前の研究では、識別器の正則化（Miyato et al。、2018; Gulrajani et al。、2017）はGANの学習プロセスを遅くすることがよくあります。
+    - 実際には、正規化された識別器を使用する方法は通常、学習中に発生器更新ステップごとに複数回の識別器更新ステップ（例えば５回）を必要とする。
     
 - Independently, Heusel et al (Heusel et al., 2017) have advocated using separate learning rates (TTUR) for the generator and the discriminator. We propose using TTUR specifically to compensate for the problem of slow learning in a regularized discriminator, making it possible to use fewer discriminator steps per generator step. Using this approach, we are able to produce better results given the same wall-clock time.
-    - 独立して、Heusel ら（Heusel et al。、2017）は、発生器と弁別器に別々の学習率（TTUR）を使用することを提唱しています。 本発明者らは、正則化された弁別器における遅い学習の問題を補償するために特にＴＴＵＲを使用することを提案し、それにより発生器ステップ当たりより少ない弁別器ステップを使用することを可能にする。 このアプローチを使用すると、同じ実時間で同じ結果が得られます。
+    - 独立して、Heusel ら（Heusel et al。、2017）は、発生器と識別器に別々の学習率（TTUR）を使用することを提唱しています。
+    - 我々は、正則化された識別器における遅い学習の問題を補償するために特にＴＴＵＲを使用することを提案し、それにより生成器１ステップ当たりに対するより少ない識別器ステップ回数を使用することを可能にする。 このアプローチを使用すると、同じ実時間で同じ結果が得られます。
 
 
 # ■ 実験結果（主張の証明）・議論（手法の良し悪し）・メソッド（実験方法）
 
-## x. 論文の項目名
+## 5. Experiments
+
+- To evaluate the proposed methods, we conducted extensive experiments on the LSVRC2012 (ImageNet) dataset (Russakovsky et al., 2015). First, in Section 5.1, we present experiments designed to evaluate the effectiveness of the two proposed techniques for stabilizing GANs’ training. Next, the proposed self-attention mechanism is investigated in Section 5.2. Finally, our SAGAN is compared with state- of-the-art methods (Odena et al., 2017; Miyato & Koyama, 2018) on the image generation task in Section 5.3. Models were trained for roughly 2 weeks on 4 GPUs each, using sychronous SGD (as there are well known difficulties with asynchronous SGD - see e.g. (Odena, 2016)).
+    - 提案された方法を評価するために、我々はLSVRC2012（ImageNet）データセットに対して広範な実験を行った（Russakovsky et al。、2015）。 まず、5.1節で、GANの訓練を安定させるために提案された2つの手法の有効性を評価するために設計された実験を紹介します。 次に提案したセルフアテンションメカニズムについて5.2節で検討する。 最後に、5.3節の画像生成タスクについて、SAGANと最先端の方法（Odena et al。、2017; Miyato＆Koyama、2018）を比較します。 モデルは、同期ＳＧＤを使用して、それぞれ４ＧＰＵについておよそ２週間訓練された（非同期ＳＧＤにはよく知られている困難があるので - 例えば（Ｏｄｅｎａ、２０１６）を参照）。
+
+### Evaluation metrics.
+
+- We choose the Inception score (IS) (Salimans et al., 2016) and the Fre ́chet Inception distance (FID) (Heusel et al., 2017) for quantitative evaluation. Though alternatives exist (Zhou et al., 2019; Khrulkov & Oseledets, 2018; Olsson et al., 2018), they are not widely used. The Inception score (Salimans et al., 2016) computes the KL divergence between the conditional class distribution and the marginal class distribution. Higher Inception score indicates better image quality. We include the Inception score because it is widely used and thus makes it possible to compare our results to previous work. However, it is important to understand that Inception score has serious limitations—it is intended primarily to ensure that the model generates samples that can be confidently recognized as belonging to a specific class, and that the model generates samples from many classes, not necessarily to assess realism of details or intra-class diversity.
+
+- FID is a more principled and comprehensive metric, and has been shown to be more consistent with human evaluation in assessing the realism and variation of the generated samples (Heusel et al., 2017). FID calculates the Wasserstein-2 distance between the gen- erated images and the real images in the feature space of an Inception-v3 network. Besides the FID calculated over the whole data distribution (i.e.., all 1000 classes of images in ImageNet), we also compute FID between the generated images and dataset images within each class (called intra FID (Miyato & Koyama, 2018)). Lower FID and intra FID values mean closer distances between synthetic and real data distributions. In all our experiments, 50k samples are randomly generated for each model to compute the Inception score, FID and intra FID.
 
 
 # ■ 関連研究（他の手法との違い）

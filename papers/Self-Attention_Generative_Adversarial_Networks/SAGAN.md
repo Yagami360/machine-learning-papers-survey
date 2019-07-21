@@ -56,22 +56,38 @@
     - そして、これらのパラメーター化は、これまで目に見えなかった入力に適用するとき、統計的に [statistically]、脆くなり [brittle]、失敗する傾向があり [prone] ます。
 
 - Increasing the size of the convolution kernels can increase the representational capacity of the network but doing so also loses the computational and statistical efficiency obtained by using local convolutional structure.
+    - 畳み込みカーネルのサイズを大きくすると、ネットワークの表現能力を高めることができますが、ローカル畳み込み構造を使用することによって得られる計算上および統計上の効率も低下します。
 
 - Self-attention (Cheng et al., 2016; Parikh et al., 2016; Vaswani et al., 2017), on the other hand, exhibits a better balance between the ability to model long-range dependencies and the computational and statistical efficiency.
+    - 一方、自己注意（Cheng et al。、2016; Parikh et al。、2016; Vaswani et al。、2017）は、長期的な依存関係をモデル化する能力と計算上および統計上の効率との間のより良いバランスを示します。 。
 
 - The self-attention module calculates response at a position as a weighted sum of the features at all positions, where the weights – or attention vectors – are calculated with only a small computational cost.
+    - 自己注意モジュールは、ある位置での応答をすべての位置での特徴の加重和として計算します。ここで、重み、つまり注意ベクトルは、わずかな計算コストで計算されます。
 
 ---
 
-- In this work, we propose Self-Attention Generative Adver- sarial Networks (SAGANs), which introduce a self-attention mechanism into convolutional GANs. The self-attention module is complementary to convolutions and helps with modeling long range, multi-level dependencies across image regions. Armed with self-attention, the generator can draw images in which fine details at every location are carefully coordinated with fine details in distant portions of the image. Moreover, the discriminator can also more accurately enforce complicated geometric constraints on the global image structure.
+- In this work, we propose Self-Attention Generative Adversarial Networks (SAGANs), which introduce a self-attention mechanism into convolutional GANs. The self-attention module is complementary to convolutions and helps with modeling long range, multi-level dependencies across image regions.
+    - 本研究では、自己注意メカニズムを畳み込みGANに導入する自己注意生成型敵対的ネットワーク（SAGAN）を提案する。
+    - セルフアテンションモジュールは畳み込みを補完する [complementary] ものであり、画像領域全体にわたる長距離のマルチレベル依存関係のモデリングに役立ちます。
+
+- Armed with self-attention, the generator can draw images in which fine details at every location are carefully coordinated with fine details in distant portions of the image. Moreover, the discriminator can also more accurately enforce complicated geometric constraints on the global image structure.
+    - 自己注意で武装して [Armed with] 、生成器は、あらゆる場所の細かい詳細が、画像の遠い部分の細部において細かい詳細で注意深く調整されているような、画像を描くことができます。
+    - さらに、識別器はまた、グローバル画像構造において、複雑な幾何学的制約をより正確に強制することもできる。
 
 ---
 
 - In addition to self-attention, we also incorporate recent insights relating network conditioning to GAN performance. The work by (Odena et al., 2018) showed that well-conditioned generators tend to perform better. We propose enforcing good conditioning of GAN generators using the spectral normalization technique that has previously been applied only to the discriminator (Miyato et al., 2018).
+    - 自己注意に加えて、私達はまたネットワーク調整をGANの性能に関連させる最近の洞察を取り入れています。 （Odena et al。、2018）による研究は、条件の良い発電機がより良く機能する傾向があることを示した。 我々は、これまで弁別器にのみ適用されてきたスペクトル正規化技術を使用して、GAN発生器の良好な条件付けを強化することを提案する（Miyato et al。、2018）。
 
 ---
 
-- We have conducted extensive experiments on the ImageNet dataset to validate the effectiveness of the proposed self- attention mechanism and stabilization techniques. SAGAN significantly outperforms prior work in image synthe- sis by boosting the best reported Inception score from 36.8 to 52.52 and reducing Fre ́chet Inception distance from 27.62 to 18.65. Visualization of the attention layers shows that the generator leverages neighborhoods that correspond to object shapes rather than local regions of fixed shape. Our code is available at https://github.com/ brain-research/self-attention-gan.
+- We have conducted extensive experiments on the ImageNet dataset to validate the effectiveness of the proposed self- attention mechanism and stabilization techniques. SAGAN significantly outperforms prior work in image synthesis by boosting the best reported Inception score from 36.8 to 52.52 and reducing Fre ́chet Inception distance from 27.62 to 18.65. 
+    - 提案した自己注意メカニズムと安定化手法の有効性を検証するために、ImageNetデータセットに対して広範な実験を行った。 SAGANは、最もよく報告されているインセプションスコアを36.8から52.52に高め、フレシェインセプション距離を27.62から18.65に減らすことによって、画像合成における以前の研究よりも著しく優れています。
+
+- Visualization of the attention layers shows that the generator leverages neighborhoods that correspond to object shapes rather than local regions of fixed shape.
+    - 注意層の視覚化は、ジェネレータが固定形状の局所領域ではなくオブジェクト形状に対応する近傍を利用することを示しています。
+
+- Our code is available at https://github.com/ brain-research/self-attention-gan.
 
 
 # ■ 結論
@@ -81,7 +97,62 @@
 
 # ■ 何をしたか？詳細
 
-## x. 論文の項目名
+## 3. Self-Attention Generative Adversarial Networks
+
+![image](https://user-images.githubusercontent.com/25688193/61586275-a0ad1b00-abaa-11e9-9a38-4c6da8ae7a5f.png)
+
+- > Figure 2. The proposed self-attention module for the SAGAN. The ⊗ denotes matrix multiplication. The softmax operation is performed on each row.
+
+---
+
+- Most GAN-based models (Radford et al., 2016; Salimans et al., 2016; Karras et al., 2018) for image generation are built using convolutional layers. Convolution processes the information in a local neighborhood, thus using convolutional layers alone is computationally inefficient for modeling long-range dependencies in images.
+    - 画像生成のためのほとんどのGANベースのモデル（Radfordら、2016年; Salimansら、2016年; Karrasら、2018年）は、たたみ込みレイヤを使用して構築されています。 畳み込みは局所的な近傍の情報を処理するので、畳み込みレイヤのみを使用することは、画像内の長距離依存性をモデル化するために計算上非効率的である。
+
+- In this section, we adapt the non-local model of (Wang et al., 2018) to introduce self-attention to the GAN framework, enabling both the generator and the discriminator to efficiently model relationships between widely separated spatial regions. We call the proposed method Self-Attention Generative Adversarial Networks (SAGAN) because of its self-attention module (see Figure 2).
+    - この節では、GANフレームワークに自己注意を導入するために（Wang et al。、2018）の非局所モデルを適応させ、
+    - 生成器と識別器の両方が広く離れた空間領域間の関係を効率的にモデル化できるようにします。
+    - 我々は、その自己注意モジュールのために提案された方法を自己注意生成型敵対的ネットワーク（ＳＡＧＡＮ）と呼ぶ（図２参照）。
+
+---
+
+- The image features from the previous hidden layer x ∈ RC×N are first transformed into two feature spaces f,g to calculate the attention, where f(x) = W_f * x, g(x) = W_g * x.
+    - 前の隠れ層ｘ∈ＲＣ×Ｎからの画像特徴は、最初に２つの特徴空間ｆ、ｇに変換されて注意を計算する。ここで、ｆ（ｘ）＝ Ｗ＿ｆ ＊ ｘ、ｇ（ｘ）＝ Ｗ＿ｇ ＊ ｘである。
+
+![image](https://user-images.githubusercontent.com/25688193/61578203-28a10f80-ab2e-11e9-9f56-1c8fa23ded5b.png)
+
+- and β_{j,i} indicates the extent to which the model attends to the i^{th} location when synthesizing the j^{th} region.
+    - <font color="Pink">**β_{j,i} は（中間層からの特徴マップ x の）j 番目の領域を合成するときに、モデルが i 番目の位置に関与する（注意を向ける）度合い [extent to] を示します。**</font>
+
+- Here, C is the number of channels and N is the number of feature locations of features from the previous hidden layer.
+
+- The output of the attention layer is o = (o1,o2,...,oj,...,oN) ∈ RC×N , where,
+
+![image](https://user-images.githubusercontent.com/25688193/61578206-49696500-ab2e-11e9-88d1-3b3c7dc2657c.png)
+
+- In the above formulation, Wg ∈ R Wh ∈ RC ̄×C , and Wv ∈ RC×C ̄ are the learned weight matrices, which are implemented as 1×1 convolutions.
+
+- Since We did not notice any significant performance decrease when reducing the channel number of C ̄ to be C/k, where k = 1, 2, 4, 8 after few training epochs on ImageNet. For memory efficiency, we choose k = 8 (i.e., C ̄ = C/8) in all our experiments.
+    - ImageNetでのいくつかの訓練エポックの後、C- のチャネル数をC / kに減らすとき、我々はいかなる大きな性能低下にも気付かなかったので。 メモリ効率のために、我々は全ての実験においてｋ ＝ ８（すなわち、Ｃ- ＝ Ｃ ／ ８）を選択する。
+
+---
+
+- In addition, we further multiply the output of the attention layer by a scale parameter and add back the input feature map. Therefore, the final output is given by,
+    - さらに、注意レイヤの出力にスケールパラメータをさらに掛けて、入力フィーチャマップを追加します。 したがって、最終的な出力は以下のようになる。
+
+![image](https://user-images.githubusercontent.com/25688193/61578223-833a6b80-ab2e-11e9-992a-145edc376146.png)
+
+- where γ is a learnable scalar and it is initialized as 0. Introducing the learnable γ allows the network to first rely on the cues in the local neighborhood – since this is easier – and then gradually learn to assign more weight to the non-local evidence.
+    - **ここで、γは学習可能なスカラーであり、0として初期化されます。**
+    - **学習可能なγを導入すると、まずネットワークの近くにある手がかりに頼ることができます。** 
+    - **その後、非局所的証拠により多くの重みを割り当てることを徐々に学びます。**
+
+- The intuition for why we do this is straightforward: we want to learn the easy task first and then progressively increase the complexity of the task.
+    - なぜこれをするのかについての直感は簡単です。最初に簡単なタスクを学び、それからタスクの複雑さを徐々に増やしたいです。
+
+- In the SAGAN, the proposed attention module has been applied to both the generator and the discriminator, which are trained in an alternating fashion by minimizing the hinge version of the adversarial loss (Lim & Ye, 2017; Tran et al., 2017; Miyato et al., 2018),
+    - SAGANでは、提案されたアテンションモジュールは、生成器と識別器の両方に適用されてきました。 他、２０１８）、
+
+![image](https://user-images.githubusercontent.com/25688193/61578233-a2d19400-ab2e-11e9-9b94-32b9a3191249.png)
 
 
 # ■ 実験結果（主張の証明）・議論（手法の良し悪し）・メソッド（実験方法）

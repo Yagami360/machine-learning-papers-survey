@@ -406,12 +406,13 @@
 - In addition, for attending to features fe from an encoder layer, we have a long-term inter-layer attention feature (contextual flow in fig. 4) and the output ye:
     - さらに、エンコーダ層からの機能 f_e に注意を向けるために、長期的なレイヤ間アテンション機能（図4のコンテキストフロー）と出力 y_e があります。
 
-- As before, a scale parameter γe is used to combine the encoder feature fe and the attention feature ce. However, unlike the decoder feature fd which has information for generating a full image, the encoder feature fe only represents visible parts Im.
+- As before, a scale parameter γe is used to combine the encoder feature fe and the attention feature ce. However, unlike the decoder feature fd which has information for generating a full image, the encoder feature fe only represents visible parts Im. Hence, a binary mask M (holes=0) is used.
     - 前述のように、スケールパラメータγｅを使用して、エンコーダ特徴ｆｅと注意特徴ｃｅを組み合わせる。    
     - しかしながら、フル画像を生成するための情報を有するデコーダ特徴ｆｄとは異なり、エンコーダ特徴ｆｅは可視部分Ｉｍのみを表す。
+    - それ故、バイナリマスクＭ（ホール＝ ０）が使用される。
     
-- Hence, a binary mask M (holes=0) is used. Finally, both the short and long term attention features are aggregated and fed into further decoder layers.
-    - それ故、バイナリマスクＭ（ホール＝ ０）が使用される。 最後に、短期と長期の両方の注意機能が集約され、さらに別のデコーダレイヤに入力されます。
+- Finally, both the short and long term attention features are aggregated and fed into further decoder layers.
+    - 最後に、短期と長期の両方の注意機能が集約され、さらに別のデコーダレイヤに入力されます。
 
 # ■ 実験結果（主張の証明）・議論（手法の良し悪し）・メソッド（実験方法）
 

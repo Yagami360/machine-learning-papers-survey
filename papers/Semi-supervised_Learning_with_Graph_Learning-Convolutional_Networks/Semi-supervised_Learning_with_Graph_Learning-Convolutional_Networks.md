@@ -178,6 +178,22 @@
 - where LGL and LSemi-GCN are defined in Eq (11) and Eq (3), respectively. Parameter λ ≥ 0 is a tradeoff parameter. It is noted that, when λ = 0, the optimal graph S is learned based on labeled data (i.e, cross-entropy loss) only which is also feasible in our GLCN.
     - ここで、LGLとLSemi-GCNは、それぞれ式（11）と式（3）で定義されています。 パラメータλ≧０はトレードオフパラメータである。 λ＝ ０の場合、最適グラフＳはラベル付きデータ（すなわちクロスエントロピー損失）のみに基づいて学習され、これは我々のＧＬＣＮでも実現可能であることに留意されたい。
 
+- Demonstrationandanalysis. Therearetwomainbenefits of the proposed GLCN network:
+
+- In GLCN, both given labels Y and the estimated labels Z are incorporated and thus can provide useful ‘weakly’ supervised information to refine the graph construction S and thus to facilitate the graph convolution operation in GCN for unknown label estimation. That is, the graph learning and semi-supervised learning are conducted jointly in GLCN and thus can boost their respectively performance.
+    - ＧＬＣＮでは、所与のラベルＹと推定ラベルＺの両方が組み込まれているので、グラフ構成Ｓを改良し、ひいては未知ラベル推定のためのＧＣＮにおけるグラフ畳み込み演算を容易にするために有用な「弱く」教師あり情報を提供できる。 つまり、グラフ学習と半教師つき学習はGLCNで共同で実施されているため、それぞれのパフォーマンスを向上させることができます。
+
+- GLCN is a unified network which can be trained via a single optimization manner and thus can be implemented simply.
+    - ＧＬＣＮは、単一の最適化方法によって訓練することができ、したがって簡単に実施することができる統合ネットワークである。
+
+---
+
+- Figure 3 shows the cross-entropy loss values over labeled node L across different epochs. One can note that, GLCN obtains obviously lower cross-entropy value than GCN at convergence, which clearly demonstrates the higher predictive accuracy of GLCN model. Also, the convergence speed of GLCN is just slightly slower than GCN, indicating the efficiency of GLCN.
+    - 図３は、異なるエポックにわたるラベル付きノードＬにわたるクロスエントロピー損失値を示す。 GLCNは、収束時にGCNより明らかに低いクロスエントロピー値を得ていることに気付くことができます。 また、GLCNの収束速度はGCNよりもわずかに遅く、GLCNの効率を示しています。
+    
+- Figure 4 demonstrates 2D t-SNE [14] visualizations of the feature map output by the first convolutional layer of GCN [11] and GLCN, respectively. Different classes are marked by different colors. One can note that, the data of different classes are distributed more clearly and compactly in our GLCN representation, which demonstrates the desired discriminative ability of GLCN on conducting graph node representation and thus semi-supervised classification tasks.
+    - 図4は、それぞれGCN [11]とGLCNの最初のたたみ込みレイヤによって出力された特徴マップの2D t-SNE [14]の可視化を示しています。 異なるクラスは異なる色でマークされています。 異なるクラスのデータは、我々のGLCN表現においてより明確かつコンパクトに分布しており、これはグラフノード表現、したがって半教師付き分類タスクを実行する際のGLCNの望ましい識別能力を実証している。
+
 
 # ■ 実験結果（主張の証明）・議論（手法の良し悪し）・メソッド（実験方法）
 

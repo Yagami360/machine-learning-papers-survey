@@ -172,10 +172,14 @@
 ![image](https://user-images.githubusercontent.com/25688193/61367030-c940c680-a8c5-11e9-9584-92ad2c708931.png)
 
 - where zc is the latent vector, qψ(·|·) the posterior importance sampling function, pφ(·|·) the conditional prior, pθ(·|·) the likelihood, with ψ, φ and θ being the deep network parameters of their corresponding functions. 
-    - ここで、zcは潜在ベクトル、qψ(·|·) は事後重点サンプリング、pφ(·|·) は条件付き事前確率、pθ(·|·) は尤度、ψ、φ、θ はディープネットワークです。 対応する関数のパラメータ 
+    - ここで、zcは潜在ベクトル、
+    - qψ(·|·) は事後重点サンプリング、
+    - pφ(·|·) は条件付き事前確率、
+    - pθ(·|·) は尤度、
+    - ψ、φ、θ は、対応する関数のディープネットワークのパラメーターです。 
 
-- This lower bound is maximized w.r.t. all parameters.
-    - この下限は、最大化されている。 すべてのパラメータ
+- This lower bound is maximized w.r.t all parameters.
+    - この下限は、すべてのパラメータに関して最大化されている。 
 
 ---
 
@@ -249,7 +253,7 @@
 #### Prior-Conditional Coupling
 
 - Next, we combine the latent priors into the conditional lower bound of (1).
-    - 次に、潜在プライアを（1）の条件付き下限に結合します。 
+    - 次に、潜在事前分布を（1）の条件付き下限に結合します。 
 
 - This can be done by assuming zc is much more closely related to Ic than to Im, so qψ(zc|Ic, Im)≈qψ(zc|Ic).
     - これは、zcがImよりもIcにはるかに密接に関連していると仮定することによって行うことができます。したがって、qψ（zc | Ic、Im）≒qψ（zc | Ic）です。
@@ -370,7 +374,7 @@
 #### Distributive Regularization
 
 - The typical interpretation of the KL divergence term in a VAE is that it regularizes the learned importance sampling function qψ(·|Ic) to a fixed latent prior p(z_c). Defining as Gaussians, we get:
-    - VAEにおけるKL発散項の典型的な解釈は、学習された重要度サンプリング関数qψ（・| Ic）を固定ラント前の p(z_c)に正規化することです。 ガウシアンとして定義すると、次のようになります。
+    - VAEにおけるKL発散項の典型的な解釈は、学習された重要度サンプリング関数qψ（・| Ic）を固定事前分布前の p(z_c) に正規化することです。 ガウシアンとして定義すると、次のようになります。
 
 - For the generative path, the appropriate interpretation is reversed: the learned conditional prior pφ(·|Im), also a Gaussian, is regularized to qψ(·|Ic).
     - 生成経路の場合、適切な解釈が逆になります。学習された条件付き事前確率pφ（・| Im）はガウス分布でもあるが、qψ（・| Ic）に正規化されます。
@@ -410,7 +414,7 @@
     - 前述のように、スケールパラメータγｅを使用して、エンコーダ特徴ｆｅと注意特徴ｃｅを組み合わせる。    
     - しかしながら、フル画像を生成するための情報を有するデコーダ特徴ｆｄとは異なり、エンコーダ特徴ｆｅは可視部分Ｉｍのみを表す。
     - それ故、バイナリマスクＭ（ホール＝ ０）が使用される。
-    
+
 - Finally, both the short and long term attention features are aggregated and fed into further decoder layers.
     - 最後に、短期と長期の両方の注意機能が集約され、さらに別のデコーダレイヤに入力されます。
 

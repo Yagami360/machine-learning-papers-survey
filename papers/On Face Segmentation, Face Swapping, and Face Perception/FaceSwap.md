@@ -115,9 +115,71 @@
 
 ## 3. Swapping faces in unconstrained images
 
-- Fig 2 summarizes our face swapping method. When swapping a face from a source image, IS , to a target image, IT , we treat both images the same, apart from the final stage (Fig 2(d)). Our method first localizes 2D facial landmarks in each image (Fig 2(b)). We use an off-the-shelf detector for this purpose [18]. Using these landmarks, we compute 3D pose (viewpoint) and modify the 3D shape to account for expression. These steps are discussed in Sec 3.1.
+![image](https://user-images.githubusercontent.com/25688193/62996727-9a0b7e00-bea0-11e9-9bea-523d67af930f.png)
+
+- > Figure 2: Overview of our method. 
+
+- > (a) Source (top) and target (bottom) input images. 
+
+- > (b) Detected facial landmarks used to establish 3D pose and facial expression for a 3D face shape (Sec 3.1). We show the 3DMM regressed by [42] but our tests demonstrate that a generic shape often works equally well.
+    - > (b) 3D顔の形状の3Dポーズと表情を確立するために使用される検出された顔のランドマーク（セクション3.1）。 [42]によって回帰された3DMMを示しますが、テストでは、一般的な形状がしばしば同等に機能することを示しています。
+
+- > (c) Our face segmentation of Sec 3.2 (red) overlaid on the projected 3D face (gray).
+    - > （c）セクション3.2（赤）の顔のセグメンテーションは、投影された3D顔（灰色）にオーバーレイされます。 
+
+- > (d) Source transfered onto target without blending, and the final results.
+    - > （d）ブレンドせずにソースをターゲットに転送し、最終結果。
+
+- > (e) after blending (Sec 3.3).
 
 ---
+
+- Fig 2 summarizes our face swapping method. When swapping a face from a source image, IS , to a target image, IT , we treat both images the same, apart from the final stage (Fig 2(d)). Our method first localizes 2D facial landmarks in each image (Fig 2(b)). We use an off-the-shelf detector for this purpose [18]. Using these landmarks, we compute 3D pose (viewpoint) and modify the 3D shape to account for expression. These steps are discussed in Sec 3.1.
+    - 図2に、顔の交換方法をまとめます。 ソース画像ISからターゲット画像ITに顔を交換する場合、最終段階を除き、両方の画像を同じように扱います（図2（d））。 この方法では、まず各画像の2D顔のランドマークを特定します（図2（b））。 この目的のために、既製の検出器を使用します[18]。 これらのランドマークを使用して、3Dポーズ（視点）を計算し、表現を考慮して3D形状を変更します。 これらの手順については、セクション3.1で説明します。
+
+---
+
+- We then segment the faces from their backgrounds and occlusions (Fig 2(c)) using a FCN trained to predict per-pixel face visibility (Sec 3.2). 
+    - 次に、ピクセルごとの顔の可視性を予測するようにトレーニングされたFCNを使用して、背景とオクルージョン（＝閉塞） [occlusions] から顔をセグメント化します（図3.2（c））。 
+
+- We describe how we generate rich labeled data to effectively train our FCN.
+    - FCNを効果的にトレーニングするために、豊富なラベル付きデータを生成する方法を説明します。 
+
+- Finally, the source is efficiently warped onto the target using the two, aligned 3D face shapes as proxies, and blended onto the target image (Sec 3.3).
+    - 最後に、ソースは、2つの整列した3D顔の形状をプロキシ（＝代理） [proxies] として使用して、ターゲットに効率的に歪まされ [warped]、ターゲットイメージにブレンドされます（セクション3.3）。
+
+> これらの3Dシェイプは、フェイスを交換するときに、あるフェイスから別のフェイスにテクスチャを転送するためのプロキシとしても使用されます（セクション3.3）。 これらの3D形状を取得する2つの代替方法を試しました。
+
+
+### 3.1. Fitting 3D face shapes
+
+- To enrich our set of examples for training the segmentation network (Sec 3.2) we explicitly model 3D face shapes. These 3D shapes are also used as proxies to transfer textures from one face onto another, when swapping faces (Sec 3.3). We experimented with two alternative methods of obtaining these 3D shapes.
+    - セグメンテーションネットワーク（セクション3.2）をトレーニングするためのサンプルセットを充実させるために、3Dの顔の形状を明示的にモデル化します。 これらの3Dシェイプは、フェイスを交換するときに、あるフェイスから別のフェイスにテクスチャを転送するためのプロキシとしても使用されます（セクション3.3）。 これらの3D形状を取得する2つの代替方法を試しました。
+
+---
+
+- The first, inspired by [14] uses a generic 3D face, making no attempt to fit its shape to the face in the image aside from pose (viewpoint) alignment. We, however, also estimate facial expressions and modify the 3D face accordingly.
+
+---
+
+- A second approach uses the recent state of the art, deep method for single image 3D face reconstruction [42]. It was shown to work well on unconstrained photos such as those considered here. To our knowledge, this is the only method quantitatively shown to produce invariant, discriminative and accurate 3D shape estimations. The code they released regresses 3D Morphable face Models (3DMM) in neutral pose and expression. We extend it by aligning 3D shapes with input photos and modifying the 3D faces to account for facial expressions.
+
+#### 3D shape representation and estimation.
+
+- xxx
+
+
+#### Pose and expression fitting.
+
+- xxx
+
+
+### 3.2. Deep face segmentation
+
+- xxx
+
+
+### 3.3. Face swapping and blending
 
 - xxx
 

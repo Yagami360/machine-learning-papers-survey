@@ -9,22 +9,103 @@
 
 ## Abstract
 
-- We show that even when face images are unconstrained and arbitrarily paired, face swapping between them is actually quite simple. To this end, we make the following contributions. (a) Instead of tailoring systems for face segmentation, as others previously proposed, we show that a standard fully convolutional network (FCN) can achieve remarkably fast and accurate segmentations, provided that it is trained on a rich enough example set. For this purpose, we describe novel data collection and generation routines which provide challenging segmented face examples. (b) We use our segmentations to enable robust face swapping under unprecedented conditions. (c) Unlike previous work, our swapping is robust enough to allow for extensive quantitative tests. To this end, we use the Labeled Faces in the Wild (LFW) benchmark and measure the effect of intra- and inter-subject face swapping on recognition. We show that our intra-subject swapped faces remain as recognizable as their sources, testifying to the effectiveness of our method. In line with well known perceptual studies, we show that better face swapping produces less recognizable inter-subject results (see, e.g, Fig 1). This is the first time this effect was quantitatively demonstrated for machine vision systems.
-    - 顔画像に制約がなく、任意にペアリングされている場合でも、それらの間の顔の交換は実際には非常に簡単であることを示します。この目的のために、以下の貢献をします。 （a）顔のセグメンテーション用にシステムを調整する代わりに、他の人が以前に提案したように、十分に豊富なサンプルセットでトレーニングされていれば、標準の完全たたみ込みネットワーク（FCN）が非常に高速で正確なセグメンテーションを達成できることを示します。この目的のために、挑戦的なセグメント化された顔の例を提供する新しいデータ収集および生成ルーチンについて説明します。 （b）セグメンテーションを使用して、前例のない条件下で堅牢なフェイススワッピングを可能にします。 （c）以前の研究とは異なり、スワッピングは十分に堅牢であり、広範な定量的テストを可能にします。この目的のために、Labeled Faces in the Wild（LFW）ベンチマークを使用して、認識における被験者内および被験者間の顔スワッピングの効果を測定します。被験者内でスワップされた顔は、そのソースと同じように認識可能なままであり、この方法の有効性を証明しています。よく知られている知覚研究に沿って、より良い顔のスワッピングが認識可能な被験者間結果をより少なくすることを示します（例えば、図1を参照）。マシンビジョンシステムでこの効果が定量的に実証されたのはこれが初めてです。
+- We show that even when face images are unconstrained and arbitrarily paired, face swapping between them is actually quite simple. 
+    - 顔画像に制約がなく、任意にペアリングされている場合でも、それらの間の顔の交換は実際には非常に簡単であることを示します。
 
-# ■ イントロダクション（何をしたいか？）
+- To this end, we make the following contributions.
+    - この目的のために、以下の貢献をします。
 
-## x. Introduction
+- (a) Instead of tailoring systems for face segmentation, as others previously proposed, we show that a standard fully convolutional network (FCN) can achieve remarkably fast and accurate segmentations, provided that it is trained on a rich enough example set.
+    -（a）顔のセグメンテーション用にシステムを調整する（＝仕立てる）[tailoring] 代わりに、他の人が以前に提案したように、十分に豊富なサンプルセットで学習された、標準的な全畳み込みネットワーク（FCN）が、非常に高速で正確なセグメンテーションを達成できることを示します。
 
-- 第１パラグラフ
+- For this purpose, we describe novel data collection and generation routines which provide challenging segmented face examples.
+    - この目的のために、挑戦的なセグメント化された顔の例を提供する新しいデータ収集および生成ルーチンについて説明します。 
+
+- (b) We use our segmentations to enable robust face swapping under unprecedented conditions.
+    - （b）セグメンテーションを使用して、前例のない [unprecedented] 条件下で堅牢なフェイススワッピングを可能にします。
+
+- (c) Unlike previous work, our swapping is robust enough to allow for extensive quantitative tests.
+    - （c）以前の研究とは異なり、スワッピングは十分に堅牢であり、広範な定量的テストを可能にします。
+
+- To this end, we use the Labeled Faces in the Wild (LFW) benchmark and measure the effect of intra- and inter-subject face swapping on recognition.
+    - この目的のために、Labeled Faces in the Wild（LFW）ベンチマークを使用して、認識における [on recognition]、被験者内 [intra-subject] および被験者間 [inter-subject] の顔スワッピングの効果を測定します。
+
+- We show that our intra-subject swapped faces remain as recognizable as their sources, testifying to the effectiveness of our method.
+    - 被験者内でスワップされた顔は、そのソースと同じように認識可能なままであり、この方法の有効性を証明しています [testifying]。
+
+- In line with well known perceptual studies, we show that better face swapping produces less recognizable inter-subject results (see, e.g, Fig 1). This is the first time this effect was quantitatively demonstrated for machine vision systems.
+    - よく知られている知覚研究に沿って [In line with]、より良い顔すり替えが、認識可能な被験者間結果をより少なくすることを示します（例えば、図1を参照）。
+    - コンピュータービジョンシステムでこの効果が定量的に実証されたのはこれが初めてです。
 
 ---
 
-- 第２パラグラフ
+![image](https://user-images.githubusercontent.com/25688193/62994183-89a1d600-be95-11e9-9287-dced3c61c4eb.png)
+
+- > Figure 1: Inter-subject swapping. LFW G.W. 
+
+- > Bush photos swapped using our method onto very different subjects and images. Unlike previous work [4, 19], we do not select convenient targets for swapping. Is Bush hard to recognize? We offer quantitative evidence supporting Sinha and Poggio [40] showing that faces and context are both crucial for recognition.
+    - > ブッシュの写真は、私たちの方法を使用して非常に異なる被写体と画像に交換しました。 以前の研究[4、19]とは異なり、スワッピングに便利なターゲットを選択しません。 ブッシュは認識しにくいですか？ シンハとポッジオ[40]を裏付ける定量的証拠を提供して、顔と文脈の両方が認識に不可欠であることを示します。
+
+# ■ イントロダクション（何をしたいか？）
+
+## 1. Introduction
+
+- Swapping faces means transferring a face from a source photo onto a face appearing in a target photo, attempting to generate realistic, unedited looking results. Although face swapping today is often associated with viral Internet memes [10, 35], it is actually far more important than this practice may suggest: Face swapping can also be used for preserving privacy [4, 34, 38], digital forensics [35] and as a potential face specific data augmentation method [33] especially in applications where training data is scarce (e.g, facial emotion recognition [26]).
+    - 顔の交換とは、ソース写真からターゲット写真に表示される顔に顔を転送し、現実的で未編集の結果を生成しようとすることです。
+    - 今日の顔の入れ替えは、しばしばバイラル（＝ウイルスのように拡散する） [viral] インターネットミーム[10、35]に関連付けられていますが、実際には、この実行が示唆するよりもはるかに重要です：
+    - 即ち、顔の入れ替えは、プライバシー[4、34、38]、デジタルフォレンジック[35 ]そして、特にトレーニングデータが不足しているアプリケーション（たとえば、顔の感情認識[26]）で、潜在的な顔固有のデータ増大方法[33]として使用されることも可能である。
+
+---
+
+- Going beyond particular applications, face swapping is also an excellent opportunity to develop and test essential face processing capabilities:  
+    - 特定のアプリケーションを超えて、顔の交換は、重要な顔処理機能を開発およびテストする絶好の機会です：
+
+- When faces are swapped between arbitrarily selected, unconstrained images, there is no guarantee on the similarity of viewpoints, expressions, 3D face shapes, genders or any other attribute that makes swapping easy [19].
+    - 即ち、任意に選択された制約のない画像間で顔が交換された場合、視点、表情、3D顔の形、性別、または 交換を容易にするその他の属性[19]の類似性に関する保証はありません 
+
+- In such cases, swapping requires robust and effective methods for face alignment, segmentation, 3D shape estimation (though we will later challenge this assertion), expression estimation and more.
+    - そのような場合、スワッピングには、顔の位置合わせ、セグメンテーション、3D形状推定（後でこの主張に挑戦しますが）、表情推定などのための堅牢で効果的な方法が必要です。
+
+---
+
+- We describe a face swapping method and test it in settings where no control is assumed over the images or their pairings. We evaluate our method using extensive quantitative tests at a scale never before attempted by other face swapping methods. These tests allow us to measure the effect face swapping has on machine face recognition, providing insights from the perspectives of both security applications and face perception.
+    - 顔の交換方法を説明し、画像またはそのペアリングを制御しないと仮定される設定でテストします。
+    - 他の顔のスワッピング方法でこれまでに試みられたことのない規模で広範な定量的テストを使用して、この方法を評価します。 これらのテストにより、顔のスワッピングがマシンの顔認識に与える影響を測定でき、セキュリティアプリケーションと顔の認識の両方の観点から洞察を提供します。
+
+---
+
+- Technically, we focus on face segmentation and the design of a face swapping pipeline. Our contributions include:
+    - 技術的には、顔のセグメンテーションと顔交換パイプラインの設計に焦点を当てています。 私たちの貢献は次のとおりです。
+
+- Semi-supervised labeling of face segmentation. We show how a rich image set with face segmentation labels can be generated with little effort by using motion cues and 3D data augmentation. The data we collect is used to train a standard FCN to segment faces, surpassing previous results in both accuracy and speed.
+    - 顔のセグメンテーションの半教師付きラベル付け。 モーションキューと3Dデータ拡張を使用することで、顔のセグメンテーションラベルを含むリッチな画像セットを簡単に生成できることを示します。 収集したデータは、顔をセグメント化するための標準FCNのトレーニングに使用され、精度と速度の両方で以前の結果を上回ります。
+
+- Face swapping pipeline. We describe a pipeline for face swapping and show that our use of improved face segmentation and robust system components leads to high quality results even under challenging unconstrained conditions.
+    - フェイススワッピングパイプライン。 フェイススワッピングのパイプラインについて説明し、改善されたフェイスセグメンテーションと堅牢なシステムコンポーネントを使用すると、厳しい制約のない条件下でも高品質の結果が得られることを示します。
+
+- Quantitative tests. Despite over a decade of work and contrary to other face processing tasks (e.g, recognition), face swapping methods were never quantitatively tested. We design two test protocols based on the LFW benchmark [15] to test how intra- and inter- subject face swapping affects face verification.
+    - 定量的テスト。 10年以上の作業にもかかわらず、他の顔処理タスク（認識など）に反して、顔の交換方法は定量的にテストされませんでした。 LFWベンチマーク[15]に基づいて2つのテストプロトコルを設計し、被験者内および被験者間の顔のスワッピングが顔の検証に与える影響をテストします。
+
+---
+
+- Our qualitative results show that our swapped faces are as compelling as those produced by others, if not more. Our quantitative tests further show that our intra-subject face swapping has little effect on face verification accuracy: our swapping does not introduce artifacts or otherwise changes these images in ways which affect subject identities.
+    - 私たちの定性的な結果は、交換された顔は、少なくとも [if not more]、他の人が作成したものと同じくらい説得力のある [compelling] ものであることを示しています。
+    - さらに、定量的テストでは、被験者内の顔の入れ替えが顔検証の精度にほとんど影響を与えないことが示されています。
+    - 即ち、私たちのスワッピングは、アーチファクトを導入したり、被写体のアイデンティティに影響するような方法でこれらの画像を変更したりしません。
+
+---
+
+- We report inter-subject results on randomly selected pairs. These tests require facial appearance to change, sometimes substantially, in order to naturally blend source faces into their new surroundings. We show that this changes them, making them less recognizable. Though this perceptual phenomenon was described over two decades ago by Sinha and Poggio [40] in their well-known Clinton- Gore illusion, we are unaware of previous quantitative reports on how this applies to machine face recognition.
+    - ランダムに選択されたペアに関する被験者間の結果を報告します。 これらのテストでは、ソースフェースを新しい環境に自然にブレンドするために、場合によっては大幅に顔の外観を変更する必要があります。
+    - これによりそれらが変化し、認識しにくくなることがわかります。
+    - この知覚現象は、20年以上前にSinhaとPoggio [40]によってよく知られているClinton-Gore錯視で説明されましたが、これがマシンの顔認識にどのように適用されるかについての以前の定量的レポートは認識していません。
+
+- For code, deep models and more information, please see our project webpage.1
+
 
 # ■ 結論
 
-## x. Conclusion
+## 5. Conclusion
 
 - We describe a novel, simple face swapping method which is robust enough to allow for large scale, quantitative testing. From these tests, several important observations emerge. (1) Face segmentation state of the art speed and accuracy, outperforming methods tailored for this task, can be obtained with a standard segmentation network, provided that the network is trained on rich and diverse examples. (2) Collecting such examples is easy. (3) Both faces and their contexts play important roles in recognition. We offer quantitative support for the two decades old claim of Sinha and Poggio [40]. (4) Better swapping, (e.g, to better mask facial spoofing attacks on biometric systems) leads to more facial changes and a drop in recognition. Finally, (5), 3D face shape estimation better blends the two faces together and so produces less recognizable source faces.
     - 大規模な定量的テストを可能にするのに十分な堅牢性を備えた、斬新でシンプルな顔スワッピング方法について説明します。 これらのテストから、いくつかの重要な観察結果が現れます。 （1）ネットワークが豊富で多様な例に基づいて訓練されている場合、標準のセグメンテーションネットワークを使用して、顔のセグメンテーションの最先端の速度と精度、このタスクに合わせたパフォーマンスの高い方法を取得できます。 （2）そのような例の収集は簡単です。 （3）両方の顔とそのコンテキストは、認識において重要な役割を果たします。 SinhaとPoggioの20年の主張に対する定量的なサポートを提供しています[40]。 （4）スワップの改善（たとえば、生体認証システムでの顔のなりすまし攻撃のマスクを改善する）により、顔の変化が増え、認識が低下します。 最後に、（5）、3Dの顔の形状の推定により、2つの顔がより良くブレンドされ、認識可能なソースの顔が少なくなります。
@@ -32,7 +113,13 @@
 
 # ■ 何をしたか？詳細
 
-## x. 論文の項目名
+## 3. Swapping faces in unconstrained images
+
+- Fig 2 summarizes our face swapping method. When swapping a face from a source image, IS , to a target image, IT , we treat both images the same, apart from the final stage (Fig 2(d)). Our method first localizes 2D facial landmarks in each image (Fig 2(b)). We use an off-the-shelf detector for this purpose [18]. Using these landmarks, we compute 3D pose (viewpoint) and modify the 3D shape to account for expression. These steps are discussed in Sec 3.1.
+
+---
+
+- xxx
 
 
 # ■ 実験結果（主張の証明）・議論（手法の良し悪し）・メソッド（実験方法）

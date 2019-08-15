@@ -1,3 +1,5 @@
+> 【非公開】論文まとめノート：https://github.com/Yagami360/My_Notebook_Private/blob/master/SPADE.md
+
 # ■ 論文
 - 論文タイトル："Semantic Image Synthesis with Spatially-Adaptive Normalization"
 - 論文リンク：https://arxiv.org/abs/1903.07291

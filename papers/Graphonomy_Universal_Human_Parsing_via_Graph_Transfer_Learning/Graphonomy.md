@@ -1,3 +1,5 @@
+> 【非公開】論文まとめノート：https://github.com/Yagami360/My_Notebook_Private/blob/master/Graphonomy.md
+
 # ■ 論文
 - 論文タイトル："Graphonomy: Universal Human Parsing via Graph Transfer Learning"
 - 論文リンク：https://arxiv.org/abs/1904.04536

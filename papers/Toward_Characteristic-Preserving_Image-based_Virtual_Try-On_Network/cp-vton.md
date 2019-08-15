@@ -1,3 +1,5 @@
+> 論文まとめノート：https://github.com/Yagami360/My_Notebook_Private/blob/master/cp-vton.md
+
 # ■ 論文
 - 論文タイトル："Toward Characteristic-Preserving Image-based Virtual Try-On Network"
 - 論文リンク：https://arxiv.org/abs/1807.07688

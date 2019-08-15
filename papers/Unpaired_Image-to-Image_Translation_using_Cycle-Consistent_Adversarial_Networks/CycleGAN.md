@@ -1,3 +1,5 @@
+> 論文まとめノート：https://github.com/Yagami360/My_NoteBook/blob/master/%E6%83%85%E5%A0%B1%E5%B7%A5%E5%AD%A6/%E6%83%85%E5%A0%B1%E5%B7%A5%E5%AD%A6_%E6%A9%9F%E6%A2%B0%E5%AD%A6%E7%BF%92_%E7%94%9F%E6%88%90%E3%83%A2%E3%83%87%E3%83%AB.md#CycleGAN
+
 # ■ 論文
 - 論文タイトル："Unpaired Image-to-Image Translation using Cycle-Consistent Adversarial Networks"
 - 論文リンク：https://arxiv.org/abs/1703.10593

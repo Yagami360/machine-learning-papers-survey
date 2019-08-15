@@ -1,3 +1,5 @@
+> 論文まとめ記事：https://github.com/Yagami360/My_NoteBook/blob/master/%E6%83%85%E5%A0%B1%E5%B7%A5%E5%AD%A6/%E6%83%85%E5%A0%B1%E5%B7%A5%E5%AD%A6_%E6%A9%9F%E6%A2%B0%E5%AD%A6%E7%BF%92_NN_Note.md#ResNet%EF%BC%88%E6%AE%8B%E5%B7%AE%E3%83%8D%E3%83%83%E3%83%88%E3%83%AF%E3%83%BC%E3%82%AF%EF%BC%89
+
 # ■ 論文
 - 論文タイトル："Deep Residual Learning for Image Recognition"
 - 論文リンク：https://arxiv.org/abs/1512.03385

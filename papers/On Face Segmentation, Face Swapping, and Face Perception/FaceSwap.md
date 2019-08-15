@@ -1,7 +1,7 @@
 # ■ 論文
 - 論文タイトル："On Face Segmentation, Face Swapping, and Face Perception"
-- 論文リンク：
-- 論文投稿日付：
+- 論文リンク：https://arxiv.org/abs/1704.06729
+- 論文投稿日付：2017/04/22
 - 著者（組織）：
 - categories：
 

@@ -154,20 +154,45 @@
 ### 3.1. Fitting 3D face shapes
 
 - To enrich our set of examples for training the segmentation network (Sec 3.2) we explicitly model 3D face shapes. These 3D shapes are also used as proxies to transfer textures from one face onto another, when swapping faces (Sec 3.3). We experimented with two alternative methods of obtaining these 3D shapes.
-    - セグメンテーションネットワーク（セクション3.2）をトレーニングするためのサンプルセットを充実させるために、3Dの顔の形状を明示的にモデル化します。 これらの3Dシェイプは、フェイスを交換するときに、あるフェイスから別のフェイスにテクスチャを転送するためのプロキシとしても使用されます（セクション3.3）。 これらの3D形状を取得する2つの代替方法を試しました。
+    - セグメンテーションネットワーク（セクション3.2）をトレーニングするためのサンプルセットを充実させるために、3Dの顔の形状を明示的にモデル化します。
+    - これらの3Dシェイプは、フェイスを交換するときに、あるフェイスから別のフェイスにテクスチャを転送するためのプロキシとしても使用されます（セクション3.3）。
+    - これらの3D形状を取得する2つの代替方法を試しました。
 
 ---
 
-- The first, inspired by [14] uses a generic 3D face, making no attempt to fit its shape to the face in the image aside from pose (viewpoint) alignment. We, however, also estimate facial expressions and modify the 3D face accordingly.
+- The first, inspired by [14] uses a generic 3D face, making no attempt to fit its shape to the face in the image aside from pose (viewpoint) alignment.
+    - 最初のアプローチは、[14]に触発されて、一般的な3D顔を使用しており、ポーズ（視点）の位置合わせを除き、画像内の顔にその形状を合わせようとしません。
+
+- We, however, also estimate facial expressions and modify the 3D face accordingly.
+    - ただし、顔の表情も推定し、状況に応じて [accordingly]、3D顔を修正します。
 
 ---
 
-- A second approach uses the recent state of the art, deep method for single image 3D face reconstruction [42]. It was shown to work well on unconstrained photos such as those considered here. To our knowledge, this is the only method quantitatively shown to produce invariant, discriminative and accurate 3D shape estimations. The code they released regresses 3D Morphable face Models (3DMM) in neutral pose and expression. We extend it by aligning 3D shapes with input photos and modifying the 3D faces to account for facial expressions.
+- A second approach uses the recent state of the art, deep method for single image 3D face reconstruction [42].
+    - 2番目のアプローチでは、最近の最先端の単一画像の3D顔再構成のためのディープメソッドを使用します[42]。
+
+- It was shown to work well on unconstrained photos such as those considered here.
+    - これは、ここで検討されているような、制約のない写真でうまく機能することが示されました。
+
+- To our knowledge, this is the only method quantitatively shown to produce invariant, discriminative and accurate 3D shape estimations.
+    - 私たちの知る限り、これは、不変、識別、および正確な3D形状推定を生成するために定量的に示されている唯一の方法です。
+
+- The code they released regresses 3D Morphable face Models (3DMM) in neutral pose and expression.
+    - 彼らがリリースしたコードは、3D Morphable Face Models（3DMM）をニュートラルなポーズと表情で退行させます [regresses]。
+
+- We extend it by aligning 3D shapes with input photos and modifying the 3D faces to account for facial expressions.
+    - 3Dシェイプを入力写真に整形し、顔の表情を考慮して [account for] 3D顔を修正することによって、それを拡張します。
 
 #### 3D shape representation and estimation.
 
-- xxx
+- Whether generic or regressed, we use the popular Basel Face Model (BFM) [36] to represent faces and the 3DDFA Morphable Model [47] for expressions.
+    - 一般的であろうと退行性であろうと、人気のバーゼル顔モデル（BFM）[36]を使用して顔を表現し、3DDFA Morphable Model [47]を表現（＝表情？）に使用します。
 
+- These are both publicly available 3DMM representations.
+
+- More specifically, a 3D face shape V ⊂ R3 is modeled by combining the following independent generative models:
+
+---
 
 #### Pose and expression fitting.
 

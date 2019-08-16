@@ -189,8 +189,10 @@
     - 一般的であろうと退行性であろうと、人気のバーゼル顔モデル（BFM）[36]を使用して顔を表現し、3DDFA Morphable Model [47]を表現（＝表情？）に使用します。
 
 - These are both publicly available 3DMM representations.
+    - これらは両方とも公的に利用可能な3DMM表現です。
 
 - More specifically, a 3D face shape V ⊂ R3 is modeled by combining the following independent generative models:
+    - より具体的には、次の独立した生成モデルを組み合わせて、3Dの顔の形状V⊂R3をモデル化します。
 
 ---
 
@@ -201,7 +203,19 @@
 
 ### 3.2. Deep face segmentation
 
-- xxx
+- Our method uses a FCN to segment the visible parts of faces from their context and occlusions. Other methods previously tailored novel network architectures for this task (e.g, [39]). We show that excellent segmentation results can be obtained with a standard FCN, provided that it is trained on plenty of rich and varied example.
+    - このメソッドは、FCNを使用して、顔の可視部分をコンテキストとオクルージョンからセグメント化します。 以前は、このタスク用に新規のネットワークアーキテクチャを調整していた他の方法（例[39]） 豊富で多様な例が豊富に訓練されていれば、標準のFCNで優れたセグメンテーション結果が得られることを示しています。
+
+---
+
+- Obtaining enough diverse images with ground truth segmentation labels can be hard: [39], for example, used manually segmented LFW faces and the semi-automatic segmentations of [7]. These labels were costly to produce and limited in their variability and number. We obtain numerous training examples with little manual effort and show that a standard FCN trained on these examples outperforms state of the art face segmentation results.
+    - グラウンドトゥルースセグメンテーションラベルを使用して十分に多様な画像を取得するのは困難な場合があります：[39]、たとえば、手動でセグメント化されたLFW顔と[7]の半自動セグメンテーションを使用します。 これらのラベルは生産コストが高く、変動性と数が限られていました。 手作業をほとんど必要とせずに多数のトレーニングサンプルを入手し、これらのサンプルでトレーニングされた標準のFCNが最新の顔セグメンテーション結果よりも優れていることを示します。
+    
+#### FCN architecture
+
+#### Semi-supervised training data collection
+
+#### Occlusion augmentation
 
 
 ### 3.3. Face swapping and blending

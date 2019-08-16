@@ -78,6 +78,35 @@
 
 ## III. CONCEPT AND IMPLEMENTATION
 
+### A. Concept and Hypotheses
+
+- The objective of this study is to present static friction sensation using the pseudo-haptic effect. We focus on the stick-slip phenomenon between an input device and surfaces. The stick-slip phenomenon is generally a dynamic cyclic process where two contacting surfaces oscillate between a stick phase and a slip phase. During the stick phase, the two surfaces are not in motion and are held in place by static friction. During the slip phase, there is finite relative motion where kinetic friction acts to retard this movement.
+    - この研究の目的は、擬似触覚効果を使用して静的摩擦感覚を提示することです。 入力デバイスとサーフェスの間のスティックスリップ現象に注目します。 スティックスリップ現象は、一般に、2つの接触面がスティック相とスリップ相の間で振動する動的周期プロセスです。 スティック段階では、2つの表面は動いておらず、静止摩擦によって所定の位置に保持されます。 スリップ段階では、動摩擦がこの運動を遅らせるように作用する有限の相対運動があります。
+
+---
+
+- In the real world, when we attempt to slide the stuck pen on a surface whose static friction coefficient is large, and a progressively larger tangential force would be applied to the pen. When the applied tangential force is greater than the maximum force of static friction, the surfaces start to slide.
+    - 現実の世界では、静止摩擦係数が大きい表面上でスタックしたペンをスライドさせようとすると、徐々に大きな接線力がペンに適用されます。 適用された接線方向の力が静摩擦の最大力よりも大きくなると、表面が滑り始めます。
+
+---
+
+- Thus, we hypothesize that users would feel a pseudohaptic static friction sensation because due to the visuohaptic sensory inconsistency if a user watches the virtual point of touch getting stuck at the contact point while the user slides a real input device. Fig.1 illustrates this concept. Fig 2 shows the visualized contact point and the real contact point. They are modeled by Coulomb’s model, which will be described later.
+    - したがって、ユーザーが実際の入力デバイスをスライドさせている間に仮想タッチポイントが接触点で立ち往生しているのを見ると、視覚触覚の感覚の不一致により、ユーザーは疑似触覚の静止摩擦感覚を感じると仮定します。 図1はこの概念を示しています。 図2は、視覚化された接点と実際の接点を示しています。 それらはクーロンのモデルによってモデル化されます。これについては後で説明します。
+    
+---
+
+- The maximum length of the visuo-haptic sensory inconsistency is defined by the stick-slip model’s static coefficient parameter if other parameters are fixed (described in the next section). Previous studies [5], [7] show that the level of visuo-haptic sensory inconsistency affect the intensity of pseudo-haptics. Thus, we also hypothesize that the configuration of the static friction coefficient would affect the pseudohaptic friction sensation. For example, a larger static friction coefficient makes the virtual pointer stickier. In contrast, a smaller static friction coefficient makes the virtual pointer less sticky.
+
+
+### B. Problem
+
+- However, there emerges a problem of losing a sense of agency. This arises because the input movement apparently does not affect the visualized pointer during the stick phase. As a result, the sense of agency over the point would be lost and it would prevent induction of pseudo-haptics.
+    - しかし、エージェンシーの感覚を失うという問題が生じます。 これは、入力フェーズがスティックフェーズ中に視覚化されたポインタに明らかに影響を与えないために発生します。 その結果、そのポイントに対するエージェンシーの感覚が失われ、疑似触覚の誘導が妨げられます。
+
+---
+
+- In order to prevent this problem and maintain the sense of agency over the pointer, we added a virtual string [7]. The virtual string extends from the contact point as the user moves the input device. The virtual string reflects the user’s input, thus the sense of agency should be maintained. Implementation of a virtual string is described in the next section.
+    - この問題を防ぎ、ポインターに対する代理店の感覚を維持するために、仮想文字列を追加しました[7]。 ユーザーが入力デバイスを動かすと、仮想文字列が接点から伸びます。 仮想文字列はユーザーの入力を反映しているため、代理店の感覚を維持する必要があります。 仮想文字列の実装については、次のセクションで説明します。
 
 
 # ■ 実験結果（主張の証明）・議論（手法の良し悪し）・メソッド（実験方法）

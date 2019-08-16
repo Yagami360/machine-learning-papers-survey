@@ -35,13 +35,14 @@
 - 顔特化系（Face Swap, etc）
     - [[GANimation] GANimation: Anatomically-aware Facial Animation from a Single Image](https://github.com/Yagami360/MachineLearning-Papers_Survey/blob/master/papers/GANimation_Anatomically-aware_FacialAnimation_from_a_Single_Image/GANimation.md)
     - [【翻訳中】[FaceGAN] Semi-supervised Adversarial Learning to Generate Photorealistic Face Images of New Identities from 3D Morphable Model](https://github.com/Yagami360/MachineLearning-Papers_Survey/blob/master/papers/Semi-supervised_Adversarial_Learning_to_Generate_Photorealistic_Face_Images_of_New_Identities_from_3D_Morphable_Model/FaceGAN.md)
-    - 【翻訳中】On Face Segmentation, Face Swapping, and Face Perception
+    - [【翻訳中】On Face Segmentation, Face Swapping, and Face Perception](https://github.com/Yagami360/MachineLearning-Papers_Survey/blob/master/papers/On%20Face%20Segmentation%2C%20Face%20Swapping%2C%20and%20Face%20Perception/FaceSwap.md)
 - Virtual Try-On
     - [[CP-VTON] Toward Characteristic-Preserving Image-based Virtual Try-On Network](https://github.com/Yagami360/MachineLearning-Papers_Survey/blob/master/papers/Toward_Characteristic-Preserving_Image-based_Virtual_Try-On_Network/cp-vton.md)
-- Tactile Sence
+- 触覚・知覚系
     - [[TackGAN] Vibrotactile Signal Generation from Texture Images or Attributes using Generative Adversarial Network](https://github.com/Yagami360/MachineLearning-Papers_Survey/blob/master/papers/TackGAN/TackGAN.md)
-    - 【翻訳中】Learning cross-modal visual-tactile representation using ensembled generative adversarial networks
-    - 【翻訳中】Presenting Static Friction Sensation at Stick-slip Transition using Pseudo-haptic Effect
+    - [【翻訳中】Learning cross-modal visual-tactile representation using ensembled generative adversarial networks](https://github.com/Yagami360/MachineLearning-Papers_Survey/blob/master/papers/Learning_cross_modal_visual_tactile_representation_using_ensembled_generative_adversarial_networks/Learning_cross_modal_visual_tactile_representation_using_ensembled_generative_adversarial_networks.md)
+    - [【翻訳中】Presenting Static Friction Sensation at Stick-slip Transition using Pseudo-haptic Effect](https://github.com/Yagami360/MachineLearning-Papers_Survey/blob/master/papers/Presenting_Static_Friction_Sensation_at_Stick_slip_Transition_using_Pseudo_haptic_Effect/Presenting_Static_Friction_Sensation_at_Stick_slip_Transition_using_Pseudo_haptic_Effect.md)
+    - [【翻訳中】Authoring New Haptic Textures Based on Interpolation of Real Textures in Affective Space](https://github.com/Yagami360/MachineLearning-Papers_Survey/blob/master/papers/Authoring%20New%20Haptic%20Textures%20Based%20on%20Interpolation%20of%20Real%20Textures%20in%20Affective%20Space/Authoring%20New%20Haptic%20Textures%20Based%20on%20Interpolation%20of%20Real%20Textures%20in%20Affective%20Space.md)
 - Others
     - xxx
 

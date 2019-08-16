@@ -194,12 +194,29 @@
 - More specifically, a 3D face shape V ⊂ R3 is modeled by combining the following independent generative models:
     - より具体的には、次の独立した生成モデルを組み合わせて、3Dの顔の形状V⊂R3をモデル化します。
 
+![image](https://user-images.githubusercontent.com/25688193/63164830-a8a29280-c064-11e9-936b-44203ae9670c.png)
+
+- Here, vector v^ is the mean face shape, computed over aligned facial 3D scans in the Basel Faces collection and represented by the concatenated 3D coordinates of their 3D points. When using a generic face shape, we use this average face. Matrices WS (shape) and WE (expression) are principle components obtained from the 3D face scans. Finally, α is a subject-specific 99D parameter vector estimated separately for each image and γ is a 29D parameter vector for expressions. To fit 3D shapes and expressions to an input image, we estimate these parameters along with camera matrices.
+    - ここで、ベクトルv ^は、Basel Facesコレクションの位置合わせされた顔の3Dスキャンで計算され、3Dポイントの連結された3D座標で表される平均顔形状です。 一般的な顔の形状を使用する場合、この平均的な顔を使用します。 行列WS（形状）およびWE（式）は、3D顔スキャンから取得される主要なコンポーネントです。 最後に、αは画像ごとに個別に推定された被験者固有の99Dパラメーターベクトルであり、γは式の29Dパラメーターベクトルです。 3D形状と式を入力画像に合わせるために、これらのパラメーターとカメラ行列を推定します。
+
 ---
+
+- To estimate per-subject 3D face shapes, we regress α using the deep network of [42]. They jointly estimate 198D parameters for face shape and texture. Dropping the texture components, we obtain α and back-project the regressed face by v^ + WS α, to get the estimated shape in 3D space.
+    - 被験者ごとの3D顔の形状を推定するために、[42]の深いネットワークを使用してαを回帰します。 彼らは、顔の形と質感の198Dパラメータを共同で推定します。 テクスチャコンポーネントをドロップして、αを取得し、v ^ + WSαによって回帰面を逆投影して、3D空間で推定された形状を取得します。
 
 #### Pose and expression fitting.
 
-- xxx
+- Given a 3D face shape (generic or regressed) we recover its pose and adjust its expression to match the face in the input image. We use the detected facial landmarks, p = {pi} ⊂ R2, for both purposes. Specifically, we begin by solving for the pose, ignoring expression. We approximate the positions in 3D of the detected 2D facial landmarks V ̃ = {V ̃i} by:
+    - 3Dの顔の形状（汎用または回帰）が与えられると、その姿勢を回復し、その表現を調整して、入力画像の顔に一致させます。 両方の目的のために、検出された顔のランドマークp = {pi}⊂R2を使用します。 具体的には、表情を無視してポーズを解くことから始めます。 検出された2D顔のランドマークの3Dでの位置を近似するV V = {V ̃i}：
 
+![image](https://user-images.githubusercontent.com/25688193/63165483-8e69b400-c066-11e9-9b21-100603c98106.png)
+
+- where f(·) is a function selecting the landmark vertices on the 3D model. The vertices of all BFM faces are registered so that the same vertex index corresponds to the same facial feature in all faces. Hence, f need only be manually specified once, at preprocessing. From f we get 2D-3D correspondences, pi ↔ V ̃ i , between detected facial features and their corresponding points on the 3D shape. Similarly to [13], we use these correspondences to estimate 3D pose, computing 3D face rotation, R ∈ R3, and translation vector t ∈ R3 using the EPnP solver [25].
+    - ここで、f（・）は3Dモデルのランドマーク頂点を選択する関数です。 すべてのBFM顔の頂点は、同じ頂点インデックスがすべての顔の同じ顔の特徴に対応するように登録されます。 したがって、fは前処理で1回だけ手動で指定する必要があります。 fから、検出された顔の特徴と3D形状上の対応するポイントとの間の2D-3D対応、pi↔V ̃ iを取得します。 [13]と同様に、EPnPソルバー[25]を使用して、これらの対応関係を使用して3Dポーズを推定し、3D顔回転、R∈R3、および並進ベクトルt∈R3を計算します。
+
+---
+
+- xxx
 
 ### 3.2. Deep face segmentation
 
@@ -213,11 +230,34 @@
     
 #### FCN architecture
 
+- We used the FCN-8s-VGG architecture, fine-tuned for segmentation on PASCAL by [30]. Following [30], we fuse information at different locations from layers with different strides. We refer to [30] for more details on this.
+    - [30]でPASCALのセグメンテーション用に微調整されたFCN-8s-VGGアーキテクチャを使用しました。 [30]に続いて、歩幅の異なるレイヤーの異なる場所で情報を融合します。 詳細については、[30]を参照してください。
+
 #### Semi-supervised training data collection
+
+- We produce large quantities of segmentation labeled face images by using motion cues in unconstrained face videos. To this end, we process videos from the recent IARPA Janus CS2 dataset [21]. These videos portray faces of different poses, ethnicities and ages, viewed under widely varying conditions. We used 1,275 videos of subjects not included in LFW, of the 2,042 CS2 videos (309 subjects out of 500).
+    - **制約のない顔ビデオのモーションキューを使用して、顔画像とラベル付けされた大量のセグメンテーションを生成します。 この目的のために、最近のIARPA Janus CS2データセットからのビデオを処理します[21]。 これらのビデオでは、さまざまなポーズ、民族、年齢の顔を、さまざまな状況で視聴しています。 LFWに含まれていない2,275個のCS2ビデオのうち、1,275個のビデオ（500個中309個のサブジェクト）を使用しました。**
+
+---
+
+- Given a video, we produce a rough, initial segmentation using a method based on [12]. Specifically, we keep a hierarchy of regions with stable region boundaries computed with dense optical flow. Though these regions may be over- or under-segmented, they are computed with temporal coherence and so these segments are consistent across frames.
+    - ビデオが与えられると、[12]に基づく方法を使用して、大まかな初期セグメンテーションを作成します。 具体的には、高密度のオプティカルフローで計算された安定した領域境界を持つ領域の階層を保持します。 これらの領域はオーバーまたはアンダーセグメント化されている場合がありますが、時間的一貫性を使用して計算されるため、これらのセグメントはフレーム全体で一貫しています。
+
+---
+
+- We use the method of [18] to detect faces and facial landmarks in each of the frames. Facial landmarks were then used to extract the face contour and extend it to include the forehead. All the segmented regions generated above, that did not overlap with a face contour are then discarded. All intersecting segmented regions are further processed using a simple interface which allows browsing the entire video, selecting the partial segments of [12] and adding or removing them from the face segmentation using simple mouse clicks. Fig. 3(a) shows the interface used in the semi-supervised labeling. A selected frame is typically processed in about five seconds. In total, we used this method to produce 9,818 segmented faces, choosing anywhere between one to five frames from each video, in a little over a day of work.
+    - [18]の方法を使用して、各フレームで顔と顔のランドマークを検出します。 次に、顔のランドマークを使用して、顔の輪郭を抽出し、額を含むように拡張しました。 上記で生成され、顔の輪郭と重ならなかったすべてのセグメント化された領域は、その後破棄されます。 交差するすべてのセグメント化された領域は、ビデオ全体を閲覧し、[12]の部分セグメントを選択し、単純なマウスクリックを使用して顔のセグメンテーションに追加または削除できるシンプルなインターフェイスを使用してさらに処理されます。 図3（a）は、半教師付きラベル付けで使用されるインターフェイスを示しています。 通常、選択されたフレームは約5秒で処理されます。 合計で、この方法を使用して9,818個のセグメント化された顔を作成し、1日少しの作業で各ビデオから1〜5フレームを選択しました。
 
 #### Occlusion augmentation
 
+- This collection is further enriched by adding synthetic occlusions. To this end, we explicitly use 3D information estimated for our example faces. Specifically, we estimate 3D face shape for our segmented faces, using the method described in Sec. 3.1. We then use computer graphic (CG) 3D models of various objects (e.g., sunglasses) to modify the faces. We project these CG models onto the image and record their image locations as synthetic occlusions. Each CG object added 9,500 face examples. The detector used in our system [18] failed to accurately localize facial features on the remaining 318 faces, and so this augmentation was not applied to them.
+    - このコレクションは、合成オクルージョンを追加することでさらに充実しています。 このため、サンプルの顔に対して推定された3D情報を明示的に使用します。 具体的には、セクション 3.1 で説明した方法を使用して、セグメント化された顔の3D顔の形状を推定します。- 次に、さまざまなオブジェクト（サングラスなど）のコンピューターグラフィック（CG）3Dモデルを使用して、顔を修正します。 これらのCGモデルを画像に投影し、画像の位置を合成オクルージョンとして記録します。 各CGオブジェクトには、9,500の顔の例が追加されました。 私たちのシステム[18]で使用されている検出器は、残りの318の顔の顔の特徴を正確に特定することができなかったため、この増強はそれらに適用されませんでした。
 
+---
+
+- Finally, an additional source of synthetic occlusions was supplied following [39] by overlaying hand images at various positions on our example images. Hand images were taken from the egohands dataset of [3]. Fig 3(b) shows a synthetic hand augmentation and Fig 3(c) a sunglasses augmentation, along with their resulting segmentation labels.
+    - 最後に、合成オクルージョンの追加ソースが、サンプル画像のさまざまな位置に手の画像を重ねることによって[39]に続いて提供されました。 手の画像は、[3]のエゴハンドデータセットから取得されました。 図3（b）は、合成の手の増強を示し、図3（c）はサングラスの増強を、その結果のセグメンテーションラベルとともに示します。
+    
 ### 3.3. Face swapping and blending
 
 - xxx

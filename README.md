@@ -36,6 +36,7 @@
     - [[GANimation] GANimation: Anatomically-aware Facial Animation from a Single Image](https://github.com/Yagami360/MachineLearning-Papers_Survey/blob/master/papers/GANimation_Anatomically-aware_FacialAnimation_from_a_Single_Image/GANimation.md)
     - [【翻訳中】[FaceGAN] Semi-supervised Adversarial Learning to Generate Photorealistic Face Images of New Identities from 3D Morphable Model](https://github.com/Yagami360/MachineLearning-Papers_Survey/blob/master/papers/Semi-supervised_Adversarial_Learning_to_Generate_Photorealistic_Face_Images_of_New_Identities_from_3D_Morphable_Model/FaceGAN.md)
     - [【翻訳中】On Face Segmentation, Face Swapping, and Face Perception](https://github.com/Yagami360/MachineLearning-Papers_Survey/blob/master/papers/On%20Face%20Segmentation%2C%20Face%20Swapping%2C%20and%20Face%20Perception/FaceSwap.md)
+    - [Face Swapping: Realistic Image Synthesis Based on Facial Landmarks Alignment](https://github.com/Yagami360/MachineLearning-Papers_Survey/blob/master/papers/Face_Swapping_Realistic_Image_Synthesis_Based_on_Facial_Landmarks_Alignment/FaceSwap.md)
 - Virtual Try-On
     - [[CP-VTON] Toward Characteristic-Preserving Image-based Virtual Try-On Network](https://github.com/Yagami360/MachineLearning-Papers_Survey/blob/master/papers/Toward_Characteristic-Preserving_Image-based_Virtual_Try-On_Network/cp-vton.md)
 - 触覚・知覚系

@@ -39,7 +39,7 @@
     - [Face Swapping: Realistic Image Synthesis Based on Facial Landmarks Alignment](https://github.com/Yagami360/MachineLearning-Papers_Survey/blob/master/papers/Face_Swapping_Realistic_Image_Synthesis_Based_on_Facial_Landmarks_Alignment/FaceSwap.md)
 - Virtual Try-On
     - [[CP-VTON] Toward Characteristic-Preserving Image-based Virtual Try-On Network](https://github.com/Yagami360/MachineLearning-Papers_Survey/blob/master/papers/Toward_Characteristic-Preserving_Image-based_Virtual_Try-On_Network/cp-vton.md)
-    - [MG-VTON] Towards_Multi-pose_Guided_Virtual_Try-on_Network
+    - [[MG-VTON] Towards_Multi-pose_Guided_Virtual_Try-on_Network](https://github.com/Yagami360/MachineLearning-Papers_Survey/blob/master/papers/Towards_Multi-pose_Guided_Virtual_Try-on_Network/MG-VTON.md)
 - 触覚・知覚系
     - [[TackGAN] Vibrotactile Signal Generation from Texture Images or Attributes using Generative Adversarial Network](https://github.com/Yagami360/MachineLearning-Papers_Survey/blob/master/papers/TackGAN/TackGAN.md)
     - [【翻訳中】Learning cross-modal visual-tactile representation using ensembled generative adversarial networks](https://github.com/Yagami360/MachineLearning-Papers_Survey/blob/master/papers/Learning_cross_modal_visual_tactile_representation_using_ensembled_generative_adversarial_networks/Learning_cross_modal_visual_tactile_representation_using_ensembled_generative_adversarial_networks.md)

@@ -154,9 +154,29 @@
 - Formally, we take warped clothes image Cw, w/o clothes reference image Iw/o clothes, the target pose P, and the synthesized human parsing St as input of the Warp-GAN generator and synthesize the result Iˆ = Gwarp(Cw, Iw/o clothes, P, St′ ).
     - 形式的には、ワープ衣服画像Cw、衣服なし参照画像Iw / o衣服、ターゲットポーズP、および合成された人間の解析StをWarp-GANジェネレーターの入力として取得し、結果を合成しますIˆ = Gwarp（Cw、Iw / o服、P、St ′）。
 
+- Inspired by [11, 8, 16], we apply a perceptual loss to measure the distances between high-level features in the pre-trained model, which encourages generator to synthesize high-quality and realistic-look images. We formulate the perceptual loss as:
+    - [11、8、16]に触発されて、知覚的損失を適用して事前学習済みモデルの高レベルの特徴間の距離を測定します。 知覚的損失は次のように定式化されます。
+
 ![image](https://user-images.githubusercontent.com/25688193/63223139-20e79000-c1ec-11e9-9bfb-4d168b74d4e6.png)
 
-- Inspired by [11, 8, 16], we apply a perceptual loss to measure the distances between high-level features in the pre-trained model, which encourages generator to synthesize high-quality and realistic-look images. We formulate the perceptual loss as:
+
+- where φi (I) denotes the i-th (i = 0, 1, 2, 3, 4) layer feature map in pre-trained network φ of ground truth image I. We use the pre-trained VGG19 [28] as φ and weightedly sum the L1 norms of last five layer feature maps in φ to represent perceptual losses between images. The αi controls the weight of loss for each layer. In addition, following pixp2pixHD [30], due to the feature map at different scales from different layers of discriminator enhance the performance of image synthesis, we also introduce a feature loss and formulate it as:
+    - ここで、φi（I）は、グラウンドトゥルースイメージIの事前学習済みネットワークφのi番目（i = 0、1、2、3、4）のレイヤーフィーチャマップを示します。事前学習済みVGG19 [28]をφとして使用します。 最後の5つのレイヤーフィーチャマップのL1ノルムをφで加重合計して、画像間の知覚損失を表します。 αiは、各層の損失の重みを制御します。 さらに、pixp2pixHD [30]に従って、識別器のさまざまな層からのさまざまな縮尺の特徴マップにより、画像合成のパフォーマンスが向上するため、特徴の損失も導入し、次のように定式化します。
+
+![image](https://user-images.githubusercontent.com/25688193/63223347-dfa4af80-c1ee-11e9-804c-771a381f901d.png)
+
+- where Fi(I) represent the i-th (i = 0, 1, 2) layer feature map of the trained Dwarp. The γi denotes the weight of L1 loss for corresponding layer.
+    - ここで、Fi（I）は、訓練されたドワープのi番目（i = 0、1、2）のレイヤーフィーチャマップを表します。 γiは、対応するレイヤーのL1損失の重みを示します。
+
+---
+
+- Furthermore, we also apply the adversarial loss Ladv [7, 19] and L1 loss L1 [32] to improve the performance. We design a weight sum losses as the loss of Gwarp, which encourages the Gwarp to synthesize realistic and natural images in different aspects, written as follows:
+    - さらに、パフォーマンスを改善するために、敵対的損失Ladv [7、19]およびL1損失L1 [32]も適用します。 重量合計の損失はGwarpの損失として設計します。これにより、Gwarpは、次のように書かれたさまざまな側面で現実的で自然な画像を合成できます。
+    
+![image](https://user-images.githubusercontent.com/25688193/63223356-f945f700-c1ee-11e9-9a3a-8edfb79c5689.png)
+
+- where λi (i = 1, 2, 3, 4) denotes the weight of corresponding loss, respectively.
+
 
 
 ### 3.3. Refinement render

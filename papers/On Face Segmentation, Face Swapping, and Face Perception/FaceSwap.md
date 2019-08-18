@@ -1,3 +1,5 @@
+> 論文まとめ：https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/3
+
 # ■ 論文
 - 論文タイトル："On Face Segmentation, Face Swapping, and Face Perception"
 - 論文リンク：https://arxiv.org/abs/1704.06729

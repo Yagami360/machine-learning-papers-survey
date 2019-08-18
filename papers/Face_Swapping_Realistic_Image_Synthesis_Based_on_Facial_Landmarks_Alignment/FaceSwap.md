@@ -1,3 +1,5 @@
+> 論文まとめ：https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/4
+
 # ■ 論文
 - 論文タイトル："Face Swapping: Realistic Image Synthesis Based on Facial Landmarks Alignment"
 - 論文リンク：http://downloads.hindawi.com/journals/mpe/2019/8902701.pdf

@@ -23,7 +23,22 @@
     
 ---
 
-- 第２パラグラフ
+- xxx
+
+---
+
+- In summary, this paper makes the following contributions:
+
+- We learn a nonlinear 3DMM model, fully models shape, albedo and lighting, that has greater representation power than its traditional linear counterpart.
+    - 形状、アルベド、ライティングを完全にモデル化した非線形3DMMモデルを学習します。これは、従来の線形対応モデルよりも優れた表現力を備えています。
+
+> アルベド（albedo）とは、天体の外部からの入射光に対する、反射光の比である。
+
+- Both shape and albedo are represented as 2D images, which help to maintain spatial relations as well as leverage CNN power in image synthesis.
+    - 形状とアルベドはどちらも2D画像として表され、空間的な関係を維持し、画像合成でCNNの力を活用するのに役立ちます。
+    
+- We jointly learn the model and th
+
 
 # ■ 結論
 

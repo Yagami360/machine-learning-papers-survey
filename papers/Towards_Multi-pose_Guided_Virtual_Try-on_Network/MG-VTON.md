@@ -1,3 +1,5 @@
+> 論文まとめ（短いver）：https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/5
+
 # ■ 論文
 - 論文タイトル："Towards Multi-pose Guided Virtual Try-on Network"
 - 論文リンク：https://arxiv.org/abs/1902.11026

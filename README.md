@@ -24,14 +24,14 @@
     - [[StarGAN] StarGAN: Unified Generative Adversarial Networks for Multi-Domain Image-to-Image Translation](https://github.com/Yagami360/MachineLearning-Papers_Survey/blob/master/papers/StarGAN_Unified_Generative_Adversarial_Networks_for_Multi-Domain_Image-to-Image_Translation/StarGAN.md)
     - [[StyleGAN] A Style-Based Generator Architecture for Generative Adversarial Networks](https://github.com/Yagami360/MachineLearning-Papers_Survey/blob/master/papers/A_Style-Based_Generator_Architecture_for_Generative_Adversarial_Networks/StyleGAN.md)
     - [【翻訳中】[Image2StyleGAN] Image2StyleGAN_How_to_Embed_Images_Into_the_StyleGAN_Latent_Space?](https://github.com/Yagami360/MachineLearning-Papers_Survey/blob/master/papers/Image2StyleGAN_How_to_Embed_Images_Into_the_StyleGAN_Latent_Space?/Image2StyleGAN.md)
-    - [[SPADE] Semantic Image Synthesis with Spatially-Adaptive Normalization](https://github.com/Yagami360/MachineLearning-Papers_Survey/blob/master/papers/Semantic_Image_Synthesis_with_Spatially-Adaptive_Normalization/SPADE.md)
+    - [[SPADE] Semantic Image Synthesis with Spatially-Adaptive Normalization](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/7)
 - Semantic Segmentation
     - [U-Net: Convolutional Networks for Biomedical Image Segmentation](https://github.com/Yagami360/MachineLearning-Papers_Survey/blob/master/papers/U-Net_Convolutional_Networks_for_Biomedical/UNet.md)
     - [Graphonomy: Universal Human Parsing via Graph Transfer Learning](https://github.com/Yagami360/MachineLearning-Papers_Survey/blob/master/papers/Graphonomy_Universal_Human_Parsing_via_Graph_Transfer_Learning/Graphonomy.md)
 - Style Transfer
     - [【翻訳中】Perceptual Losses for Real-Time Style Transfer and Super-Resolution](https://github.com/Yagami360/MachineLearning-Papers_Survey/blob/master/papers/Perceptual_Losses_for_Real-Time_Style_Transfer_and_Super-Resolution/Perceptual_Losses_for_Real-Time_Style_Transfer_and_Super-Resolution.md)
 - Inpainting
-    - [Pluralistic Image Completion](https://github.com/Yagami360/MachineLearning-Papers_Survey/blob/master/papers/Pluralistic_Image_Completion/Pluralistic-Inpainting.md)
+    - [Pluralistic Image Completion](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/6)
 - 顔特化系（Face Swap, etc）
     - [[GANimation] GANimation: Anatomically-aware Facial Animation from a Single Image](https://github.com/Yagami360/MachineLearning-Papers_Survey/blob/master/papers/GANimation_Anatomically-aware_FacialAnimation_from_a_Single_Image/GANimation.md)
     - [【翻訳中】[FaceGAN] Semi-supervised Adversarial Learning to Generate Photorealistic Face Images of New Identities from 3D Morphable Model](https://github.com/Yagami360/MachineLearning-Papers_Survey/blob/master/papers/Semi-supervised_Adversarial_Learning_to_Generate_Photorealistic_Face_Images_of_New_Identities_from_3D_Morphable_Model/FaceGAN.md)

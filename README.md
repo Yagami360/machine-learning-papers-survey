@@ -27,7 +27,7 @@
     - [[SPADE] Semantic Image Synthesis with Spatially-Adaptive Normalization](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/7)
 - Semantic Segmentation
     - [U-Net: Convolutional Networks for Biomedical Image Segmentation](https://github.com/Yagami360/MachineLearning-Papers_Survey/blob/master/papers/U-Net_Convolutional_Networks_for_Biomedical/UNet.md)
-    - [Graphonomy: Universal Human Parsing via Graph Transfer Learning](https://github.com/Yagami360/MachineLearning-Papers_Survey/blob/master/papers/Graphonomy_Universal_Human_Parsing_via_Graph_Transfer_Learning/Graphonomy.md)
+    - [Graphonomy: Universal Human Parsing via Graph Transfer Learning](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/8)
 - Style Transfer
     - [【翻訳中】Perceptual Losses for Real-Time Style Transfer and Super-Resolution](https://github.com/Yagami360/MachineLearning-Papers_Survey/blob/master/papers/Perceptual_Losses_for_Real-Time_Style_Transfer_and_Super-Resolution/Perceptual_Losses_for_Real-Time_Style_Transfer_and_Super-Resolution.md)
 - Inpainting
@@ -40,6 +40,8 @@
 - Virtual Try-On
     - [[CP-VTON] Toward Characteristic-Preserving Image-based Virtual Try-On Network](https://github.com/Yagami360/MachineLearning-Papers_Survey/blob/master/papers/Toward_Characteristic-Preserving_Image-based_Virtual_Try-On_Network/cp-vton.md)
     - [[MG-VTON] Towards_Multi-pose_Guided_Virtual_Try-on_Network](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/5)
+- text-to-image
+    - StackGAN
 - 触覚・知覚系
     - [[TackGAN] Vibrotactile Signal Generation from Texture Images or Attributes using Generative Adversarial Network](https://github.com/Yagami360/MachineLearning-Papers_Survey/blob/master/papers/TackGAN/TackGAN.md)
     - [【翻訳中】Learning cross-modal visual-tactile representation using ensembled generative adversarial networks](https://github.com/Yagami360/MachineLearning-Papers_Survey/blob/master/papers/Learning_cross_modal_visual_tactile_representation_using_ensembled_generative_adversarial_networks/Learning_cross_modal_visual_tactile_representation_using_ensembled_generative_adversarial_networks.md)

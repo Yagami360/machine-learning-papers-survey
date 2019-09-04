@@ -1,7 +1,7 @@
 # ■ 論文
 - 論文タイトル："High-Resolution Image Synthesis and Semantic Manipulation with Conditional GANs"
 - 論文リンク：https://arxiv.org/abs/1711.11585
-- 論文投稿日付：
+- 論文投稿日付：2017/11/30
 - 著者（組織）：
 - categories：
 
@@ -9,7 +9,7 @@
 
 ## Abstract
 
-- We present a new method for synthesizing high- resolution photo-realistic images from semantic label maps using conditional generative adversarial networks (condi- tional GANs).
+- We present a new method for synthesizing high- resolution photo-realistic images from semantic label maps using conditional generative adversarial networks (conditional GANs).
     - 条件付き生成敵対ネットワーク（条件付きGAN）を用いて、意味ラベルマップから高解像度の写実的な画像を合成する新しい方法を提案する。
 
 - Conditional GANs have enabled a variety of applications, but the results are often limited to lowresolution and still far from realistic. 
@@ -33,13 +33,34 @@
 
 # ■ イントロダクション（何をしたいか？）
 
-## x. 論文の項目名 (Introduction)
+## 1. Introduction
 
-- 第１パラグラフ
+- Photo-realistic image rendering using standard graphics techniques is involved, since geometry, materials, and light transport must be simulated explicitly. Although existing graphics algorithms excel at the task, building and editing virtual environments is expensive and time-consuming. That is because we have to model every aspect of the world explicitly. If we were able to render photo-realistic images using a model learned from data, we could turn the process of graphics rendering into a model learning and inference problem. Then, we could simplify the process of creating new virtual worlds by training models on new datasets. We could even make it easier to customize environments by allowing users to simply specify overall semantic structure rather than modeling geometry, materials, or lighting.
+    - ジオメトリ、マテリアル、ライトトランスポートを明示的にシミュレートする必要があるため、標準のグラフィックス技術を使用したフォトリアリスティックな画像レンダリングが必要です。 既存のグラフィックスアルゴリズムはタスクに優れていますが、仮想環境の構築と編集には費用と時間がかかります。 これは、世界のあらゆる側面を明示的にモデル化する必要があるためです。 データから学習したモデルを使用して写真のようにリアルな画像をレンダリングできた場合、グラフィックレンダリングのプロセスをモデルの学習と推論の問題に変えることができます。 次に、新しいデータセットでモデルをトレーニングすることにより、新しい仮想世界を作成するプロセスを簡素化できます。 ユーザーがジオメトリ、マテリアル、または照明をモデリングするのではなく、全体的なセマンティック構造を指定できるようにすることで、環境をカスタマイズしやすくすることさえできます。
 
 ---
 
-- 第２パラグラフ
+- In this paper, we discuss a new approach that produces high-resolution images from semantic label maps. This method has a wide range of applications. For example, we can use it to create synthetic training data for training visual recognition algorithms, since it is much easier to create semantic labels for desired scenarios than to generate training images. Using semantic segmentation methods, we can transform images into a semantic label domain, edit the objects in the label domain, and then transform them back to the image domain. This method also gives us new tools for higher-level image editing, e.g, adding objects to images or changing the appearance of existing objects.
+    - この論文では、セマンティックラベルマップから高解像度画像を生成する新しいアプローチについて説明します。 この方法には幅広い用途があります。 たとえば、トレーニング画像を生成するよりも目的のシナリオのセマンティックラベルを作成する方がはるかに簡単なので、これを使用して視覚認識アルゴリズムをトレーニングするための合成トレーニングデータを作成できます。 セマンティックセグメンテーションメソッドを使用して、画像をセマンティックラベルドメインに変換し、ラベルドメイン内のオブジェクトを編集してから、それらを画像ドメインに戻すことができます。 この方法は、画像にオブジェクトを追加したり、既存のオブジェクトの外観を変更したりするなど、より高レベルの画像編集用の新しいツールも提供します。
+    
+---
+
+- To synthesize images from semantic labels, one can use the pix2pix method, an image-to-image translation frame- work [21] which leverages generative adversarial networks (GANs) [16] in a conditional setting. Recently, Chen and Koltun [5] suggest that adversarial training might be un- stable and prone to failure for high-resolution image gen- eration tasks. Instead, they adopt a modified perceptual loss [11, 13, 22] to synthesize images, which are high- resolution but often lack fine details and realistic textures.
+
+---
+
+- Here we address two main issues of the above state-of-the-art methods: (1) the difficulty of generating high-resolution images with GANs [21] and (2) the lack of details and realistic textures in the previous high-resolution results [5]. We show that through a new, robust adversarial learning objective together with new multi-scale generator and discriminator architectures, we can synthesize photo-realistic images at 2048 × 1024 resolution, which are more visually appealing than those computed by previous methods [5, 21]. We first obtain our results with adversarial training only, without relying on any hand-crafted losses [44] or pre-trained networks (e.g VGGNet [48]) for perceptual losses [11, 22] (Figs 9c, 10b). Then we show that adding perceptual losses from pre-trained networks [48] can slightly improve the results in some circumstances (Figs 9d, 10c), if a pre-trained network is available. Both results outperform previous works substantially in terms of image quality.
+    - ここでは、上記の最新の方法の2つの主な問題に対処します。（1）GANを使用した高解像度画像の生成の難しさ[21]および（2）以前の高解像度の詳細と現実的なテクスチャの欠如 解決結果[5]。 新しい堅牢な敵対的学習目標と新しいマルチスケールジェネレーターおよびディスクリミネーターアーキテクチャを通じて、2048×1024の解像度でフォトリアリスティックな画像を合成できることを示します。これは、以前の方法で計算されたものより視覚的に魅力的です[5、21 ]。 最初に、知覚的損失[11、22]（図9c、10b）について、手作業による損失[44]または事前に訓練されたネットワーク（例えばVGGNet [48]）に依存することなく、敵対的訓練のみで結果を取得します。 次に、事前に訓練されたネットワークが利用可能な場合、事前に訓練されたネットワーク[48]からの知覚的損失を追加すると、状況によっては結果がわずかに改善されることを示します（図9d、10c）。 どちらの結果も、画質の点で以前の作品を大幅に上回っています。
+
+---
+
+- Furthermore, to support interactive semantic manipulation, we extend our method in two directions. First, we use instance-level object segmentation information, which can separate different object instances within the same category. This enables flexible object manipulations, such as adding/removing objects and changing object types. Second, we propose a method to generate diverse results given the same input label map, allowing the user to edit the appearance of the same object interactively.
+    - さらに、インタラクティブなセマンティック操作をサポートするために、メソッドを2つの方向に拡張します。 まず、インスタンスレベルのオブジェクトセグメンテーション情報を使用します。これにより、同じカテゴリ内の異なるオブジェクトインスタンスを分離できます。 これにより、オブジェクトの追加/削除やオブジェクトタイプの変更など、柔軟なオブジェクト操作が可能になります。 次に、同じ入力ラベルマップが与えられた場合に多様な結果を生成し、ユーザーが同じオブジェクトの外観をインタラクティブに編集できるようにする方法を提案します。
+
+---
+
+- We compare against state-of-the-art visual synthesis systems [5, 21], and show that our method outperforms these approaches regarding both quantitative evaluations and human perception studies. We also perform an ablation study regarding the training objectives and the importance of instance-level segmentation information. In addition to semantic manipulation, we test our method on edge2photo applications (Figs 2,13), which shows the generalizability of our approach. Code and data are available at our website
+
 
 # ■ 結論
 

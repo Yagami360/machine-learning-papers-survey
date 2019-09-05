@@ -46,7 +46,13 @@
 
 ---
 
-- The contribution of the proposed method is threefold: (1) We propose a novel Stacked Generative Adversarial Networks for synthesizing photo-realistic images from text descriptions. It decomposes the difficult problem of generating high-resolution images into more manageable subproblems and significantly improve the state of the art. The StackGAN for the first time generates images of 256×256 resolution with photo-realistic details from text descriptions. (2) A new Conditioning Augmentation technique is proposed to stabilize the conditional GAN training and also improves the diversity of the generated samples. (3) Extensive qualitative and quantitative experiments demonstrate the effectiveness of the overall model design as well as the effects of individual components, which provide useful information for designing future conditional GAN models. Our code is available at
+- The contribution of the proposed method is threefold: (1) We propose a novel Stacked Generative Adversarial Networks for synthesizing photo-realistic images from text descriptions. It decomposes the difficult problem of generating high-resolution images into more manageable subproblems and significantly improve the state of the art. The StackGAN for the first time generates images of 256×256 resolution with photo-realistic details from text descriptions. (2) A new Conditioning Augmentation technique is proposed to stabilize the conditional GAN training and also improves the diversity of the generated samples. (3) Extensive qualitative and quantitative experiments demonstrate the effectiveness of the overall model design as well as the effects of individual components, which provide useful information for designing future conditional GAN models.
+    - 提案された方法の貢献は3つあります。
+    -（ 1）テキスト記述から写真のようにリアルな画像を合成するための、新規のスタック生成敵対ネットワークを提案します。 高解像度画像を生成するという困難な問題をより扱いやすいサブ問題に分解し、最新技術を大幅に改善します。 StackGANは、テキスト記述から写真のようにリアルな詳細を備えた256×256解像度の画像を初めて生成します。 
+    - （2）条件付きGANトレーニングを安定化し、生成されたサンプルの多様性を改善するために、新しい条件付き拡張手法が提案されています。 
+    - （3）広範な定性的および定量的実験は、モデル設計全体の有効性と個々のコンポーネントの効果を実証し、将来の条件付きGANモデルの設計に役立つ情報を提供します。
+
+- Our code is available at https://github.com/hanzhanggit/StackGAN.
 
 # ■ 結論
 
@@ -55,8 +61,35 @@
 
 # ■ 何をしたか？詳細
 
-## x. 論文の項目名
+## 3. Stacked Generative Adversarial Networks
 
+- xxx
+
+
+### 3.2. Conditioning Augmentation
+
+- As shown in Figure 2, the text description t is first encoded by an encoder, yielding a text embedding φt. In previous works [26, 24], the text embedding is nonlinearly transformed to generate conditioning latent variables as the input of the generator. However, latent space for the text embedding is usually high dimensional (> 100 dimensions). With limited amount of data, it usually causes discontinuity in the latent data manifold, which is not desirable for learning the generator.
+    - 図2に示すように、テキスト記述tは最初にエンコーダーによってエンコードされ、φtを埋め込むテキストを生成します。 以前の作品[26、24]では、テキスト埋め込みは非線形に変換され、ジェネレーターの入力として条件付け潜在変数を生成します。 ただし、テキスト埋め込みの潜在スペースは通常、高次元（> 100次元）です。 データの量が限られている場合、通常、潜在データ多様体で不連続が発生しますが、これはジェネレーターの学習には望ましくありません。
+
+- To mitigate this problem, we introduce a Conditioning Augmentation technique to produce additional conditioning variables cˆ. In contrast to the fixed conditioning text variable c in [26, 24], we randomly sample the latent variables cˆ from an independent Gaussian distribution N (μ(φt ), Σ(φt )), where the mean μ(φt ) and diagonal covariance matrix Σ(φt) are functions of the text embedding φt. The proposed Conditioning Augmentation yields more training pairs given a small number of image-text pairs, and thus encourages robustness to small perturbations along the conditioning manifold. To further enforce the smoothness over the conditioning manifold and avoid overfitting [6, 14], we add the following regularization term to the objective of the generator during training,
+    - この問題を軽減するために、追加の調整変数cˆを生成するための調整強化手法を導入します。 [26、24]の固定条件付きテキスト変数cとは対照的に、独立したガウス分布N（μ（φt）、Σ（φt））から潜在変数cˆをランダムにサンプリングします。ここで、平均μ（φt）および対角 共分散行列Σ（φt）は、φtを埋め込むテキストの関数です。 提案されたコンディショニング拡張は、少数の画像とテキストのペアが与えられると、より多くのトレーニングペアを生成します。 コンディショニングマニホールドの平滑性をさらに強化し、オーバーフィッティング[6、14]を回避するために、トレーニング中にジェネレーターの目的に次の正則化用語を追加します。
+
+
+- which is the Kullback-Leibler divergence (KL divergence) between the standard Gaussian distribution and the condi- tioning Gaussian distribution. The randomness introduced in the Conditioning Augmentation is beneficial for model- ing text to image translation as the same sentence usually corresponds to objects with various poses and appearances.
+    - これは、標準ガウス分布と条件付きガウス分布の間のカルバック・ライブラー発散（KL発散）です。 コンディショニング拡張で導入されたランダム性は、同じ文が通常さまざまなポーズや外観を持つオブジェクトに対応するため、テキストから画像への翻訳のモデリングに役立ちます。
+
+### 3.3. Stage-I GAN
+
+- xxx
+
+### 3.4. Stage-II GAN
+
+- xxx
+
+---
+
+- Different from the original GAN formulation, the random noise z is not used in this stage with the assumption that the randomness has already been preserved by s0. Gaussian conditioning variables cˆ used in this stage and cˆ0 used in Stage-I GAN share the same pre-trained text encoder, generating the same text embedding φt. However, Stage- I and Stage-II Conditioning Augmentation have different fully connected layers for generating different means and standard deviations. In this way, Stage-II GAN learns to capture useful information in the text embedding that is omitted by Stage-I GAN.
+    - 元のGAN定式化とは異なり、この段階ではランダムノイズzは使用されません。これは、ランダム性がs0によって既に保存されているという仮定によるものです。 このステージで使用されるガウス条件変数cˆとStage-I GANで使用されるcˆ0は同じ事前トレーニング済みテキストエンコーダーを共有し、φtを埋め込む同じテキストを生成します。 ただし、Stage-IとStage-IIの調整増強には、異なる平均と標準偏差を生成するための異なる完全に接続されたレイヤーがあります。 このようにして、Stage-II GANは、Stage-I GANで省略されているテキスト埋め込みの有用な情報をキャプチャすることを学習します。
 
 # ■ 実験結果（主張の証明）・議論（手法の良し悪し）・メソッド（実験方法）
 

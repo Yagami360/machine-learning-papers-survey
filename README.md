@@ -3,6 +3,8 @@
 
 ## ■ 構成
 
+### ◎ 基礎系
+
 - Deep Neural Network
     - [[ResNet] Deep Residual Learning for Image Recognition](https://github.com/Yagami360/MachineLearning-Papers_Survey/blob/master/papers/Deep_Residual_Learning_for_Image_Recognition/ResNet.md)
     - [Kervolutional Neural Networks](https://github.com/Yagami360/MachineLearning-Papers_Survey/blob/master/papers/Kervolutional_Neural_Networks/Kervolutional_Neural_Networks.md)
@@ -16,10 +18,16 @@
     - [[DCGAN] Unsupervised Representation Learning with Deep Convolutional Generative Adversarial Networks](https://github.com/Yagami360/MachineLearning-Papers_Survey/blob/master/papers/Unsupervised_Representation_Learning_with_Deep_Convolutional_Generative_Adversarial_Networks/DeepConvolutionalGAN.md)
     - [[cGAN] Conditional Generative Adversarial Nets](https://github.com/Yagami360/MachineLearning-Papers_Survey/blob/master/papers/Conditional_Generative_Adversarial_Nets/ConditionalGAN.md)
     - [[WGAN] Wasserstein GAN](https://github.com/Yagami360/MachineLearning-Papers_Survey/blob/master/papers/Wasserstein_GAN/WassersteinGAN.md)
-    - [[pix2pix] Image-to-Image Translation with Conditional Adversarial Networks](https://github.com/Yagami360/MachineLearning-Papers_Survey/blob/master/papers/Image-to-Image_Translation_with_Conditional_Adversarial_Networks/pix2pix.md)
-    - [【翻訳中】[pix2pix-HD] High-Resolution_Image_Synthesis_and_Semantic_Manipulation_with_Conditional_GANs](https://github.com/Yagami360/MachineLearning-Papers_Survey/blob/master/papers/High-Resolution_Image_Synthesis_and_Semantic_Manipulation_with_Conditional_GANs/pix2pix-HD.md)
     - [SAGAN [Self-Attention Generative Adversarial Networks]](https://github.com/Yagami360/MachineLearning-Papers_Survey/blob/master/papers/Self-Attention_Generative_Adversarial_Networks/SAGAN.md)
     - [[PGGAN] Progressive Growing of GANs for Improved Quality, Stability, and Variation](https://github.com/Yagami360/MachineLearning-Papers_Survey/blob/master/papers/Progressive_Growing_of_GANs_for_Improved_Quality_Stability_and_Variation/ProgressiveGAN.md)
+- Flow-based generative model
+    - Residual Flows for Invertible Generative Modeling
+
+### ◎ アプリケーション系
+
+- image-to-image [GANs base]
+    - [[pix2pix] Image-to-Image Translation with Conditional Adversarial Networks](https://github.com/Yagami360/MachineLearning-Papers_Survey/blob/master/papers/Image-to-Image_Translation_with_Conditional_Adversarial_Networks/pix2pix.md)
+    - [【翻訳中】[pix2pix-HD] High-Resolution_Image_Synthesis_and_Semantic_Manipulation_with_Conditional_GANs](https://github.com/Yagami360/MachineLearning-Papers_Survey/blob/master/papers/High-Resolution_Image_Synthesis_and_Semantic_Manipulation_with_Conditional_GANs/pix2pix-HD.md)
     - [[CycleGAN] Unpaired Image-to-Image Translation using Cycle-Consistent Adversarial Networks](https://github.com/Yagami360/MachineLearning-Papers_Survey/blob/master/papers/Unpaired_Image-to-Image_Translation_using_Cycle-Consistent_Adversarial_Networks/CycleGAN.md)
     - [[StarGAN] StarGAN: Unified Generative Adversarial Networks for Multi-Domain Image-to-Image Translation](https://github.com/Yagami360/MachineLearning-Papers_Survey/blob/master/papers/StarGAN_Unified_Generative_Adversarial_Networks_for_Multi-Domain_Image-to-Image_Translation/StarGAN.md)
     - [[StyleGAN] A Style-Based Generator Architecture for Generative Adversarial Networks](https://github.com/Yagami360/MachineLearning-Papers_Survey/blob/master/papers/A_Style-Based_Generator_Architecture_for_Generative_Adversarial_Networks/StyleGAN.md)

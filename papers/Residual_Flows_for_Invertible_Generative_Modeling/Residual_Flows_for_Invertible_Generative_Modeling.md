@@ -11,7 +11,7 @@
 ## Abstract
 
 - Flow-based generative models parameterize probability distributions through an invertible transformation and can be trained by maximum likelihood.
-    - フローベースの生成モデルは、可逆 [invertible] 変換により確率分布をパラメーター化し、最尤法でトレーニングできます。
+    - フローベースの生成モデルは、可逆 [invertible] な写像により確率分布をパラメーター化し、最尤法で学習できます。
 
 - Invertible residual networks provide a flexible family of transformations where only Lipschitz conditions rather than strict architectural constraints are needed for enforcing invertibility.
     - 可逆的 [Invertible] residual networks は、厳格なアーキテクチャ上の制約ではなく、リプシッツ条件のみが可逆性を強制するために必要な、柔軟な変換集合を提供します。
@@ -38,7 +38,7 @@
     - 最尤法は、学習を分布整合問題として提起するコアマシン学習パラダイムです。 ただし、高次元の連続データに適合するためにどの分布集合を使用する必要があるかは不明なことがよくあります。
 
 - In this regard, the change of variables theorem offers an appealing way to construct flexible distributions that allow tractable exact sampling and efficient evaluation of its density.
-    - この点において [In this regard]、変数定理の変更は、扱いやすい [tractable] 正確なサンプリングとその密度の効率的な評価を可能にするような、柔軟な分布を構築するための魅力的な [appealing] 方法を提供します。
+    - この点において [In this regard]、変数変換の公式 [change of variables theorem] は、扱いやすい [tractable] 正確なサンプリングとその密度の効率的な評価を可能にするような、柔軟な分布を構築するための魅力的な [appealing] 方法を提供します。
     
 - This class of models is generally referred to as invertible or flow-based generative models (Deco and Brauer, 1995; Rezende and Mohamed, 2015).
     - このクラスのモデルは一般に、可逆またはフローベースの生成モデルと呼ばれます（Deco and Brauer、1995; Rezende and Mohamed、2015）。
@@ -97,8 +97,35 @@
 
 # ■ 何をしたか？詳細
 
-## x. 論文の項目名
+## 2 Background
 
+### Maximum likelihood estimation.
+
+- xxx
+
+### Change of variables theorem.
+
+- With an invertible transformation f , the change of variables
+
+
+- captures the change in density of the transformed samples. 
+
+- A simple base distribution such as a standard normal is often used for logp(f(x)). Tractable evaluation of (2) allows flow-based models to be trained using the maximum likelihood objective (1). In contrast, variational autoen- coders (Kingma and Welling, 2014) can only optimize a stochastic lower bound, and generative adversial networks (Goodfellow et al., 2014) require an extra discriminator network for training.
+    - 標準正規分布などの単純な基本分布は、logp（f（x））によく使用されます。 （2）の実行可能な評価により、最尤目標（1）を使用してフローベースモデルをトレーニングできます。 対照的に、変分オートエンコーダー（Kingma and Welling、2014）は確率的下限のみを最適化でき、生成的敵対ネットワーク（Goodfellow et al。、2014）はトレーニングに追加の判別器ネットワークを必要とします。
+
+
+### Invertible residual networks (i-ResNets).
+
+- Residual networks are composed of simple transformations y = f(x) = x + g(x). Behrmann et al. (2019) noted that this transformation is invertible by the Banach fixed point theorem if g is contractive, i.e with Lipschitz constant strictly less than unity, which was enforced using spectral normalization (Miyato et al., 2018; Gouk et al., 2018).
+    - 残存ネットワークは、単純な変換y = f（x）= x + g（x）で構成されます。 Behrmann et al（2019）は、gが収縮性の場合、つまりスペクトル正規化を使用して強制されたリプシッツ定数が厳密に1未満である場合、この変換はバナッハ不動点定理によって可逆的であることに注目しました（Miyato et al。、2018; Gouk et al。 、2018）。
+
+- xxx
+
+## 3 Residual Flows
+
+### Unbiased Log Density Estimation for Maximum Likelihood Estimation
+
+- Evaluation of the exact log density function log pθ (·) in (3) requires infinite time due to the power series. Instead, we rely on randomization to derive an unbiased estimator that can be computed in finite time (with probability one) based on an existing concept (Kahn, 1955).
 
 # ■ 実験結果（主張の証明）・議論（手法の良し悪し）・メソッド（実験方法）
 

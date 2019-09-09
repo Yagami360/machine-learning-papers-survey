@@ -22,7 +22,7 @@
     - [[PGGAN] Progressive Growing of GANs for Improved Quality, Stability, and Variation](https://github.com/Yagami360/MachineLearning-Papers_Survey/blob/master/papers/Progressive_Growing_of_GANs_for_Improved_Quality_Stability_and_Variation/ProgressiveGAN.md)
 - Flow-based generative model
     - [NICE: NON-LINEAR INDEPENDENT COMPONENTS ESTIMATION](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/10)
-    - Real NVP [Density estimation using Real NVP]
+    - [Real NVP [Density estimation using Real NVP]](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/11)
     - Glow [Generative Flow with Invertible 1×1 Convolutions]
     - i-ResNets [Invertible residual networks]
     - Residual Flows for Invertible Generative Modeling

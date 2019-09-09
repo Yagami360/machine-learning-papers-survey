@@ -52,6 +52,7 @@
 - Virtual Try-On
     - [[CP-VTON] Toward Characteristic-Preserving Image-based Virtual Try-On Network](https://github.com/Yagami360/MachineLearning-Papers_Survey/blob/master/papers/Toward_Characteristic-Preserving_Image-based_Virtual_Try-On_Network/cp-vton.md)
     - [[MG-VTON] Towards_Multi-pose_Guided_Virtual_Try-on_Network](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/5)
+    - [[WUTON] End-to-End Learning of Geometric Deformations of Feature Maps for Virtual Try-On](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/12)
 - text-to-image
     - [[StackGAN] Text to Photo-realistic Image Synthesis with Stacked Generative Adversarial Network](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/9)
 - 触覚・知覚系

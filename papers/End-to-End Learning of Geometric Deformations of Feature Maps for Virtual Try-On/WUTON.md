@@ -1,7 +1,7 @@
 # ■ 論文
 - 論文タイトル："End-to-End Learning of Geometric Deformations of Feature Maps for Virtual Try-On"
-- 論文リンク：2019/06/04
-- 論文投稿日付：
+- 論文リンク：
+- 論文投稿日付：2019/06/04
 - 被引用数（記事作成時点）：xxx 件
 - 著者（組織）：
 - categories：

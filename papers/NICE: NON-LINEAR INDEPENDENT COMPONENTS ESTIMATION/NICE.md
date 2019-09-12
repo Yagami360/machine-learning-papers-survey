@@ -1,3 +1,6 @@
+> 論文まとめ（要約ver）: https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/10
+
+
 # ■ 論文
 - 論文タイトル："NICE: NON-LINEAR INDEPENDENT COMPONENTS ESTIMATION"
 - 論文リンク：https://arxiv.org/abs/1410.8516

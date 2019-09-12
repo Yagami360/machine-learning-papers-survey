@@ -1,4 +1,5 @@
-> 【非公開】論文まとめノート：https://github.com/Yagami360/My_Notebook_Private/blob/master/SPADE.md
+> 論文まとめ（要約ver）：https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/7
+
 
 # ■ 論文
 - 論文タイトル："Semantic Image Synthesis with Spatially-Adaptive Normalization"

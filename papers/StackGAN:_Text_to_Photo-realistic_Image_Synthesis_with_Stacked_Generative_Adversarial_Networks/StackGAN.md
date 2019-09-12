@@ -1,3 +1,5 @@
+> 論文まとめ（要約ver）：https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/9
+
 # ■ 論文
 - 論文タイトル："StackGAN: Text to Photo-realistic Image Synthesis with Stacked Generative Adversarial Networks"
 - 論文リンク：https://arxiv.org/abs/1612.03242

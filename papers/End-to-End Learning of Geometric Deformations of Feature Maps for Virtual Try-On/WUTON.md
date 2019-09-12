@@ -1,3 +1,6 @@
+> 論文まとめ（要約ver）: https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/12
+
+
 # ■ 論文
 - 論文タイトル："End-to-End Learning of Geometric Deformations of Feature Maps for Virtual Try-On"
 - 論文リンク：

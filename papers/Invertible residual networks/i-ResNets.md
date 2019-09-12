@@ -1,8 +1,6 @@
-> 論文まとめ（要約ver）: https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/13
-
 # ■ 論文
-- 論文タイトル："Glow: Generative Flow with Invertible 1x1 Convolutions"
-- 論文リンク：https://arxiv.org/abs/1807.03039
+- 論文タイトル："xxx"
+- 論文リンク：
 - 論文投稿日付：
 - 被引用数（記事作成時点）：xxx 件
 - 著者（組織）：

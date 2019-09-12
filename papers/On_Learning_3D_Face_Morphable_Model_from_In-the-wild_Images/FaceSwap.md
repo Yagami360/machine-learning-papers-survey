@@ -1,3 +1,5 @@
+> 論文まとめ（要約ver）：https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/4
+
 # ■ 論文
 - 論文タイトル："On Learning 3D Face Morphable Model from In-the-wild Images"
 - 論文リンク：https://arxiv.org/abs/1808.09560

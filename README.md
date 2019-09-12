@@ -1,5 +1,7 @@
 # MachineLearning-Papers_Survey
-機械学習関連の論文（arXiv等）読み練習用レポジトリ
+機械学習関連の論文（arXiv等）読み練習用レポジトリです。<br>
+Survey の進捗は、[Projectsページ](https://github.com/Yagami360/MachineLearning-Papers_Survey/projects/1) で管理しています。
+
 
 ## ■ 構成
 
@@ -23,7 +25,7 @@
 - Flow-based generative model
     - [NICE: NON-LINEAR INDEPENDENT COMPONENTS ESTIMATION](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/10)
     - [Real NVP [Density estimation using Real NVP]](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/11)
-    - Glow [Generative Flow with Invertible 1×1 Convolutions]
+    - [Glow [Generative Flow with Invertible 1×1 Convolutions]](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/13)
     - i-ResNets [Invertible residual networks]
     - Residual Flows for Invertible Generative Modeling
 

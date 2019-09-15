@@ -1,4 +1,4 @@
-
+> 論文まとめ（要約ver）: https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/14
 
 # ■ 論文
 - 論文タイトル："Invertible Residual Networks"

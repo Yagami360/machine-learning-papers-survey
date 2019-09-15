@@ -27,7 +27,7 @@ Survey の進捗は、[Projects ページ](https://github.com/Yagami360/MachineL
     - [Real NVP [Density estimation using Real NVP]](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/11)
     - [Glow [Generative Flow with Invertible 1×1 Convolutions]](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/13)
     - [i-ResNets [Invertible residual networks]](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/14)
-    - Residual Flows for Invertible Generative Modeling
+    - [Residual Flows for Invertible Generative Modeling](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/15)
 
 ### ◎ アプリケーション系
 

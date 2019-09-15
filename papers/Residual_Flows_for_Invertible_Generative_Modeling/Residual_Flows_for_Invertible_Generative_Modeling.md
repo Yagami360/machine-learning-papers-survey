@@ -1,3 +1,5 @@
+> 論文まとめ（要約ver）: https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/15
+
 # ■ 論文
 - 論文タイトル："Residual Flows for Invertible Generative Modeling"
 - 論文リンク：https://arxiv.org/abs/1906.02735
@@ -18,6 +20,8 @@
 
 - However, prior work trained invertible residual networks for density estimation by relying on biased log-density estimates whose bias increased with the network’s expressiveness.
     - しかし、以前の研究では、ネットワークの表現力とともにバイアスが増加したバイアスされたログ密度推定に依存することにより、密度推定のための可逆残差ネットワークを訓練していました。 
+
+> ログ密度推定 : 目的である観測データ x  を生成する確率分布の対数尤度
 
 - We give a tractable unbiased estimate of the log density using a “Russian roulette” estimator, and reduce the memory required during training by using an alternative infinite series for the gradient. 
     - 「ロシアンルーレット」推定器を使用して、対数密度の扱いやすい不偏推定値を与え、勾配に別の無限級数を使用することにより、トレーニング中に必要なメモリを削減します。
@@ -123,9 +127,47 @@
 
 ## 3 Residual Flows
 
-### Unbiased Log Density Estimation for Maximum Likelihood Estimation
+### 3.1 Unbiased Log Density Estimation for Maximum Likelihood Estimation
 
 - Evaluation of the exact log density function log pθ (·) in (3) requires infinite time due to the power series. Instead, we rely on randomization to derive an unbiased estimator that can be computed in finite time (with probability one) based on an existing concept (Kahn, 1955).
+    - （3）の正確な対数密度関数logpθ（・）の評価には、べき級数のために無限の時間が必要です。 代わりに、既存の概念に基づいて有限確率（確率1）で計算できる不偏推定量を導き出すために、ランダム化に依存しています（Kahn、1955）。
+
+- To illustrate the idea, let ∆k denote the k-th term of an infinite series, and suppose we always evaluate the first term then flip a coin b ∼ Bernoulli(q) to determine whether we stop or continue evaluating the remaining terms. By reweighting the remaining terms by 1 , we obtain an unbiased estimator
+    - 考え方を説明するために、Δkが無限級数のk番目の項を表し、最初の項を常に評価し、その後コインb〜Bernoulli（q）を反転させて残りの項の評価を停止するか続行するかを決定するとします。 残りの項を1で再重み付けすることにより、不偏推定量を取得します
+
+> 式
+
+- Interestingly, whereas naïve computation would always use infinite compute, this unbiased estimator has probability q of being evaluated in finite time. We can obtain an estimator that is evaluated in finite time with probability one by applying this process infinitely many times to the remaining terms. Directly sampling the number of evaluated terms, we obtain the appropriately named “Russian roulette” estimator (Kahn, 1955)
+    - 興味深いことに、ナイーブ計算では常に無限計算が使用されますが、この不偏推定量には有限時間で評価される確率qがあります。 このプロセスを残りの項に無限に何度も適用することで、確率1で有限時間で評価される推定量を取得できます。 評価された用語の数を直接サンプリングして、適切な名前の「ロシアンルーレット」推定量を取得します（Kahn、1955）
+
+> 式
+
+- We note that the explanation above is only meant to be an intuitive guide and not a formal derivation. The peculiarities of dealing with infinite quantities dictate that we must make assumptions on ∆k, p(N ), or both in order for the equality in (5) to hold. While many existing works have made different assumptions depending on specific applications of (5), we state our result as a theorem where the only condition is that p(N ) must have support over all of the indices.
+    - 上記の説明は、直感的なガイドであり、正式な派生物ではないことに注意してください。 無限の量を処理する特性により、（5）の等式が成立するためには、Δk、p（N）、またはその両方を仮定する必要があります。 多くの既存の作品は（5）の特定のアプリケーションに応じて異なる仮定を行っていますが、p（N）がすべてのインデックスをサポートする必要があるという唯一の条件である定理として結果を述べています。
+
+- Note that since Jg is constrained to have a spectral radius less than unity, the power series converges exponentially. The variance of the Russian roulette estimator is small when the infinite series exhibits fast convergence (Rhee and Glynn, 2015; Beatson and Adams, 2019), and in practice, we did not have to tune p(N) for 3.0 variance reduction. Instead, in our experiments, we compute two terms exactly and then use 2.50 5 the unbiased estimator on the remaining terms with a single sample from p(N ) = Geom(0.5). This results in an expected compute cost of 4 terms, which is less than the 5 to 10 terms that Behrmann et al. (2019) used for their biased estimator.
+    - Jgは1未満のスペクトル半径を持つように制約されているため、べき級数は指数関数的に収束することに注意してください。 無限級数が高速収束を示す場合、ロシアのルーレット推定量の分散は小さく（RheeとGlynn、2015; BeatsonとAdams、2019）、実際には3.0の分散低減のためにp（N）を調整する必要はありませんでした。 代わりに、我々の実験では、2つの項を正確に計算し、p（N）= Geom（0.5）からの単一のサンプルで残りの項に不偏推定量2.50を使用します。 これにより、予想される計算条件は4項になり、Behrmann et al。の5〜10項よりも小さくなります。 （2019）バイアス推定器に使用されます。
+
+- Theorem 1 forms the core of Residual Flows, as we can now perform maximum likelihood training by backpropagating through (6) to obtain unbiased gradients. This allows us to train more expressive networks where a biased estimator would fail (Figure 2). The price we pay for the unbiased estimator is variable compute and memory, as each sample of the log density uses a random number of terms in the power series.
+    - 定理1は、（6）を逆伝播して不偏勾配を取得することにより最尤トレーニングを実行できるため、残差フローのコアを形成します。 これにより、バイアスのかかった推定器が失敗する、より表現力のあるネットワークをトレーニングできます（図2）。 対数密度の各サンプルはべき級数の項の乱数を使用するため、不偏推定量に支払う価格は可変計算とメモリです。
+
+### 3.2 Memory-Efficient Backpropagation
+
+- Memory can be a scarce resource, and running out of memory due to a large sample from the unbiased estimator can halt training unexpectedly. To this end, we propose two methods to reduce the memory consumption during training.
+    - メモリは希少なリソースである可能性があり、偏りのない推定器からの大きなサンプルが原因でメモリが不足すると、トレーニングが予期せず停止する可能性があります。 この目的のために、トレーニング中のメモリ消費を削減する2つの方法を提案します。
+
+- To see how naïve backpropagation can be problematic, the gradient w.r.t. parameters θ by directly differentiating through the power series (6) can be expressed as
+    - ナイーブバックプロパゲーションがどのように問題になるかを確認するために、べき級数（6）を直接微分することによるパラメーターθに関する勾配は、
+
+
+> 式
+
+- Unfortunately, this estimator requires each term to be stored in memory because ∂/∂θ needs to be applied to each term. The total memory cost is then O(n · m) where n is the number of computed terms and m is the number of residual blocks in the entire network. This is extremely memory-hungry during training, and a large random sample of n can occasionally result in running out of memory.
+    - 残念ながら、this /∂θを各項に適用する必要があるため、この推定器では各項をメモリに保存する必要があります。 合計メモリコストはO（n・m）です。ここで、nは計算された項の数、mはネットワーク全体の残差ブロックの数です。 これは、トレーニング中に非常にメモリを消費し、nの大きなランダムサンプルがメモリ不足になる場合があります。
+
+
+- As the power series in (8) does not need to be differentiated through, using this reduces the memory requirement by a factor of n. This is especially useful when using the unbiased estimator as the memory will be constant regardless of the number of terms we draw from p(N ).
+
 
 # ■ 実験結果（主張の証明）・議論（手法の良し悪し）・メソッド（実験方法）
 

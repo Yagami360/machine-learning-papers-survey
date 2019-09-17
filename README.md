@@ -78,14 +78,12 @@ Survey の進捗は、[Projects ページ](https://github.com/Yagami360/MachineL
 - [Hyper Collocation](https://hypcol.marutank.net/ja/)
 - [arXiv Vanity](https://www.arxiv-vanity.com/)
 
-
 ### ◎ その他参考サイト
-
 - [arXivTimes](https://github.com/arXivTimes/arXivTimes)
 - [ymym3412/acl-papers](https://github.com/ymym3412/acl-papers)
 - [shunk031/paper-survey](https://github.com/shunk031/paper-survey)
 
-## ■ 論文要約フォーマット（短いバージョン）
+## ■ 論文要約フォーマット（要約バージョン）
 
 ```
 layout: post
@@ -115,29 +113,6 @@ categories: CV NLP Others
 * [著者，"タイトル，" ジャーナル名，voluem，no.，ページ，年](論文リンク)
 
 ```
-- [先端技術とメディア表現1 #FTMA15](http://www.slideshare.net/Ochyai/1-ftma15) from [Yoichi Ochiai](http://www.slideshare.net/Ochyai)
+- [例）先端技術とメディア表現1 #FTMA15](http://www.slideshare.net/Ochyai/1-ftma15) from [Yoichi Ochiai](http://www.slideshare.net/Ochyai)
 
 ![](https://raw.githubusercontent.com/shunk031/paper-survey/master/assets/img/FTMA15-1-page-65.png)
-
-<br>
-
-```
-## 一言でいうと
-
-### 論文リンク
-
-### 著者/所属機関
-
-### 投稿日付(yyyy/MM/dd)
-
-## 概要
-
-## 新規性・差分
-
-## 手法
-
-## 結果
-
-## コメント
-```
-

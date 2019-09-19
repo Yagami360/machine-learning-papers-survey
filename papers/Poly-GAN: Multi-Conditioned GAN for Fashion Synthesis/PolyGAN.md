@@ -72,8 +72,22 @@
 
 ---
 
-- The entire flow can be divided into 4 stages illustrated in Figure 2. In Stage 1, the RGB pose skeleton is concatenated with the reference garment and passed to the Poly-GAN. The RGB skeleton acts as a condition for generating a garment that is reshaped according to an arbitrary human pose. The Stage 1 output is a newly generated garment which matches the shape and alignment of the RGB skeleton on which Poly-GAN is conditioned. The transformed garment from Stage 1 along with the segmented human body (without garment and without head) and the RGB skeleton are passed to the Poly-GAN in Stage 2. Stage 2 serves the purpose of stitching the generated garment from Stage 1 to the segmented human body which has no garment. In Stage 2, Poly-GAN assumes that the incoming garment may be positioned at any angle and does not require garment alignment with the human body. This assumption makes Poly-GAN more robust to potential misalignment of the generated garment during the transformation in Stage 1. Due to differences in size between the reference garment and the segmented garment on the body of the model, there may be blank areas due to missing regions. To deal with missing regions at the output of Stage 2, we pass the resulting image to Stage 3 along with the difference mask indicating missing regions. In Stage 3, Poly-GAN learns to perform inpainting on irregular holes and refines the final result. In Stage 4, we perform post processing by combining the results of Stage 2 and Stage 3, and stitching the head back on the body for the final result.
+- The entire flow can be divided into 4 stages illustrated in Figure 2. In Stage 1, the RGB pose skeleton is concatenated with the reference garment and passed to the Poly-GAN. The RGB skeleton acts as a condition for generating a garment that is reshaped according to an arbitrary human pose. The Stage 1 output is a newly generated garment which matches the shape and alignment of the RGB skeleton on which Poly-GAN is conditioned. 
+    - フロー全体を図2に示す4つの段階に分割できます。段階1では、RGBポーズスケルトンが参照衣服と連結され、Poly-GANに渡されます。 RGBスケルトンは、任意の人間のポーズに応じて形を変えた衣服を生成するための条件として機能します。 ステージ1の出力は、Poly-GANが条件付けされているRGBスケルトンの形状と配置に一致する新しく生成された衣服です。
 
+- The transformed garment from Stage 1 along with the segmented human body (without garment and without head) and the RGB skeleton are passed to the Poly-GAN in Stage 2.
+- Stage 2 serves the purpose of stitching the generated garment from Stage 1 to the segmented human body which has no garment. In Stage 2, Poly-GAN assumes that the incoming garment may be positioned at any angle and does not require garment alignment with the human body. This assumption makes Poly-GAN more robust to potential misalignment of the generated garment during the transformation in Stage 1.
+- Due to differences in size between the reference garment and the segmented garment on the body of the model, there may be blank areas due to missing regions.
+    - セグメント化された人体（衣服なし、頭部なし）およびRGBスケルトンとともに、ステージ1から変換された衣服は、ステージ2でPoly-GANに渡されます。
+    - ステージ2は、ステージ1で生成された衣服を、衣服のないセグメント化された人体に縫い付ける目的を果たします。 ステージ2では、Poly-GANは、入ってくる衣服が任意の角度で配置できることを想定しており、衣服を人体に合わせる必要はありません。 この仮定により、Poly-GANは、ステージ1の変換中に生成された衣服の位置ずれの可能性に対してより堅牢になります。
+    - 基準衣服とモデル本体のセグメント化された衣服のサイズの違いにより、領域が欠落しているために空白の領域がある場合があります。
+
+- To deal with missing regions at the output of Stage 2, we pass the resulting image to Stage 3 along with the difference mask indicating missing regions. In Stage 3, Poly-GAN learns to perform inpainting on irregular holes and refines the final result.
+    - ステージ2の出力で欠落している領域を処理するために、欠落している領域を示す差分マスクとともに結果の画像をステージ3に渡します。 ステージ3では、Poly-GANは不規則な穴の修復を学習し、最終結果を改善します。
+
+- In Stage 4, we perform post processing by combining the results of Stage 2 and Stage 3, and stitching the head back on the body for the final result.
+    - ステージ4では、ステージ2とステージ3の結果を組み合わせ、最終結果を得るために頭部を身体に縫い付けて後処理を実行します。
+    
 
 
 # ■ 実験結果（主張の証明）・議論（手法の良し悪し）・メソッド（実験方法）

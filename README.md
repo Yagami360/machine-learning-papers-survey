@@ -1,7 +1,6 @@
 # MachineLearning-Papers_Survey
-機械学習関連の論文（arXiv等）読み練習用レポジトリです。<br>
-Survey の進捗は、[Projects ページ](https://github.com/Yagami360/MachineLearning-Papers_Survey/projects/1) で管理しています。
-
+機械学習関連の論文読み練習用レポジトリです。<br>
+論文要約まとめは、[Issues](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues) に記載しています。進捗は、[Projects ページ](https://github.com/Yagami360/MachineLearning-Papers_Survey/projects/1) で管理しています。
 
 ## ■ 構成
 

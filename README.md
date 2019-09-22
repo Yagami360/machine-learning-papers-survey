@@ -32,7 +32,7 @@
 
 - image-to-image [GANs base]
     - [[pix2pix] Image-to-Image Translation with Conditional Adversarial Networks](https://github.com/Yagami360/MachineLearning-Papers_Survey/blob/master/papers/Image-to-Image_Translation_with_Conditional_Adversarial_Networks/pix2pix.md)
-    - [pix2pix-HD] High-Resolution_Image_Synthesis_and_Semantic_Manipulation_with_Conditional_GANs
+    - [[pix2pix-HD] High-Resolution_Image_Synthesis_and_Semantic_Manipulation_with_Conditional_GANs](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/18)
     - [[CycleGAN] Unpaired Image-to-Image Translation using Cycle-Consistent Adversarial Networks](https://github.com/Yagami360/MachineLearning-Papers_Survey/blob/master/papers/Unpaired_Image-to-Image_Translation_using_Cycle-Consistent_Adversarial_Networks/CycleGAN.md)
     - [[StarGAN] StarGAN: Unified Generative Adversarial Networks for Multi-Domain Image-to-Image Translation](https://github.com/Yagami360/MachineLearning-Papers_Survey/blob/master/papers/StarGAN_Unified_Generative_Adversarial_Networks_for_Multi-Domain_Image-to-Image_Translation/StarGAN.md)
     - [[StyleGAN] A Style-Based Generator Architecture for Generative Adversarial Networks](https://github.com/Yagami360/MachineLearning-Papers_Survey/blob/master/papers/A_Style-Based_Generator_Architecture_for_Generative_Adversarial_Networks/StyleGAN.md)

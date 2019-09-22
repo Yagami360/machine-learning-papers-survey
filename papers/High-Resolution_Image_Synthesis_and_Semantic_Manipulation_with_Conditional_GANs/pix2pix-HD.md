@@ -103,7 +103,7 @@
 
 ![image](https://user-images.githubusercontent.com/25688193/60664646-6864c780-9e9d-11e9-86a0-7f612587140d.png)
 
-- The pix2pix method adopts U-Net [43] as the generator and a patch-based fully convolutional network [36] as the discriminator. The input to the discriminator is a channel- wise concatenation of the semantic label map and the corre- sponding image. However, the resolution of the generated images on Cityscapes [7] is up to 256 × 256. We tested directly applying the pix2pix framework to generate high- resolution images but found the training unstable and the quality of generated images unsatisfactory. Therefore, we describe how we improve the pix2pix framework in the next subsection.
+- The pix2pix method adopts U-Net [43] as the generator and a patch-based fully convolutional network [36] as the discriminator. The input to the discriminator is a channel- wise concatenation of the semantic label map and the corresponding image. However, the resolution of the generated images on Cityscapes [7] is up to 256 × 256. We tested directly applying the pix2pix framework to generate high- resolution images but found the training unstable and the quality of generated images unsatisfactory. Therefore, we describe how we improve the pix2pix framework in the next subsection.
 
 
 ### 3.2. Improving Photorealism and Resolution

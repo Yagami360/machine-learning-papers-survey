@@ -21,6 +21,7 @@
     - [[WGAN] Wasserstein GAN](https://github.com/Yagami360/MachineLearning-Papers_Survey/blob/master/papers/Wasserstein_GAN/WassersteinGAN.md)
     - [SAGAN [Self-Attention Generative Adversarial Networks]](https://github.com/Yagami360/MachineLearning-Papers_Survey/blob/master/papers/Self-Attention_Generative_Adversarial_Networks/SAGAN.md)
     - [[PGGAN] Progressive Growing of GANs for Improved Quality, Stability, and Variation](https://github.com/Yagami360/MachineLearning-Papers_Survey/blob/master/papers/Progressive_Growing_of_GANs_for_Improved_Quality_Stability_and_Variation/ProgressiveGAN.md)
+    - [GAN-Tree: An Incrementally Learned Hierarchical Generative Framework for Multi-Modal Data Distributions](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/19)
 - Flow-based generative model
     - [NICE: NON-LINEAR INDEPENDENT COMPONENTS ESTIMATION](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/10)
     - [Real NVP [Density estimation using Real NVP]](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/11)
@@ -65,23 +66,21 @@
 - Others
     - xxx
 
-## ■ 参考サイト
 
-### ◎ 論文サイト
-- [arXiv](https://arxiv.org/)
-- [Google Scholer](https://scholar.google.co.jp/schhp?hl=ja&as_sdt=0,5)
+## ■ 機械学習系の論文調査や論文の読み方
 
-### ◎ 便利サイト
-- [Google翻訳](https://translate.google.co.jp/?hl=ja&tab=wT)
-- [papers with code](https://paperswithcode.com/)
-    - 論文実装の有無を確認できる。    
-- [Hyper Collocation](https://hypcol.marutank.net/ja/)
-- [arXiv Vanity](https://www.arxiv-vanity.com/)
+- 論文調査
+    - その論文の発展版を探すには、Google Scholer でその論文の被引用論文を探すのが手っ取り早い。
+    - 基本的には、その論文の被引用数が多いものが注目の論文。但し最新の論文は当然被引用数は少なくなる。
+    - 基本的には、最新の論文ほど優れた実験結果を出しているので、Google Scholer で出来るだけ公開日時の最新のものを探す。
+    - 論文の公式実装がないものは、自前実装の再現コストが高いので、公式実装があるものを優先的に探す。
+    - 論文の公式実装の有無は、papers with code で確認できる。
 
-### ◎ その他参考サイト
-- [arXivTimes](https://github.com/arXivTimes/arXivTimes)
-- [ymym3412/acl-papers](https://github.com/ymym3412/acl-papers)
-- [shunk031/paper-survey](https://github.com/shunk031/paper-survey)
+- 論文の読み方
+    - 基本的に、「Abstract」→「Introduction」→「Conclusion」→「何をしたかの詳細」→「Experiments」→「Related Work」項目の順に読むのが効率的。Related Work は最悪飛ばしても良い。
+    - Abstract や Introduction 内の "In this paper ...", "In this work ..." という文面や、Introduction の最後にある "the contributions of this paper ... as follows." という文面には注目。
+    - その論文の未解決課題や問題点は、論文中の Future work や Conculution に述べられていることが多い。或いは、その論文を引用している論文の Related Work に述べられていることが多い。
+
 
 ## ■ 論文要約フォーマット（要約バージョン）
 
@@ -116,3 +115,22 @@ categories: CV NLP Others
 - [例）先端技術とメディア表現1 #FTMA15](http://www.slideshare.net/Ochyai/1-ftma15) from [Yoichi Ochiai](http://www.slideshare.net/Ochyai)
 
 ![](https://raw.githubusercontent.com/shunk031/paper-survey/master/assets/img/FTMA15-1-page-65.png)
+
+
+## ■ 参考サイト
+
+### ◎ 論文サイト
+- [arXiv](https://arxiv.org/)
+- [Google Scholer](https://scholar.google.co.jp/schhp?hl=ja&as_sdt=0,5)
+
+### ◎ 便利サイト
+- [Google翻訳](https://translate.google.co.jp/?hl=ja&tab=wT)
+- [papers with code](https://paperswithcode.com/)
+    - 論文実装の有無を確認できる。    
+- [Hyper Collocation](https://hypcol.marutank.net/ja/)
+- [arXiv Vanity](https://www.arxiv-vanity.com/)
+
+### ◎ その他参考サイト
+- [arXivTimes](https://github.com/arXivTimes/arXivTimes)
+- [ymym3412/acl-papers](https://github.com/ymym3412/acl-papers)
+- [shunk031/paper-survey](https://github.com/shunk031/paper-survey)

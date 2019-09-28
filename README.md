@@ -8,6 +8,7 @@
 
 - Deep Neural Network
     - [[ResNet] Deep Residual Learning for Image Recognition](https://github.com/Yagami360/MachineLearning-Papers_Survey/blob/master/papers/Deep_Residual_Learning_for_Image_Recognition/ResNet.md)
+    - [[Neural-ODE] Neural Ordinary Differential Equations](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/21)
     - Kervolutional Neural Networks
 - GNN
     - Semi-supervised Learning with Graph Learning-Convolutional Networks

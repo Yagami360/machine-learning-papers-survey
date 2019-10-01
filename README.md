@@ -15,6 +15,7 @@
 - VAE
     - [[VAE] Auto-Encoding Variational Bayes](https://github.com/Yagami360/MachineLearning-Papers_Survey/blob/master/papers/Auto-Encoding_Variational_Bayes/VAE.md)
     - [CVAE] Learning Structured Output Representation using Deep Conditional Generative Models
+    - [[VQ-VAE] Neural Discrete Representation Learning](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/23)
 - GANs
     - [[GAN] Generative Adversarial Networks](https://github.com/Yagami360/MachineLearning-Papers_Survey/blob/master/papers/Generative_Adversarial_Networks/GenerativeAdversarialNetworks.md)
     - [[DCGAN] Unsupervised Representation Learning with Deep Convolutional Generative Adversarial Networks](https://github.com/Yagami360/MachineLearning-Papers_Survey/blob/master/papers/Unsupervised_Representation_Learning_with_Deep_Convolutional_Generative_Adversarial_Networks/DeepConvolutionalGAN.md)
@@ -32,7 +33,7 @@
 
 ### ◎ アプリケーション系
 
-- image-to-image [GANs base]
+- image-to-image
     - [[pix2pix] Image-to-Image Translation with Conditional Adversarial Networks](https://github.com/Yagami360/MachineLearning-Papers_Survey/blob/master/papers/Image-to-Image_Translation_with_Conditional_Adversarial_Networks/pix2pix.md)
     - [[pix2pix-HD] High-Resolution_Image_Synthesis_and_Semantic_Manipulation_with_Conditional_GANs](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/18)
     - [[CycleGAN] Unpaired Image-to-Image Translation using Cycle-Consistent Adversarial Networks](https://github.com/Yagami360/MachineLearning-Papers_Survey/blob/master/papers/Unpaired_Image-to-Image_Translation_using_Cycle-Consistent_Adversarial_Networks/CycleGAN.md)

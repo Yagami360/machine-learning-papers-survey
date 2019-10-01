@@ -48,8 +48,14 @@
 
 ---
 
-- One significant strength common to both our methods is that they only require a trained GAN that is equipped with AdaIN/CBN structure; there is no need to train an additional model. Our methods can be applied to practically any types of images for which there is a well-trained GAN. Both methods can be used together as well to make an even wider variety of semantic manipulation on images. Also, by combining our methods with manifold projection [44], we can manipulate the local semantic information of a real image (Fig 2). Our experiments with the most advanced species of GANs [27, 2, 20] shows that our strategy of “standing on the shoulder of giants” is a sound strategy for the task of unsupervised local semantic transformation.
-    - 両方の方法に共通する大きな強みの1つは、AdaIN / CBN構造を備えたトレーニング済みGANのみが必要なことです。 追加のモデルをトレーニングする必要はありません。 私たちの方法は、よく訓練されたGANが存在する実質的にあらゆるタイプの画像に適用できます。 両方の方法を一緒に使用して、画像に対してさらに多様なセマンティック操作を行うこともできます。 また、メソッドを多様体投影[44]と組み合わせることにより、実画像の局所的な意味情報を操作できます（図2）。 GAN [27、2、20]の最新の種を用いた実験は、「巨人の肩の上に立つ」という戦略が、教師なしのローカルセマンティック変換のタスクに適した戦略であることを示しています。
+- One significant strength common to both our methods is that they only require a trained GAN that is equipped with AdaIN/CBN structure; there is no need to train an additional model. Our methods can be applied to practically any types of images for which there is a well-trained GAN. Both methods can be used together as well to make an even wider variety of semantic manipulation on images.  
+    - 両方の方法に共通する大きな強みの1つは、AdaIN / CBN構造を備えたトレーニング済みGANのみが必要なことです。 追加のモデルをトレーニングする必要はありません。 私たちの方法は、よく訓練されたGANが存在する実質的にあらゆるタイプの画像に適用できます。 両方の方法を一緒に使用して、画像に対してさらに多様なセマンティック操作を行うこともできます。 
+    
+- Also, by combining our methods with manifold projection [44], we can manipulate the local semantic information of a real image (Fig 2).
+    - また、メソッドを manifold projection [44]と組み合わせることにより、実画像の局所的な意味情報を操作できます（図2）。
+    
+- Our experiments with the most advanced species of GANs [27, 2, 20] shows that our strategy of “standing on the shoulder of giants” is a sound strategy for the task of unsupervised local semantic transformation.
+    - GAN [27、2、20]の最新の種を用いた実験は、「巨人の肩の上に立つ」という戦略が、教師なしのローカルセマンティック変換のタスクに適した戦略であることを示しています。
 
 # ■ 結論
 
@@ -113,6 +119,29 @@
 - As a map that is akin to the class map W (l) in sCBN, the user may choose M(l) in a similar way as in the previous section to spatially control the effect of the blending. Spatial feature blending can also be applied to real images by using the method of manifold projection. The figure 4 is an overview of the feature-blending process in which the goal is to transplant a feature (front facing open mouth) of an image G(z2) to the target image G(z1)(a dog with a closed mouth). All the user has to do in this scenario is to provide a mixing map M that has high intensity on the region that corresponds to the region of the mouth. As we will show in the experiment section, our method is quite robust to the alignment, and the region of mouth in G(z2) and G(z1) needs to be only roughly aligned.
     - sCBNのクラスマップW（l）に似たマップとして、ユーザーは前のセクションと同様の方法でM（l）を選択して、ブレンドの効果を空間的に制御できます。
     - 空間的特徴の混合は、多様体投影の方法を使用することにより、実際の画像に適用することもできます。 図4は、画像G（z2）の特徴（口を開けて正面）をターゲット画像G（z1）（口を閉じた犬）に移植することを目標とする特徴ブレンドプロセスの概要です。 。 このシナリオでユーザーがしなければならないことは、口の領域に対応する領域に高い強度を持つ混合マップMを提供することです。 実験セクションで示すように、この方法はアライメントに対して非常に堅牢であり、G（z2）とG（z1）の口の領域は大まかにアライメントするだけで済みます。
+
+## 4. Application to Real Images
+
+- To edit the semantic information of a real image, we can use the method of manifold projection [44] that looks for the latent variable z such that G(z) = x. After obtaining the inverse of x, we can apply the same set of procedures we described above to either modify the label information of parts of x or blend the features of other images into x or do both. The figure 5 is the flow of real-image editing.
+    - 実画像のセマンティクス情報を編集するために、G（z）= xのような潜在変数zを探す manifold projection [44]を使用できます。 xの逆数を取得した後、xの一部のラベル情報を変更するか、他の画像の機能をxにブレンドするか、またはその両方を行うために、上で説明した同じ手順を適用できます。 図5は、実際の画像編集のフローです。
+
+- We will describe this process in more formality. Let (G,D) be the pair of a trained generator and a discriminator. Given an image x of interest (often a clip from a larger image), the first goal of the manifold projection step is to train the encoder E such that L(G(E(x)), x) is small for some dissimilarity measure L. The choice of L in our method is the cosine distance in the final feature space of the discriminator D. That is, if Ψ(x) is the normalized feature of the image x in the final layer of D,
+    - このプロセスをより形式的に説明します。 （G、D）を訓練されたジェネレーターと判別器のペアとします。 関心のある画像x（多くの場合、より大きな画像からのクリップ）が与えられると、多様体投影ステップの最初の目標は、L（G（E（x））、x）が何らかの非類似性測度に対して小さくなるようにエンコーダーEを訓練することです L.私たちの方法でのLの選択は、弁別器Dの最終的な特徴空間のコサイン距離です。つまり、Ψ（x）がDの最終層の画像xの正規化された特徴である場合、
+
+> 式
+
+- After training the encoder, one can produce the reconstruction of x by applying G to z = E(x). In the reconstructed image, however, semantically independent objects can be disaligned. We, therefore, calibrate z by additionally back- propagating the loss L. After some rounds of calibration, we can feed the obtained z to the modified G to create a transformed reconstruction. Please see the supplementary material for the details of the manifold projection algorithm. The figure 6 shows examples of reconstruction with various class conditions.
+    - エンコーダーをトレーニングした後、Gをz = E（x）に適用することにより、xの再構成を生成できます。 ただし、再構成された画像では、意味的に独立したオブジェクトの位置がずれることがあります。 したがって、損失Lをさらに逆伝播することによってzを較正します。いくつかの較正の後、得られたzを修正されたGに供給して、変換された再構成を作成できます。 多様体投影アルゴリズムの詳細については、補足資料を参照してください。 図6は、さまざまなクラス条件での再構成の例を示しています。
+
+---
+
+- As a final touch to the transformed image, we apply a post-processing step of Poisson blending [34]. Because most trained GAN models do not have the ability to disentangle objects from the background, naively pasting the generated clip to the target image can produce artifacts in the region surrounding the object of interest. We can clean up these artifacts with Poisson blending to the region of interest.
+    - 変換された画像の最後の仕上げとして、ポアソンブレンディングの後処理ステップを適用します[34]。 ほとんどの訓練されたGANモデルには、背景からオブジェクトを解く機能がないため、生成されたクリップをターゲットイメージに単純に貼り付けると、対象のオブジェクトを囲む領域にアーティファクトが生じる可能性があります。 これらのアーティファクトは、関心領域にポアソンブレンディングを使用してクリーンアップできます。
+
+---
+
+- Fig 7 are examples of the application of our methods to real images. The image in the left panel is an application of sCBN to a real image, and the image in the right panel is an application of feature blending to a real image.
+    - 図7は、実際の画像へのメソッドの適用例です。 左パネルの画像は、sCBNを実際の画像に適用したものであり、右パネルの画像は、feature blending を実際の画像に適用したものです。
 
 
 # ■ 実験結果（主張の証明）・議論（手法の良し悪し）・メソッド（実験方法）

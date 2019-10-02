@@ -141,7 +141,8 @@
 ---
 
 - Finally, since the volume of the embedding space is dimensionless, it can grow arbitrarily if the embeddings ei do not train as fast as the encoder parameters. To make sure the encoder commits to an embedding and its output does not grow, we add a commitment loss, the third term in equation 3. Thus, the total training objective becomes:
-
+    - 最後に、埋め込みスペースのボリュームは無次元であるため、埋め込みeiがエンコーダーパラメーターほど速くトレーニングされない場合、ボリュームは任意に大きくなる可能性があります。 エンコーダーが埋め込みをコミットし、その出力が増加しないことを確認するために、コミットメント損失、式3の3番目の項を追加します。したがって、トレーニングの目標は次のようになります。
+    
 
 ### 3.3 Prior
 

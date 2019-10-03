@@ -82,6 +82,60 @@
 
 ## 3. Pixel Recurrent Neural Networks
 
+- In this section we describe the architectural components that compose the PixelRNN. In Sections 3.1 and 3.2, we describe the two types of LSTM layers that use convolutions to compute at once the states along one of the spatial dimensions. In Section 3.3 we describe how to incorporate residual connections to improve the training of a PixelRNN with many LSTM layers. In Section 3.4 we describe the softmax layer that computes the discrete joint distribution of the colors and the masking technique that ensures the proper conditioning scheme. In Section 3.5 we describe the PixelCNN architecture. Finally in Section 3.6 we describe the multi-scale architecture.
+
+### 3.1. Row LSTM
+
+- The Row LSTM is a unidirectional layer that processes the image row by row from top to bottom computing features for a whole row at once; the computation is performed with a one-dimensional convolution. For a pixel xi the layer captures a roughly triangular context above the pixel as shown in Figure 4 (center). The kernel of the one-dimensional convolution has size k × 1 where k ≥ 3; the larger the value of k the broader the context that is captured. The weight sharing in the convolution ensures translation invariance of the computed features along each row.
+    - 行LSTMは、行全体で一度に行ごとに画像機能を処理する単方向レイヤーです。 計算は1次元の畳み込みで実行されます。 ピクセルxiの場合、図4（中央）に示すように、レイヤーはピクセルの上のほぼ三角形のコンテキストをキャプチャします。 1次元畳み込みのカーネルのサイズはk×1で、k≥3です。 kの値が大きいほど、キャプチャされるコンテキストが広くなります。 畳み込みの重み共有により、各行に沿って計算された特徴の変換不変性が保証されます。
+
+---
+
+- The computation proceeds as follows. An LSTM layer has an input-to-state component and a recurrent state-to-state component that together determine the four gates inside the LSTM core. To enhance parallelization in the Row LSTM the input-to-state component is first computed for the entire two-dimensional input map; for this a k × 1 convolution is used to follow the row-wise orientation of the LSTM itself. The convolution is masked to include only the valid context (see Section 3.4) and produces a tensor of size 4h × n × n, representing the four gate vectors for each position in the input map, where h is the number of output feature maps.
+    - 計算は次のように進みます。 LSTMレイヤーには、LSTMコア内の4つのゲートを一緒に決定する、状態から入力への入力コンポーネントと状態から状態への繰り返しコンポーネントがあります。 Row LSTMの並列化を強化するために、最初に2次元入力マップ全体に対して入力から状態へのコンポーネントが計算されます。 このため、k×1の畳み込みを使用して、LSTM自体の行方向を追跡します。 畳み込みは有効なコンテキストのみを含むようにマスクされ（セクション3.4を参照）、サイズ4h×n×nのテンソルを生成します。これは、入力マップの各位置の4つのゲートベクトルを表します。hは出力フィーチャマップの数です。
+
+---
+
+- xxx
+
+### 3.2. Diagonal BiLSTM
+
+- The Diagonal BiLSTM is designed to both parallelize the computation and to capture the entire available context for any image size. Each of the two directions of the layer scans the image in a diagonal fashion starting from a corner at the top and reaching the opposite corner at the bottom. Each step in the computation computes at once the LSTM state along a diagonal in the image. Figure 4 (right) illustrates the computation and the resulting receptive field.
+    - Diagonal BiLSTMは、計算の並列化と、あらゆる画像サイズの利用可能なコンテキスト全体のキャプチャの両方を行うように設計されています。 レイヤーの2つの方向のそれぞれは、上部のコーナーから始まり、下部の反対側のコーナーに到達する斜めの方法で画像をスキャンします。 計算の各ステップは、画像の対角線に沿ってLSTM状態を一度に計算します。 図4（右）は、計算と結果の受容野を示しています。
+
+---
+
+- The diagonal computation proceeds as follows. We first skew the input map into a space that makes it easy to apply convolutions along diagonals. The skewing operation offsets each row of the input map by one position with respect to the previous row, as illustrated in Figure 3; this results in a map of size n×(2n−1). At this point we can compute the input-to-state and state-to-state components of the Diagonal BiLSTM. For each of the two directions, the input-to-state component is simply a 1 × 1 convolution K is that contributes to the four gates in the LSTM core; the op- eration generates a 4h × n × n tensor. The state-to-state recurrent component is then computed with a column-wise convolution Kss that has a kernel of size 2 × 1. The step takes the previous hidden and cell states, combines the contribution of the input-to-state component and produces the next hidden and cell states, as defined in Equation 3. The output feature map is then skewed back into an n × n map by removing the offset positions. This computation is repeated for each of the two directions. Given the two output maps, to prevent the layer from seeing future pixels, the right output map is then shifted down by one row and added to the left output map.
+    - 対角線の計算は次のように進みます。まず、入力マップを空間に傾けて、対角線に沿って畳み込みを簡単に適用できるようにします。スキュー操作は、図3に示すように、入力マップの各行を前の行に対して1つの位置だけオフセットします。これにより、サイズがn×（2n-1）のマップが作成されます。この時点で、対角BiLSTMの入力から状態および状態から状態のコンポーネントを計算できます。 2つの方向のそれぞれについて、状態への入力コンポーネントは、LSTMコアの4つのゲートに寄与する1×1コンボリューションKです。操作は4h×n×nテンソルを生成します。状態から状態への再帰成分は、サイズ2×1のカーネルを持つ列方向の畳み込みKssを使用して計算されます。このステップでは、以前の非表示状態とセル状態を取得し、状態から入力への成分の寄与を結合し、式3で定義されているように、次の非表示の状態とセルの状態を生成します。出力フィーチャマップは、オフセット位置を削除することにより、n×nマップにスキューバックされます。この計算は、2つの方向のそれぞれについて繰り返されます。 2つの出力マップがある場合、レイヤーが将来のピクセルを表示しないように、右の出力マップは1行下にシフトされ、左の出力マップに追加されます。
+
+---
+
+> 図３
+
+- > Figure 3. In the Diagonal BiLSTM, to allow for parallelization along the diagonals, the input map is skewed by offseting each row by one position with respect to the previous row. When the spatial layer is computed left to right and column by column, the output map is shifted back into the original size. The convolution uses a kernel of size 2 × 1.
+    - > 図3.対角線BiLSTMでは、対角線に沿った並列化を可能にするために、各行を前の行に対して1つの位置だけオフセットすることにより、入力マップがスキューされます。 空間レイヤーが左から右、列ごとに計算されると、出力マップは元のサイズに戻ります。 畳み込みでは、サイズ2×1のカーネルを使用します。
+
+---
+
+- Besides reaching the full dependency field, the Diagonal BiLSTM has the additional advantage that it uses a convolutional kernel of size 2 × 1 that processes a minimal amount of information at each step yielding a highly non-linear computation. Kernel sizes larger than 2 × 1 are not particularly useful as they do not broaden the already global receptive field of the Diagonal BiLSTM.
+    - 完全な依存関係フィールドに到達することに加えて、対角BiLSTMには、各ステップで最小量の情報を処理するサイズ2×1の畳み込みカーネルを使用して、高度な非線形計算を行うという追加の利点があります。 2×1より大きいカーネルサイズは、Diagonal BiLSTMの既にグローバルな受容フィールドを広げないため、特に有用ではありません。
+
+## 3.3. Residual Connections
+
+- xxx
+
+## 3.4. Masked Convolution
+
+- xxx
+
+## 3.5. PixelCNN
+
+- xxx
+
+## 3.6. Multi-Scale PixelRNN
+
+- xxx
+
 
 # ■ 実験結果（主張の証明）・議論（手法の良し悪し）・メソッド（実験方法）
 

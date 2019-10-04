@@ -122,20 +122,30 @@
 
 ## 3.3. Residual Connections
 
-- xxx
+- We train PixelRNNs of up to twelve layers of depth. As a means to both increase convergence speed and propagate signals more directly through the network, we deploy residual connections (He et al., 2015) from one LSTM layer to the next. Figure 5 shows a diagram of the residual blocks. The input map to the PixelRNN LSTM layer has 2h features. The input-to-state component reduces the number of features by producing h features per gate. After applying the recurrent layer, the output map is upsampled back to 2h features per position via a 1 × 1 convolution and the input map is added to the output map. This method is related to previous approaches that use gating along the depth of the recurrent network (Kalchbrenner et al., 2015; Zhang et al., 2016), but has the advantage of not requiring additional gates. Apart from residual connections, one can also use learnable skip connections from each layer to the output. In the experiments we evaluate the relative effectiveness of residual and layer-to-output skip connections.
+
 
 ## 3.4. Masked Convolution
 
-- xxx
+- The h features for each input position at every layer in the network are split into three parts, each corresponding to one of the RGB channels. When predicting the R channel for the current pixel xi, only the generated pixels left and above of xi can be used as context. When predicting the G channel, the value of the R channel can also be used as context in addition to the previously generated pixels. Likewise, for the B channel, the values of both the R and G channels can be used. To restrict connections in the network to these dependencies, we apply a mask to the input- to-state convolutions and to other purely convolutional layers in a PixelRNN.
+    - ネットワーク内のすべてのレイヤーの各入力位置のhフィーチャは3つの部分に分割され、それぞれがRGBチャンネルの1つに対応します。 現在のピクセルxiのRチャネルを予測する場合、xiの左と上に生成されたピクセルのみがコンテキストとして使用できます。 Gチャネルを予測するとき、以前に生成されたピクセルに加えて、Rチャネルの値もコンテキストとして使用できます。 同様に、Bチャネルでは、RチャネルとGチャネルの両方の値を使用できます。 ネットワーク内の接続をこれらの依存関係に制限するために、入力から状態への畳み込みおよびPixelRNNの他の純粋な畳み込み層にマスクを適用します。
+
+---
+
+- We use two types of masks that we indicate with mask A and mask B, as shown in Figure 2 (Right). Mask A is applied only to the first convolutional layer in a PixelRNN and restricts the connections to those neighboring pixels and to those colors in the current pixels that have already been predicted. On the other hand, mask B is applied to all the subsequent input-to-state convolutional transitions and relaxes the restrictions of mask A by also allowing the connection from a color to itself. The masks can be easily implemented by zeroing out the corresponding weights in the input-to-state convolutions after each update. Similar masks have also been used in variational autoencoders (Gregor et al., 2014; Germain et al., 2015).
+    - 図2（右）に示すように、マスクAとマスクBで示す2種類のマスクを使用します。 マスクAは、PixelRNNの最初の畳み込み層にのみ適用され、それらの隣接ピクセルと、既に予測されている現在のピクセルの色への接続を制限します。 一方、マスクBは後続のすべての入力から状態への畳み込み遷移に適用され、色からそれ自体への接続も許可することでマスクAの制限を緩和します。 マスクは、各更新後に入力から状態への畳み込みの対応する重みをゼロにすることで簡単に実装できます。 同様のマスクは、変分オートエンコーダーでも使用されています（Gregor et al。、2014; Germain et al。、2015）。
 
 ## 3.5. PixelCNN
 
-- xxx
+- The Row and Diagonal LSTM layers have a potentially unbounded dependency range within their receptive field. This comes with a computational cost as each state needs to be computed sequentially. One simple workaround is to make the receptive field large, but not unbounded. We can use standard convolutional layers to capture a bounded receptive field and compute features for all pixel positions at once. The PixelCNN uses multiple convolutional layers that preserve the spatial resolution; pooling layers are not used. Masks are adopted in the convolutions to avoid seeing the future context; masks have previously also been used in non-convolutional models such as MADE (Germain et al., 2015). Note that the advantage of parallelization of the PixelCNN over the PixelRNN is only available during training or during evaluating of test images. The image generation process is sequential for both kinds of networks, as each sampled pixel needs to be given as input back into the network.
+    - RowおよびDiagonal LSTMレイヤーには、受容フィールド内に潜在的に無制限の依存範囲があります。 これには、各状態を順番に計算する必要があるため、計算コストが伴います。 1つの簡単な回避策は、受容フィールドを大きくすることですが、無制限ではありません。 標準の畳み込み層を使用して、境界のある受容野をキャプチャし、すべてのピクセル位置の特徴を一度に計算できます。 PixelCNNは、空間解像度を保持する複数の畳み込み層を使用します。 プール層は使用されません。 畳み込みではマスクが採用され、将来のコンテキストが表示されないようにします。 マスクは、MADEなどの非畳み込みモデルでも以前に使用されています（Germain et al。、2015）。 PixelRNNに対するPixelCNNの並列化の利点は、トレーニング中またはテスト画像の評価中にのみ利用可能であることに注意してください。 画像生成プロセスは、サンプリングされた各ピクセルをネットワークへの入力として返す必要があるため、両方の種類のネットワークで連続しています。
+
+
 
 ## 3.6. Multi-Scale PixelRNN
 
-- xxx
-
+- The Multi-Scale PixelRNN is composed of an unconditional PixelRNN and one or more conditional PixelRNNs. The unconditional network first generates in the standard way a smaller s×s image that is subsampled from the original image. The conditional network then takes the s × s image as an additional input and generates a larger n × n image, as shown in Figure 2 (Middle).
+    - マルチスケールPixelRNNは、無条件のPixelRNNと1つ以上の条件付きPixelRNNで構成されます。 無条件ネットワークは、最初に、元の画像からサブサンプリングされたより小さなs×s画像を標準的な方法で生成します。 図2（中央）に示すように、条件付きネットワークはs×sイメージを追加入力として受け取り、より大きなn×nイメージを生成します。
 
 # ■ 実験結果（主張の証明）・議論（手法の良し悪し）・メソッド（実験方法）
 

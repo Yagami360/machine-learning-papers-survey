@@ -31,7 +31,7 @@
     - [i-ResNets [Invertible residual networks]](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/14)
     - [Residual Flows for Invertible Generative Modeling](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/15)
 - Autoregressive Models
-    - [[PixelCNN] Pixel Recurrent Neural Networks](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/24)
+    - [[PixelRNN, PixelCNN] Pixel Recurrent Neural Networks](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/24)
 
 ### ◎ アプリケーション系
 

@@ -23,6 +23,7 @@
     - [[WGAN] Wasserstein GAN](https://github.com/Yagami360/MachineLearning-Papers_Survey/blob/master/papers/Wasserstein_GAN/WassersteinGAN.md)
     - [[WGAN-gp] improved Training of Wasserstein GANs](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/25)
     - [SAGAN [Self-Attention Generative Adversarial Networks]](https://github.com/Yagami360/MachineLearning-Papers_Survey/blob/master/papers/Self-Attention_Generative_Adversarial_Networks/SAGAN.md)
+    - [InfoGAN: Interpretable Representation Learning by Information Maximizing Generative Adversarial Nets](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/26)
     - [[PGGAN] Progressive Growing of GANs for Improved Quality, Stability, and Variation](https://github.com/Yagami360/MachineLearning-Papers_Survey/blob/master/papers/Progressive_Growing_of_GANs_for_Improved_Quality_Stability_and_Variation/ProgressiveGAN.md)
     - [GAN-Tree: An Incrementally Learned Hierarchical Generative Framework for Multi-Modal Data Distributions](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/19)
 - Flow-based generative model

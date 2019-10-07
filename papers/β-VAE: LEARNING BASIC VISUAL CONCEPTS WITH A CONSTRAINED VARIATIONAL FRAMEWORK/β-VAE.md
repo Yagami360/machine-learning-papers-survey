@@ -74,31 +74,6 @@
 - Our main contributions are the following: 1) we propose β-VAE, a new unsupervised approach for learning disentangled representations of independent visual data generative factors; 2) we devise a protocol to quantitatively compare the degree of disentanglement learnt by different models; 3) we demonstrate both qualitatively and quantitatively that our β-VAE approach achieves state-of-the-art disentanglement performance compared to various baselines on a variety of complex datasets.
     - 主な貢献は次のとおりです。1）独立した視覚データ生成因子のもつれのない表現を学習するための新しい教師なしアプローチであるβ-VAEを提案します。 2）異なるモデルによって学習されたもつれ解除の程度を定量的に比較するプロトコルを考案します。 3）β-VAEアプローチが、さまざまな複雑なデータセットのさまざまなベースラインと比較して、最先端のディスエンタングルメントパフォーマンスを達成することを定性的および定量的に実証します。
 
----
-
-- xxx
-
----
-
-- Varying β changes the degree of applied learning pressure during training, thus encouraging different learnt representations. β-VAE where β = 1 corresponds to the original VAE formulation of (Kingma & Welling, 2014).
-    - 変化するβは、トレーニング中に適用される学習圧力の度合いを変更し、異なる学習表現を奨励します。 β-VAE（β= 1）は、（Kingma＆Welling、2014）の元のVAE定式化に対応しています。
-
-- We postulate that in order to learn disentangled representations of the conditionally independent data generative factors v, it is important to set β > 1, thus putting a stronger constraint on the latent bottleneck than in the original VAE formulation of Kingma & Welling (2014). 
-    - 条件付き独立データ生成因子vの解きほぐされた表現を学習するには、β> 1を設定することが重要であり、したがって、Kingma＆Welling（2014）の元のVAE定式化よりも潜在的なボトルネックにより強い制約を課すことが重要です。
-
-- These constraints limit the capacity of z, which, combined with the pressure to maximise the log likelihood of the training data x under the model, should encourage the model to learn the most efficient representation of the data.
-    - これらの制約により、zの容量が制限されます。これは、モデルの下でトレーニングデータxの対数尤度を最大化する圧力と組み合わせて、モデルがデータの最も効率的な表現を学習するようにします。
-
-- Since the data x is generated using at least some conditionally independent ground truth factors v, and the DKL term of the β-VAE objective function encourages conditional independence in qφ(z|x), we hypothesise that higher values of β should encourage learning a disentangled representation of v.
-    - データxは、少なくともいくつかの条件付き独立グラウンドトゥルースファクターvを使用して生成され、β-VAE目的関数のDKL項はqφ（z | x）の条件付き独立性を促進するため、βの値が大きいほど、vのもつれのない表現の学習が促進されると仮定します。
-
-- The extra pressures coming from high β values, however, may create a trade-off between reconstruction fidelity and the quality of disentanglement within the learnt latent representations. Disentangled representations emerge when the right balance is found between information preservation (reconstruction cost as regularisation) and latent channel capacity restriction (β > 1). The latter can lead to poorer reconstructions due to the loss of high frequency details when passing through a constrained latent bottleneck. Hence, the log likelihood of the data under the learnt model is a poor metric for evaluating disentangling in β-VAEs. Instead we propose a quantitative metric that directly measures the degree of learnt disentanglement in the latent representation.
-    - しかし、高いβ値から生じる余分な圧力は、再構築の忠実度と学習した潜在表現内のもつれ解除の質とのトレードオフを生み出す可能性があります。情報の保存（正則化としての再構築コスト）と潜在的なチャネル容量制限（β> 1）の間に適切なバランスが見られる場合、解きほぐされた表現が現れます。後者は、制約のある潜在的なボトルネックを通過するときに高周波数の詳細が失われるため、再構築の質が低下する可能性があります。したがって、学習モデルの下でのデータの対数尤度は、β-VAEのもつれを評価するための貧弱なメトリックです。代わりに、潜在表現で学習したもつれ解除の程度を直接測定する定量的メトリックを提案します。
-
----
-
-- Since our proposed hyperparameter β directly affects the degree of learnt disentanglement, we would like to estimate the optimal β for learning a disentangled latent representation directly. However, it is not possible to do so. This is because the optimal β will depend on the value of ε in Eq 2. Different datasets and different model architectures will require different optimal values of ε. However, when optimising β in Eq 4, we are indirectly also optimising ε for the best disentanglement (see Sec.A.7 for details), and while we can not learn the optimal value of β directly, we can instead estimate it using either our proposed disentanglement metric (see Sec 3) or through visual inspection heuristics.
-    - 提案されたハイパーパラメータβは、学習したもつれ解除の程度に直接影響するため、もつれ解除された潜在表現を直接学習するための最適なβを推定したいと思います。 ただし、そうすることはできません。 これは、最適なβが式2のεの値に依存するためです。異なるデータセットと異なるモデルアーキテクチャでは、εの異なる最適値が必要になります。 ただし、式4でβを最適化する場合、間接的にεを最適化して最適化を解除し（詳細はセクションA.7を参照）、βの最適値を直接学習することはできませんが、代わりに次のいずれかを使用して推定できます 提案されたもつれ解除メトリック（セクション3を参照）または視覚的検査ヒューリスティックを使用。
 
 # ■ 結論
 
@@ -131,6 +106,78 @@
 - This can be achieved if we set the prior to be an isotropic unit Gaussian (p(z) = N (0, I )), hence arriving at the constrained optimisation problem in Eq 2, where ε specifies the strength of the applied constraint.
     - これは、事前を等方性単位ガウス（p（z）= N（0、I））に設定すると達成できます。したがって、式2の制約付き最適化問題に到達します。εは適用された制約の強度を指定します。
 
+---
+
+- xxx
+
+---
+
+- Varying β changes the degree of applied learning pressure during training, thus encouraging different learnt representations. β-VAE where β = 1 corresponds to the original VAE formulation of (Kingma & Welling, 2014).
+    - 変化するβは、トレーニング中に適用される学習圧力の度合いを変更し、異なる学習表現を奨励します。 β-VAE（β= 1）は、（Kingma＆Welling、2014）の元のVAE定式化に対応しています。
+
+- We postulate that in order to learn disentangled representations of the conditionally independent data generative factors v, it is important to set β > 1, thus putting a stronger constraint on the latent bottleneck than in the original VAE formulation of Kingma & Welling (2014). 
+    - 条件付き独立データ生成因子vの解きほぐされた表現を学習するには、β> 1を設定することが重要であり、したがって、Kingma＆Welling（2014）の元のVAE定式化よりも潜在的なボトルネックにより強い制約を課すことが重要です。
+
+- These constraints limit the capacity of z, which, combined with the pressure to maximise the log likelihood of the training data x under the model, should encourage the model to learn the most efficient representation of the data.
+    - これらの制約により、zの容量が制限されます。これは、モデルの下でトレーニングデータxの対数尤度を最大化する圧力と組み合わせて、モデルがデータの最も効率的な表現を学習するようにします。
+
+- Since the data x is generated using at least some conditionally independent ground truth factors v, and the DKL term of the β-VAE objective function encourages conditional independence in qφ(z|x), we hypothesise that higher values of β should encourage learning a disentangled representation of v.
+    - データxは、少なくともいくつかの条件付き独立グラウンドトゥルースファクターvを使用して生成され、β-VAE目的関数のDKL項はqφ（z | x）の条件付き独立性を促進するため、βの値が大きいほど、vのもつれのない表現の学習が促進されると仮定します。
+
+- The extra pressures coming from high β values, however, may create a trade-off between reconstruction fidelity and the quality of disentanglement within the learnt latent representations. Disentangled representations emerge when the right balance is found between information preservation (reconstruction cost as regularisation) and latent channel capacity restriction (β > 1). The latter can lead to poorer reconstructions due to the loss of high frequency details when passing through a constrained latent bottleneck. Hence, the log likelihood of the data under the learnt model is a poor metric for evaluating disentangling in β-VAEs. Instead we propose a quantitative metric that directly measures the degree of learnt disentanglement in the latent representation.
+    - しかし、高いβ値から生じる余分な圧力は、再構築の忠実度と学習した潜在表現内のもつれ解除の質とのトレードオフを生み出す可能性があります。情報の保存（正則化としての再構築コスト）と潜在的なチャネル容量制限（β> 1）の間に適切なバランスが見られる場合、解きほぐされた表現が現れます。後者は、制約のある潜在的なボトルネックを通過するときに高周波数の詳細が失われるため、再構築の質が低下する可能性があります。したがって、学習モデルの下でのデータの対数尤度は、β-VAEのもつれを評価するための貧弱なメトリックです。代わりに、潜在表現で学習したもつれ解除の程度を直接測定する定量的メトリックを提案します。
+
+---
+
+- Since our proposed hyperparameter β directly affects the degree of learnt disentanglement, we would like to estimate the optimal β for learning a disentangled latent representation directly. However, it is not possible to do so. This is because the optimal β will depend on the value of ε in Eq 2. Different datasets and different model architectures will require different optimal values of ε. However, when optimising β in Eq 4, we are indirectly also optimising ε for the best disentanglement (see Sec.A.7 for details), and while we can not learn the optimal value of β directly, we can instead estimate it using either our proposed disentanglement metric (see Sec 3) or through visual inspection heuristics.
+    - 提案されたハイパーパラメータβは、学習したもつれ解除の程度に直接影響するため、もつれ解除された潜在表現を直接学習するための最適なβを推定したいと思います。 ただし、そうすることはできません。 これは、最適なβが式2のεの値に依存するためです。異なるデータセットと異なるモデルアーキテクチャでは、εの異なる最適値が必要になります。 ただし、式4でβを最適化する場合、間接的にεを最適化して最適化を解除し（詳細はセクションA.7を参照）、βの最適値を直接学習することはできませんが、代わりに次のいずれかを使用して推定できます 提案されたもつれ解除メトリック（セクション3を参照）または視覚的検査ヒューリスティックを使用。
+
+
+## 3 DISENTANGLEMENT METRIC
+
+- It is important to be able to quantify the level of disentanglement achieved by different models. Designing a metric for this, however, is not straightforward. We begin by defining the properties that we expect a disentangled representation to have. Then we describe our proposed solution for quantifying the presence of such properties in a learnt representation.
+    - 異なるモデルによって達成される disentanglement のレベルを定量化できることが重要です。 ただし、このためのメトリックの設計は簡単ではありません。 disentanglement された表現が持つと期待される性質を定義することから始めます。 次に、学習した表現でそのような性質の存在を定量化するための提案されたソリューションを説明します。
+
+---
+
+- As stated above, we assume that the data is generated by a ground truth simulation process which uses a number of data generative factors, some of which are conditionally independent, and we also assume that they are interpretable.
+    - 上記のように、データは多くのデータ生成要因を使用するグラウンドトゥルースシミュレーションプロセスによって生成されると仮定します。そのいくつかは条件付きで独立しており、それらは解釈可能でもあります。
+
+- For example, the simulator might sample independent factors corresponding to object shape, colour and size to generate an image of a small green apple. Because of the independence property, the simulator can also generate small red apples or big green apples.
+    - たとえば、シミュレータは、オブジェクトの形状、色、サイズに対応する独立した要因をサンプリングして、小さな青リンゴの画像を生成します。 独立性のため、シミュレータは小さな赤いリンゴまたは大きな緑のリンゴも生成できます。
+
+- A representation of the data that is disentangled with respect to these generative factors, i.e. which encodes them in separate latents, would enable robust classification even using very simple linear classifiers (hence providing interpretability). For example, a classifier that learns a decision boundary that relies on object shape would perform as well when other data generative factors, such as size or colour, are varied.
+    - **これらの生成因子に関して disentanglement されたデータの表現、つまりそれらを別々の潜在要素にエンコードすることにより、非常に単純な線形分類器を使用しても堅牢な分類が可能になります（したがって、解釈可能性が提供されます） たとえば、オブジェクトの形状に依存する決定境界を学習する分類子は、サイズや色などの他のデータ生成要因が変化する場合にも機能します。**
+
+---
+
+- Note that a representation consisting of independent latents is not necessarily disentangled, according to our desiderata. Independence can readily be achieved by a variety of approaches (such as PCA or ICA) that learn to project the data onto independent bases. Representations learnt by such approaches do not in general align with the data generative factors and hence may lack interpretability. For this reason, a simple cross-correlation calculation between the inferred latents would not suffice as a disentanglement metric.
+    - 独立した潜在的要素からなる表現は、必ずしも私たちの要求に従って解くとは限らないことに注意してください。 独立性は、データを独立したベースに投影することを学習するさまざまなアプローチ（PCAやICAなど）によって容易に実現できます。 そのようなアプローチによって学習された表現は、一般にデータ生成因子と一致しないため、解釈性に欠ける場合があります。 このため、推定された潜在物間の単純な相互相関計算は、もつれ解除のメトリックとしては十分ではありません。
+
+---
+
+- Our proposed disentangling metric, therefore, measures both the independence and interpretability (due to the use of a simple classifier) of the inferred latents.
+    - したがって、提案されたもつれを解くメトリックは、推定された潜在の独立性と解釈可能性（単純な分類子の使用による）の両方を測定します。
+
+- To apply our metric, we run inference on a number of images that are generated by fixing the value of one data generative factor while randomly sampling all others.
+    - メトリックを適用するために、1つのデータ生成要因の値を固定し、他のすべての要因をランダムにサンプリングすることにより生成される多数の画像に対して推論を実行します。
+
+- If the independence and interpretability properties hold for the inferred representations, there will be less variance in the inferred latents that correspond to the fixed generative factor.
+    - 独立性と解釈可能性のプロパティが推論された表現に当てはまる場合、固定された生成因子に対応する推論された潜在要素の分散が少なくなります。
+
+- We use a low capacity linear classifier to identify this factor and report the accuracy value as the final disentanglement metric score. Smaller variance in the latents corresponding to the target factor will make the job of this classifier easier, resulting in a higher score under the metric. See Fig 5 for a representation of the full process.
+    - 低容量の線形分類器を使用してこの要素を特定し、精度値を最終的なもつれ解除メトリックスコアとして報告します。 ターゲットファクターに対応する潜在性の分散が小さいと、この分類子の仕事が簡単になり、メトリックの下でより高いスコアが得られます。 完全なプロセスの図については、図5を参照してください。
+
+---
+
+- More formally, we start from a dataset D = {X, V, W } as described in Sec 2, assumed to contain a balanced distribution of ground truth factors (v, w), where images data points are obtained using a ground truth simulator process x ∼ Sim(v, w). We also assume we are given labels identifying a subset of the independent data generative factors v ∈ V for at least some instances. We then construct a batch of B vectors z_{diff}^{b}, to be fed as inputs to a linear classifier as follows:
+    - より正式には、セクション2で説明したデータセットD = {X、V、W}から開始します。グラウンドトゥルースファクター（v、w）のバランスの取れた分布を含むと仮定します。 プロセスx〜Sim（v、w）。 また、少なくともいくつかのインスタンスについて、独立データ生成因子v∈Vのサブセットを識別するラベルが与えられていると仮定します。 次に、Bベクトルz_ {diff} ^ {b}のバッチを作成し、次のように線形分類器への入力として供給します。
+
+> アルゴリズム
+
+- The classifier’s goal is to predict the index y of the generative factor that was kept fixed for a given zbdiff. The accuracy of this classifier over multiple batches is used as our disentanglement metric score. We choose a linear classifier with low VC-dimension in order to ensure it has no capacity to perform nonlinear disentangling by itself. We take differences of two inferred latent vectors to reduce the variance in the inputs to the classifier, and to reduce the conditional dependence on the inputs x.
+    - 分類子の目標は、特定のzbdiffに対して固定された生成因子のインデックスyを予測することです。 複数のバッチにわたるこの分類子の精度は、解きほぐしメトリックスコアとして使用されます。 VC次元が低い線形分類器を選択して、非線形のもつれを解く能力を持たないようにします。 2つの推定された潜在ベクトルの差を利用して、分類器への入力の分散を減らし、入力xへの条件依存を減らします。
+    
 
 # ■ 実験結果（主張の証明）・議論（手法の良し悪し）・メソッド（実験方法）
 

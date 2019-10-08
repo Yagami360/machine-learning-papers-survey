@@ -53,7 +53,7 @@
     - Perceptual Losses for Real-Time Style Transfer and Super-Resolution
 - Inpainting
     - [Pluralistic Image Completion](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/6)
-    - Boundless: Generative Adversarial Networks for Image Extension
+    - [Boundless: Generative Adversarial Networks for Image Extension](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/28)
 - 顔特化系（Face Swap, etc）
     - [[GANimation] GANimation: Anatomically-aware Facial Animation from a Single Image](https://github.com/Yagami360/MachineLearning-Papers_Survey/blob/master/papers/GANimation_Anatomically-aware_FacialAnimation_from_a_Single_Image/GANimation.md)
     - [FaceGAN] Semi-supervised Adversarial Learning to Generate Photorealistic Face Images of New Identities from 3D Morphable Model

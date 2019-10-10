@@ -52,7 +52,7 @@
 - Style Transfer
     - Perceptual Losses for Real-Time Style Transfer and Super-Resolution
 - Inpainting
-    - [Deepfillv2] Free-Form Image Inpainting with Gated Convolution
+    - [[Deepfillv2] Free-Form Image Inpainting with Gated Convolution](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/29)
     - [Pluralistic Image Completion](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/6)
     - [Boundless: Generative Adversarial Networks for Image Extension](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/28)
 - 顔特化系（Face Swap, etc）

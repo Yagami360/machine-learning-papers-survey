@@ -61,6 +61,7 @@
     - [On Face Segmentation, Face Swapping, and Face Perception](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/3)
     - [Face Swapping: Realistic Image Synthesis Based on Facial Landmarks Alignment](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/4)
 - Virtual Try-On
+    - [VITON: An Image-based Virtual Try-on Network](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/30)
     - [[CP-VTON] Toward Characteristic-Preserving Image-based Virtual Try-On Network](https://github.com/Yagami360/MachineLearning-Papers_Survey/blob/master/papers/Toward_Characteristic-Preserving_Image-based_Virtual_Try-On_Network/cp-vton.md)
     - [[MG-VTON] Towards_Multi-pose_Guided_Virtual_Try-on_Network](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/5)
     - [[WUTON] End-to-End Learning of Geometric Deformations of Feature Maps for Virtual Try-On](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/12)

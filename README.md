@@ -67,6 +67,7 @@
     - [[WUTON] End-to-End Learning of Geometric Deformations of Feature Maps for Virtual Try-On](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/12)
     - [Generating High-Resolution Fashion Model Images Wearing Custom Outfits](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/16)
     - [Poly-GAN: Multi-Conditioned GAN for Fashion Synthesis](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/17)
+    - Virtually Trying on New Clothing with Arbitrary Poses
 - text-to-image
     - [[StackGAN] Text to Photo-realistic Image Synthesis with Stacked Generative Adversarial Network](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/9)
 - 触覚・知覚系

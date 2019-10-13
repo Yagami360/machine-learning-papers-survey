@@ -1,6 +1,6 @@
 # ■ 論文
-- 論文タイトル："xxx"
-- 論文リンク：
+- 論文タイトル："Virtually Trying on New Clothing with Arbitrary Poses"
+- 論文リンク：https://liqiangnie.github.io/paper/Virtually%20Trying%20on%20New%20Clothing%20with%20Arbitrary
 - 論文投稿日付：
 - 被引用数（記事作成時点）：xxx 件
 - 著者（組織）：
@@ -120,11 +120,35 @@
 
 - xxx
 
-- To accomplish the above generator, we introduce a human feature encoder Fhuman, a clothing feature encoder Fclothing and a unified try-on image decoder Fdec to our generator G. In particular, the human feature encoder Fhuman works on embedding the conditional person image IA and the desired pose PB and the predicted body shape mask SˆB, while the clothing feature encoder Fclothing is designed to extract the key features of the warped clothing item Tθ (c).
+- To accomplish the above generator, we introduce a human feature encoder Fhuman, a clothing feature encoder Fclothing and a unified try-on image decoder Fdec to our generator G.
+
+- In particular, the human feature encoder Fhuman works on embedding the conditional person image IA and the desired pose PB and the predicted body shape mask SˆB, while the clothing feature encoder Fclothing is designed to extract the key features of the warped clothing item Tθ (c).
+    - 特に、ヒューマンフィーチャエンコーダーFhumanは条件付き人物画像IAと望ましいポーズPBおよび予測された身体形状マスクSˆBの埋め込みに取り組んでいますが、衣服フィーチャエンコーダーFclothingは反った衣服アイテムTの主要な特徴を抽出するように設計されています。
 
 - Then the network seamlessly fuses the human features and clothing features by the dilation-based bottleneck, which has been proved to be effective in image inpainting [37]. Thereafter, the fused features would be decoded to the target person image Iˆ by the try-on image decoder B Fdec .
+    - 特に、ヒューマンフィーチャエンコーダーFhumanは条件付き人物画像IAと望ましいポーズPBおよび予測された身体形状マスクSˆBの埋め込みに取り組んでいますが、衣服フィーチャエンコーダーFclothingは反った衣服アイテムTの主要な特徴を抽出するように設計されています。
 
-- For each encoder, we adopt the UNet network [11] with skip connections. In a sense, the skip connections between Fhuman and Fdec serve to propagate the human appearance and the desired pose, while those between Fclothinд and Fdec work on transferring the features of desired clothing item.
+- For each encoder, we adopt the UNet network [11] with skip connections. In a sense, the skip connections between Fhuman and Fdec serve to propagate the human appearance and the desired pose, while those between Fclothing and Fdec work on transferring the features of desired clothing item.
+    - 各エンコーダーには、スキップ接続のあるUNetネットワーク[11]を採用しています。 ある意味で、FhumanとFdecの間のスキップ接続は、人間の外観と目的のポーズを伝播するのに役立ち、FclothingとFdecの間の目的は、目的の衣料品の特徴を転送するために働きます。
+
+---
+
+- In order to push the try-on network to pay more attention to the (target) try-on area and achieve the natural alignment of the warped clothing item, we adopt the attention mechanism, which has shown great success in various computer vision tasks [4, 18, 19]. In a sense, the attention mechanism serves to help the generator to focus more on the region that the warped clothing item should be aligned.
+    - 試着ネットワークを押して（ターゲット）試着エリアにより注意を払い、ゆがんだ衣服の自然な配置を実現するために、さまざまなコンピュータービジョンタスクで大きな成功を収めている注意メカニズムを採用しています[ 4、18、19]。 ある意味では、アテンションメカニズムは、ジェネレーターが、ゆがんだ衣服が位置合わせされるべき領域により多く焦点を当てるのに役立ちます。
+
+---
+
+- Towards this end, we introduce a transformation layer LI that aims to synthesize a rough target person image I ̃B ∈ R3×H ×W as the template, and an attention layer LA for generating the attention mask A ∈ R1×H×W with the same shape of the person image. Accordingly, we can generate the target person image IˆB as follows:
+
+
+---
+
+- Inspired by [40], we expect the generator G to be capable of not only synthesizing a realistic try-on image conditioned on the given person image, the new clothing item, the desired pose and the predicted body shape mask, but also rendering back to the original person image conditioned on original constraints (i.e., the original pose, original clothing item and original body shape mask).
+    - [40]に触発されて、ジェネレーターGは、与えられた人物画像、新しい衣服アイテム、希望のポーズ、予測された身体形状マスクを条件とする現実的な試着画像を合成できるだけでなく、 元の制約に条件付けられた元の人物の画像にも（つまり、元のポーズ、元の衣服、元の体型マスク）。
+
+- Accordingly, given the generated try-on image IˆB, the original pose PA and the original clothing item cˆ, which can be directly extracted from IA, the generator G should be able to synthesize a original person image IˆA. It is worth noting that the rendered back person image IˆA and the original person image IA should keep the same data distribution. As a result, to regularize the bidirectional generation consistency, we have:
+    - したがって、生成された試着画像IˆB、元のポーズPA、およびIAから直接抽出できる元の衣料品cˆが与えられた場合、ジェネレータGは元の人物画像IˆAを合成できるはずです。 レンダリングされた背中の人の画像IˆAと元の人の画像IAは、同じデータ分布を維持する必要があることに注意してください。 その結果、双方向の生成の一貫性を正規化するために、次のことができます。
+
 
 # ■ 実験結果（主張の証明）・議論（手法の良し悪し）・メソッド（実験方法）
 

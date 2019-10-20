@@ -64,7 +64,39 @@
 
 ### 3.1. Feature extraction
 
-- xxx
+- The first stage of the pipeline is feature extraction, for which we use a standard CNN architecture. A CNN without fully connected layers takes an input image and produces a feature map f ∈ Rh×w×d, which can be interpreted as a h × w dense spatial grid of d-dimensional local descriptors. A similar interpretation has been used previously in instance retrieval [4, 6, 7, 21] demonstrating high discriminative power of CNN-based descriptors. Thus, for feature extraction we use the VGG-16 network [48], cropped at the pool4 layer (before the ReLU unit), followed by perfeature L2-normalization. We use a pre-trained model, originally trained on ImageNet [13] for the task of image classification. As shown in Fig. 2, the feature extraction network is duplicated and arranged in a siamese configuration such that the two input images are passed through two identical networks which share parameters.
+    - パイプラインの最初の段階は、標準CNNアーキテクチャを使用する機能抽出です。 完全に接続されたレイヤーのないCNNは、入力画像を取得し、特徴マップf∈Rh×w×dを生成します。これは、d次元ローカル記述子のh×w密空間グリッドとして解釈できます。 同様の解釈が以前にインスタンス検索で使用されており[4、6、7、21]、CNNベースの記述子の高い識別力を示しています。 したがって、特徴の抽出には、pool4層（ReLUユニットの前）でトリミングされたVGG-16ネットワーク[48]を使用し、その後に特徴L2正規化が続きます。 もともと画像分類のタスクのためにImageNet [13]でトレーニングされた事前トレーニングモデルを使用します。 図2に示すように、特徴抽出ネットワークは、2つの入力画像がパラメーターを共有する2つの同一のネットワークを通過するように、シャム構成で複製および配置されます。
+
+### 3.2. Matching network
+
+- The image features produced by the feature extraction networks should be combined into a single tensor as input to the regressor network to estimate the geometric transformation. We first describe the classical approach for generating tentative correspondences, and then present our matching layer which mimics this process.
+    - 特徴抽出ネットワークによって生成された画像特徴は、リグレッサーネットワークへの入力として単一のテンソルに結合して、幾何学的変換を推定する必要があります。 最初に、暫定的な対応を生成するための古典的なアプローチを説明し、次にこのプロセスを模倣するマッチングレイヤーを示します。
+
+---
+
+Tentative matches in classical geometry estimation.
+
+- Classical methods start by computing similarities between all pairs of descriptors across the two images. From this point on, the original descriptors are discarded as all the necessary information for geometry estimation is contained in the pairwise descriptor similarities and their spatial locations. Secondly, the pairs are pruned by either thresholding the similarity values, or, more commonly, only keeping the matches which involve the nearest (most similar) neighbors. Furthermore, the second nearest neighbor test [40] prunes the matches further by requiring that the match strength is significantly stronger than the second best match involving the same descriptor, which is very effective at discarding ambiguous matches.
+    - 古典的な方法は、2つの画像にわたる記述子のすべてのペア間の類似性を計算することから始まります。 この時点から、ジオメトリ推定に必要なすべての情報がペアワイズ記述子の類似性とそれらの空間位置に含まれているため、元の記述子は破棄されます。 次に、類似値をしきい値処理するか、より一般的には、最も近い（最も類似した）近隣を含む一致のみを保持することによって、ペアを枝刈りします。 さらに、2番目の最近傍テスト[40]は、一致強度が同じ記述子を含む2番目に良い一致よりもかなり強いことを要求することにより、一致をさらに切り取ります。
+
+---
+
+Matching layer. 
+
+- Our matching layer applies a similar procedure. Analogously to the classical approach, only descriptor similarities and their spatial locations should be considered for geometry estimation, and not the original descriptors themselves.
+    - マッチングレイヤーは同様の手順を適用します。 従来のアプローチと同様に、ジオメトリの推定では記述子の類似性とその空間位置のみを考慮し、元の記述子自体は考慮しないでください。
+
+---
+
+- To achieve this, we propose to use a correlation layer followed by normalization. Firstly, all pairs of similarities between descriptors are computed in the correlation layer. Secondly, similarity scores are processed and normalized such that ambiguous matches are strongly down-weighted.
+    - これを実現するために、正規化が後に続く「correlation layer」の使用を提案します。 まず、記述子間の類似性のすべてのペアが correlation layer で計算されます。 第二に、あいまいな一致が強くダウンウェイトされるように、類似性スコアが処理および正規化されます。
+
+---
+
+- As is done in the classical methods for tentative correspondence estimation, it is important to postprocess the pairwise similarity scores to remove ambiguous matches. To this end, we apply a channel-wise normalization of the correlation map at each spatial location to produce the final tentative correspondence map fAB. The normalization is performed by ReLU, to zero out negative correlations, followed by L2-normalization, which has two desirable effects. First, let us consider the case when descriptor fB correlates well with only a single feature in fA. In this case, the normalization will amplify the score of the match, akin to the nearest neighbor matching in classical geometry estimation. Second, in the case of the descriptor fB matching multiple features in fA due to the existence of clutter or repetitive patterns, matching scores will be down-weighted similarly to the second nearest neighbor test [40]. However, note that both the correlation and the normalization operations are differentiable with respect to the input descriptors, which facilitates backpropagation thus enabling end-to-end learning.
+    - 暫定的な対応推定の古典的な方法で行われているように、あいまいな一致を除去するために、ペアワイズ類似性スコアを後処理することが重要です。このため、各空間位置で相関マップのチャネルごとの正規化を適用して、最終的な暫定的な対応マップfABを作成します。正規化は、負の相関をゼロにするためにReLUによって実行され、L2正規化が続きます。これには2つの望ましい効果があります。まず、記述子fBがfAの単一の特徴とのみ相関する場合を考えてみましょう。この場合、正規化により、一致のスコアが増幅されます。これは、従来のジオメトリ推定での最近傍一致に似ています。第二に、乱雑または反復パターンの存在によりfAの複数の特徴に一致する記述子fBの場合、一致スコアは2番目の最近傍検定と同様に重みが低くなります[40]。ただし、相関操作と正規化操作の両方が入力記述子に関して微分可能であることに注意してください。これにより、逆伝播が容易になり、エンドツーエンドの学習が可能になります。
+
+    
 
 # ■ 実験結果（主張の証明）・議論（手法の良し悪し）・メソッド（実験方法）
 

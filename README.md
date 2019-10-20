@@ -11,7 +11,7 @@
     - [[Neural-ODE] Neural Ordinary Differential Equations](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/21)
     - Kervolutional Neural Networks
 - CNN
-    - Convolutional neural network architecture for geometric matching
+    - [Convolutional neural network architecture for geometric matching](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/36)
 - GNN
     - Semi-supervised Learning with Graph Learning-Convolutional Networks
 - VAE

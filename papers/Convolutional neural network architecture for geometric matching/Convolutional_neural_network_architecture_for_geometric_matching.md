@@ -98,6 +98,16 @@ Matching layer.
 
     
 
+#### 4.1. Loss function
+
+- xxx
+
+---
+
+- Furthermore, the loss should be independent of the parametrization of the transformation and thus should not directly operate on the parameter values themselves. We address all these design constraints by measuring loss on an imaginary grid of points which is being deformed by the transformation. Namely, we construct a grid of points in image A, transform it using the ground truth and neural network estimated transformations TθGT and Tθˆ with parameters θGT and θˆ, respectively, and measure the discrepancy between the two transformed grids by summing the squared distances between the corresponding grid points:
+    - さらに、損失は変換のパラメーター化に依存しないため、パラメーター値自体に直接作用することはありません。 これらすべての設計上の制約に対処するには、変換によって変形されている点の仮想グリッドで損失を測定します。 つまり、画像Aに点のグリッドを構築し、グラウンドトゥルースおよびニューラルネットワーク推定変換TθGTおよびTθˆをそれぞれパラメーターθGTおよびθˆで使用して変換し、2つの変換されたグリッド間の不一致を測定します。 対応するグリッドポイント：
+
+
 # ■ 実験結果（主張の証明）・議論（手法の良し悪し）・メソッド（実験方法）
 
 ## x. 論文の項目名

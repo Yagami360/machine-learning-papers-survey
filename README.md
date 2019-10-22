@@ -7,27 +7,30 @@
 ### ◎ 基礎系
 
 - Deep Neural Network
-    - [[ResNet] Deep Residual Learning for Image Recognition](https://github.com/Yagami360/MachineLearning-Papers_Survey/blob/master/papers/Deep_Residual_Learning_for_Image_Recognition/ResNet.md)
+    - [[ResNet] Deep Residual Learning for Image Recognition](https://github.com/Yagami360/My_NoteBook/blob/master/%E6%83%85%E5%A0%B1%E5%B7%A5%E5%AD%A6/%E6%83%85%E5%A0%B1%E5%B7%A5%E5%AD%A6_%E6%A9%9F%E6%A2%B0%E5%AD%A6%E7%BF%92_NN_Note.md#ResNet%EF%BC%88%E6%AE%8B%E5%B7%AE%E3%83%8D%E3%83%83%E3%83%88%E3%83%AF%E3%83%BC%E3%82%AF%EF%BC%89)
     - [[Neural-ODE] Neural Ordinary Differential Equations](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/21)
     - Kervolutional Neural Networks
 - CNN
     - [Convolutional neural network architecture for geometric matching](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/36)
 - GNN
+    - [Convolutional Neural Networks on Graphs with Fast Localized Spectral Filtering](https://github.com/Yagami360/My_NoteBook/blob/master/%E6%83%85%E5%A0%B1%E5%B7%A5%E5%AD%A6/%E6%83%85%E5%A0%B1%E5%B7%A5%E5%AD%A6_%E6%A9%9F%E6%A2%B0%E5%AD%A6%E7%BF%92_NN_Note.md#Convolutional_Neural_Networks_on_Graphs_with_Fast_Localized_Spectral_Filtering)
+    - [Semi-Supervised Classification with Graph Convolutional Networks](https://github.com/Yagami360/My_NoteBook/blob/master/%E6%83%85%E5%A0%B1%E5%B7%A5%E5%AD%A6/%E6%83%85%E5%A0%B1%E5%B7%A5%E5%AD%A6_%E6%A9%9F%E6%A2%B0%E5%AD%A6%E7%BF%92_NN_Note.md#Semi-Supervised_Classification_with_Graph_Convolutional_Networks)
+    - [[R-GCN] Relational Graph Convolutional Network](https://github.com/Yagami360/My_NoteBook/blob/master/%E6%83%85%E5%A0%B1%E5%B7%A5%E5%AD%A6/%E6%83%85%E5%A0%B1%E5%B7%A5%E5%AD%A6_%E6%A9%9F%E6%A2%B0%E5%AD%A6%E7%BF%92_NN_Note.md#R-GCN%EF%BC%88%E3%82%B0%E3%83%A9%E3%83%95%E3%83%95%E3%83%BC%E3%83%AA%E3%82%A8%E5%A4%89%E6%8F%9B%E3%82%92%E7%94%A8%E3%81%84%E3%81%AA%E3%81%84%E3%82%B0%E3%83%A9%E3%83%95%E7%95%B3%E3%81%BF%E8%BE%BC%E3%81%BF%EF%BC%89)
     - Semi-supervised Learning with Graph Learning-Convolutional Networks
 - VAE
-    - [[VAE] Auto-Encoding Variational Bayes](https://github.com/Yagami360/MachineLearning-Papers_Survey/blob/master/papers/Auto-Encoding_Variational_Bayes/VAE.md)
+    - [[VAE] Auto-Encoding Variational Bayes](https://github.com/Yagami360/My_NoteBook/blob/master/%E6%83%85%E5%A0%B1%E5%B7%A5%E5%AD%A6/%E6%83%85%E5%A0%B1%E5%B7%A5%E5%AD%A6_%E6%A9%9F%E6%A2%B0%E5%AD%A6%E7%BF%92_%E7%94%9F%E6%88%90%E3%83%A2%E3%83%87%E3%83%AB.md#VAE)
     - [CVAE] Learning Structured Output Representation using Deep Conditional Generative Models
     - [[VQ-VAE] Neural Discrete Representation Learning](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/23)
     - [β-VAE: LEARNING BASIC VISUAL CONCEPTS WITH A CONSTRAINED VARIATIONAL FRAMEWORK](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/27)
 - GANs
-    - [[GAN] Generative Adversarial Networks](https://github.com/Yagami360/MachineLearning-Papers_Survey/blob/master/papers/Generative_Adversarial_Networks/GenerativeAdversarialNetworks.md)
-    - [[DCGAN] Unsupervised Representation Learning with Deep Convolutional Generative Adversarial Networks](https://github.com/Yagami360/MachineLearning-Papers_Survey/blob/master/papers/Unsupervised_Representation_Learning_with_Deep_Convolutional_Generative_Adversarial_Networks/DeepConvolutionalGAN.md)
-    - [[cGAN] Conditional Generative Adversarial Nets](https://github.com/Yagami360/MachineLearning-Papers_Survey/blob/master/papers/Conditional_Generative_Adversarial_Nets/ConditionalGAN.md)
-    - [[WGAN] Wasserstein GAN](https://github.com/Yagami360/MachineLearning-Papers_Survey/blob/master/papers/Wasserstein_GAN/WassersteinGAN.md)
+    - [[GAN] Generative Adversarial Networks](https://github.com/Yagami360/My_NoteBook/blob/master/%E6%83%85%E5%A0%B1%E5%B7%A5%E5%AD%A6/%E6%83%85%E5%A0%B1%E5%B7%A5%E5%AD%A6_%E6%A9%9F%E6%A2%B0%E5%AD%A6%E7%BF%92_%E7%94%9F%E6%88%90%E3%83%A2%E3%83%87%E3%83%AB.md#GAN)
+    - [[DCGAN] Unsupervised Representation Learning with Deep Convolutional Generative Adversarial Networks](https://github.com/Yagami360/My_NoteBook/blob/master/%E6%83%85%E5%A0%B1%E5%B7%A5%E5%AD%A6/%E6%83%85%E5%A0%B1%E5%B7%A5%E5%AD%A6_%E6%A9%9F%E6%A2%B0%E5%AD%A6%E7%BF%92_%E7%94%9F%E6%88%90%E3%83%A2%E3%83%87%E3%83%AB.md#DCGAN)
+    - [[cGAN] Conditional Generative Adversarial Nets](https://github.com/Yagami360/My_NoteBook/blob/master/%E6%83%85%E5%A0%B1%E5%B7%A5%E5%AD%A6/%E6%83%85%E5%A0%B1%E5%B7%A5%E5%AD%A6_%E6%A9%9F%E6%A2%B0%E5%AD%A6%E7%BF%92_%E7%94%9F%E6%88%90%E3%83%A2%E3%83%87%E3%83%AB.md#ConditionalGAN%EF%BC%88cGAN%EF%BC%89)
+    - [[WGAN] Wasserstein GAN](https://github.com/Yagami360/My_NoteBook/blob/master/%E6%83%85%E5%A0%B1%E5%B7%A5%E5%AD%A6/%E6%83%85%E5%A0%B1%E5%B7%A5%E5%AD%A6_%E6%A9%9F%E6%A2%B0%E5%AD%A6%E7%BF%92_%E7%94%9F%E6%88%90%E3%83%A2%E3%83%87%E3%83%AB.md#WGAN)
     - [[WGAN-gp] improved Training of Wasserstein GANs](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/25)
-    - [SAGAN [Self-Attention Generative Adversarial Networks]](https://github.com/Yagami360/MachineLearning-Papers_Survey/blob/master/papers/Self-Attention_Generative_Adversarial_Networks/SAGAN.md)
+    - [SAGAN [Self-Attention Generative Adversarial Networks]](https://github.com/Yagami360/My_NoteBook/blob/master/%E6%83%85%E5%A0%B1%E5%B7%A5%E5%AD%A6/%E6%83%85%E5%A0%B1%E5%B7%A5%E5%AD%A6_%E6%A9%9F%E6%A2%B0%E5%AD%A6%E7%BF%92_%E7%94%9F%E6%88%90%E3%83%A2%E3%83%87%E3%83%AB.md#SAGAN)
     - [InfoGAN: Interpretable Representation Learning by Information Maximizing Generative Adversarial Nets](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/26)
-    - [[PGGAN] Progressive Growing of GANs for Improved Quality, Stability, and Variation](https://github.com/Yagami360/MachineLearning-Papers_Survey/blob/master/papers/Progressive_Growing_of_GANs_for_Improved_Quality_Stability_and_Variation/ProgressiveGAN.md)
+    - [[PGGAN] Progressive Growing of GANs for Improved Quality, Stability, and Variation](https://github.com/Yagami360/My_NoteBook/blob/master/%E6%83%85%E5%A0%B1%E5%B7%A5%E5%AD%A6/%E6%83%85%E5%A0%B1%E5%B7%A5%E5%AD%A6_%E6%A9%9F%E6%A2%B0%E5%AD%A6%E7%BF%92_%E7%94%9F%E6%88%90%E3%83%A2%E3%83%87%E3%83%AB.md#ProgressiveGAN%EF%BC%88PGGAN%EF%BC%89)
     - [GAN-Tree: An Incrementally Learned Hierarchical Generative Framework for Multi-Modal Data Distributions](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/19)
 - Flow-based generative model
     - [NICE: NON-LINEAR INDEPENDENT COMPONENTS ESTIMATION](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/10)
@@ -41,16 +44,16 @@
 ### ◎ アプリケーション系
 
 - image-to-image
-    - [[pix2pix] Image-to-Image Translation with Conditional Adversarial Networks](https://github.com/Yagami360/MachineLearning-Papers_Survey/blob/master/papers/Image-to-Image_Translation_with_Conditional_Adversarial_Networks/pix2pix.md)
+    - [[pix2pix] Image-to-Image Translation with Conditional Adversarial Networks](https://github.com/Yagami360/My_NoteBook/blob/master/%E6%83%85%E5%A0%B1%E5%B7%A5%E5%AD%A6/%E6%83%85%E5%A0%B1%E5%B7%A5%E5%AD%A6_%E6%A9%9F%E6%A2%B0%E5%AD%A6%E7%BF%92_%E7%94%9F%E6%88%90%E3%83%A2%E3%83%87%E3%83%AB.md#pix2pix)
     - [[pix2pix-HD] High-Resolution_Image_Synthesis_and_Semantic_Manipulation_with_Conditional_GANs](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/18)
-    - [[CycleGAN] Unpaired Image-to-Image Translation using Cycle-Consistent Adversarial Networks](https://github.com/Yagami360/MachineLearning-Papers_Survey/blob/master/papers/Unpaired_Image-to-Image_Translation_using_Cycle-Consistent_Adversarial_Networks/CycleGAN.md)
-    - [[StarGAN] StarGAN: Unified Generative Adversarial Networks for Multi-Domain Image-to-Image Translation](https://github.com/Yagami360/MachineLearning-Papers_Survey/blob/master/papers/StarGAN_Unified_Generative_Adversarial_Networks_for_Multi-Domain_Image-to-Image_Translation/StarGAN.md)
-    - [[StyleGAN] A Style-Based Generator Architecture for Generative Adversarial Networks](https://github.com/Yagami360/MachineLearning-Papers_Survey/blob/master/papers/A_Style-Based_Generator_Architecture_for_Generative_Adversarial_Networks/StyleGAN.md)
+    - [[CycleGAN] Unpaired Image-to-Image Translation using Cycle-Consistent Adversarial Networks](https://github.com/Yagami360/My_NoteBook/blob/master/%E6%83%85%E5%A0%B1%E5%B7%A5%E5%AD%A6/%E6%83%85%E5%A0%B1%E5%B7%A5%E5%AD%A6_%E6%A9%9F%E6%A2%B0%E5%AD%A6%E7%BF%92_%E7%94%9F%E6%88%90%E3%83%A2%E3%83%87%E3%83%AB.md#CycleGAN)
+    - [[StarGAN] StarGAN: Unified Generative Adversarial Networks for Multi-Domain Image-to-Image Translation](https://github.com/Yagami360/My_NoteBook/blob/master/%E6%83%85%E5%A0%B1%E5%B7%A5%E5%AD%A6/%E6%83%85%E5%A0%B1%E5%B7%A5%E5%AD%A6_%E6%A9%9F%E6%A2%B0%E5%AD%A6%E7%BF%92_%E7%94%9F%E6%88%90%E3%83%A2%E3%83%87%E3%83%AB.md#StarGAN)
+    - [[StyleGAN] A Style-Based Generator Architecture for Generative Adversarial Networks](https://github.com/Yagami360/My_NoteBook/blob/master/%E6%83%85%E5%A0%B1%E5%B7%A5%E5%AD%A6/%E6%83%85%E5%A0%B1%E5%B7%A5%E5%AD%A6_%E6%A9%9F%E6%A2%B0%E5%AD%A6%E7%BF%92_%E7%94%9F%E6%88%90%E3%83%A2%E3%83%87%E3%83%AB.md#StyleGAN)
     - [[SPADE] Semantic Image Synthesis with Spatially-Adaptive Normalization](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/7)
     - [[Neural Collage] Spatially Controllable Image Synthesis with Internal Representation Collaging](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/22)
     - [[Soft-Gated Warping-GAN] Soft-Gated Warping-GAN for Pose-Guided Person Image Synthesis](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/35)
 - Semantic Segmentation
-    - [U-Net: Convolutional Networks for Biomedical Image Segmentation](https://github.com/Yagami360/MachineLearning-Papers_Survey/blob/master/papers/U-Net_Convolutional_Networks_for_Biomedical/UNet.md)
+    - [U-Net: Convolutional Networks for Biomedical Image Segmentation](https://github.com/Yagami360/My_NoteBook/blob/master/%E6%83%85%E5%A0%B1%E5%B7%A5%E5%AD%A6/%E6%83%85%E5%A0%B1%E5%B7%A5%E5%AD%A6_%E6%A9%9F%E6%A2%B0%E5%AD%A6%E7%BF%92_%E7%94%9F%E6%88%90%E3%83%A2%E3%83%87%E3%83%AB.md#UNet)
     - [Graphonomy: Universal Human Parsing via Graph Transfer Learning](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/8)
 - Style Transfer
     - Perceptual Losses for Real-Time Style Transfer and Super-Resolution
@@ -59,13 +62,12 @@
     - [Pluralistic Image Completion](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/6)
     - [Boundless: Generative Adversarial Networks for Image Extension](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/28)
 - 顔特化系（Face Swap, etc）
-    - [[GANimation] GANimation: Anatomically-aware Facial Animation from a Single Image](https://github.com/Yagami360/MachineLearning-Papers_Survey/blob/master/papers/GANimation_Anatomically-aware_FacialAnimation_from_a_Single_Image/GANimation.md)
-    - [FaceGAN] Semi-supervised Adversarial Learning to Generate Photorealistic Face Images of New Identities from 3D Morphable Model
+    - [[GANimation] GANimation: Anatomically-aware Facial Animation from a Single Image](https://github.com/Yagami360/My_NoteBook/blob/master/%E6%83%85%E5%A0%B1%E5%B7%A5%E5%AD%A6/%E6%83%85%E5%A0%B1%E5%B7%A5%E5%AD%A6_%E6%A9%9F%E6%A2%B0%E5%AD%A6%E7%BF%92_%E7%94%9F%E6%88%90%E3%83%A2%E3%83%87%E3%83%AB.md#GANimation)
     - [On Face Segmentation, Face Swapping, and Face Perception](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/3)
     - [Face Swapping: Realistic Image Synthesis Based on Facial Landmarks Alignment](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/4)
 - Virtual Try-On
     - [VITON: An Image-based Virtual Try-on Network](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/30)
-    - [[CP-VTON] Toward Characteristic-Preserving Image-based Virtual Try-On Network](https://github.com/Yagami360/MachineLearning-Papers_Survey/blob/master/papers/Toward_Characteristic-Preserving_Image-based_Virtual_Try-On_Network/cp-vton.md)
+    - [【非公開】[CP-VTON] Toward Characteristic-Preserving Image-based Virtual Try-On Network](https://github.com/Yagami360/My_Notebook_Private/blob/master/cp-vton.md)
     - [[MG-VTON] Towards_Multi-pose_Guided_Virtual_Try-on_Network](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/5)
     - [[WUTON] End-to-End Learning of Geometric Deformations of Feature Maps for Virtual Try-On](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/12)
     - [Generating High-Resolution Fashion Model Images Wearing Custom Outfits](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/16)

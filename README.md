@@ -9,6 +9,7 @@
 - Deep Neural Network
     - [[ResNet] Deep Residual Learning for Image Recognition](https://github.com/Yagami360/My_NoteBook/blob/master/%E6%83%85%E5%A0%B1%E5%B7%A5%E5%AD%A6/%E6%83%85%E5%A0%B1%E5%B7%A5%E5%AD%A6_%E6%A9%9F%E6%A2%B0%E5%AD%A6%E7%BF%92_NN_Note.md#ResNet%EF%BC%88%E6%AE%8B%E5%B7%AE%E3%83%8D%E3%83%83%E3%83%88%E3%83%AF%E3%83%BC%E3%82%AF%EF%BC%89)
     - [[Neural-ODE] Neural Ordinary Differential Equations](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/21)
+    - [Augmented Neural ODEs](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/37)
     - Kervolutional Neural Networks
 - CNN
     - [Convolutional neural network architecture for geometric matching](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/36)
@@ -76,7 +77,7 @@
 - text-to-image
     - [[StackGAN] Text to Photo-realistic Image Synthesis with Stacked Generative Adversarial Network](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/9)
 - 触覚・知覚系
-    - [TackGAN] Vibrotactile Signal Generation from Texture Images or Attributes using Generative Adversarial Network
+    - 【非公開】[TackGAN] Vibrotactile Signal Generation from Texture Images or Attributes using Generative Adversarial Network
     - Learning cross-modal visual-tactile representation using ensembled generative adversarial networks
     - Presenting Static Friction Sensation at Stick-slip Transition using Pseudo-haptic Effect
     - Authoring New Haptic Textures Based on Interpolation of Real Textures in Affective Space

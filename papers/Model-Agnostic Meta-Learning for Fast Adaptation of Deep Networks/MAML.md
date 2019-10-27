@@ -76,16 +76,47 @@
 
 - In effect, we will aim to find model parameters that are sensitive to changes in the task, such that small changes in the parameters will produce large improvements on the loss function of any task drawn from p(T), when altered in the direction of the gradient of that loss (see Figure 1). We make no assumption on the form of the model, other than to assume that it is parametrized by some parameter vector θ, and that the loss function is smooth enough in θ that we can use gradient-based learning techniques.
     - 実際、タスクの変化に敏感なモデルパラメーターを見つけることを目指します。パラメーターの小さな変化は、p（T）から引き出されたタスクの損失関数に大きな改善をもたらします。 その損失の勾配（図1を参照）。 モデルの形式については、何らかのパラメーターベクトルθによってパラメーター化されていること、および損失関数がθで十分に滑らかであり、勾配ベースの学習手法を使用できることを前提としています。
-    
+
 ---
 
 - xxx
+
+---
+
+- Note that the meta-optimization is performed over the model parameters θ, whereas the objective is computed using the updated model parameters θ′. In effect, our proposed method aims to optimize the model parameters such that one or a small number of gradient steps on a new task will produce maximally effective behavior on that task.
+    - メタ最適化はモデルパラメーターθに対して実行されるのに対し、目的は更新されたモデルパラメーターθ 'を使用して計算されることに注意してください。 実際、提案された方法は、新しいタスクの1つまたは少数の勾配ステップがそのタスクで最大限効果的な動作を生成するように、モデルパラメーターを最適化することを目的としています。
+
+---
+
+- xxx
+
+---
+
+- The MAML meta-gradient update involves a gradient through a gradient. Computationally, this requires an additional backward pass through f to compute Hessian-vector products, which is supported by standard deep learning libraries such as TensorFlow (Abadi et al., 2016). In our experiments, we also include a comparison to dropping this backward pass and using a first-order approximation, which we discuss in Section 5.2.
+    - MAMLメタグラデーション更新には、グラデーションを介したグラデーションが含まれます。 計算上、これにはヘッセ行列ベクトル積を計算するためにfを介した追加の後方パスが必要です。これは、TensorFlowなどの標準の深層学習ライブラリでサポートされています（Abadi et al。、2016）。 私たちの実験では、この逆方向パスを削除し、1次近似を使用することとの比較も含めています。
+
 
 
 
 # ■ 実験結果（主張の証明）・議論（手法の良し悪し）・メソッド（実験方法）
 
-## x. 論文の項目名
+## 5. Experimental Evaluation
+
+### 5.1. Regression
+
+- xxx
+
+- The qualitative results, shown in Figure 2 and further expanded on in Appendix B show that the learned model is able to quickly adapt with only 5 datapoints, shown as purple triangles, whereas the model that is pretrained using standard supervised learning on all tasks is unable to adequately adapt with so few datapoints without catastrophic overfitting. 
+    - 図2に示され、さらに付録Bに拡張された定性的結果は、学習されたモデルが紫色の三角形で示された5つのデータポイントのみで迅速に適応できるのに対し、すべてのタスクで標準的な教師あり学習を使用して事前学習されたモデルは不可能であることを示しています 壊滅的なオーバーフィッティングなしで非常に少ないデータポイントで適切に適応する。
+
+- Crucially, when the K datapoints are all in one half of the input range, the model trained with MAML can still infer the amplitude and phase in the other half of the range, demonstrating that the MAML trained model f has learned to model the periodic nature of the sine wave.
+    - 重要なのは、Kデータポイントがすべて入力範囲の半分にある場合、MAMLでトレーニングされたモデルは範囲の残りの半分で振幅と位相を推測できるため、MAMLトレーニングモデルfが周期的性質のモデル化を学習したことを示しています 正弦波の。
+
+- Furthermore, we observe both in the qualitative and quantitative results (Figure 3 and Appendix B) that the model learned with MAML continues to improve with additional gradient steps, despite being trained for maximal performance after one gradient step.
+    - さらに、定性的および定量的な結果（図3および付録B）の両方で、MAMLで学習されたモデルは、1つの勾配ステップ後の最大のパフォーマンスのためにトレーニングされているにもかかわらず、追加の勾配ステップで改善し続けていることがわかります
+
+- This improvement suggests that MAML optimizes the parameters such that they lie in a region that is amenable to fast adaptation and is sensitive to loss functions from p(T ), as discussed in Section 2.2, rather than overfitting to parameters θ that only improve after one step.
+    - この改善は、セクション2.2で説明したように、MAMLがパラメーターを最適化して、高速適応に適し、pからの損失関数に敏感な領域にあるようにパラメーターを最適化することを示しています。
 
 
 # ■ 関連研究（他の手法との違い）

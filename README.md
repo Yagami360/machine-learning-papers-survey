@@ -41,6 +41,9 @@
     - [Residual Flows for Invertible Generative Modeling](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/15)
 - Autoregressive Models
     - [[PixelRNN, PixelCNN] Pixel Recurrent Neural Networks](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/24)
+    
+- meta-learning, few-shot learning
+    - MAML:Model Agnostic Meta-Learning for Fast Adaption
 - Neural Processes
     - [Conditional Neural Processes](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/38)
     - Neural Processes

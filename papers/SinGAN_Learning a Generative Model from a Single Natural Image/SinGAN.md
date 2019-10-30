@@ -62,13 +62,26 @@
     - 図5に示すように、すべてのジェネレーターは同様のアーキテクチャを備えています。具体的には、畳み込み層のシーケンスに入力される前に、ノイズznが画像（x ̃n + 1）↑rに追加されます。 これにより、ランダム性を伴う条件付きスキームでよく発生するように、GANはノイズを無視しません[62、36、63]。 畳み込み層の役割は、（x ̃n + 1）↑rの欠落した詳細を生成することです（残差学習[22、57]）。 つまり、Gnは次の操作を実行します。
 
 
+#### Reconstruction loss
+
+- We want to ensure that there exists a specific set of input noise maps, which generates the original image x. We specifically choose {zrec,zrec ...,zrec} = {z∗,0,...,0}, where z∗ is some fixed noise map (drawn once and kept fixed during train- ing).
+    - 元の画像xを生成する入力ノイズマップの特定のセットが存在することを確認する必要があります。 具体的には、{zrec、zrec ...、zrec} = {z ∗、0、...、0}を選択します。ここで、z ∗は何らかの固定ノイズマップです（一度描画され、トレーニング中に固定されたままです）。
+
+- Denote by x ̃rec the generated image at the nth scale when using these noise maps. Then for n < N ,
+    - これらのノイズマップを使用する場合、n番目のスケールで生成されたイメージをx ̃recで示します。 次に、n <Nの場合、
+
+- The reconstructed image x ̃rec has another role during training, which is to determine the standard deviation σn of the noise zn in each scale. Specifically, we take σn to be proportional to the root mean squared error (RMSE) between (x ̃rec ) ↑r and x , which gives an indication of the amount of details that need to be added at that scale.
+    - 再構成された画像x ̃recには、トレーニング中に別の役割があります。これは、各スケールのノイズznの標準偏差σnを決定することです。 具体的には、σnを（x ̃rec）↑rとxの間の二乗平均平方根誤差（RMSE）に比例させることで、そのスケールで追加する必要がある詳細の量を示します。
+
 
 
 # ■ 実験結果（主張の証明）・議論（手法の良し悪し）・メソッド（実験方法）
 
 ## x. 論文の項目名
 
-
+- Qualitative examples of our generated random image samples are shown in Fig. 1, Fig. 6, and many more examples are included in the SM. For each example, we show a number of random samples with the same aspect ratio as the original image, and with decreased and expanded dimensions in each axis. As can be seen, in all these cases, the generated samples depict new realistic structures and configuration of objects, while preserving the visual content of the training image. Our model successfully preservers global structure of objects, e.g. mountains (Fig. 1), air balloons or pyramids (Fig. 6), as well as fine texture information. Because the network has a limited receptive field (smaller than the entire image), it can generate new combinations of patches that do not exist in the training image Furthermore, we observe that in many cases reflections and shadows are realistically synthesized, as can be seen in Fig. 6 and Fig. 1 (and the first example of Fig. 8). Note that SinGAN’s architecture is resolution agnostic and can thus be used on high resolution images, as illustrated in Fig. 7 (see 4Mpix results in the SM). Here as well, structures at all scales are nicely generated, from the global arrangement of sky, clouds and mountains, to the fine textures of the snow.
+    - 生成されたランダム画像サンプルの定性的な例を図1、図6に示し、さらに多くの例がSMに含まれています。各例について、元の画像と同じアスペクト比で、各軸の寸法を縮小および拡大したランダムサンプルをいくつか示します。ご覧のように、これらのすべてのケースで、生成されたサンプルは、トレーニング画像の視覚的な内容を維持しながら、オブジェクトの新しい現実的な構造と構成を示しています。私たちのモデルは、オブジェクトのグローバル構造を正常に保存します。山（図1）、気球またはピラミッド（図6）、細かいテクスチャ情報。ネットワークの受信フィールドは限られているため（画像全体よりも小さい）、トレーニング画像には存在しないパッチの新しい組み合わせを生成できます。さらに、多くの場合、反射と影が実際に合成されていることがわかります。図6および図1（および図8の最初の例）。 SinGANのアーキテクチャは解像度に依存しないため、図7に示すように高解像度の画像で使用できます（SMでの4Mpixの結果を参照）。ここでも、空、雲、山の全体的な配置から、雪のきめの細かいテクスチャまで、あらゆる規模の構造がうまく生成されています。
+    
 # ■ 関連研究（他の手法との違い）
 
 ## x. Related Work

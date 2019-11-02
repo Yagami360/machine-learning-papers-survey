@@ -79,9 +79,28 @@ Our contributions are:
 - For the pose branch, we concatenate the 18- channel heatmaps with the appearance feature maps and pass them into the a “U-Net”-based architecture [29], i.e., convolutional autoencoder with skip connections, to generate the final person image following PG2 (G1+D) [21].
     - ポーズブランチでは、18チャンネルのヒートマップを外観の特徴マップと連結し、それらを「U-Net」ベースのアーキテクチャ[29]、つまりスキップ接続の畳み込みオートエンコーダに渡し、次の最終的な人物画像を生成します PG2（G1 + D）[21]。
 
-- Here, the combination of appearance and pose imposes a strong explicit disentangling constraint that forces the network to learn how to use pose structure information to select the useful appearance information for each pixel. For pose sampling, we use an extra fully-connected network to reconstruct the pose information, so that we can decode the embedded pose features to obtain the heatmaps. Since some body regions may be unseen due to occlusions, we introduce a visibility variable αi ∈ {0, 1}, i = 1, ..., 18 to represent the visibility state of each pose keypoint. Now, the pose information can be represented by a 54-dim vector (36-dim keypoint coordinates γ and 18-dim keypoint visibility α).
-    - ここでは、外観とポーズの組み合わせにより、ネットワークがポーズ構造情報を使用して各ピクセルの有用な外観情報を選択する方法を学習することを強制する強い明示的な解きほぐし制約が課せられます。 ポーズサンプリングでは、追加の完全に接続されたネットワークを使用してポーズ情報を再構築するため、埋め込まれたポーズフィーチャをデコードしてヒートマップを取得できます。 オクルージョンのために一部の身体領域が見えない可能性があるため、各ポーズキーポイントの可視性状態を表す可視性変数αi∈{0、1}、i = 1、...、18を導入します。 これで、ポーズ情報は54次元のベクトル（36次元のキーポイント座標γと18次元のキーポイントの可視性α）で表すことができます。
-    
+- Here, the combination of appearance and pose imposes a strong explicit disentangling constraint that forces the network to learn how to use pose structure information to select the useful appearance information for each pixel. For pose sampling, we use an extra fully-connected network to reconstruct the pose information, so that we can decode the embedded pose features to obtain the heatmaps.
+    - ここでは、外観とポーズの組み合わせにより、ネットワークがポーズ構造情報を使用して各ピクセルの有用な外観情報を選択する方法を学習することを強制する強い明示的な解きほぐし制約が課せられます。 ポーズサンプリングでは、追加の完全に接続されたネットワークを使用してポーズ情報を再構築するため、埋め込まれたポーズフィーチャをデコードしてヒートマップを取得できます。 
+
+- Since some body regions may be unseen due to occlusions, we introduce a visibility variable αi ∈ {0, 1}, i = 1, ..., 18 to represent the visibility state of each pose keypoint. Now, the pose information can be represented by a 54-dim vector (36-dim keypoint coordinates γ and 18-dim keypoint visibility α).    
+    - オクルージョンのために一部の身体領域が見えない可能性があるため、各ポーズキーポイントの可視性状態を表す可視性変数αi∈{0、1}、i = 1、...、18を導入します。 これで、ポーズ情報は54次元のベクトル（36次元のキーポイント座標γと18次元のキーポイントの可視性α）で表すことができます。
+
+
+### 3.2. Stage-II: Embedding feature mapping
+
+- Images can be represented by a low-dimensional, continuous feature embedding space. In particular, in [36, 30, 37, 5] it has been shown that they lie on or near a low-dimensional manifold of the original high-dimensional space. Therefore, the distribution of this feature embedding space should be more continuous and easier to learn compared to the real data distribution. Some works [38, 8, 28] have then attempted to use the intermediate feature representations of a pre-trained DNN to guide another DNN.
+    - 画像は、空間を埋め込んだ低次元の連続フィーチャで表すことができます。 特に、[36、30、37、5]では、元の高次元空間の低次元多様体の上または近くにあることが示されています。 したがって、この埋めこみ特徴空間の分布は、実際のデータ分布と比較して、より連続的で学習しやすいものでなければなりません。 その後、いくつかの研究[38、8、28]は、事前に訓練されたDNNの中間特徴表現を使用して、別のDNNをガイドしようとしました。
+
+- Inspired by these ideas, we propose a two-step mapping technique as illustrated in Fig. 2. Instead of directly learning to decode Gaussian noise to the image space, we first learn a mapping function Φ that maps a Gaussian space Z into a continuous feature embedding space E, and then use the pre-trained decoder to map the feature embedding space E into the real image space X. The encoder learned in stage-I encodes the FG, BG and Pose factors x into low- dimensional real embedding features e. Then, we treat the features mapped from Gaussian noise z as fake embedding features e ̃ and learn the mapping function Φ adversarially. In this way, we can sample fake embedding features from noise and then map them back to images using the decoder learned in stage-I. The proposed two-step mapping technique is easy to train in a piecewise style and most importantly can be useful for other image generation applications.
+    - これらのアイデアに着想を得て、図2に示すような2段階のマッピング手法を提案します。ガウスノイズを画像空間に直接デコードするのではなく、ガウス空間Zを連続的な特徴にマッピングするマッピング関数Φを最初に学習します 段階Eで学習したエンコーダーは、FG、BG、およびポーズファクターxを低次元の実際の埋め込み機能eにエンコードします。 。 次に、ガウスノイズzからマッピングされた特徴を偽の埋め込み特徴e asとして扱い、マッピング関数Φを敵対的に学習します。 このようにして、偽の埋め込み機能をノイズからサンプリングし、ステージIで学習したデコーダーを使用してそれらを画像にマッピングし直すことができます。 提案された2ステップマッピング手法は、区分的なスタイルで簡単にトレーニングでき、最も重要なことは、他の画像生成アプリケーションに役立つ可能性があります。
+
+### 3.3. Person image sampling
+
+- As explained, each image factor can not only be encoded from the input information, but also be sampled from Gaussian noise. As to the latter, to sample a new foreground, background or pose, we combine the decoders learned in stage-I and mapping functions learned in stage-II to construct a z → e ̃ → x ̃ sampling pipeline (Fig. 4). Note that, for foreground and background sampling the decoder is a convolutional “U-net”-based architecture, while for pose sampling the decoder is a fully-connected one. Our experiments show that our framework performs well when used in both a conditional and an unconditional way.
+    - 説明したように、各画像要素は入力情報からエンコードできるだけでなく、ガウスノイズからサンプリングすることもできます。 後者については、新しい前景、背景、またはポーズをサンプリングするために、ステージIで学習したデコーダーとステージIIで学習したマッピング関数を組み合わせて、z→e ̃→x ̃サンプリングパイプラインを構築します（図4）。 フォアグラウンドおよびバックグラウンドサンプリングの場合、デコーダーは畳み込みの「U-net」ベースのアーキテクチャであり、ポーズサンプリングの場合、デコーダーは完全に接続されたものであることに注意してください。 私たちの実験は、私たちのフレームワークが条件付きと無条件の両方の方法で使用されたときにうまく機能することを示しています。
+
+### 
+
 # ■ 実験結果（主張の証明）・議論（手法の良し悪し）・メソッド（実験方法）
 
 ## x. 論文の項目名

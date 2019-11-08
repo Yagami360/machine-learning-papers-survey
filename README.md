@@ -82,6 +82,7 @@
     - [Generating High-Resolution Fashion Model Images Wearing Custom Outfits](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/16)
     - [Poly-GAN: Multi-Conditioned GAN for Fashion Synthesis](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/17)
     - [Virtually Trying on New Clothing with Arbitrary Poses](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/31)
+    - [FW-GAN: Flow-navigated Warping GAN for Video Virtual Try-on](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/42)
 - text-to-image
     - [[StackGAN] Text to Photo-realistic Image Synthesis with Stacked Generative Adversarial Network](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/9)
 - 触覚・知覚系

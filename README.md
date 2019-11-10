@@ -47,7 +47,7 @@
     - [MAML:Model Agnostic Meta-Learning for Fast Adaption of Deep Networks](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/39)
 - Neural Processes
     - [Conditional Neural Processes](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/38)
-    - Neural Processes
+    - [Neural Processes](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/44)
 
 ### ◎ アプリケーション系
 

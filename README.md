@@ -44,7 +44,7 @@
     - [[PixelRNN, PixelCNN] Pixel Recurrent Neural Networks](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/24)
 
 - meta-learning, few-shot learning
-    - [MAML:Model Agnostic Meta-Learning for Fast Adaption](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/39)
+    - [MAML:Model Agnostic Meta-Learning for Fast Adaption of Deep Networks](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/39)
 - Neural Processes
     - [Conditional Neural Processes](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/38)
     - Neural Processes

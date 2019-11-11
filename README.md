@@ -4,7 +4,7 @@
 
 ## ■ 構成
 
-### ◎ 基礎系
+### ◎ 基礎系（基礎モデル）
 
 - Deep Neural Network
     - [[ResNet] Deep Residual Learning for Image Recognition](https://github.com/Yagami360/My_NoteBook/blob/master/%E6%83%85%E5%A0%B1%E5%B7%A5%E5%AD%A6/%E6%83%85%E5%A0%B1%E5%B7%A5%E5%AD%A6_%E6%A9%9F%E6%A2%B0%E5%AD%A6%E7%BF%92_NN_Note.md#ResNet%EF%BC%88%E6%AE%8B%E5%B7%AE%E3%83%8D%E3%83%83%E3%83%88%E3%83%AF%E3%83%BC%E3%82%AF%EF%BC%89)
@@ -84,6 +84,7 @@
     - [Virtually Trying on New Clothing with Arbitrary Poses](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/31)
     - [FW-GAN: Flow-navigated Warping GAN for Video Virtual Try-on](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/42)
     - [Robust Cloth Warping via Multi-Scale Patch Adversarial Loss for Virtual Try-On Framework](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/45)
+    - ClothFlow: A Flow-Based Model for Clothed Person Generation
 - text-to-image
     - [[StackGAN] Text to Photo-realistic Image Synthesis with Stacked Generative Adversarial Network](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/9)
 - Optical Flow
@@ -96,6 +97,10 @@
 - Others
     - xxx
 
+
+### ◎ 理論系
+
+- xxx
 
 ## ■ 機械学習系の論文調査や論文の読み方
 

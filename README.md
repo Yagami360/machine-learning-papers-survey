@@ -84,7 +84,7 @@
     - [Virtually Trying on New Clothing with Arbitrary Poses](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/31)
     - [FW-GAN: Flow-navigated Warping GAN for Video Virtual Try-on](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/42)
     - [Robust Cloth Warping via Multi-Scale Patch Adversarial Loss for Virtual Try-On Framework](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/45)
-    - ClothFlow: A Flow-Based Model for Clothed Person Generation
+    - [ClothFlow: A Flow-Based Model for Clothed Person Generation](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/46)
 - text-to-image
     - [[StackGAN] Text to Photo-realistic Image Synthesis with Stacked Generative Adversarial Network](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/9)
 - Optical Flow

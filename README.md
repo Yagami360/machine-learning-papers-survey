@@ -89,6 +89,7 @@
     - [[StackGAN] Text to Photo-realistic Image Synthesis with Stacked Generative Adversarial Network](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/9)
 - Optical Flow
     - [FlowNet: Learning Optical Flow with Convolutional Networks](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/43)
+    - [View Synthesis by Appearance Flow](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/47)
 - 触覚・知覚系
     - 【非公開】[TackGAN] Vibrotactile Signal Generation from Texture Images or Attributes using Generative Adversarial Network
     - Learning cross-modal visual-tactile representation using ensembled generative adversarial networks

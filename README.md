@@ -13,6 +13,7 @@
     - Kervolutional Neural Networks
 - CNN
     - [Convolutional neural network architecture for geometric matching](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/36)
+    - [Spatial Transformer Networks](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/48)
 - GNN
     - [Convolutional Neural Networks on Graphs with Fast Localized Spectral Filtering](https://github.com/Yagami360/My_NoteBook/blob/master/%E6%83%85%E5%A0%B1%E5%B7%A5%E5%AD%A6/%E6%83%85%E5%A0%B1%E5%B7%A5%E5%AD%A6_%E6%A9%9F%E6%A2%B0%E5%AD%A6%E7%BF%92_NN_Note.md#Convolutional_Neural_Networks_on_Graphs_with_Fast_Localized_Spectral_Filtering)
     - [Semi-Supervised Classification with Graph Convolutional Networks](https://github.com/Yagami360/My_NoteBook/blob/master/%E6%83%85%E5%A0%B1%E5%B7%A5%E5%AD%A6/%E6%83%85%E5%A0%B1%E5%B7%A5%E5%AD%A6_%E6%A9%9F%E6%A2%B0%E5%AD%A6%E7%BF%92_NN_Note.md#Semi-Supervised_Classification_with_Graph_Convolutional_Networks)

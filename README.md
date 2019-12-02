@@ -1,5 +1,5 @@
 # MachineLearning-Papers_Survey
-機械学習関連の論文読み練習用レポジトリです。<br>
+機械学習関連の論文 Survey 用レポジトリです。<br>
 論文要約まとめは、[Issues](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues) に記載しています。進捗は、[Projects ページ](https://github.com/Yagami360/MachineLearning-Papers_Survey/projects/1) で管理しています。
 
 ## ■ 構成
@@ -34,7 +34,6 @@
     - [InfoGAN: Interpretable Representation Learning by Information Maximizing Generative Adversarial Nets](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/26)
     - [[PGGAN] Progressive Growing of GANs for Improved Quality, Stability, and Variation](https://github.com/Yagami360/My_NoteBook/blob/master/%E6%83%85%E5%A0%B1%E5%B7%A5%E5%AD%A6/%E6%83%85%E5%A0%B1%E5%B7%A5%E5%AD%A6_%E6%A9%9F%E6%A2%B0%E5%AD%A6%E7%BF%92_%E7%94%9F%E6%88%90%E3%83%A2%E3%83%87%E3%83%AB.md#ProgressiveGAN%EF%BC%88PGGAN%EF%BC%89)
     - [GAN-Tree: An Incrementally Learned Hierarchical Generative Framework for Multi-Modal Data Distributions](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/19)
-    - [Disentangled Person Image Generation](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/41)
 - Flow-based generative model
     - [NICE: NON-LINEAR INDEPENDENT COMPONENTS ESTIMATION](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/10)
     - [Real NVP [Density estimation using Real NVP]](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/11)
@@ -45,7 +44,7 @@
     - [[PixelRNN, PixelCNN] Pixel Recurrent Neural Networks](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/24)
 
 - meta-learning, few-shot learning
-    - [MAML:Model Agnostic Meta-Learning for Fast Adaption of Deep Networks](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/39)
+    - [MAML:Model Agnostic Meta-Learning for Fast Adaption](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/39)
 - Neural Processes
     - [Conditional Neural Processes](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/38)
     - [Neural Processes](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/44)
@@ -60,7 +59,6 @@
     - [[StyleGAN] A Style-Based Generator Architecture for Generative Adversarial Networks](https://github.com/Yagami360/My_NoteBook/blob/master/%E6%83%85%E5%A0%B1%E5%B7%A5%E5%AD%A6/%E6%83%85%E5%A0%B1%E5%B7%A5%E5%AD%A6_%E6%A9%9F%E6%A2%B0%E5%AD%A6%E7%BF%92_%E7%94%9F%E6%88%90%E3%83%A2%E3%83%87%E3%83%AB.md#StyleGAN)
     - [[SPADE] Semantic Image Synthesis with Spatially-Adaptive Normalization](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/7)
     - [[Neural Collage] Spatially Controllable Image Synthesis with Internal Representation Collaging](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/22)
-    - [[Soft-Gated Warping-GAN] Soft-Gated Warping-GAN for Pose-Guided Person Image Synthesis](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/35)
     - [SinGAN: Learning a Generative Model from a Single Natural Image](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/40)
 - Semantic Segmentation
     - [U-Net: Convolutional Networks for Biomedical Image Segmentation](https://github.com/Yagami360/My_NoteBook/blob/master/%E6%83%85%E5%A0%B1%E5%B7%A5%E5%AD%A6/%E6%83%85%E5%A0%B1%E5%B7%A5%E5%AD%A6_%E6%A9%9F%E6%A2%B0%E5%AD%A6%E7%BF%92_%E7%94%9F%E6%88%90%E3%83%A2%E3%83%87%E3%83%AB.md#UNet)
@@ -71,6 +69,10 @@
     - [[Deepfillv2] Free-Form Image Inpainting with Gated Convolution](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/29)
     - [Pluralistic Image Completion](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/6)
     - [Boundless: Generative Adversarial Networks for Image Extension](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/28)
+- Person Image Generation
+    - [Pose Guided Person Image Generation](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/49)
+    - [Disentangled Person Image Generation](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/41)
+    - [[Soft-Gated Warping-GAN] Soft-Gated Warping-GAN for Pose-Guided Person Image Synthesis](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/35)
 - 顔特化系（Face Swap, etc）
     - [[GANimation] GANimation: Anatomically-aware Facial Animation from a Single Image](https://github.com/Yagami360/My_NoteBook/blob/master/%E6%83%85%E5%A0%B1%E5%B7%A5%E5%AD%A6/%E6%83%85%E5%A0%B1%E5%B7%A5%E5%AD%A6_%E6%A9%9F%E6%A2%B0%E5%AD%A6%E7%BF%92_%E7%94%9F%E6%88%90%E3%83%A2%E3%83%87%E3%83%AB.md#GANimation)
     - [On Face Segmentation, Face Swapping, and Face Perception](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/3)
@@ -93,12 +95,8 @@
     - [View Synthesis by Appearance Flow](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/47)
 - 触覚・知覚系
     - 【非公開】[TackGAN] Vibrotactile Signal Generation from Texture Images or Attributes using Generative Adversarial Network
-    - Learning cross-modal visual-tactile representation using ensembled generative adversarial networks
-    - Presenting Static Friction Sensation at Stick-slip Transition using Pseudo-haptic Effect
-    - Authoring New Haptic Textures Based on Interpolation of Real Textures in Affective Space
 - Others
     - xxx
-
 
 ### ◎ 理論系
 

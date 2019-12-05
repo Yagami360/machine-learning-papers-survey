@@ -93,6 +93,8 @@
 - Optical Flow
     - [FlowNet: Learning Optical Flow with Convolutional Networks](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/43)
     - [View Synthesis by Appearance Flow](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/47)
+- Texture Mapping
+    - [DensePose: Dense Human Pose Estimation in the Wild](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/50)
 - 触覚・知覚系
     - 【非公開】[TackGAN] Vibrotactile Signal Generation from Texture Images or Attributes using Generative Adversarial Network
 - Others

@@ -81,7 +81,7 @@
     - [Face Swapping: Realistic Image Synthesis Based on Facial Landmarks Alignment](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/4)
 - Virtual Try-On
     - [VITON: An Image-based Virtual Try-on Network](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/30)
-    - [【非公開】[CP-VTON] Toward Characteristic-Preserving Image-based Virtual Try-On Network](https://github.com/Yagami360/My_Notebook_Private/blob/master/cp-vton.md)
+    - [[CP-VTON] Toward Characteristic-Preserving Image-based Virtual Try-On Network](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/53)
     - [[MG-VTON] Towards_Multi-pose_Guided_Virtual_Try-on_Network](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/5)
     - [[WUTON] End-to-End Learning of Geometric Deformations of Feature Maps for Virtual Try-On](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/12)
     - [Generating High-Resolution Fashion Model Images Wearing Custom Outfits](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/16)
@@ -90,6 +90,7 @@
     - [FW-GAN: Flow-navigated Warping GAN for Video Virtual Try-on](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/42)
     - [Robust Cloth Warping via Multi-Scale Patch Adversarial Loss for Virtual Try-On Framework](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/45)
     - [ClothFlow: A Flow-Based Model for Clothed Person Generation](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/46)
+    - [SieveNet: A Unified Framework for Robust Image-Based Virtual Try-On](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/54)
 - text-to-image
     - [[StackGAN] Text to Photo-realistic Image Synthesis with Stacked Generative Adversarial Network](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/9)
 - Optical Flow

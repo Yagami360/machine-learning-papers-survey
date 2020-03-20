@@ -91,6 +91,7 @@
     - [Robust Cloth Warping via Multi-Scale Patch Adversarial Loss for Virtual Try-On Framework](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/45)
     - [ClothFlow: A Flow-Based Model for Clothed Person Generation](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/46)
     - [SieveNet: A Unified Framework for Robust Image-Based Virtual Try-On](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/54)
+    - [[ACGPN] Towards Photo-Realistic Virtual Try-On by Adaptively Generating↔Preserving Image Content](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/55)
 - text-to-image
     - [[StackGAN] Text to Photo-realistic Image Synthesis with Stacked Generative Adversarial Network](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/9)
 - Optical Flow

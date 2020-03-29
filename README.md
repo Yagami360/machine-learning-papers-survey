@@ -93,6 +93,7 @@
     - [SieveNet: A Unified Framework for Robust Image-Based Virtual Try-On](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/54)
     - [GarmentGAN: Photo-realistic Adversarial Fashion Transfer](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/56)
     - [[ACGPN] Towards Photo-Realistic Virtual Try-On by Adaptively Generating↔Preserving Image Content](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/55)
+    - [Toward Accurate and Realistic Virtual Try-on Through Shape Matching and Multiple Warps](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/57)
 - text-to-image
     - [[StackGAN] Text to Photo-realistic Image Synthesis with Stacked Generative Adversarial Network](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/9)
 - Optical Flow

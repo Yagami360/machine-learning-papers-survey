@@ -94,6 +94,7 @@
     - [GarmentGAN: Photo-realistic Adversarial Fashion Transfer](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/56)
     - [[ACGPN] Towards Photo-Realistic Virtual Try-On by Adaptively Generating↔Preserving Image Content](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/55)
     - [Toward Accurate and Realistic Virtual Try-on Through Shape Matching and Multiple Warps](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/57)
+    - [DEEP LEARNING APPROACHES FOR ATTRIBUTE MANIPULATION AND TEXT-TO-IMAGE SYNTHESIS / Chapter4 : Attribute Manipulation Generative Adversarial Networks for Image-to-Image Translation](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/58)a
 - text-to-image
     - [[StackGAN] Text to Photo-realistic Image Synthesis with Stacked Generative Adversarial Network](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/9)
 - Optical Flow

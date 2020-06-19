@@ -67,6 +67,7 @@
     - [Graphonomy: Universal Human Parsing via Graph Transfer Learning](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/8)
     - [Concurrent Spatial and Channel ‘Squeeze & Excitation’ in Fully Convolutional Networks](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/62)
     - [Pyramid Attention Network for Semantic Segmentation](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/63)
+    - [Hypercolumns for Object Segmentation and Fine-grained Localization](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/64)    
 - Style Transfer
     - Perceptual Losses for Real-Time Style Transfer and Super-Resolution
 - Inpainting

@@ -59,6 +59,8 @@
     - [Concurrent Spatial and Channel ‘Squeeze & Excitation’ in Fully Convolutional Networks](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/62)
     - [Pyramid Attention Network for Semantic Segmentation](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/63)
     - [Hypercolumns for Object Segmentation and Fine-grained Localization](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/64)
+- Object Detection
+    - [Focal Loss for Dense Object Detection](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/66)
 - Instance Segmentation
     - [Mask R-CNN](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/65)
 - image-to-image

@@ -53,7 +53,14 @@
     - [Neural Processes](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/44)
 
 ### ◎ アプリケーション系
-
+- Semantic Segmentation
+    - [U-Net: Convolutional Networks for Biomedical Image Segmentation](https://github.com/Yagami360/My_NoteBook/blob/master/%E6%83%85%E5%A0%B1%E5%B7%A5%E5%AD%A6/%E6%83%85%E5%A0%B1%E5%B7%A5%E5%AD%A6_%E6%A9%9F%E6%A2%B0%E5%AD%A6%E7%BF%92_%E7%94%9F%E6%88%90%E3%83%A2%E3%83%87%E3%83%AB.md#UNet)
+    - [Graphonomy: Universal Human Parsing via Graph Transfer Learning](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/8)
+    - [Concurrent Spatial and Channel ‘Squeeze & Excitation’ in Fully Convolutional Networks](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/62)
+    - [Pyramid Attention Network for Semantic Segmentation](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/63)
+    - [Hypercolumns for Object Segmentation and Fine-grained Localization](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/64)
+- Instance Segmentation
+    - [Mask R-CNN](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/65)
 - image-to-image
     - [[pix2pix] Image-to-Image Translation with Conditional Adversarial Networks](https://github.com/Yagami360/My_NoteBook/blob/master/%E6%83%85%E5%A0%B1%E5%B7%A5%E5%AD%A6/%E6%83%85%E5%A0%B1%E5%B7%A5%E5%AD%A6_%E6%A9%9F%E6%A2%B0%E5%AD%A6%E7%BF%92_%E7%94%9F%E6%88%90%E3%83%A2%E3%83%87%E3%83%AB.md#pix2pix)
     - [[pix2pix-HD] High-Resolution_Image_Synthesis_and_Semantic_Manipulation_with_Conditional_GANs](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/18)
@@ -61,13 +68,7 @@
     - [[StarGAN] StarGAN: Unified Generative Adversarial Networks for Multi-Domain Image-to-Image Translation](https://github.com/Yagami360/My_NoteBook/blob/master/%E6%83%85%E5%A0%B1%E5%B7%A5%E5%AD%A6/%E6%83%85%E5%A0%B1%E5%B7%A5%E5%AD%A6_%E6%A9%9F%E6%A2%B0%E5%AD%A6%E7%BF%92_%E7%94%9F%E6%88%90%E3%83%A2%E3%83%87%E3%83%AB.md#StarGAN)
     - [[SPADE] Semantic Image Synthesis with Spatially-Adaptive Normalization](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/7)
     - [[Neural Collage] Spatially Controllable Image Synthesis with Internal Representation Collaging](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/22)
-    - [SinGAN: Learning a Generative Model from a Single Natural Image](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/40)
-- Semantic Segmentation
-    - [U-Net: Convolutional Networks for Biomedical Image Segmentation](https://github.com/Yagami360/My_NoteBook/blob/master/%E6%83%85%E5%A0%B1%E5%B7%A5%E5%AD%A6/%E6%83%85%E5%A0%B1%E5%B7%A5%E5%AD%A6_%E6%A9%9F%E6%A2%B0%E5%AD%A6%E7%BF%92_%E7%94%9F%E6%88%90%E3%83%A2%E3%83%87%E3%83%AB.md#UNet)
-    - [Graphonomy: Universal Human Parsing via Graph Transfer Learning](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/8)
-    - [Concurrent Spatial and Channel ‘Squeeze & Excitation’ in Fully Convolutional Networks](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/62)
-    - [Pyramid Attention Network for Semantic Segmentation](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/63)
-    - [Hypercolumns for Object Segmentation and Fine-grained Localization](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/64)    
+    - [SinGAN: Learning a Generative Model from a Single Natural Image](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/40)  
 - Style Transfer
     - Perceptual Losses for Real-Time Style Transfer and Super-Resolution
 - Inpainting

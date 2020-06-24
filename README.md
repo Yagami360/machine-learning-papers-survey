@@ -60,6 +60,7 @@
     - [Pyramid Attention Network for Semantic Segmentation](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/63)
     - [Hypercolumns for Object Segmentation and Fine-grained Localization](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/64)
     - [Tversky loss function for image segmentation using 3D fully convolutional deep networks](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/67)
+    - [[DeepLab v3+] Encoder-Decoder with Atrous Separable Convolution for Semantic Image Segmentation](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/68)
 - Object Detection
     - [Focal Loss for Dense Object Detection](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/66)
 - Instance Segmentation

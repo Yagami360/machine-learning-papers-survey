@@ -52,12 +52,15 @@
     - [Conditional Neural Processes](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/38)
     - [Neural Processes](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/44)
 
-### ◎ アプリケーション系
+### ◎ アプリケーション系（CV）
+- Image Classification
+    - xxx
 - Semantic Segmentation
     - [U-Net: Convolutional Networks for Biomedical Image Segmentation](https://github.com/Yagami360/My_NoteBook/blob/master/%E6%83%85%E5%A0%B1%E5%B7%A5%E5%AD%A6/%E6%83%85%E5%A0%B1%E5%B7%A5%E5%AD%A6_%E6%A9%9F%E6%A2%B0%E5%AD%A6%E7%BF%92_%E7%94%9F%E6%88%90%E3%83%A2%E3%83%87%E3%83%AB.md#UNet)
     - [[PSPNet] Pyramid Scene Parsing Network](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/69)
     - [Pyramid Attention Network for Semantic Segmentation](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/63)
     - [[DeepLab v3+] Encoder-Decoder with Atrous Separable Convolution for Semantic Image Segmentation](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/68)
+    - [[JPPNet] Look into Person: Joint Body Parsing & Pose Estimation Network and A New Benchmark](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/70)
     - [Graphonomy: Universal Human Parsing via Graph Transfer Learning](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/8)
     - [Concurrent Spatial and Channel ‘Squeeze & Excitation’ in Fully Convolutional Networks](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/62)
     - [Hypercolumns for Object Segmentation and Fine-grained Localization](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/64)

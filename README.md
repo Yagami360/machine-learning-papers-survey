@@ -107,6 +107,7 @@
     - [DEEP LEARNING APPROACHES FOR ATTRIBUTE MANIPULATION AND TEXT-TO-IMAGE SYNTHESIS / Chapter4 : Attribute Manipulation Generative Adversarial Networks for Image-to-Image Translation](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/58)
     - [LGVTON: A Landmark Guided Approach to Virtual Try-On](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/59)
     - [FashionOn: Semantic-guided Image-based Virtual Try-on with Detailed Human and Clothing Information](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/61)
+    - [[Outfit-VITON] Image Based Virtual Try-On Network From Unpaired Data](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/71)
 - recommendation
     - [ViBE: Dressing for Diverse Body Shapes](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/60)
 - text-to-image

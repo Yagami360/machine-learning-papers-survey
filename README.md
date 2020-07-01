@@ -71,6 +71,8 @@
     - [Focal Loss for Dense Object Detection](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/66)
 - Instance Segmentation
     - [Mask R-CNN](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/65)
+    - Human Parsing
+        - [Parsing R-CNN for Instance-Level Human Analysis](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/73)
 - Pose Estimation
     - [DensePose: Dense Human Pose Estimation in the Wild](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/50)
 - image-to-image

@@ -67,6 +67,7 @@
         - [[JPPNet] Look into Person: Joint Body Parsing & Pose Estimation Network and A New Benchmark](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/70)
         - [[CE2P] Devil in the Details: Towards Accurate Single and Multiple Human Parsing](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/72)
         - [Graphonomy: Universal Human Parsing via Graph Transfer Learning](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/8)
+        - [[CorrPM] Correlating Edge, Pose with Parsing](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/74)
 - Object Detection
     - [Focal Loss for Dense Object Detection](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/66)
 - Instance Segmentation

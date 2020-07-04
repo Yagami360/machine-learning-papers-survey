@@ -69,6 +69,7 @@
         - [Graphonomy: Universal Human Parsing via Graph Transfer Learning](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/8)
         - [[CorrPM] Correlating Edge, Pose with Parsing](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/74)
 - Object Detection
+    - [Fast R-CNN](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/75)
     - [Focal Loss for Dense Object Detection](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/66)
 - Instance Segmentation
     - [Mask R-CNN](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/65)

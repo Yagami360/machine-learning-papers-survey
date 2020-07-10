@@ -63,6 +63,7 @@
     - [Concurrent Spatial and Channel ‘Squeeze & Excitation’ in Fully Convolutional Networks](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/62)
     - [Hypercolumns for Object Segmentation and Fine-grained Localization](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/64)
     - [Tversky loss function for image segmentation using 3D fully convolutional deep networks](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/67)
+    - [Boundary loss for highly unbalanced segmentation](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/77)
     - Human Parsing
         - [[JPPNet] Look into Person: Joint Body Parsing & Pose Estimation Network and A New Benchmark](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/70)
         - [[CE2P] Devil in the Details: Towards Accurate Single and Multiple Human Parsing](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/72)

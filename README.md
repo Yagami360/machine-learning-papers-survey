@@ -87,6 +87,7 @@
     - [[SPADE] Semantic Image Synthesis with Spatially-Adaptive Normalization](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/7)
     - [[Neural Collage] Spatially Controllable Image Synthesis with Internal Representation Collaging](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/22)
     - [SinGAN: Learning a Generative Model from a Single Natural Image](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/40)  
+    - [Recapture as You Want](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/78)
 - Inpainting
     - [[Deepfillv2] Free-Form Image Inpainting with Gated Convolution](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/29)
     - [Pluralistic Image Completion](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/6)

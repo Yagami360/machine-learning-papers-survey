@@ -12,7 +12,6 @@
     - [Augmented Neural ODEs](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/37)
     - Kervolutional Neural Networks
 - CNN
-    - [Convolutional neural network architecture for geometric matching](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/36)
     - [Spatial Transformer Networks](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/48)
 - GNN
     - [Convolutional Neural Networks on Graphs with Fast Localized Spectral Filtering](https://github.com/Yagami360/My_NoteBook/blob/master/%E6%83%85%E5%A0%B1%E5%B7%A5%E5%AD%A6/%E6%83%85%E5%A0%B1%E5%B7%A5%E5%AD%A6_%E6%A9%9F%E6%A2%B0%E5%AD%A6%E7%BF%92_NN_Note.md#Convolutional_Neural_Networks_on_Graphs_with_Fast_Localized_Spectral_Filtering)
@@ -80,6 +79,8 @@
         - [Parsing R-CNN for Instance-Level Human Analysis](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/73)
 - Pose Estimation
     - [DensePose: Dense Human Pose Estimation in the Wild](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/50)
+- Image Registration / geometric matching（画像レジストレーション / 画像位置合わせ）
+    - [Convolutional neural network architecture for geometric matching](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/36)
 - image-to-image
     - [[pix2pix] Image-to-Image Translation with Conditional Adversarial Networks](https://github.com/Yagami360/My_NoteBook/blob/master/%E6%83%85%E5%A0%B1%E5%B7%A5%E5%AD%A6/%E6%83%85%E5%A0%B1%E5%B7%A5%E5%AD%A6_%E6%A9%9F%E6%A2%B0%E5%AD%A6%E7%BF%92_%E7%94%9F%E6%88%90%E3%83%A2%E3%83%87%E3%83%AB.md#pix2pix)
     - [[pix2pix-HD] High-Resolution_Image_Synthesis_and_Semantic_Manipulation_with_Conditional_GANs](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/18)
@@ -123,6 +124,8 @@
     - [Do Not Mask What You Do Not Need to Mask: a Parser-Free Virtual Try-On](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/80)
 - recommendation
     - [ViBE: Dressing for Diverse Body Shapes](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/60)
+- image-to-3D / image-based 3D Reconstruction 
+    - [3D Virtual Garment Modeling from RGB Images](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/81)
 - text-to-image
     - [[StackGAN] Text to Photo-realistic Image Synthesis with Stacked Generative Adversarial Network](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/9)
 - Optical Flow

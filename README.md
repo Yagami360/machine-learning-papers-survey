@@ -122,6 +122,9 @@
     - [FashionOn: Semantic-guided Image-based Virtual Try-on with Detailed Human and Clothing Information](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/61)
     - [[Outfit-VITON] Image Based Virtual Try-On Network From Unpaired Data](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/71)
     - [Do Not Mask What You Do Not Need to Mask: a Parser-Free Virtual Try-On](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/80)
+    - [CP-VTON+: Clothing Shape and Texture Preserving Image-Based Virtual Try-On](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/82)
+    - 3D based virtual try-on
+        - xxx
 - recommendation
     - [ViBE: Dressing for Diverse Body Shapes](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/60)
 - image-to-3D / image-based 3D Reconstruction 

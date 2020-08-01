@@ -127,13 +127,16 @@
         - xxx
 - recommendation
     - [ViBE: Dressing for Diverse Body Shapes](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/60)
-- image-to-3D / image-based 3D Reconstruction 
-    - [3D Virtual Garment Modeling from RGB Images](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/81)
 - text-to-image
     - [[StackGAN] Text to Photo-realistic Image Synthesis with Stacked Generative Adversarial Network](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/9)
 - Optical Flow
     - [FlowNet: Learning Optical Flow with Convolutional Networks](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/43)
     - [View Synthesis by Appearance Flow](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/47)
+- 3D shape prediction
+    - xxx
+- image-to-3D / image-based 3D Reconstruction 
+    - [Mesh R-CNN](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/83)
+    - [3D Virtual Garment Modeling from RGB Images](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/81)
 - Others
     - xxx
 

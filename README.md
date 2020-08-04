@@ -124,7 +124,7 @@
     - [Do Not Mask What You Do Not Need to Mask: a Parser-Free Virtual Try-On](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/80)
     - [CP-VTON+: Clothing Shape and Texture Preserving Image-Based Virtual Try-On](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/82)
     - 3D based virtual try-on
-        - xxx
+        - [SIZER: A Dataset and Model for Parsing 3D Clothing and Learning Size Sensitive 3D Clothing](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/84)
 - recommendation
     - [ViBE: Dressing for Diverse Body Shapes](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/60)
 - text-to-image

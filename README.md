@@ -133,8 +133,8 @@
 - Optical Flow
     - [FlowNet: Learning Optical Flow with Convolutional Networks](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/43)
     - [View Synthesis by Appearance Flow](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/47)
-- 3D shape prediction
-    - xxx
+- 3D-to-3D / 3D shape prediction
+    - [SMPL: A skinned multi-person linear model ](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/86)
 - image-to-3D / image-based 3D Reconstruction 
     - [Mesh R-CNN](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/83)
     - [3D Virtual Garment Modeling from RGB Images](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/81)

@@ -138,6 +138,7 @@
 - image-to-3D / image-based 3D Reconstruction 
     - [Mesh R-CNN](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/83)
     - [3D Virtual Garment Modeling from RGB Images](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/81)
+    - [Multi-Garment Net: Learning to Dress 3D People from Images](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/87)
 - Others
     - xxx
 

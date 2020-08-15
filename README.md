@@ -10,17 +10,14 @@
     - [[ResNet] Deep Residual Learning for Image Recognition](https://github.com/Yagami360/My_NoteBook/blob/master/%E6%83%85%E5%A0%B1%E5%B7%A5%E5%AD%A6/%E6%83%85%E5%A0%B1%E5%B7%A5%E5%AD%A6_%E6%A9%9F%E6%A2%B0%E5%AD%A6%E7%BF%92_NN_Note.md#ResNet%EF%BC%88%E6%AE%8B%E5%B7%AE%E3%83%8D%E3%83%83%E3%83%88%E3%83%AF%E3%83%BC%E3%82%AF%EF%BC%89)
     - [[Neural-ODE] Neural Ordinary Differential Equations](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/21)
     - [Augmented Neural ODEs](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/37)
-    - Kervolutional Neural Networks
 - CNN
     - [Spatial Transformer Networks](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/48)
 - GNN
     - [Convolutional Neural Networks on Graphs with Fast Localized Spectral Filtering](https://github.com/Yagami360/My_NoteBook/blob/master/%E6%83%85%E5%A0%B1%E5%B7%A5%E5%AD%A6/%E6%83%85%E5%A0%B1%E5%B7%A5%E5%AD%A6_%E6%A9%9F%E6%A2%B0%E5%AD%A6%E7%BF%92_NN_Note.md#Convolutional_Neural_Networks_on_Graphs_with_Fast_Localized_Spectral_Filtering)
     - [Semi-Supervised Classification with Graph Convolutional Networks](https://github.com/Yagami360/My_NoteBook/blob/master/%E6%83%85%E5%A0%B1%E5%B7%A5%E5%AD%A6/%E6%83%85%E5%A0%B1%E5%B7%A5%E5%AD%A6_%E6%A9%9F%E6%A2%B0%E5%AD%A6%E7%BF%92_NN_Note.md#Semi-Supervised_Classification_with_Graph_Convolutional_Networks)
     - [[R-GCN] Relational Graph Convolutional Network](https://github.com/Yagami360/My_NoteBook/blob/master/%E6%83%85%E5%A0%B1%E5%B7%A5%E5%AD%A6/%E6%83%85%E5%A0%B1%E5%B7%A5%E5%AD%A6_%E6%A9%9F%E6%A2%B0%E5%AD%A6%E7%BF%92_NN_Note.md#R-GCN%EF%BC%88%E3%82%B0%E3%83%A9%E3%83%95%E3%83%95%E3%83%BC%E3%83%AA%E3%82%A8%E5%A4%89%E6%8F%9B%E3%82%92%E7%94%A8%E3%81%84%E3%81%AA%E3%81%84%E3%82%B0%E3%83%A9%E3%83%95%E7%95%B3%E3%81%BF%E8%BE%BC%E3%81%BF%EF%BC%89)
-    - Semi-supervised Learning with Graph Learning-Convolutional Networks
 - VAE
     - [[VAE] Auto-Encoding Variational Bayes](https://github.com/Yagami360/My_NoteBook/blob/master/%E6%83%85%E5%A0%B1%E5%B7%A5%E5%AD%A6/%E6%83%85%E5%A0%B1%E5%B7%A5%E5%AD%A6_%E6%A9%9F%E6%A2%B0%E5%AD%A6%E7%BF%92_%E7%94%9F%E6%88%90%E3%83%A2%E3%83%87%E3%83%AB.md#VAE)
-    - [CVAE] Learning Structured Output Representation using Deep Conditional Generative Models
     - [[VQ-VAE] Neural Discrete Representation Learning](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/23)
     - [β-VAE: LEARNING BASIC VISUAL CONCEPTS WITH A CONSTRAINED VARIATIONAL FRAMEWORK](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/27)
 - GANs
@@ -79,7 +76,7 @@
         - [Parsing R-CNN for Instance-Level Human Analysis](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/73)
 - Pose Estimation
     - [DensePose: Dense Human Pose Estimation in the Wild](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/50)
-- Image Registration / geometric matching（画像レジストレーション / 画像位置合わせ）
+- Image Registration / geometric matching
     - [Convolutional neural network architecture for geometric matching](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/36)
 - image-to-image
     - [[pix2pix] Image-to-Image Translation with Conditional Adversarial Networks](https://github.com/Yagami360/My_NoteBook/blob/master/%E6%83%85%E5%A0%B1%E5%B7%A5%E5%AD%A6/%E6%83%85%E5%A0%B1%E5%B7%A5%E5%AD%A6_%E6%A9%9F%E6%A2%B0%E5%AD%A6%E7%BF%92_%E7%94%9F%E6%88%90%E3%83%A2%E3%83%87%E3%83%AB.md#pix2pix)
@@ -134,13 +131,14 @@
 - Optical Flow
     - [FlowNet: Learning Optical Flow with Convolutional Networks](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/43)
     - [View Synthesis by Appearance Flow](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/47)
-- 3D-to-3D / 3D shape prediction
+- 3D Reconstruction
     - [SMPL: A skinned multi-person linear model ](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/86)
-- image-to-3D / image-based 3D Reconstruction 
-    - [Mesh R-CNN](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/83)
-    - [3D Virtual Garment Modeling from RGB Images](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/81)
-    - [Multi-Garment Net: Learning to Dress 3D People from Images](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/87)
-    - [Deep Fashion3D: A Dataset and Benchmark for 3D Garment Reconstruction from Single Images](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/89)
+    - [Occupancy Networks: Learning 3D Reconstruction in Function Space](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/90)
+    - image-to-3D / image-based 3D Reconstruction 
+        - [Mesh R-CNN](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/83)
+        - [3D Virtual Garment Modeling from RGB Images](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/81)
+        - [Multi-Garment Net: Learning to Dress 3D People from Images](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/87)
+        - [Deep Fashion3D: A Dataset and Benchmark for 3D Garment Reconstruction from Single Images](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/89)
 - Others
     - xxx
 

@@ -124,6 +124,7 @@
         - [Learning to Transfer Texture from Clothing Images to 3D Humans](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/85)
         - [SIZER: A Dataset and Model for Parsing 3D Clothing and Learning Size Sensitive 3D Clothing](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/84)
         - [3D Reconstruction of Clothes using a Human Body Model and its Application to Image-based Virtual Try-On](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/88)
+        - [TailorNet: Predicting Clothing in 3D as a Function of Human Pose, Shape and Garment Style](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/91)
 - recommendation
     - [ViBE: Dressing for Diverse Body Shapes](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/60)
 - text-to-image

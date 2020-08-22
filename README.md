@@ -1,6 +1,6 @@
 # MachineLearning-Papers_Survey
 機械学習関連の論文 Survey 用レポジトリです。<br>
-論文要約まとめは、[Issues](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues) に記載しています。進捗は、[Projects ページ](https://github.com/Yagami360/MachineLearning-Papers_Survey/projects/1) で管理しています。
+論文まとめ記事は、[Issues](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues) に記載しています。進捗は、[Projects ページ](https://github.com/Yagami360/MachineLearning-Papers_Survey/projects/1) で管理しています。
 
 ## ■ 構成
 
@@ -140,6 +140,7 @@
         - [3D Virtual Garment Modeling from RGB Images](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/81)
         - [Multi-Garment Net: Learning to Dress 3D People from Images](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/87)
         - [Deep Fashion3D: A Dataset and Benchmark for 3D Garment Reconstruction from Single Images](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/89)
+        - [BCNet: Learning Body and Cloth Shape from A Single Image](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/92)
 - Others
     - xxx
 

@@ -132,7 +132,7 @@
     - [SMPL: A skinned multi-person linear model ](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/86)
     - [Occupancy Networks: Learning 3D Reconstruction in Function Space](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/90)
     - [TailorNet: Predicting Clothing in 3D as a Function of Human Pose, Shape and Garment Style](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/91)
-    - [[CAPE] Learning to Dress 3D People in Generative Clothing]()
+    - [[CAPE] Learning to Dress 3D People in Generative Clothing](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/93)
     - [SIZER: A Dataset and Model for Parsing 3D Clothing and Learning Size Sensitive 3D Clothing](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/84)
     - image-to-3D / image-based 3D Reconstruction 
         - [Mesh R-CNN](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/83)

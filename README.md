@@ -120,11 +120,7 @@
     - [[Outfit-VITON] Image Based Virtual Try-On Network From Unpaired Data](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/71)
     - [Do Not Mask What You Do Not Need to Mask: a Parser-Free Virtual Try-On](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/80)
     - [CP-VTON+: Clothing Shape and Texture Preserving Image-Based Virtual Try-On](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/82)
-    - 3D based virtual try-on
-        - [Learning to Transfer Texture from Clothing Images to 3D Humans](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/85)
-        - [SIZER: A Dataset and Model for Parsing 3D Clothing and Learning Size Sensitive 3D Clothing](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/84)
-        - [3D Reconstruction of Clothes using a Human Body Model and its Application to Image-based Virtual Try-On](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/88)
-        - [TailorNet: Predicting Clothing in 3D as a Function of Human Pose, Shape and Garment Style](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/91)
+    - [3D Reconstruction of Clothes using a Human Body Model and its Application to Image-based Virtual Try-On](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/88)
 - recommendation
     - [ViBE: Dressing for Diverse Body Shapes](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/60)
 - text-to-image
@@ -135,12 +131,17 @@
 - 3D Reconstruction
     - [SMPL: A skinned multi-person linear model ](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/86)
     - [Occupancy Networks: Learning 3D Reconstruction in Function Space](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/90)
+    - [TailorNet: Predicting Clothing in 3D as a Function of Human Pose, Shape and Garment Style](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/91)
+    - [[CAPE] Learning to Dress 3D People in Generative Clothing]()
+    - [SIZER: A Dataset and Model for Parsing 3D Clothing and Learning Size Sensitive 3D Clothing](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/84)
     - image-to-3D / image-based 3D Reconstruction 
         - [Mesh R-CNN](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/83)
         - [3D Virtual Garment Modeling from RGB Images](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/81)
         - [Multi-Garment Net: Learning to Dress 3D People from Images](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/87)
         - [Deep Fashion3D: A Dataset and Benchmark for 3D Garment Reconstruction from Single Images](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/89)
         - [BCNet: Learning Body and Cloth Shape from A Single Image](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/92)
+    - Texture Mapping
+        - [Learning to Transfer Texture from Clothing Images to 3D Humans](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/85)
 - Others
     - xxx
 

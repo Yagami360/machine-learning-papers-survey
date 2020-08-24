@@ -131,11 +131,12 @@
 - 3D Reconstruction
     - [SMPL: A skinned multi-person linear model ](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/86)
     - [Occupancy Networks: Learning 3D Reconstruction in Function Space](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/90)
-    - [TailorNet: Predicting Clothing in 3D as a Function of Human Pose, Shape and Garment Style](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/91)
     - [[CAPE] Learning to Dress 3D People in Generative Clothing](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/93)
+    - [TailorNet: Predicting Clothing in 3D as a Function of Human Pose, Shape and Garment Style](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/91)
     - [SIZER: A Dataset and Model for Parsing 3D Clothing and Learning Size Sensitive 3D Clothing](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/84)
     - image-to-3D / image-based 3D Reconstruction 
         - [Mesh R-CNN](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/83)
+        - [PIFuHD: Multi-Level Pixel-Aligned Implicit Function for High-Resolution 3D Human Digitization](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/94)
         - [3D Virtual Garment Modeling from RGB Images](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/81)
         - [Multi-Garment Net: Learning to Dress 3D People from Images](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/87)
         - [Deep Fashion3D: A Dataset and Benchmark for 3D Garment Reconstruction from Single Images](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/89)

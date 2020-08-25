@@ -137,6 +137,7 @@
     - image-to-3D / image-based 3D Reconstruction 
         - [Mesh R-CNN](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/83)
         - [PIFuHD: Multi-Level Pixel-Aligned Implicit Function for High-Resolution 3D Human Digitization](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/94)
+        - [NormalGAN: Learning Detailed 3D Human from a Single RGB-D Image](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/95)
         - [3D Virtual Garment Modeling from RGB Images](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/81)
         - [Multi-Garment Net: Learning to Dress 3D People from Images](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/87)
         - [Deep Fashion3D: A Dataset and Benchmark for 3D Garment Reconstruction from Single Images](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/89)

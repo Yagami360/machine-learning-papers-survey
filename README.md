@@ -129,19 +129,24 @@
     - [FlowNet: Learning Optical Flow with Convolutional Networks](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/43)
     - [View Synthesis by Appearance Flow](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/47)
 - 3D Reconstruction
-    - [SMPL: A skinned multi-person linear model ](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/86)
-    - [Occupancy Networks: Learning 3D Reconstruction in Function Space](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/90)
-    - [[CAPE] Learning to Dress 3D People in Generative Clothing](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/93)
-    - [TailorNet: Predicting Clothing in 3D as a Function of Human Pose, Shape and Garment Style](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/91)
-    - [SIZER: A Dataset and Model for Parsing 3D Clothing and Learning Size Sensitive 3D Clothing](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/84)
+    - param-to-3D / parametric 3D models
+        - [SMPL: A skinned multi-person linear model ](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/86)
+        - [[CAPE] Learning to Dress 3D People in Generative Clothing](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/93)
+        - [TailorNet: Predicting Clothing in 3D as a Function of Human Pose, Shape and Garment Style](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/91)
+        - [SIZER: A Dataset and Model for Parsing 3D Clothing and Learning Size Sensitive 3D Clothing](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/84)
     - image-to-3D / image-based 3D Reconstruction 
-        - [Mesh R-CNN](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/83)
-        - [PIFuHD: Multi-Level Pixel-Aligned Implicit Function for High-Resolution 3D Human Digitization](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/94)
-        - [NormalGAN: Learning Detailed 3D Human from a Single RGB-D Image](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/95)
-        - [3D Virtual Garment Modeling from RGB Images](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/81)
-        - [Multi-Garment Net: Learning to Dress 3D People from Images](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/87)
-        - [Deep Fashion3D: A Dataset and Benchmark for 3D Garment Reconstruction from Single Images](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/89)
-        - [BCNet: Learning Body and Cloth Shape from A Single Image](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/92)
+        - none-parametric 3D models
+            - [Mesh R-CNN](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/83)
+             - [Occupancy Networks: Learning 3D Reconstruction in Function Space](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/90)
+            - [PIFuHD: Multi-Level Pixel-Aligned Implicit Function for High-Resolution 3D Human Digitization](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/94)
+            - [NormalGAN: Learning Detailed 3D Human from a Single RGB-D Image](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/95)
+            - [3D Virtual Garment Modeling from RGB Images](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/81)
+        - parametric 3D models
+            - [Multi-Garment Net: Learning to Dress 3D People from Images](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/87)
+            - [Deep Fashion3D: A Dataset and Benchmark for 3D Garment Reconstruction from Single Images](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/89)
+            - [BCNet: Learning Body and Cloth Shape from A Single Image](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/92)
+    - video-to-3D
+        - [TexMesh: Reconstructing Detailed Human Texture and Geometry from RGB-D Video](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/96)
     - Texture Mapping
         - [Learning to Transfer Texture from Clothing Images to 3D Humans](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/85)
 - Others
@@ -208,7 +213,7 @@ categories: CV NLP Others
 - [Google Scholer](https://scholar.google.co.jp/schhp?hl=ja&as_sdt=0,5)
 
 ### ◎ 便利サイト
-- [Google翻訳](https://translate.google.co.jp/?hl=ja&tab=wT)
+- [DeepL](https://www.deepl.com/translator)
 - [papers with code](https://paperswithcode.com/)
     - 論文実装の有無を確認できる。    
 - [Hyper Collocation](https://hypcol.marutank.net/ja/)

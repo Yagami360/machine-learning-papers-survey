@@ -145,6 +145,7 @@
             - [Multi-Garment Net: Learning to Dress 3D People from Images](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/87)
             - [Deep Fashion3D: A Dataset and Benchmark for 3D Garment Reconstruction from Single Images](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/89)
             - [BCNet: Learning Body and Cloth Shape from A Single Image](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/92)
+            - [ExPose: Monocular Expressive Body Regression through Body-Driven Attention](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/97)
     - video-to-3D
         - [TexMesh: Reconstructing Detailed Human Texture and Geometry from RGB-D Video](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/96)
     - Texture Mapping
@@ -161,6 +162,7 @@
 - 論文調査
     - その論文の発展版を探すには、Google Scholer でその論文の被引用論文を探すのが手っ取り早い。
     - 基本的には、その論文の被引用数が多いものが注目の論文。但し最新の論文は当然被引用数は少なくなる。
+    - 著者の所属組織も優れた論文であるか判断材料になり得る。例えば、GAFA や NVIDIA, Adobe などの論文は、優れた論文である可能性が高い
     - 基本的には、最新の論文ほど優れた実験結果を出しているので、Google Scholer で出来るだけ公開日時の最新のものを探す。
     - 論文の公式実装がないものは、自前実装の再現コストが高いので、公式実装があるものを優先的に探す。
     - 論文の公式実装の有無は、papers with code で確認できる。
@@ -211,6 +213,7 @@ categories: CV NLP Others
 ### ◎ 論文サイト
 - [arXiv](https://arxiv.org/)
 - [Google Scholer](https://scholar.google.co.jp/schhp?hl=ja&as_sdt=0,5)
+- [Microsoft Academic](https://academic.microsoft.com/home)
 
 ### ◎ 便利サイト
 - [DeepL](https://www.deepl.com/translator)

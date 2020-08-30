@@ -142,6 +142,7 @@
             - [NormalGAN: Learning Detailed 3D Human from a Single RGB-D Image](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/95)
             - [3D Virtual Garment Modeling from RGB Images](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/81)
         - parametric 3D models
+            - [[HMR] End-to-end Recovery of Human Shape and Pose](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/98)
             - [Multi-Garment Net: Learning to Dress 3D People from Images](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/87)
             - [Deep Fashion3D: A Dataset and Benchmark for 3D Garment Reconstruction from Single Images](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/89)
             - [BCNet: Learning Body and Cloth Shape from A Single Image](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/92)
@@ -166,6 +167,7 @@
     - 基本的には、最新の論文ほど優れた実験結果を出しているので、Google Scholer で出来るだけ公開日時の最新のものを探す。
     - 論文の公式実装がないものは、自前実装の再現コストが高いので、公式実装があるものを優先的に探す。
     - 論文の公式実装の有無は、papers with code で確認できる。
+    - github 上に論文公式実装がある場合は、スター数も優れた論文であるかの判断材料になり得る。
 
 - 論文の読み方
     - 基本的に、「Abstract」→「Introduction」→「Conclusion」→「何をしたかの詳細」→「Experiments」→「Related Work」項目の順に読むのが効率的。Related Work は最悪飛ばしても良い。

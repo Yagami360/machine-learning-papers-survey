@@ -137,7 +137,8 @@
     - image-to-3D / image-based 3D Reconstruction 
         - none-parametric 3D models
             - [Mesh R-CNN](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/83)
-             - [Occupancy Networks: Learning 3D Reconstruction in Function Space](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/90)
+            - [Occupancy Networks: Learning 3D Reconstruction in Function Space](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/90)
+            - [PIFu: Pixel-Aligned Implicit Function for High-Resolution Clothed Human Digitization](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/99)
             - [PIFuHD: Multi-Level Pixel-Aligned Implicit Function for High-Resolution 3D Human Digitization](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/94)
             - [NormalGAN: Learning Detailed 3D Human from a Single RGB-D Image](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/95)
             - [3D Virtual Garment Modeling from RGB Images](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/81)

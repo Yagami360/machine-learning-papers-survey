@@ -148,6 +148,7 @@
             - [Deep Fashion3D: A Dataset and Benchmark for 3D Garment Reconstruction from Single Images](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/89)
             - [BCNet: Learning Body and Cloth Shape from A Single Image](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/92)
             - [ExPose: Monocular Expressive Body Regression through Body-Driven Attention](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/97)
+            - [I2L-MeshNet: Image-to-Lixel Prediction Network for Accurate 3D Human Pose and Mesh Estimation from a Single RGB Image](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/100)
     - video-to-3D
         - [TexMesh: Reconstructing Detailed Human Texture and Geometry from RGB-D Video](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/96)
     - Texture Mapping

@@ -151,8 +151,10 @@
             - [I2L-MeshNet: Image-to-Lixel Prediction Network for Accurate 3D Human Pose and Mesh Estimation from a Single RGB Image](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/100)
     - video-to-3D
         - [TexMesh: Reconstructing Detailed Human Texture and Geometry from RGB-D Video](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/96)
-    - Texture Mapping
+    - texture mapping
         - [Learning to Transfer Texture from Clothing Images to 3D Humans](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/85)
+    - camera localization
+        - [PoseNet: A Convolutional Network for Real-Time 6-DOF Camera Relocalization](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/101)
 - Others
     - xxx
 
@@ -170,6 +172,7 @@
     - 論文の公式実装がないものは、自前実装の再現コストが高いので、公式実装があるものを優先的に探す。
     - 論文の公式実装の有無は、papers with code で確認できる。
     - github 上に論文公式実装がある場合は、スター数も優れた論文であるかの判断材料になり得る。
+    - 探している分野の論文が１つ見つかれば、その論文を papers with code で検索する。その論文の "Tasks" が割り振られている場合は、その Tasks の名前からその分野の最新論文を調べることが出来る。
 
 - 論文の読み方
     - 基本的に、「Abstract」→「Introduction」→「Conclusion」→「何をしたかの詳細」→「Experiments」→「Related Work」項目の順に読むのが効率的。Related Work は最悪飛ばしても良い。

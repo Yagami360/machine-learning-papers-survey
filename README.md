@@ -155,6 +155,7 @@
         - [Learning to Transfer Texture from Clothing Images to 3D Humans](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/85)
     - camera localization
         - [PoseNet: A Convolutional Network for Real-Time 6-DOF Camera Relocalization](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/101)
+        - [Geometry-Aware Learning of Maps for Camera Localization](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/102)
 - Others
     - xxx
 

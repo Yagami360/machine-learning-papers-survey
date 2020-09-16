@@ -152,6 +152,7 @@
     - video-to-3D
         - [TexMesh: Reconstructing Detailed Human Texture and Geometry from RGB-D Video](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/96)
     - texture mapping
+        - [360-Degree Textures of People in Clothing from a Single Image](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/103)
         - [Learning to Transfer Texture from Clothing Images to 3D Humans](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/85)
     - camera localization
         - [PoseNet: A Convolutional Network for Real-Time 6-DOF Camera Relocalization](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/101)

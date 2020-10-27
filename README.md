@@ -100,6 +100,7 @@
     - [[GANimation] GANimation: Anatomically-aware Facial Animation from a Single Image](https://github.com/Yagami360/My_NoteBook/blob/master/%E6%83%85%E5%A0%B1%E5%B7%A5%E5%AD%A6/%E6%83%85%E5%A0%B1%E5%B7%A5%E5%AD%A6_%E6%A9%9F%E6%A2%B0%E5%AD%A6%E7%BF%92_%E7%94%9F%E6%88%90%E3%83%A2%E3%83%87%E3%83%AB.md#GANimation)
     - [On Face Segmentation, Face Swapping, and Face Perception](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/3)
     - [Face Swapping: Realistic Image Synthesis Based on Facial Landmarks Alignment](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/4)
+    - [FaceShifter: Towards High Fidelity And Occlusion Aware Face Swapping](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/106)
 - Virtual Try-On
     - [VITON: An Image-based Virtual Try-on Network](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/30)
     - [[CP-VTON] Toward Characteristic-Preserving Image-based Virtual Try-On Network](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/53)

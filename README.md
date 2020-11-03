@@ -85,9 +85,12 @@
     - [[StarGAN] StarGAN: Unified Generative Adversarial Networks for Multi-Domain Image-to-Image Translation](https://github.com/Yagami360/My_NoteBook/blob/master/%E6%83%85%E5%A0%B1%E5%B7%A5%E5%AD%A6/%E6%83%85%E5%A0%B1%E5%B7%A5%E5%AD%A6_%E6%A9%9F%E6%A2%B0%E5%AD%A6%E7%BF%92_%E7%94%9F%E6%88%90%E3%83%A2%E3%83%87%E3%83%AB.md#StarGAN)
     - [[SPADE] Semantic Image Synthesis with Spatially-Adaptive Normalization](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/7)
     - [[Neural Collage] Spatially Controllable Image Synthesis with Internal Representation Collaging](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/22)
-    - [SinGAN: Learning a Generative Model from a Single Natural Image](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/40)  
     - [Recapture as You Want](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/78)
     - [Encoding in Style: a StyleGAN Encoder for Image-to-Image Translation](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/104)
+    - few-shot learning
+        - [SinGAN: Learning a Generative Model from a Single Natural Image](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/40)  
+        - [[DeepSIM] Deep Single Image Manipulation](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/107)
+
 - Inpainting
     - [[Deepfillv2] Free-Form Image Inpainting with Gated Convolution](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/29)
     - [Pluralistic Image Completion](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/6)

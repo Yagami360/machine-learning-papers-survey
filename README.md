@@ -28,11 +28,8 @@
     - [[WGAN-gp] improved Training of Wasserstein GANs](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/25)
     - [SAGAN [Self-Attention Generative Adversarial Networks]](https://github.com/Yagami360/My_NoteBook/blob/master/%E6%83%85%E5%A0%B1%E5%B7%A5%E5%AD%A6/%E6%83%85%E5%A0%B1%E5%B7%A5%E5%AD%A6_%E6%A9%9F%E6%A2%B0%E5%AD%A6%E7%BF%92_%E7%94%9F%E6%88%90%E3%83%A2%E3%83%87%E3%83%AB.md#SAGAN)
     - [InfoGAN: Interpretable Representation Learning by Information Maximizing Generative Adversarial Nets](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/26)
-    - [[PGGAN] Progressive Growing of GANs for Improved Quality, Stability, and Variation](https://github.com/Yagami360/My_NoteBook/blob/master/%E6%83%85%E5%A0%B1%E5%B7%A5%E5%AD%A6/%E6%83%85%E5%A0%B1%E5%B7%A5%E5%AD%A6_%E6%A9%9F%E6%A2%B0%E5%AD%A6%E7%BF%92_%E7%94%9F%E6%88%90%E3%83%A2%E3%83%87%E3%83%AB.md#ProgressiveGAN%EF%BC%88PGGAN%EF%BC%89)
-    - [[StyleGAN] A Style-Based Generator Architecture for Generative Adversarial Networks](https://github.com/Yagami360/My_NoteBook/blob/master/%E6%83%85%E5%A0%B1%E5%B7%A5%E5%AD%A6/%E6%83%85%E5%A0%B1%E5%B7%A5%E5%AD%A6_%E6%A9%9F%E6%A2%B0%E5%AD%A6%E7%BF%92_%E7%94%9F%E6%88%90%E3%83%A2%E3%83%87%E3%83%AB.md#StyleGAN)
-    - [[StyleGAN2] Analyzing and Improving the Image Quality of StyleGAN](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/52)
-    - [GAN-Tree: An Incrementally Learned Hierarchical Generative Framework for Multi-Modal Data Distributions](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/19)
     - [[RSGAN,RGAN,RaGAN] The relativistic discriminator: a key element missing from standard GAN](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/51)
+    - [GAN-Tree: An Incrementally Learned Hierarchical Generative Framework for Multi-Modal Data Distributions](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/19)
 - Flow-based generative model
     - [NICE: NON-LINEAR INDEPENDENT COMPONENTS ESTIMATION](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/10)
     - [Real NVP [Density estimation using Real NVP]](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/11)
@@ -41,7 +38,6 @@
     - [Residual Flows for Invertible Generative Modeling](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/15)
 - Autoregressive Models
     - [[PixelRNN, PixelCNN] Pixel Recurrent Neural Networks](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/24)
-
 - meta-learning, few-shot learning
     - [MAML:Model Agnostic Meta-Learning for Fast Adaption](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/39)
 - Neural Processes
@@ -88,9 +84,14 @@
     - [Recapture as You Want](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/78)
     - [Encoding in Style: a StyleGAN Encoder for Image-to-Image Translation](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/104)
     - few-shot learning
-        - [SinGAN: Learning a Generative Model from a Single Natural Image](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/40)  
+        - [SinGAN: Learning a Generative Model from a Single Natural Image](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/40)
         - [[DeepSIM] Deep Single Image Manipulation](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/107)
-
+- noize-to-image
+    - [[PGGAN] Progressive Growing of GANs for Improved Quality, Stability, and Variation](https://github.com/Yagami360/My_NoteBook/blob/master/%E6%83%85%E5%A0%B1%E5%B7%A5%E5%AD%A6/%E6%83%85%E5%A0%B1%E5%B7%A5%E5%AD%A6_%E6%A9%9F%E6%A2%B0%E5%AD%A6%E7%BF%92_%E7%94%9F%E6%88%90%E3%83%A2%E3%83%87%E3%83%AB.md#ProgressiveGAN%EF%BC%88PGGAN%EF%BC%89)
+    - [[StyleGAN] A Style-Based Generator Architecture for Generative Adversarial Networks](https://github.com/Yagami360/My_NoteBook/blob/master/%E6%83%85%E5%A0%B1%E5%B7%A5%E5%AD%A6/%E6%83%85%E5%A0%B1%E5%B7%A5%E5%AD%A6_%E6%A9%9F%E6%A2%B0%E5%AD%A6%E7%BF%92_%E7%94%9F%E6%88%90%E3%83%A2%E3%83%87%E3%83%AB.md#StyleGAN)
+    - [[StyleGAN2] Analyzing and Improving the Image Quality of StyleGAN](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/52)
+    - few-shot learning
+        - [Training Generative Adversarial Networks with Limited Data / StyleGAN2 with adaptive discriminator augmentation (ADA)](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/108)
 - Inpainting
     - [[Deepfillv2] Free-Form Image Inpainting with Gated Convolution](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/29)
     - [Pluralistic Image Completion](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/6)
@@ -147,7 +148,8 @@
             - [PIFu: Pixel-Aligned Implicit Function for High-Resolution Clothed Human Digitization](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/99)
             - [PIFuHD: Multi-Level Pixel-Aligned Implicit Function for High-Resolution 3D Human Digitization](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/94)
             - [NormalGAN: Learning Detailed 3D Human from a Single RGB-D Image](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/95)
-            - [3D Virtual Garment Modeling from RGB Images](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/81)
+            - using templete mesh
+                - [3D Virtual Garment Modeling from RGB Images](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/81)
         - parametric 3D models
             - [[HMR] End-to-end Recovery of Human Shape and Pose](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/98)
             - [Multi-Garment Net: Learning to Dress 3D People from Images](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/87)

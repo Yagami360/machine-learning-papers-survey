@@ -92,6 +92,7 @@
     - [[StyleGAN2] Analyzing and Improving the Image Quality of StyleGAN](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/52)
     - few-shot learning
         - [Training Generative Adversarial Networks with Limited Data / StyleGAN2 with adaptive discriminator augmentation (ADA)](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/108)
+        - [Data-Efficient GANs with DiffAugment](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/109)
 - Inpainting
     - [[Deepfillv2] Free-Form Image Inpainting with Gated Convolution](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/29)
     - [Pluralistic Image Completion](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/6)

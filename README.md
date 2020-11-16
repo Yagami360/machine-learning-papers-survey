@@ -30,6 +30,7 @@
     - [InfoGAN: Interpretable Representation Learning by Information Maximizing Generative Adversarial Nets](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/26)
     - [[RSGAN,RGAN,RaGAN] The relativistic discriminator: a key element missing from standard GAN](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/51)
     - [GAN-Tree: An Incrementally Learned Hierarchical Generative Framework for Multi-Modal Data Distributions](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/19)
+    - [A U-Net Based Discriminator for Generative Adversarial Networks](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/110)
 - Flow-based generative model
     - [NICE: NON-LINEAR INDEPENDENT COMPONENTS ESTIMATION](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/10)
     - [Real NVP [Density estimation using Real NVP]](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/11)

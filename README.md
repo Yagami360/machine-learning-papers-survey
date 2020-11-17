@@ -102,6 +102,8 @@
     - [Pose Guided Person Image Generation](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/49)
     - [Disentangled Person Image Generation](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/41)
     - [[Soft-Gated Warping-GAN] Soft-Gated Warping-GAN for Pose-Guided Person Image Synthesis](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/35)
+
+<!--
 - 顔特化系（Face Swap, etc）
     - [[GANimation] GANimation: Anatomically-aware Facial Animation from a Single Image](https://github.com/Yagami360/My_NoteBook/blob/master/%E6%83%85%E5%A0%B1%E5%B7%A5%E5%AD%A6/%E6%83%85%E5%A0%B1%E5%B7%A5%E5%AD%A6_%E6%A9%9F%E6%A2%B0%E5%AD%A6%E7%BF%92_%E7%94%9F%E6%88%90%E3%83%A2%E3%83%87%E3%83%AB.md#GANimation)
     - [On Face Segmentation, Face Swapping, and Face Perception](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/3)
@@ -130,6 +132,8 @@
     - [Do Not Mask What You Do Not Need to Mask: a Parser-Free Virtual Try-On](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/80)
     - [CP-VTON+: Clothing Shape and Texture Preserving Image-Based Virtual Try-On](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/82)
     - [3D Reconstruction of Clothes using a Human Body Model and its Application to Image-based Virtual Try-On](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/88)
+-->
+
 - recommendation
     - [ViBE: Dressing for Diverse Body Shapes](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/60)
 - text-to-image

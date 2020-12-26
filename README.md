@@ -84,6 +84,8 @@
     - [[Neural Collage] Spatially Controllable Image Synthesis with Internal Representation Collaging](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/22)
     - [Recapture as You Want](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/78)
     - [Encoding in Style: a StyleGAN Encoder for Image-to-Image Translation](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/104)
+    - [[Impersonator++] Liquid Warping GAN with Attention: A Unified Framework for Human Image Synthesis](https://github.com/Yagami360/MachineLearning-Papers_Survey_Private/issues/5)
+    - [Focal Frequency Loss for Generative Models](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/114)
     - few-shot learning
         - [SinGAN: Learning a Generative Model from a Single Natural Image](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/40)
         - [[DeepSIM] Deep Single Image Manipulation](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/107)
@@ -94,6 +96,7 @@
     - few-shot learning
         - [Training Generative Adversarial Networks with Limited Data / StyleGAN2 with adaptive discriminator augmentation (ADA)](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/108)
         - [Data-Efficient GANs with DiffAugment](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/109)
+        - [[Lightweight GAN] Towards Faster and Stabilized GAN Training for High-fidelity Few-shot Image Synthesis](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/113)
 - Inpainting
     - [[Deepfillv2] Free-Form Image Inpainting with Gated Convolution](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/29)
     - [Pluralistic Image Completion](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/6)

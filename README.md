@@ -6,16 +6,19 @@
 
 ### ◎ 基礎系（基礎モデル）
 
-- Deep Neural Network
-    - [[ResNet] Deep Residual Learning for Image Recognition](https://github.com/Yagami360/My_NoteBook/blob/master/%E6%83%85%E5%A0%B1%E5%B7%A5%E5%AD%A6/%E6%83%85%E5%A0%B1%E5%B7%A5%E5%AD%A6_%E6%A9%9F%E6%A2%B0%E5%AD%A6%E7%BF%92_NN_Note.md#ResNet%EF%BC%88%E6%AE%8B%E5%B7%AE%E3%83%8D%E3%83%83%E3%83%88%E3%83%AF%E3%83%BC%E3%82%AF%EF%BC%89)
-    - [[Neural-ODE] Neural Ordinary Differential Equations](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/21)
-    - [Augmented Neural ODEs](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/37)
 - CNN
+    - [[ResNet] Deep Residual Learning for Image Recognition](https://github.com/Yagami360/My_NoteBook/blob/master/%E6%83%85%E5%A0%B1%E5%B7%A5%E5%AD%A6/%E6%83%85%E5%A0%B1%E5%B7%A5%E5%AD%A6_%E6%A9%9F%E6%A2%B0%E5%AD%A6%E7%BF%92_NN_Note.md#ResNet%EF%BC%88%E6%AE%8B%E5%B7%AE%E3%83%8D%E3%83%83%E3%83%88%E3%83%AF%E3%83%BC%E3%82%AF%EF%BC%89)
     - [Spatial Transformer Networks](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/48)
 - GNN
     - [Convolutional Neural Networks on Graphs with Fast Localized Spectral Filtering](https://github.com/Yagami360/My_NoteBook/blob/master/%E6%83%85%E5%A0%B1%E5%B7%A5%E5%AD%A6/%E6%83%85%E5%A0%B1%E5%B7%A5%E5%AD%A6_%E6%A9%9F%E6%A2%B0%E5%AD%A6%E7%BF%92_NN_Note.md#Convolutional_Neural_Networks_on_Graphs_with_Fast_Localized_Spectral_Filtering)
     - [Semi-Supervised Classification with Graph Convolutional Networks](https://github.com/Yagami360/My_NoteBook/blob/master/%E6%83%85%E5%A0%B1%E5%B7%A5%E5%AD%A6/%E6%83%85%E5%A0%B1%E5%B7%A5%E5%AD%A6_%E6%A9%9F%E6%A2%B0%E5%AD%A6%E7%BF%92_NN_Note.md#Semi-Supervised_Classification_with_Graph_Convolutional_Networks)
     - [[R-GCN] Relational Graph Convolutional Network](https://github.com/Yagami360/My_NoteBook/blob/master/%E6%83%85%E5%A0%B1%E5%B7%A5%E5%AD%A6/%E6%83%85%E5%A0%B1%E5%B7%A5%E5%AD%A6_%E6%A9%9F%E6%A2%B0%E5%AD%A6%E7%BF%92_NN_Note.md#R-GCN%EF%BC%88%E3%82%B0%E3%83%A9%E3%83%95%E3%83%95%E3%83%BC%E3%83%AA%E3%82%A8%E5%A4%89%E6%8F%9B%E3%82%92%E7%94%A8%E3%81%84%E3%81%AA%E3%81%84%E3%82%B0%E3%83%A9%E3%83%95%E7%95%B3%E3%81%BF%E8%BE%BC%E3%81%BF%EF%BC%89)
+- RNN
+    - [[RNN] Recursive Neural Network](https://github.com/Yagami360/My_NoteBook/blob/master/%E6%83%85%E5%A0%B1%E5%B7%A5%E5%AD%A6/%E6%83%85%E5%A0%B1%E5%B7%A5%E5%AD%A6_%E6%A9%9F%E6%A2%B0%E5%AD%A6%E7%BF%92_NN_Note.md#%E3%83%AA%E3%82%AB%E3%83%AC%E3%83%B3%E3%83%88%E3%83%8B%E3%83%A5%E3%83%BC%E3%83%A9%E3%83%AB%E3%83%8D%E3%83%83%E3%83%88%E3%83%AF%E3%83%BC%E3%82%AF-rnn--recursive-neural-network%E9%9A%8E%E5%B1%A4%E5%9E%8B%E3%83%8B%E3%83%A5%E3%83%BC%E3%83%A9%E3%83%AB%E3%83%8D%E3%83%83%E3%83%88%E3%83%AF%E3%83%BC%E3%82%AF)
+    - [[LSTM] long short-term memory](https://github.com/Yagami360/My_NoteBook/blob/master/%E6%83%85%E5%A0%B1%E5%B7%A5%E5%AD%A6/%E6%83%85%E5%A0%B1%E5%B7%A5%E5%AD%A6_%E6%A9%9F%E6%A2%B0%E5%AD%A6%E7%BF%92_NN_Note.md#%E9%95%B7%E7%9F%AD%E6%9C%9F%E8%A8%98%E6%86%B6lstm-long-short-term-memory%E3%83%A2%E3%83%87%E3%83%AB)
+    - [[GRU] gated recurrent unit](https://github.com/Yagami360/My_NoteBook/blob/master/%E6%83%85%E5%A0%B1%E5%B7%A5%E5%AD%A6/%E6%83%85%E5%A0%B1%E5%B7%A5%E5%AD%A6_%E6%A9%9F%E6%A2%B0%E5%AD%A6%E7%BF%92_NN_Note.md#gru-gated-recurrent-unit)
+- Transformer
+    - [Attention Is All You Need](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/115)
 - VAE
     - [[VAE] Auto-Encoding Variational Bayes](https://github.com/Yagami360/My_NoteBook/blob/master/%E6%83%85%E5%A0%B1%E5%B7%A5%E5%AD%A6/%E6%83%85%E5%A0%B1%E5%B7%A5%E5%AD%A6_%E6%A9%9F%E6%A2%B0%E5%AD%A6%E7%BF%92_%E7%94%9F%E6%88%90%E3%83%A2%E3%83%87%E3%83%AB.md#VAE)
     - [[VQ-VAE] Neural Discrete Representation Learning](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/23)
@@ -41,6 +44,9 @@
     - [[PixelRNN, PixelCNN] Pixel Recurrent Neural Networks](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/24)
 - meta-learning, few-shot learning
     - [MAML:Model Agnostic Meta-Learning for Fast Adaption](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/39)
+- Neural-ODE
+    - [[Neural-ODE] Neural Ordinary Differential Equations](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/21)
+    - [Augmented Neural ODEs](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/37)
 - Neural Processes
     - [Conditional Neural Processes](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/38)
     - [Neural Processes](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/44)

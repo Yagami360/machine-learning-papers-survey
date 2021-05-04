@@ -18,7 +18,9 @@
     - [[LSTM] long short-term memory](https://github.com/Yagami360/My_NoteBook/blob/master/%E6%83%85%E5%A0%B1%E5%B7%A5%E5%AD%A6/%E6%83%85%E5%A0%B1%E5%B7%A5%E5%AD%A6_%E6%A9%9F%E6%A2%B0%E5%AD%A6%E7%BF%92_NN_Note.md#%E9%95%B7%E7%9F%AD%E6%9C%9F%E8%A8%98%E6%86%B6lstm-long-short-term-memory%E3%83%A2%E3%83%87%E3%83%AB)
     - [[GRU] gated recurrent unit](https://github.com/Yagami360/My_NoteBook/blob/master/%E6%83%85%E5%A0%B1%E5%B7%A5%E5%AD%A6/%E6%83%85%E5%A0%B1%E5%B7%A5%E5%AD%A6_%E6%A9%9F%E6%A2%B0%E5%AD%A6%E7%BF%92_NN_Note.md#gru-gated-recurrent-unit)
 - Transformer
-    - [Attention Is All You Need](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/115)
+    - [[Transformer] Attention Is All You Need](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/115)
+    - [[Vision Transformer] An Image is Worth 16x16 Words: Transformers for Image Recognition at Scale](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/116)
+    - [TransGAN: Two Transformers Can Make One Strong GAN](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/117)
 - VAE
     - [[VAE] Auto-Encoding Variational Bayes](https://github.com/Yagami360/My_NoteBook/blob/master/%E6%83%85%E5%A0%B1%E5%B7%A5%E5%AD%A6/%E6%83%85%E5%A0%B1%E5%B7%A5%E5%AD%A6_%E6%A9%9F%E6%A2%B0%E5%AD%A6%E7%BF%92_%E7%94%9F%E6%88%90%E3%83%A2%E3%83%87%E3%83%AB.md#VAE)
     - [[VQ-VAE] Neural Discrete Representation Learning](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/23)

@@ -6,14 +6,14 @@
 
 ### ◎ 基礎系（基礎モデル）
 
-<details>
+<details open>
 <summary>CNN</summary>
 
 - [[ResNet] Deep Residual Learning for Image Recognition](https://github.com/Yagami360/My_NoteBook/blob/master/%E6%83%85%E5%A0%B1%E5%B7%A5%E5%AD%A6/%E6%83%85%E5%A0%B1%E5%B7%A5%E5%AD%A6_%E6%A9%9F%E6%A2%B0%E5%AD%A6%E7%BF%92_NN_Note.md#ResNet%EF%BC%88%E6%AE%8B%E5%B7%AE%E3%83%8D%E3%83%83%E3%83%88%E3%83%AF%E3%83%BC%E3%82%AF%EF%BC%89)
 - [Spatial Transformer Networks](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/48)
 </details>
 
-<details>
+<details open>
 <summary>GCN</summary>
 
 - [Convolutional Neural Networks on Graphs with Fast Localized Spectral Filtering](https://github.com/Yagami360/My_NoteBook/blob/master/%E6%83%85%E5%A0%B1%E5%B7%A5%E5%AD%A6/%E6%83%85%E5%A0%B1%E5%B7%A5%E5%AD%A6_%E6%A9%9F%E6%A2%B0%E5%AD%A6%E7%BF%92_NN_Note.md#Convolutional_Neural_Networks_on_Graphs_with_Fast_Localized_Spectral_Filtering)
@@ -21,7 +21,7 @@
 - [[R-GCN] Relational Graph Convolutional Network](https://github.com/Yagami360/My_NoteBook/blob/master/%E6%83%85%E5%A0%B1%E5%B7%A5%E5%AD%A6/%E6%83%85%E5%A0%B1%E5%B7%A5%E5%AD%A6_%E6%A9%9F%E6%A2%B0%E5%AD%A6%E7%BF%92_NN_Note.md#R-GCN%EF%BC%88%E3%82%B0%E3%83%A9%E3%83%95%E3%83%95%E3%83%BC%E3%83%AA%E3%82%A8%E5%A4%89%E6%8F%9B%E3%82%92%E7%94%A8%E3%81%84%E3%81%AA%E3%81%84%E3%82%B0%E3%83%A9%E3%83%95%E7%95%B3%E3%81%BF%E8%BE%BC%E3%81%BF%EF%BC%89)
 </details>
 
-<details>
+<details open>
 <summary>RNN</summary>
 
 - [[RNN] Recursive Neural Network](https://github.com/Yagami360/My_NoteBook/blob/master/%E6%83%85%E5%A0%B1%E5%B7%A5%E5%AD%A6/%E6%83%85%E5%A0%B1%E5%B7%A5%E5%AD%A6_%E6%A9%9F%E6%A2%B0%E5%AD%A6%E7%BF%92_NN_Note.md#%E3%83%AA%E3%82%AB%E3%83%AC%E3%83%B3%E3%83%88%E3%83%8B%E3%83%A5%E3%83%BC%E3%83%A9%E3%83%AB%E3%83%8D%E3%83%83%E3%83%88%E3%83%AF%E3%83%BC%E3%82%AF-rnn--recursive-neural-network%E9%9A%8E%E5%B1%A4%E5%9E%8B%E3%83%8B%E3%83%A5%E3%83%BC%E3%83%A9%E3%83%AB%E3%83%8D%E3%83%83%E3%83%88%E3%83%AF%E3%83%BC%E3%82%AF)
@@ -29,7 +29,7 @@
 - [[GRU] gated recurrent unit](https://github.com/Yagami360/My_NoteBook/blob/master/%E6%83%85%E5%A0%B1%E5%B7%A5%E5%AD%A6/%E6%83%85%E5%A0%B1%E5%B7%A5%E5%AD%A6_%E6%A9%9F%E6%A2%B0%E5%AD%A6%E7%BF%92_NN_Note.md#gru-gated-recurrent-unit)
 </details>
 
-<details>
+<details open>
 <summary>Transformer</summary>
 
 - [[Transformer] Attention Is All You Need](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/115)
@@ -37,7 +37,7 @@
 - [TransGAN: Two Transformers Can Make One Strong GAN](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/117)
 </details>
 
-<details>
+<details open>
 <summary>VAE</summary>
 
 - [[VAE] Auto-Encoding Variational Bayes](https://github.com/Yagami360/My_NoteBook/blob/master/%E6%83%85%E5%A0%B1%E5%B7%A5%E5%AD%A6/%E6%83%85%E5%A0%B1%E5%B7%A5%E5%AD%A6_%E6%A9%9F%E6%A2%B0%E5%AD%A6%E7%BF%92_%E7%94%9F%E6%88%90%E3%83%A2%E3%83%87%E3%83%AB.md#VAE)
@@ -45,7 +45,7 @@
 - [β-VAE: LEARNING BASIC VISUAL CONCEPTS WITH A CONSTRAINED VARIATIONAL FRAMEWORK](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/27)
 </details>
 
-<details>
+<details open>
 <summary>GANs</summary>
 
 - [[GAN] Generative Adversarial Networks](https://github.com/Yagami360/My_NoteBook/blob/master/%E6%83%85%E5%A0%B1%E5%B7%A5%E5%AD%A6/%E6%83%85%E5%A0%B1%E5%B7%A5%E5%AD%A6_%E6%A9%9F%E6%A2%B0%E5%AD%A6%E7%BF%92_%E7%94%9F%E6%88%90%E3%83%A2%E3%83%87%E3%83%AB.md#GAN)
@@ -60,7 +60,7 @@
 - [A U-Net Based Discriminator for Generative Adversarial Networks](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/110)
 </details>
 
-<details>
+<details open>
 <summary>Flow-based generative model</summary>
 
 - [NICE: NON-LINEAR INDEPENDENT COMPONENTS ESTIMATION](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/10)
@@ -70,26 +70,26 @@
 - [Residual Flows for Invertible Generative Modeling](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/15)
 </details>
 
-<details>
+<details open>
 <summary>Autoregressive Models</summary>
 
 - [[PixelRNN, PixelCNN] Pixel Recurrent Neural Networks](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/24)
 </details>
 
-<details>
+<details open>
 <summary>meta-learning, few-shot learning</summary>
 
 - [MAML:Model Agnostic Meta-Learning for Fast Adaption](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/39)
 </details>
 
-<details>
+<details open>
 <summary>Neural-ODE</summary>
 
 - [[Neural-ODE] Neural Ordinary Differential Equations](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/21)
 - [Augmented Neural ODEs](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/37)
 </details>
 
-<details>
+<details open>
 <summary>Neural Processes</summary>
 
 - [Conditional Neural Processes](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/38)
@@ -100,13 +100,13 @@
 
 ### ◎ アプリケーション系（CV）
 
-<details>
+<details open>
 <summary>Image Classification</summary>
 
 - xxx
 </details>
 
-<details>
+<details open>
 <summary>Semantic Segmentation</summary>
 
 - [U-Net: Convolutional Networks for Biomedical Image Segmentation](https://github.com/Yagami360/My_NoteBook/blob/master/%E6%83%85%E5%A0%B1%E5%B7%A5%E5%AD%A6/%E6%83%85%E5%A0%B1%E5%B7%A5%E5%AD%A6_%E6%A9%9F%E6%A2%B0%E5%AD%A6%E7%BF%92_%E7%94%9F%E6%88%90%E3%83%A2%E3%83%87%E3%83%AB.md#UNet)
@@ -125,7 +125,7 @@
     - [[CorrPM] Correlating Edge, Pose with Parsing](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/74)
 </details>
 
-<details>
+<details open>
 <summary>Object Detection</summary>
 
 - [Fast R-CNN](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/75)
@@ -133,7 +133,7 @@
 - [Focal Loss for Dense Object Detection](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/66)
 </details>
 
-<details>
+<details open>
 <summary>Instance Segmentation</summary>
 
 - [Mask R-CNN](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/65)
@@ -141,19 +141,19 @@
     - [Parsing R-CNN for Instance-Level Human Analysis](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/73)
 </details>
 
-<details>
+<details open>
 <summary>Pose Estimation</summary>
 
 - [DensePose: Dense Human Pose Estimation in the Wild](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/50)
 </details>
 
-<details>
+<details open>
 <summary>Image Registration / geometric matching</summary>
 
 - [Convolutional neural network architecture for geometric matching](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/36)
 </details>
 
-<details>
+<details open>
 <summary>image-to-image</summary>
 
 - [[pix2pix] Image-to-Image Translation with Conditional Adversarial Networks](https://github.com/Yagami360/My_NoteBook/blob/master/%E6%83%85%E5%A0%B1%E5%B7%A5%E5%AD%A6/%E6%83%85%E5%A0%B1%E5%B7%A5%E5%AD%A6_%E6%A9%9F%E6%A2%B0%E5%AD%A6%E7%BF%92_%E7%94%9F%E6%88%90%E3%83%A2%E3%83%87%E3%83%AB.md#pix2pix)
@@ -171,7 +171,7 @@
     - [[DeepSIM] Deep Single Image Manipulation](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/107)
 </details>
 
-<details>
+<details open>
 <summary>noize-to-image</summary>
 
 - [[PGGAN] Progressive Growing of GANs for Improved Quality, Stability, and Variation](https://github.com/Yagami360/My_NoteBook/blob/master/%E6%83%85%E5%A0%B1%E5%B7%A5%E5%AD%A6/%E6%83%85%E5%A0%B1%E5%B7%A5%E5%AD%A6_%E6%A9%9F%E6%A2%B0%E5%AD%A6%E7%BF%92_%E7%94%9F%E6%88%90%E3%83%A2%E3%83%87%E3%83%AB.md#ProgressiveGAN%EF%BC%88PGGAN%EF%BC%89)
@@ -184,7 +184,7 @@
 
 </details>
 
-<details>
+<details open>
 <summary>Inpainting</summary>
 
 - [[Deepfillv2] Free-Form Image Inpainting with Gated Convolution](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/29)
@@ -192,25 +192,29 @@
 - [Boundless: Generative Adversarial Networks for Image Extension](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/28)
 </details>
 
-<details>
+<details open>
 <summary>Person Image Generation</summary>
 
 - [Pose Guided Person Image Generation](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/49)
 - [Disentangled Person Image Generation](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/41)
 - [[Soft-Gated Warping-GAN] Soft-Gated Warping-GAN for Pose-Guided Person Image Synthesis](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/35)
+
 </details>
 
 <!--
-<details>
+<details open>
 <summary>顔特化系（Face Swap, etc）</summary>
 
 - [[GANimation] GANimation: Anatomically-aware Facial Animation from a Single Image](https://github.com/Yagami360/My_NoteBook/blob/master/%E6%83%85%E5%A0%B1%E5%B7%A5%E5%AD%A6/%E6%83%85%E5%A0%B1%E5%B7%A5%E5%AD%A6_%E6%A9%9F%E6%A2%B0%E5%AD%A6%E7%BF%92_%E7%94%9F%E6%88%90%E3%83%A2%E3%83%87%E3%83%AB.md#GANimation)
 - [On Face Segmentation, Face Swapping, and Face Perception](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/3)
 - [Face Swapping: Realistic Image Synthesis Based on Facial Landmarks Alignment](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/4)
 - [FaceShifter: Towards High Fidelity And Occlusion Aware Face Swapping](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/106)
-</details>
 
-<details>
+</details>
+-->
+
+<!--
+<details open>
 <summary>Virtual Try-On</summary>
 
 - [VITON: An Image-based Virtual Try-on Network](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/30)
@@ -235,29 +239,30 @@
 - [Do Not Mask What You Do Not Need to Mask: a Parser-Free Virtual Try-On](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/80)
 - [CP-VTON+: Clothing Shape and Texture Preserving Image-Based Virtual Try-On](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/82)
 - [3D Reconstruction of Clothes using a Human Body Model and its Application to Image-based Virtual Try-On](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/88)
+
 </details>
 -->
 
-<details>
+<details open>
 <summary>recommendation</summary>
 
 - [ViBE: Dressing for Diverse Body Shapes](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/60)
 </details>
 
-<details>
+<details open>
 <summary>text-to-image</summary>
 
 - [[StackGAN] Text to Photo-realistic Image Synthesis with Stacked Generative Adversarial Network](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/9)
 </details>
 
-<details>
+<details open>
 <summary>Optical Flow</summary>
 
 - [FlowNet: Learning Optical Flow with Convolutional Networks](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/43)
 - [View Synthesis by Appearance Flow](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/47)
 </details>
 
-<details>
+<details open>
 <summary>3D Reconstruction</summary>
 
 - param-to-3D / parametric 3D models
@@ -291,7 +296,7 @@
     - [Geometry-Aware Learning of Maps for Camera Localization](https://github.com/Yagami360/MachineLearning-Papers_Survey/issues/102)
 </details>
 
-<details>
+<details open>
 <summary>Others</summary>
 
 - xxx
@@ -301,7 +306,7 @@
 
 ### ◎ 理論系
 
-<details>
+<details open>
 <summary>xxx</summary>
 
 - xxx
